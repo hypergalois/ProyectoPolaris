@@ -27,7 +27,7 @@ React / Nextjs
 MongoDB
 
 ## Documentación 📚
-Para más detalles sobre la implementación y uso de Project Nexus, por favor consulta nuestra wiki.
+Para más detalles sobre la implementación y uso del Proyecto Polaris, por favor consulta nuestra wiki.
 
 ## Contacto 📫
 Para cualquier consulta, contactar con nuestro administrador plenipotenciario en gonzalo.antonio@live.u-tad.com.
