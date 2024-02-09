@@ -8,6 +8,7 @@ dotenv.config();
 
 import authRoutes from './routes/auth.routes.js';
 import projectRoutes from './routes/project.routes.js';
+import testRoutes from './routes/test.routes.js';
 
 const app = express();
 
@@ -22,7 +23,8 @@ app.use(cookieParser());
 
 app.use("/uploads", express.static("uploads"));
 
-app.use('/api', authRoutes);
-app.use('/api', projectRoutes);
+// app.use('/api', authRoutes);
+// app.use('/api', projectRoutes);
+app.use('/api', testRoutes);
 
 export default app;
