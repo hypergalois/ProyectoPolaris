@@ -34,8 +34,11 @@ model User {
   updatedAt      DateTime    @updatedAt
   Requests       Request[]
 
-  involvedAsStudent   String[] @db.ObjectId
-  involvedAsProfessor String[] @db.ObjectId
+  involvedAsStudentIDs   String[] @db.ObjectId
+  involvedAsStudent      Project[] @relation(fields: [involvedAsStudentIDs], references: [id], name: "involvedAsStudent")
+  
+  involvedAsProfessorIDs String[] @db.ObjectId
+  involvedAsProfessor Project[] @relation(fields: [involvedAsProfessorIDs], references: [id], name: "involvedAsProfessor")
 
   @@map("users")
 }
@@ -53,8 +56,15 @@ model Project {
   academicCourse    String
   course            String
   letter            String
-  impliedStudents   String[]    @db.ObjectId
+
+
+  impliedStudents   User[]     @relation(fields: [impliedStudentsIDs], references: [id], name: "involvedAsStudent")
+  impliedStudentsIDs String[] @db.ObjectId
+
   impliedProfessors String[]    @db.ObjectId
+  impliedProfessorsIDs User[]   @relation(fields: [impliedProfessors], references: [id], name: "involvedAsProfessor")
+
+
   summary           String?
   report            String?
   externalLinks     String[]
