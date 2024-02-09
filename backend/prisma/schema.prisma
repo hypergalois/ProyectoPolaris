@@ -1,0 +1,86 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  fullName       String
+  email          String    @unique
+  role           String
+  alias          String
+  position       String?
+  promotion      String?
+  department     String?
+  degree         String?
+  academicCourse String?
+  passwordHash   String
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  Request        Request[]
+
+  @@map("users")
+}
+
+model Project {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  title             String
+  type              String
+  description       String
+  differentiator    String?
+  academicCourse    String
+  courseAndLetter   String
+  impliedStudents   String[]
+  impliedProfessors String[]
+  summary           String?
+  report            String?
+  externalLinks     String[]
+  awards            String[]
+  keywords          String[]
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@map("projects")
+}
+
+model Degree {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  area         String
+  department   String
+  Department   Department? @relation(fields: [departmentId], references: [id])
+  departmentId String?     @db.ObjectId
+
+  @@map("degrees")
+}
+
+model Department {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  area        String
+  coordinator String
+  degrees     Degree[]
+
+  @@map("departments")
+}
+
+model Request {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  projectTitle   String
+  requester      User     @relation(fields: [requesterId], references: [id])
+  description    String
+  academicCourse String
+  state          String
+  requesterId    String   @db.ObjectId
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("requests")
+}
