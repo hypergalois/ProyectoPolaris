@@ -10,21 +10,32 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ADMIN
+  CREATOR
+  USER
+}
+
 model User {
-  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  id             String      @id @default(auto()) @map("_id") @db.ObjectId
   fullName       String
-  email          String    @unique
-  role           String
-  alias          String
+  email          String      @unique
+  role           Role        @default(USER)
+  alias          String      @unique
   position       String?
   promotion      String?
-  department     String?
-  degree         String?
+  departmentId   String?     @db.ObjectId
+  department     Department? @relation(fields: [departmentId], references: [id])
+  degree         Degree?     @relation(fields: [degreeId], references: [id])
+  degreeId       String?     @db.ObjectId
   academicCourse String?
   passwordHash   String
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-  Request        Request[]
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  Requests       Request[]
+
+  involvedAsStudent   String[] @db.ObjectId
+  involvedAsProfessor String[] @db.ObjectId
 
   @@map("users")
 }
@@ -35,7 +46,6 @@ model Project {
   type              String
   description       String
   differentiator    String?
-  department        String
   Department        Department? @relation(fields: [departmentId], references: [id])
   departmentId      String?     @db.ObjectId
   subject           String?
@@ -43,8 +53,8 @@ model Project {
   academicCourse    String
   course            String
   letter            String
-  impliedStudents   String[]
-  impliedProfessors String[]
+  impliedStudents   String[]    @db.ObjectId
+  impliedProfessors String[]    @db.ObjectId
   summary           String?
   report            String?
   externalLinks     String[]
@@ -64,6 +74,8 @@ model Degree {
   Department   Department? @relation(fields: [departmentId], references: [id])
   departmentId String?     @db.ObjectId
 
+  Users User[]
+
   @@map("degrees")
 }
 
@@ -73,7 +85,8 @@ model Department {
   area        String
   coordinator String
   degrees     Degree[]
-  Project     Project[]
+  Projects    Project[]
+  Users       User[]
 
   @@map("departments")
 }
