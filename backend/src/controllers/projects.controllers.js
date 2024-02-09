@@ -1,6 +1,35 @@
-export const getProjects = async (req, res) => {}
+import { matchedData } from 'express-validator'
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
 
-export const createProject = async (req, res) => {}
+
+export const getProjects = async (req, res) => {
+    try{
+        //const projects = await prisma.project.findMany();
+        res.send({ message: "Get projects" });
+    } catch(err){
+        console.log(err);
+        res.status(500).send({ message: "Error getting projects" });
+    }
+}
+
+export const createProject = async (req, res) => {
+    try{
+        const { title, description, category, status, user_id } = matchedData(req);
+        const newProject = await prisma.project.create({
+            data: {
+                title,
+                description,
+                subject,
+                status
+            }
+        });
+        res.send(newProject);
+    } catch(err){
+        console.log(err);
+        res.status(500).send({ message: "Error creating project" });
+    }
+}
 
 export const getProject = async (req, res) => {}
 
