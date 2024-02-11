@@ -5,3 +5,7 @@ import { axiosInstance } from "./axios";
 export const signupRequest = user => axiosInstance.post("/signup", user);
 
 export const loginRequest = user => axiosInstance.post("/login", user);
+
+export const verifyTokenRequest = () => axiosInstance.get("/verify");
+
+export const logoutRequest = () => axiosInstance.post("/logout");
