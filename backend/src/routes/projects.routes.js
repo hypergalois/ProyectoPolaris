@@ -12,9 +12,9 @@ router.get("/projects", getProjects);
 
 router.get("/projects/:id", getProject);
 
-router.post("/projects", uploadMiddleware.array("files", 5), createProject);
+router.post("/projects", validateSchema(projectSchema), uploadMiddleware.array("files", 5), createProject);
 
-router.put("/projects/:id", updateProject);
+router.put("/projects/:id", validateSchema(updateProjectSchema), updateProject);
 
 router.delete("/projects/:id", deleteProject);
 
