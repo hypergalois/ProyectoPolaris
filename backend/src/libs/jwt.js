@@ -3,6 +3,10 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+// Tengo un problema con las variables de entorno, que sin importar
+// dotenv aqui, no las reconoce
+// Supuestamente haciendolo solo en app.js deberia bastar
+
 const secret = process.env.TOKEN_SECRET;
 
 export function createAccessToken(payload) {
