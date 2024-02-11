@@ -101,8 +101,80 @@ export const logout = async (req, res) => {
     return res.status(200).json({ message: "Logged out successfully." });
 }
 
-export const profile = async (req, res) => { }
+export const profile = async (req, res) => {
+    const userFound = await prisma.user.findUnique({
+        where: {
+            id: req.userId
+        }
+    });
 
-export const verifyToken = async (req, res) => { }
+    if (!userFound) return res.status(404).json({ message: "User not found." });
 
-export const refreshToken = async (req, res) => { }
+    return res.json({
+        id: userFound.id,
+        username: userFound.username,
+        email: userFound.email,
+        createdAt: userFound.createdAt,
+        updatedAt: userFound.updatedAt
+    });
+}
+
+export const verifyToken = async (req, res) => {
+    const { token } = req.cookies;
+
+    if (!token) return res.status(401).json({ message: "No token provided." });
+
+    jwt.verify(token, secret, async (err, user) => {
+        if (err) return res.status(403).json({ message: "Invalid token." });
+
+        const userFound = await prisma.user.findUnique({
+            where: {
+                id: user.id
+            }
+        });
+
+        if (!userFound) return res.status(404).json({ message: "User not found." });
+
+        return res.json({
+            id: userFound.id,
+            username: userFound.username,
+            email: userFound.email,
+            createdAt: userFound.createdAt,
+            updatedAt: userFound.updatedAt
+        });
+    })
+}
+
+// I don't know to what extent this is necessary
+export const refreshToken = async (req, res) => {
+    const { token } = req.cookies;
+
+    if (!token) return res.status(401).json({ message: "No token provided." });
+
+    jwt.verify(token, secret, async (err, user) => {
+        if (err) return res.status(403).json({ message: "Invalid token." });
+
+        const userFound = await prisma.user.findUnique({
+            where: {
+                id: user.id
+            }
+        });
+
+        if (!userFound) return res.status(404).json({ message: "User not found." });
+
+        const accessToken = await createAccessToken({ id: userFound.id });
+
+        res.cookie("token", accessToken, {
+            sameSite: "none",
+            secure: true
+        });
+
+        return res.json({
+            id: userFound.id,
+            username: userFound.username,
+            email: userFound.email,
+            createdAt: userFound.createdAt,
+            updatedAt: userFound.updatedAt
+        });
+    })
+}
