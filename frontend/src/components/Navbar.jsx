@@ -1,6 +1,7 @@
 // TODO Mejorar Navbar
 import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
+import React from "react";
 
 function NavBar() {
 
@@ -8,7 +9,7 @@ function NavBar() {
     // y mostraremos unos botones u otros
     // Para acceder al estado de autenticacion, usamos el hook useAuth
 
-    const { isAuthenticated, logout } = useAuth();
+    const { isAuthenticated } = useAuth();
 
     return (
         <nav>

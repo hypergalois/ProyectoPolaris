@@ -22,8 +22,10 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            <ProtectedRoute path="/profile" element={<ProfilePage />} />
-            <ProtectedRoute path="/project/new" element={<ProjectFormPage />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/project/new" element={<ProjectFormPage />} />
+            </Route>
           </Routes>
         </main>
       </Router>
