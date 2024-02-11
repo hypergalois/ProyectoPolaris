@@ -78,6 +78,8 @@ model Project {
   impliedProfessors    String[] @db.ObjectId
   impliedProfessorsIDs User[]   @relation(fields: [impliedProfessors], references: [id], name: "involvedAsProfessor")
 
+  uploadedContent String[]
+
   summary       String?
   report        String?
   externalLinks String[]

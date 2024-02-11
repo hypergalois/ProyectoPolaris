@@ -15,8 +15,9 @@ export const getProjects = async (req, res) => {
 
 export const createProject = async (req, res) => {
     try{
-        console.log(req.body);
-        const newProject = await prisma.project.create({data: req.body});
+        const files = req.files ? req.files.map(file => process.env.PUBLIC_URL+file.destination+file.filename) : []
+        console.log(files);
+        const newProject = await prisma.project.create({data: {...req.body, uploadedContent: files}});
         res.send(newProject);
     } catch(err){
         console.log(err);

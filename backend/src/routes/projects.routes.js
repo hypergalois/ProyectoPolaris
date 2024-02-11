@@ -1,6 +1,6 @@
 import { Router } from "express";
-import upload from "../multer.js";
 import { createProject, deleteProject, getProject, getProjectByCategory, getProjectByDate, getProjectByStatus, getProjectByTitle, getProjectByUser, getProjects, updateProject } from "../controllers/projects.controllers.js";
+import { uploadMiddleware } from "../middlewares/upload.middleware.js";
 import { validateSchema } from "../middlewares/validator.middleware.js";
 import { projectSchema, updateProjectSchema } from "../schemas/project.schema.js";
 
@@ -12,7 +12,7 @@ router.get("/projects", getProjects);
 
 router.get("/projects/:id", getProject);
 
-router.post("/projects", validateSchema(projectSchema), createProject);
+router.post("/projects", uploadMiddleware.array("files", 5), createProject);
 
 router.put("/projects/:id", updateProject);
 
