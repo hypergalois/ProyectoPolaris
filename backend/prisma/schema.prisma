@@ -83,7 +83,7 @@ model Project {
   externalLinks String[]
   awards        String[]
   keywords      String[]
-  createdAt     DateTime? @default(now())
+  createdAt     DateTime @default(now())
   updatedAt     DateTime? @updatedAt
 
   @@map("projects")
