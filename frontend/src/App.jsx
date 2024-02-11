@@ -24,7 +24,8 @@ function App() {
             <Route path="/register" element={<RegisterPage />} />
             <Route element={<ProtectedRoute />}>
               <Route path="/profile" element={<ProfilePage />} />
-              <Route path="/project/new" element={<ProjectFormPage />} />
+              <Route path="/projects/new" element={<ProjectFormPage />} />
+              <Route path="/logout"></Route>
             </Route>
           </Routes>
         </main>

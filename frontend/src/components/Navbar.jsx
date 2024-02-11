@@ -20,10 +20,13 @@ function NavBar() {
                 {isAuthenticated ? (
                     <React.Fragment>
                         <li>
-                            <Link to="/projects/add">Añadir proyecto</Link>
+                            <Link to="/projects/new">Añadir proyecto</Link>
                         </li>
                         <li>
                             <Link to="/logout">Logout</Link>
+                        </li>
+                        <li>
+                            <Link to="/profile">Profile</Link>
                         </li>
                     </React.Fragment>
                 ) :
