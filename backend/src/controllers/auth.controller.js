@@ -58,7 +58,39 @@ export const register = async (req, res) => {
 }
 
 export const login = async (req, res) => {
-    
+    const { email, password } = req.body;
+
+    try {
+        const foundUser = await prisma.user.findUnique({
+            where: {
+                email: email
+            }
+        });
+        
+        if (!foundUser) return res.status(400).json({ message: "There doesn't exist an user with that email. Try registering instead." });
+
+        const passwordsMatch = await bcrypt.compare(password, foundUser.passwordHash);
+
+        if (!passwordsMatch) return res.status(400).json({ message: "The password is incorrect. Try again." });
+
+        const accessToken = await createAccessToken({ id: foundUser.id });
+
+        res.cookie("token", accessToken, {
+            sameSite: "none",
+            secure: true,
+        });
+
+        return res.json({
+            id: foundUser.id,
+            username: foundUser.username,
+            email: foundUser.email,
+            createdAt: foundUser.createdAt,
+            updatedAt: foundUser.updatedAt
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: error.message });
+    }
 }
 
 export const logout = async (req, res) => { }
