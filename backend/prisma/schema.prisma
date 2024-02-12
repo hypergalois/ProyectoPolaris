@@ -109,7 +109,7 @@ model Department {
   name        String?
   area        String?
   coordinator String?
-  degrees     Degree[]
+  Degrees     Degree[]
   Projects    Project[]
   Users       User[]
 
