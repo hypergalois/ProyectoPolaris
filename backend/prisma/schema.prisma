@@ -2,130 +2,136 @@
 // TODO: Remove when API is stable
 
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mongodb"
-  url      = env("DATABASE_URL")
+    provider = "mongodb"
+    url      = env("DATABASE_URL")
 }
 
 enum Role {
-  ADMIN
-  CREATOR
-  USER
+    ADMIN
+    CREATOR
+    USER
 }
 
 enum Status {
-  PENDING
-  ACCEPTED
-  REJECTED
+    PENDING
+    ACCEPTED
+    REJECTED
 }
 
 model User {
-  id       String  @id @default(auto()) @map("_id") @db.ObjectId
-  fullName String?
+    id       String  @id @default(auto()) @map("_id") @db.ObjectId
+    fullName String?
 
-  email         String?  @unique
-  emailVerified Boolean? @default(false)
+    email         String?  @unique
+    emailVerified Boolean? @default(false)
 
-  role Role? @default(USER)
+    role Role? @default(USER)
 
-  username  String? @unique
-  position  String?
-  promotion String?
+    username  String? @unique
+    position  String?
+    promotion String?
 
-  departmentId String?     @db.ObjectId
-  department   Department? @relation(fields: [departmentId], references: [id])
+    departmentId String?     @db.ObjectId
+    department   Department? @relation(fields: [departmentId], references: [id])
 
-  degree   Degree? @relation(fields: [degreeId], references: [id])
-  degreeId String? @db.ObjectId
+    degree   Degree? @relation(fields: [degreeId], references: [id])
+    degreeId String? @db.ObjectId
 
-  academicCourse String?
-  passwordHash   String?
-  createdAt      DateTime? @default(now())
-  updatedAt      DateTime? @updatedAt
+    academicCourse String?
+    passwordHash   String?
+    createdAt      DateTime? @default(now())
+    updatedAt      DateTime? @updatedAt
 
-  Requests Request[]
+    Requests Request[]
 
-  involvedAsStudentIDs String[]  @db.ObjectId
-  involvedAsStudent    Project[] @relation(fields: [involvedAsStudentIDs], references: [id], name: "involvedAsStudent")
+    involvedAsCoordinatorID  String?     @db.ObjectId
+    involvedAsCoordinator    Department? @relation(fields: [involvedAsCoordinatorID], references: [id], name: "involvedAsCoordinator")
 
-  involvedAsProfessorIDs String[]  @db.ObjectId
-  involvedAsProfessor    Project[] @relation(fields: [involvedAsProfessorIDs], references: [id], name: "involvedAsProfessor")
+    involvedAsStudentIDs String[]  @db.ObjectId
+    involvedAsStudent    Project[] @relation(fields: [involvedAsStudentIDs], references: [id], name: "involvedAsStudent")
 
-  @@map("users")
+    involvedAsProfessorIDs String[]  @db.ObjectId
+    involvedAsProfessor    Project[] @relation(fields: [involvedAsProfessorIDs], references: [id], name: "involvedAsProfessor")
+
+    @@map("users")
 }
 
 model Project {
-  id              String      @id @default(auto()) @map("_id") @db.ObjectId
-  title           String?
-  type            String?
-  status          Status?     @default(PENDING)
-  description     String?
-  differentiator  String?
-  Department      Department? @relation(fields: [departmentId], references: [id])
-  departmentId    String?     @db.ObjectId
-  subject         String?
-  personalProject Boolean?
-  academicCourse  String?
-  course          String?
-  letter          String?
+    id              String      @id @default(auto()) @map("_id") @db.ObjectId
+    title           String?
+    type            String?
+    status          Status?     @default(PENDING)
+    description     String?
+    differentiator  String?
+    Department      Department? @relation(fields: [departmentId], references: [id])
+    departmentId    String?     @db.ObjectId
+    subject         String?
+    personalProject Boolean?
+    academicCourse  String?
+    course          String?
+    letter          String?
 
-  impliedStudents    User[]   @relation(fields: [impliedStudentsIDs], references: [id], name: "involvedAsStudent")
-  impliedStudentsIDs String[] @db.ObjectId
+    impliedStudents    User[]   @relation(fields: [impliedStudentsIDs], references: [id], name: "involvedAsStudent")
+    impliedStudentsIDs String[] @db.ObjectId
 
-  impliedProfessors    String[] @db.ObjectId
-  impliedProfessorsIDs User[]   @relation(fields: [impliedProfessors], references: [id], name: "involvedAsProfessor")
+    impliedProfessors    String[] @db.ObjectId
+    impliedProfessorsIDs User[]   @relation(fields: [impliedProfessors], references: [id], name: "involvedAsProfessor")
 
-  uploadedContent String[]
+    uploadedContent String[]
 
-  summary       String?
-  report        String?
-  externalLinks String[]
-  awards        String[]
-  keywords      String[]
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime? @updatedAt
+    summary       String?
+    report        String?
+    externalLinks String[]
+    awards        String[]
+    keywords      String[]
+    createdAt     DateTime  @default(now())
+    updatedAt     DateTime? @updatedAt
 
-  @@map("projects")
+    @@map("projects")
 }
 
 model Degree {
-  id           String      @id @default(auto()) @map("_id") @db.ObjectId
-  name         String?
-  area         String?
-  department   String?
-  Department   Department? @relation(fields: [departmentId], references: [id])
-  departmentId String?     @db.ObjectId
+    id           String      @id @default(auto()) @map("_id") @db.ObjectId
+    name         String?
+    area         String?
+    department   String?
+    Department   Department? @relation(fields: [departmentId], references: [id])
+    departmentId String?     @db.ObjectId
 
-  Users User[]
+    Users User[]
 
-  @@map("degrees")
+    @@map("degrees")
 }
 
 model Department {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
-  name        String?
-  area        String?
-  coordinator String?
-  Degrees     Degree[]
-  Projects    Project[]
-  Users       User[]
+    id   String  @id @default(auto()) @map("_id") @db.ObjectId
+    name String?
+    area String?
 
-  @@map("departments")
+    coordinator   User?
+    coordinatorId String? @db.ObjectId
+
+    Degrees  Degree[]
+    Projects Project[]
+    Users    User[]
+
+    @@map("departments")
 }
 
 model Request {
-  id             String    @id @default(auto()) @map("_id") @db.ObjectId
-  projectTitle   String?
-  requester      User?     @relation(fields: [requesterId], references: [id])
-  description    String?
-  academicCourse String?
-  state          String?
-  requesterId    String?   @db.ObjectId
-  createdAt      DateTime? @default(now())
-  updatedAt      DateTime? @updatedAt
+    id             String    @id @default(auto()) @map("_id") @db.ObjectId
+    projectTitle   String?
+    requester      User?     @relation(fields: [requesterId], references: [id])
+    description    String?
+    academicCourse String?
+    state          String?
+    requesterId    String?   @db.ObjectId
+    createdAt      DateTime? @default(now())
+    updatedAt      DateTime? @updatedAt
 
-  @@map("requests")
+    @@map("requests")
 }
