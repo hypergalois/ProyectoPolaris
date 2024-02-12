@@ -10,10 +10,12 @@ export const authRequired = async (req, res, next) => {
 
     if (!token) return res.status(401).json({ message: "No token provided." });
 
-    jwt.verify(token, secret, (err, user) => {
+    jwt.verify(token, secret, (err, payload) => {
         if (err) return res.status(403).json({ message: "Invalid token." });
 
-        req.userId = user.id;
+        req.userId = payload.id;
+        req.role = payload.role;
+
         next();
     })
 }

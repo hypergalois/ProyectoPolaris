@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { createProject, deleteProject, getProject, getProjectByCategory, getProjectByDate, getProjectByStatus, getProjectByTitle, getProjectByUser, getProjects, updateProject } from "../controllers/projects.controllers.js";
-import { uploadMiddleware } from "../middlewares/upload.middleware.js";
+import { uploadMiddleware } from "../middlewares/uploadFile.middleware.js";
 import { validateSchema } from "../middlewares/validator.middleware.js";
 import { projectSchema, updateProjectSchema } from "../schemas/project.schema.js";
 

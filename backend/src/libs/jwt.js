@@ -11,9 +11,10 @@ const secret = process.env.TOKEN_SECRET;
 
 export function createAccessToken(payload) {
 
-    console.log(secret);
-    console.log(payload);
+    // console.log(secret);
+    // console.log(payload);
 
+    // TODO Tiempo de expiracion del token puede estar en el .env
     return new Promise((resolve, reject) => {
         jwt.sign(payload, secret, { expiresIn: 86400 }, (err, token) => {
             if (err) reject(err);
