@@ -14,7 +14,8 @@ router.get("/projects", getProjects);
 
 router.get("/projects/:id", getProject);
 
-router.post("/projects", validateSchema(projectSchema), uploadFile.array("files", 5), createProject);
+// validateSchema(projectSchema)
+router.post("/projects", uploadFile.array("files", 5), createProject);
 
 router.put("/projects/:id", validateSchema(updateProjectSchema), updateProject);
 

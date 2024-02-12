@@ -4,6 +4,8 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
+import { authRequired } from './middlewares/authRequired.middleware.js';
+
 dotenv.config();
 
 import authRoutes from './routes/auth.routes.js';
@@ -24,7 +26,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/uploads", express.static("uploads"));
+app.use("/uploads", authRequired, express.static("uploads"));
 
 app.use('/api', authRoutes);
 app.use('/api', projectRoutes);
