@@ -10,27 +10,27 @@ const router = Router();
 // Main routes
 // TODO: Poner authRequired a todas las rutas cuando esté más avanzado el proyecto
 
-router.get("/projects", getProjects);
+router.get("/projects", authRequired, getProjects);
 
-router.get("/projects/:id", getProject);
+router.get("/projects/:id", authRequired, getProject);
 
 // validateSchema(projectSchema)
-router.post("/projects", uploadFile.array("files", 5), createProject);
+router.post("/projects", authRequired, uploadFile.array("files", 5), createProject);
 
-router.put("/projects/:id", validateSchema(updateProjectSchema), updateProject);
+router.put("/projects/:id", authRequired, validateSchema(updateProjectSchema), updateProject);
 
-router.delete("/projects/:id", deleteProject);
+router.delete("/projects/:id", authRequired, deleteProject);
 
 // Searching routes
 
-router.get("/projects/user/:userId", getProjectByUser);
+router.get("/projects/user/:userId", authRequired, getProjectByUser);
 
-router.get("/projects/category/:category", getProjectByCategory);
+router.get("/projects/category/:category", authRequired, getProjectByCategory);
 
-router.get("/projects/keyword/:keyword", getProjectByStatus);
+router.get("/projects/keyword/:keyword", authRequired, getProjectByStatus);
 
-router.get("/projects/date/:date", getProjectByDate);
+router.get("/projects/date/:date", authRequired, getProjectByDate);
 
-router.get("/projects/title/:title", getProjectByTitle);
+router.get("/projects/title/:title", authRequired, getProjectByTitle);
 
 export default router;

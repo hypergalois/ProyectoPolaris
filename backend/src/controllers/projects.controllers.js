@@ -16,8 +16,16 @@ export const getProjects = async (req, res) => {
 export const createProject = async (req, res) => {
     try{
         const files = req.files ? req.files.map(file => process.env.PUBLIC_URL+file.destination+file.filename) : []
-        console.log(files);
         const newProject = await prisma.project.create({data: {...req.body, uploadedContent: files}});
+        await prisma.request.create({
+            data: {
+                projectId: newProject.id,
+                requesterId: req.userId,
+                projectTitle: newProject.title,
+                description: newProject.description,
+                academicCourse: newProject.academicCourse
+            }
+        });
         res.send(newProject);
     } catch(err){
         console.log(err);
@@ -39,7 +47,16 @@ export const getProject = async (req, res) => {
 export const updateProject = async (req, res) => {
     try{
         const { id } = req.params;
-        const updatedProject = await prisma.project.update({where: {id: id}, data: req.body});
+        const updatedProject = await prisma.project.update({where: {id: id}, data: {...req.body, state: "PENDING"}});
+        await prisma.request.create({
+            data: {
+                projectId: newProject.id,
+                requesterId: req.userId,
+                projectTitle: newProject.title,
+                description: newProject.description,
+                academicCourse: newProject.academicCourse
+            }
+        });
         res.send(updatedProject);
     } catch(err){
         console.log(err);

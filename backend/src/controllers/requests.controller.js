@@ -55,3 +55,29 @@ export const deleteRequest = async (req, res) => {
         res.status(500).send({ message: "Error deleting request" });
     }
 }
+
+// Utility controllers
+
+export const acceptRequest = async (req, res) => {
+    try{
+        const { id } = req.params;
+        const acceptedRequest = await prisma.request.update({where: {id: id}, data: {state: "ACCEPTED"}});
+        await prisma.project.update({where: {id: acceptedRequest.projectId}, data: {state: "ACCEPTED"}});
+        res.send(acceptedRequest);
+    } catch(err){
+        console.log(err);
+        res.status(500).send({ message: "Error accepting request" });
+    }
+}
+
+export const rejectRequest = async (req, res) => {
+    try{
+        const { id } = req.params;
+        const rejectedRequest = await prisma.request.update({where: {id: id}, data: {state: "REJECTED"}});
+        await prisma.project.update({where: {id: acceptedRequest.projectId}, data: {state: "REJECTED"}});
+        res.send(rejectedRequest);
+    } catch(err){
+        console.log(err);
+        res.status(500).send({ message: "Error rejecting request" });
+    }
+}
