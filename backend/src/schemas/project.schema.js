@@ -15,7 +15,7 @@ export const projectSchema = z.object({
     externalLink: z.array(z.string()).optional(),
     awards: z.array(z.string()).optional(),
     keywords: z.array(z.string()).optional(),
-}).strip();
+});
 
 export const updateProjectSchema = z.object({
     title: z.string().optional(),
@@ -32,4 +32,4 @@ export const updateProjectSchema = z.object({
     externalLink: z.array(z.string()).optional(),
     awards: z.array(z.string()).optional(),
     keywords: z.array(z.string()).optional()
-}).strip();
+});

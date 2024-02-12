@@ -7,4 +7,4 @@ export const degreeSchema = z.object({
     area: z.string({
         required_error: 'Area is required'
     })
-}).strip()
+});
