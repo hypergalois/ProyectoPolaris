@@ -22,14 +22,14 @@ router.delete("/projects/:id", deleteProject);
 
 // Searching routes
 
-router.get("/projects/:userId", getProjectByUser);
+router.get("/projects/user/:userId", getProjectByUser);
 
-router.get("/projects/:category", getProjectByCategory);
+router.get("/projects/category/:category", getProjectByCategory);
 
-router.get("/projects/:keyword", getProjectByStatus);
+router.get("/projects/keyword/:keyword", getProjectByStatus);
 
-router.get("/projects/:date", getProjectByDate);
+router.get("/projects/date/:date", getProjectByDate);
 
-router.get("/projects/:title", getProjectByTitle);
+router.get("/projects/title/:title", getProjectByTitle);
 
 export default router;
