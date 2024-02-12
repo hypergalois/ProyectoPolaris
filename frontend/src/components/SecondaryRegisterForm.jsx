@@ -3,12 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useEffect } from "react";
 
-// TODO Falta modificar el formulario para que se adapte al login
-const LogInPage = () => {
+const SecondaryRegisterForm = () => {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
     // Pongo registerUser para evitar colisiones con el hook register
-    const { login: loginUser, isAuthenticated, errors: loginErrors } = useAuth();
+    const { register: registerUser, isAuthenticated, errors: registerErrors } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -18,23 +17,37 @@ const LogInPage = () => {
     }, [isAuthenticated, navigate])
 
     const onSubmit = handleSubmit(async (data) => {
-        await loginUser(data);
+        await registerUser(data);
     });
 
     return (
         <div>
             <div>
                 {
-                    loginErrors.map((error, index) =>
+                    registerErrors.map((error, index) =>
                     (
                         <div key={index}>{error.message}</div>
 
                     )
                     )}
             </div>
-            <h1>Hacer Log In</h1>
+            <h1>Registrarse</h1>
             <form onSubmit={onSubmit}>
-                
+                <p>Username</p>
+                <input type="text" {
+                    ...register("username", {
+                        required: true,
+                        minLength: 3,
+                        maxLength: 20
+                    })
+                }
+                />
+                {
+                    errors.username && (
+                        <p>Hace falta un nombre de usuario</p>
+                    )
+                }
+
                 <p>Email</p>
                 <input type="email" {
                     ...register("email", {
@@ -64,7 +77,7 @@ const LogInPage = () => {
                 }
 
                 <button type="submit">
-                    Log In
+                    Registrarse
                 </button>
 
 
@@ -74,4 +87,4 @@ const LogInPage = () => {
     )
 }
 
-export default LogInPage;
+export default SecondaryRegisterForm;

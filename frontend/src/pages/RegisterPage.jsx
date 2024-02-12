@@ -14,7 +14,7 @@ const RegisterPage = () => {
         if (isAuthenticated) {
             navigate('/profile');
         }
-    }, [isAuthenticated])
+    }, [isAuthenticated, navigate])
 
     const onSubmit = handleSubmit(async (data) => {
         await registerUser(data);
