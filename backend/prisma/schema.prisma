@@ -130,7 +130,7 @@ model Department {
 model Request {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
-  state Status? @default(PENDING)
+  status Status? @default(PENDING)
 
   projectId String  @db.ObjectId
   project   Project @relation(fields: [projectId], references: [id])

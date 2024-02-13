@@ -1,16 +1,13 @@
 const roles = {
-    ADMIN: 'admin',
-    CREATOR: 'creator',
-    USER: 'user'
+    ADMIN: 'ADMIN',
+    CREATOR: 'CREATOR',
+    USER: 'USER'
 };
 
 const status = {
-    PENDING: 'pending',
-    ACCEPTED: 'accepted',
-    REJECTED: 'rejected'
+    PENDING: 'PENDING',
+    ACCEPTED: 'ACCEPTED',
+    REJECTED: 'REJECTED'
 };
 
-export default {
-    roles,
-    status
-};
+export { roles, status };
