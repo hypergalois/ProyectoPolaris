@@ -1,4 +1,5 @@
 import prisma from '../config/prisma.client.js';
+import status from '../config/tags.js';
 
 // Main controllers
 
@@ -60,8 +61,8 @@ export const deleteRequest = async (req, res) => {
 export const acceptRequest = async (req, res) => {
     try{
         const { id } = req.params;
-        const acceptedRequest = await prisma.request.update({where: {id: id}, data: {state: "ACCEPTED"}});
-        await prisma.project.update({where: {id: acceptedRequest.projectId}, data: {state: "ACCEPTED"}});
+        const acceptedRequest = await prisma.request.update({where: {id: id}, data: {state: status.ACCEPTED}});
+        await prisma.project.update({where: {id: acceptedRequest.projectId}, data: {state: status.ACCEPTED}});
         res.send(acceptedRequest);
     } catch(err){
         console.log(err);
@@ -72,8 +73,8 @@ export const acceptRequest = async (req, res) => {
 export const rejectRequest = async (req, res) => {
     try{
         const { id } = req.params;
-        const rejectedRequest = await prisma.request.update({where: {id: id}, data: {state: "REJECTED"}});
-        await prisma.project.update({where: {id: acceptedRequest.projectId}, data: {state: "REJECTED"}});
+        const rejectedRequest = await prisma.request.update({where: {id: id}, data: {state: status.REJECTED}});
+        await prisma.project.update({where: {id: acceptedRequest.projectId}, data: {state: status.REJECTED}});
         res.send(rejectedRequest);
     } catch(err){
         console.log(err);
