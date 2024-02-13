@@ -31,54 +31,48 @@ const InitialRegisterForm = () => {
                     )
                     )}
             </div>
-            <h1>Registrarse</h1>
             <form onSubmit={onSubmit}>
-                <p>Username</p>
-                <input type="text" {
-                    ...register("username", {
-                        required: true,
-                        minLength: 3,
-                        maxLength: 20
-                    })
-                }
-                />
-                {
-                    errors.username && (
-                        <p>Hace falta un nombre de usuario</p>
-                    )
-                }
-
-                <p>Email</p>
-                <input type="email" {
-                    ...register("email", {
-                        required: true,
-                        pattern: /^\S+@\S+$/i
-                    })
-                }
-                />
-                {
-                    errors.email && (
-                        <p>Hace falta un email</p>
-                    )
-                }
-
-                <p>Password</p>
-                <input type="password" {
-                    ...register("password", {
-                        required: true,
-                        minLength: 6
-                    })
-                }
-                />
-                {
-                    errors.password && (
-                        <p>Hace falta una contraseña</p>
-                    )
-                }
-
-                <button type="submit">
-                    Registrarse
-                </button>
+                <div className="mb-4">
+                    <input
+                        className="w-5/12 p-4 rounded-2xl"
+                        type="text" {
+                        ...register("username", {
+                            required: true,
+                            minLength: 3,
+                            maxLength: 20
+                        })}
+                        placeholder="Nombre"
+                    />
+                    {
+                        errors.username && (
+                            <p className="mb-2">Hace falta un nombre de usuario</p>
+                        )
+                    }
+                </div>
+                <div className="mb-4">
+                    <input 
+                        className="w-5/12 p-4 rounded-2xl"
+                        type="email" {
+                        ...register("email", {
+                            required: true,
+                            pattern: /^\S+@\S+$/i
+                        })}
+                        placeholder="Correo de la Utad"
+                    />
+                    {
+                        errors.email && (
+                            <p className="mb-2">Hace falta un email</p>
+                        )
+                    }
+                </div>
+                <div className="mb-4">
+                    <p className="text-xs">Creando una cuenta aceptas los Términos de Uso y la Política de Privacidad.</p>
+                </div>
+                <div className="mb-4">
+                    <button  className="w-5/12 p-4 rounded-xl bg-[#333333] text-white" type="submit">
+                        Registrarse
+                    </button>
+                </div>
 
 
             </form>
