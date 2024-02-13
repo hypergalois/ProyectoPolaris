@@ -24,108 +24,121 @@ enum Status {
 
 model User {
   id       String  @id @default(auto()) @map("_id") @db.ObjectId
+
   fullName String?
 
   email         String?  @unique
   emailVerified Boolean? @default(false)
+  username  String? @unique
+  passwordHash   String?
 
   role Role? @default(USER)
 
-  username  String? @unique
   position  String?
   promotion String?
-
-  departmentId String?     @db.ObjectId
-  department   Department? @relation(fields: [departmentId], references: [id])
-
-  degree   Degree? @relation(fields: [degreeId], references: [id])
-  degreeId String? @db.ObjectId
-
   academicCourse String?
-  passwordHash   String?
-  createdAt      DateTime? @default(now())
-  updatedAt      DateTime? @updatedAt
 
-  Requests Request[]
+  // Solo para coordinadores tienen un departamento
+  headOfDepartmentId String?     @db.ObjectId @unique
+  headOfDepartment   Department? @relation(fields: [headOfDepartmentId], references: [id])
 
+  degreeId String? @db.ObjectId
+  degree   Degree? @relation(fields: [degreeId], references: [id])
+  
+  requests Request[]
+  
   involvedAsStudentIDs String[]  @db.ObjectId
   involvedAsStudent    Project[] @relation(fields: [involvedAsStudentIDs], references: [id], name: "involvedAsStudent")
 
   involvedAsProfessorIDs String[]  @db.ObjectId
   involvedAsProfessor    Project[] @relation(fields: [involvedAsProfessorIDs], references: [id], name: "involvedAsProfessor")
 
+  createdAt      DateTime? @default(now())
+  updatedAt      DateTime? @updatedAt
+
   @@map("users")
 }
 
 model Project {
   id              String      @id @default(auto()) @map("_id") @db.ObjectId
+
+  status          Status?     @default(PENDING)
+  Request       Request[]
+
   title           String?
   type            String?
-  status          Status?     @default(PENDING)
   description     String?
+
+  summary       String?
+  report        String?
   differentiator  String?
-  Department      Department? @relation(fields: [departmentId], references: [id])
-  departmentId    String?     @db.ObjectId
+  keywords      String[]
+  awards        String[]
+
   subject         String?
   personalProject Boolean?
+
   academicCourse  String?
   course          String?
   letter          String?
 
-  impliedStudents    User[]   @relation(fields: [impliedStudentsIDs], references: [id], name: "involvedAsStudent")
-  impliedStudentsIDs String[] @db.ObjectId
-
-  impliedProfessors    String[] @db.ObjectId
-  impliedProfessorsIDs User[]   @relation(fields: [impliedProfessors], references: [id], name: "involvedAsProfessor")
-
+  externalLinks String[]
   uploadedContent String[]
 
-  summary       String?
-  report        String?
-  externalLinks String[]
-  awards        String[]
-  keywords      String[]
+  departmentId    String?     @db.ObjectId
+  Department      Department? @relation(fields: [departmentId], references: [id])
+  
+  impliedStudentsIDs String[] @db.ObjectId
+  impliedStudents    User[]   @relation(fields: [impliedStudentsIDs], references: [id], name: "involvedAsStudent")
+  
+  impliedProfessorsIDs    String[] @db.ObjectId
+  impliedProfessors User[]   @relation(fields: [impliedProfessorsIDs], references: [id], name: "involvedAsProfessor")
+
   createdAt     DateTime  @default(now())
   updatedAt     DateTime? @updatedAt
-  Request       Request[]
-
+  
   @@map("projects")
 }
 
 model Degree {
   id           String      @id @default(auto()) @map("_id") @db.ObjectId
-  name         String?
-  area         String?
-  department   String?
-  Department   Department? @relation(fields: [departmentId], references: [id])
+  
+  name         String
+  
   departmentId String?     @db.ObjectId
-
-  Users User[]
+  department   Department? @relation(fields: [departmentId], references: [id])
+  
+  users User[]
 
   @@map("degrees")
 }
 
 model Department {
   id   String  @id @default(auto()) @map("_id") @db.ObjectId
-  name String?
-  area String?
 
-  Degrees  Degree[]
-  Projects Project[]
-  Users    User[]
+  name String?
+
+  degrees Degree[]
+
+  projects Project[]
+
+  headOfDepartment    User?
 
   @@map("departments")
 }
 
 model Request {
   id             String  @id @default(auto()) @map("_id") @db.ObjectId
-  projectTitle   String?
-  description    String?
-  academicCourse String?
+
   state          Status? @default(PENDING)
 
-  project   Project? @relation(fields: [projectId], references: [id])
   projectId String?  @db.ObjectId
+  project   Project? @relation(fields: [projectId], references: [id])
+  
+  projectTitle   String?
+  description    String?
+
+  academicCourse String?
 
   requester   User?   @relation(fields: [requesterId], references: [id])
   requesterId String? @db.ObjectId
