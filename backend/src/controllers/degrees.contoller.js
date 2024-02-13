@@ -3,54 +3,54 @@ import prisma from '../config/prisma.client.js';
 // Main controllers
 
 export const getDegrees = async (req, res) => {
-    try{
+    try {
         const degrees = await prisma.degree.findMany();
-        res.send(degrees);
-    } catch(err){
-        console.log(err);
-        res.status(500).send({ message: "Error getting degrees" });
+        res.status(200).send(degrees);
+    } catch(error) {
+        console.log(error);
+        res.status(500).send({ message: error.message });
     }
 }
 
 export const createDegree = async (req, res) => {
-    try{
+    try {
         const newDegree = await prisma.degree.create({data: {...req.body}});
-        res.send(newDegree);
-    } catch(err){
-        console.log(err);
-        res.status(500).send({ message: "Error creating degree" });
+        res.status(200).send(newDegree);
+    } catch(error) {
+        console.log(error);
+        res.status(500).send({ message: error.message });
     }
 }
 
 export const getDegree = async (req, res) => {
-    try{
+    try {
         const { id } = req.params;
         const degree = await prisma.degree.findUnique({where: {id: id}});
-        res.send(degree);
-    } catch(err){
-        console.log(err);
-        res.status(500).send({ message: "Error getting degree" });
+        res.status(200).send(degree);
+    } catch(error) {
+        console.log(error);
+        res.status(500).send({ message: error.message });
     }
 }
 
 export const updateDegree = async (req, res) => {
-    try{
+    try {
         const { id } = req.params;
         const updatedDegree = await prisma.degree.update({where: {id: id}, data: req.body});
-        res.send(updatedDegree);
-    } catch(err){
-        console.log(err);
-        res.status(500).send({ message: "Error updating degree" });
+        res.status(200).send(updatedDegree);
+    } catch(error) {
+        console.log(error);
+        res.status(500).send({ message: error.message });
     }
 }
 
 export const deleteDegree = async (req, res) => {
-    try{
+    try {
         const { id } = req.params;
         const deletedDegree = await prisma.degree.delete({where: {id: id}});
-        res.send(deletedDegree);
-    } catch(err){
-        console.log(err);
-        res.status(500).send({ message: "Error deleting degree" });
+        res.status(200).send(deletedDegree);
+    } catch(error) {
+        console.log(error);
+        res.status(500).send({ message: error.message });
     }
 }
