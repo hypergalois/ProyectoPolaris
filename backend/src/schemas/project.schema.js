@@ -12,6 +12,9 @@ export const projectSchema = z.object({
     description: z.string({
         required_error: 'Description is required'
     }),
+    departmentName: z.string({
+        required_error: 'Department is required'
+    }),
     externalLink: z.array(z.string()).optional(),
     awards: z.array(z.string()).optional(),
     keywords: z.array(z.string()).optional(),

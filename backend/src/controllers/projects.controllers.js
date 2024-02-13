@@ -16,7 +16,10 @@ export const createProject = async (req, res) => {
     try {
         const files = req.files ? req.files.map(file => process.env.PUBLIC_URL+file.destination+file.filename) : []
 
-        const newProject = await prisma.project.create({data: {...req.body, uploadedContent: files}});
+        const { id } = await prisma.department.findFirst({where: {name: req.body.departmentName}, select: {id: true}});
+        delete req.body.departmentName;
+
+        const newProject = await prisma.project.create({data: {...req.body, uploadedContent: files, departmentId: id}});
 
         await prisma.request.create({
             data: {
