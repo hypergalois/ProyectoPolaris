@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const HomePageRegister = () => {
     return (
-        <>
+        <div className="bg-[#858585] text-white  items-center">
             <HomePageBar />
             <div className="flex">
                 <div className="flex-1">
@@ -18,7 +18,7 @@ const HomePageRegister = () => {
                     <InitialRegisterForm />
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 

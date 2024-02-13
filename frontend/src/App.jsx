@@ -12,6 +12,7 @@ import ProjectFormPage from "./pages/ProjectFormPage";
 
 import ProtectedRoute from "./ProtectedRoute";
 import HomePageRegister from "./pages/HomePageRegister";
+import HomePageRegisterSecond from "./pages/HomePageRegisterSecond";
 
 import HomePageBar from "./components/HomePageBar";
 import HomePageLanding from "./components/HomePageLanding";
