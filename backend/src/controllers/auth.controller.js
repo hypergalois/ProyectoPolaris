@@ -1,13 +1,10 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import prisma from '../config/prisma.client.js';
 
 import { createAccessToken } from '../libs/jwt.js';
 
-import { PrismaClient } from '@prisma/client';
-
 const secret = process.env.TOKEN_SECRET;
-
-const prisma = new PrismaClient();
 
 export const register = async (req, res) => {
     console.log(req.body)

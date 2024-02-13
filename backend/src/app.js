@@ -3,7 +3,7 @@ import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
-
+import prisma from './config/prisma.client.js';
 import { authRequired } from './middlewares/authRequired.middleware.js';
 
 dotenv.config();
@@ -34,5 +34,9 @@ app.use('/api', degreeRoutes);
 app.use('/api', departmentRoutes);
 app.use('/api', requestRoutes);
 app.use('/api', testRoutes);
+
+app.on('close', () => {
+    prisma.$disconnect();
+});
 
 export default app;
