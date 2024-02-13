@@ -72,6 +72,7 @@ const InitialRegisterForm = () => {
                     <button  className="w-5/12 p-4 rounded-xl bg-[#333333] text-white" type="submit">
                         Registrarse
                     </button>
+                    <Link className="w-5/12 p-4 rounded-xl bg-[#333333] text-white" to="/registerSecond">Registrarse 2</Link>
                 </div>
 
 
