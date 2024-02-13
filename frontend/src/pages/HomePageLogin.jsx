@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const HomePage = () => {
     return (
-        <div className="bg-[#858585] text-white">  
+        <div className="bg-[#858585] text-white  items-center">  
             
             <HomePageBar />
             <div className="flex justify-center h-screen">

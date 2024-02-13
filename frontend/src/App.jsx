@@ -45,6 +45,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePageLogin />} />
             <Route path="/register" element={<HomePageRegister />} />
+            <Route path="/registerSecond" element={<HomePageRegisterSecond />} />
             {/* <Route path="/projects/new" element={<ProjectFormPage />} /> */}
             {/* <Route path="/projects/search" element={<ProjectSearchPage />}></Route> */}
           </Routes>
