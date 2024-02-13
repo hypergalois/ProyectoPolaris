@@ -6,21 +6,21 @@ import { Link } from "react-router-dom";
 
 const HomePage = () => {
     return (
-        <div class="bg-[#858585] text-white">  
+        <div className="bg-[#858585] text-white">  
             
             <HomePageBar />
-            <div class="flex justify-center h-screen">
-                <form class="mx-auto text-center">
-                    <div class="text-4xl">
+            <div className="flex justify-center h-screen">
+                <form className="mx-auto text-center">
+                    <div className="text-4xl">
                         <h1>BIENVENIDO</h1>
                     </div>
-                    <div class="text-2xl">
+                    <div className="text-2xl">
                         <h2>Descubre y conecta con los proyectos que están dando forma al futuro digital en U-Tad</h2>
                     </div>    
                     <LoginForm />
-                    <footer class="text-xl">
-                        <p>¿Olvidaste tu contraseña? <a class="underline decoration-solid decoration-1" href="/forgot-password">Recupérala</a></p>
-                        <p>¿Eres nuevo en U-Tad? <Link class="underline decoration-solid decoration-1" to="/register">Registrate</Link></p>
+                    <footer className="text-xl">
+                        <p>¿Olvidaste tu contraseña? <a className="underline decoration-solid decoration-1" href="/forgot-password">Recupérala</a></p>
+                        <p>¿Eres nuevo en U-Tad? <Link className="underline decoration-solid decoration-1" to="/register">Registrate</Link></p>
                     </footer>
                 </form>
             </div>
