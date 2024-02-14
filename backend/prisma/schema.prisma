@@ -75,7 +75,7 @@ model Project {
   keywords       String[]
   awards         String[]
 
-  subject         String?
+  subject         String? 
   personalProject Boolean?
 
   academicCourse String?
@@ -110,6 +110,9 @@ model Degree {
 
   users User[]
 
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
   @@map("degrees")
 }
 
@@ -121,6 +124,9 @@ model Area {
   degrees Degree[]
 
   projects Project[]
+
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
 
   @@map("areas")
 }
