@@ -1,4 +1,5 @@
 import prisma from '../config/prisma.client.js';
+import { status } from '../config/tags.js';
 
 // Main controllers
 
@@ -15,8 +16,6 @@ export const getProjects = async (req, res) => {
     }
 }
 
-// Si un usuario crea un proyecto, se crea una request
-// Si lo hace un admin no se crea una request
 export const createProject = async (req, res) => {
 
     console.log(req.role);
@@ -26,15 +25,8 @@ export const createProject = async (req, res) => {
         const files = req.files ? req.files.map(file => process.env.PUBLIC_URL + file.destination + file.filename) : []
         console.log(files);
 
-        const { id } = await prisma.area.findFirst({ where: { name: req.body.name }, select: { id: true } });
-        console.log(id);
-        if (!id) return res.status(404).send({ message: "Department not found" });
-
-        // TODO: No me gusta esto de borrar, prefiero especificar los campos que quiero
-        delete req.body.departmentName;
-
         if (req.role === "USER" || "CREATOR") {
-            const newProject = await prisma.project.create({ data: { ...req.body, uploadedContent: files, departmentId: id } });
+            const newProject = await prisma.project.create({ data: { ...req.body, uploadedContent: files } });
             if (!newProject) return res.status(404).send({ message: "Project not created" });
 
             const newRequest = await prisma.request.create({
@@ -51,8 +43,7 @@ export const createProject = async (req, res) => {
             return res.status(200).send(newProject);
 
         } else if (req.role === "ADMIN") {
-            // TODO Poner status en ACCEPTED
-            const newProject = await prisma.project.create({ data: { ...req.body, uploadedContent: files, departmentId: id, status: "ACCEPTED" } });
+            const newProject = await prisma.project.create({ data: { ...req.body, uploadedContent: files, departmentId: id, status: status.ACCEPTED } });
             if (!newProject) return res.status(404).send({ message: "Project not created" });
 
             return res.status(200).send(newProject);
@@ -85,8 +76,7 @@ export const updateProject = async (req, res) => {
 
     try {
         if (req.role === "USER" || "CREATOR") {
-            // Si un proyecto se actualiza, se cambia su estado a "PENDING" y se crea una request
-            const updatedProject = await prisma.project.update({ where: { id: id }, data: { ...req.body, state: "PENDING" } });
+            const updatedProject = await prisma.project.update({ where: { id: id }, data: { ...req.body, status: status.PENDING } });
 
             await prisma.request.create({
                 data: {
@@ -100,9 +90,7 @@ export const updateProject = async (req, res) => {
 
             return res.status(200).send(updatedProject);
         } else if (req.role === "ADMIN") {
-            // Si es admin no se crea una request ni se cambia el estado
-            // Si un proyecto se actualiza, se cambia su estado a "PENDING" y se crea una request
-            const updatedProject = await prisma.project.update({ where: { id: id }, data: { ...req.body } });
+            const updatedProject = await prisma.project.update({ where: { id: id }, data: { ...req.body, status: status.ACCEPTED } });
 
             return res.status(200).send(updatedProject);
         } else {

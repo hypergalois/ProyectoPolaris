@@ -1,5 +1,7 @@
 import { Router } from "express";
-import { createRequest, deleteRequest, getRequest, getRequests, updateRequest, acceptRequest, rejectRequest } from "../controllers/requests.controller.js";
+import { checkRole } from "../middlewares/checkRole.middleware.js";
+import { roles } from "../config/tags.js";
+import { getRequest, getRequests, updateRequest, acceptRequest, rejectRequest, getRequestsByStatus } from "../controllers/requests.controller.js";
 
 /**
  * @swagger
@@ -86,45 +88,6 @@ router.get("/requests/:id", getRequest);
 
 /**
  * @swagger
- * /api/requests:
- *   post:
- *     summary: Create a new request
- *     tags:
- *       - Requests
- *     requestBody:
- *       content:
- *         application/json:
- *           example:
- *             status: "PENDING"
- *             projectId: "2"
- *             projectTitle: "New Project"
- *             description: "New Project Description"
- *             academicCourse: "2023"
- *             requesterId: "3"
- *     responses:
- *       '200':
- *         description: Successful response
- *         content:
- *           application/json:
- *             example:
- *               id: "3"
- *               status: "PENDING"
- *               projectId: "2"
- *               projectTitle: "New Project"
- *               description: "New Project Description"
- *               academicCourse: "2023"
- *               requesterId: "3"
- *       '404':
- *         description: Error creating request
- *         content:
- *           application/json:
- *             example:
- *               message: Error creating request
- */
-router.post("/requests", createRequest);
-
-/**
- * @swagger
  * /api/requests/{id}:
  *   put:
  *     summary: Update details of a specific request
@@ -162,45 +125,36 @@ router.post("/requests", createRequest);
  *             example:
  *               message: Request not updated
  */
-router.put("/requests/:id", updateRequest);
+router.put("/requests/:id", checkRole([roles.ADMIN]), updateRequest);
+
+// Utility routes
 
 /**
  * @swagger
- * /api/requests/{id}:
- *   delete:
- *     summary: Delete a specific request
+ * /api/requests/accepted:
+ *   get:
+ *     summary: Get a list of requests by status based on user role (ADMIN, USER, CREATOR)
  *     tags:
  *       - Requests
- *     parameters:
- *       - name: id
- *         in: path
- *         required: true
- *         description: ID of the request to delete
- *         schema:
- *           type: string
+ *     security:
+ *       - cookieAuth: []
  *     responses:
  *       '200':
  *         description: Successful response
+ *       '403':
+ *         description: Forbidden
  *         content:
  *           application/json:
  *             example:
- *               id: "3"
- *               status: "ACCEPTED"
- *               projectId: "2"
- *               projectTitle: "New Project"
- *               description: "New Project Description"
- *               academicCourse: "2023"
- *               requesterId: "3"
+ *               message: You are not allowed.
  *       '404':
- *         description: Request not deleted
+ *         description: No requests found
  *         content:
  *           application/json:
  *             example:
- *               message: Request not deleted
+ *               message: No requests found
  */
-router.delete("/requests/:id", deleteRequest);
-
-// Utility routes
+router.get("/requests/status/:status", getRequestsByStatus);
 
 /**
  * @swagger
@@ -236,7 +190,7 @@ router.delete("/requests/:id", deleteRequest);
  *             example:
  *               message: Request not accepted
  */
-router.post("/requests/accept/:id", acceptRequest);
+router.post("/requests/accept/:id", checkRole([roles.ADMIN]), acceptRequest);
 
 /**
  * @swagger
@@ -274,6 +228,6 @@ router.post("/requests/accept/:id", acceptRequest);
  *             example:
  *               message: Request not rejected
  */
-router.post("/requests/reject/:id", rejectRequest);
+router.post("/requests/reject/:id", checkRole([roles.ADMIN]), rejectRequest);
 
 export default router;

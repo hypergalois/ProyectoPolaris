@@ -1,107 +1,126 @@
-import prisma from '../config/prisma.client.js';
-import { status } from '../config/tags.js';
+import prisma from "../config/prisma.client.js";
+import { status } from "../config/tags.js";
 
 // Main controllers
 // TODO. Esto me lo dejo para hacer mañana miercoles o jueves
 
 // Solo van a tener request los admin, los user y creators solo pueden ver las que han hecho ellos
-// Habria que hacer otro get, para respuestas de admin, y otro para respuestas de user y creator
-// Otro get quizas para las aceptadas y las rechazadas y para las pendientes
-export const getRequests = async (req, res) => {
-    try{
-        const requests = await prisma.request.findMany();
-        if (!requests) return res.status(404).send({ message: "No requests found" });
+// Habria que hacer otro get, para respuestas de admin, y otro para respuestas de user y creator Gon: ??? No entiendo esto
+// Otro get quizas para las aceptadas y las rechazadas y para las pendientes Gon: Hecho un getRequestByStatus que sirve para esos casos (pendientes, aceptadas, rechazadas)
 
-        return res.send(requests);
-    } catch(err){
+// requests al ser const no llega la información al ultimo send por lo que me he metido un send en cada apartado, otra opcion es hacer una variable local en la función
+export const getRequests = async (req, res) => {
+    try {
+        if (req.role === "USER" || "CREATOR") {
+            const requests = await prisma.request.findMany( { where: { requesterId: req.userId } });
+            if (!requests)
+                return res.status(404).send({ message: "No requests found" });
+            return res.status(200).send(requests);
+        } else if (req.role === "ADMIN") {
+            const requests = await prisma.request.findMany();
+            if (!requests)
+                return res.status(404).send({ message: "No requests found" });
+            return res.status(200).send(requests);
+        } else {
+            return res.status(403).json({ message: "You are not allowed." });
+        }
+    } catch (err) {
         console.log(err);
         return res.status(500).send({ message: "Error getting requests" });
     }
-}
+};
 
-// De nuevo, aqui hay que mirar la logica
+// De nuevo, aqui hay que mirar la logica Gon: Probablemente la borremos ya que un admin no va a entrar en un menú con una sola request sino en un menú con todas las requests
 export const getRequest = async (req, res) => {
-    try{
+    try {
         const { id } = req.params;
-        const request = await prisma.request.findUnique({where: {id: id}});
-        if (!request) return res.status(404).send({ message: "Request not found" });
+        const request = await prisma.request.findUnique({ where: { id: id } });
+        if (!request)
+            return res.status(404).send({ message: "Request not found" });
 
-        return res.send(request);
-    } catch(err){
+        return res.status(200).send(request);
+    } catch (err) {
         console.log(err);
         return res.status(500).send({ message: "Error getting request" });
     }
-}
+};
 
-// En principio, no hace falta mas
-export const createRequest = async (req, res) => {
-    try{
-        const newRequest = await prisma.request.create({data: req.body});
-        if (!newRequest) res.status(404).send({ message: "Error creating request" });
-
-        res.send(newRequest);
-        return res.send(newRequest);
-    } catch(err){
-        console.log(err);
-        return res.status(500).send({ message: "Error creating request" });
-    }
-}
-
-// Solo ADMINS
 export const updateRequest = async (req, res) => {
-    try{
+    try {
         const { id } = req.params;
-        const updatedRequest = await prisma.request.update({where: {id: id}, data: req.body});
-        if (!updatedRequest) res.status(404).send({ message: "Request not found" });
+        const updatedRequest = await prisma.request.update({
+            where: { id: id },
+            data: req.body,
+        });
+        if (!updatedRequest)
+            res.status(404).send({ message: "Request not found" });
 
-        res.send(updatedRequest);
-        return res.send(updatedRequest);
-    } catch(err){
+        return res.status(200).send(updatedRequest);
+    } catch (err) {
         console.log(err);
         return res.status(500).send({ message: "Error updating request" });
     }
-}
+};
 
-// Solo ADMINS???
-export const deleteRequest = async (req, res) => {
-    try{
-        const { id } = req.params;
-        const deletedRequest = await prisma.request.delete({where: {id: id}});
-        if (!deletedRequest) res.status(404).send({ message: "Request not found" });
+// Utility controllers
 
-        res.send(deletedRequest);
-        return res.send(deletedRequest);
-    } catch(err){
+export const getRequestsByStatus = async (req, res) => {
+    try {
+        if (req.role === "USER" || "CREATOR") {
+            const requests = await prisma.request.findMany( { where: { requesterId: req.userId, status: req.params.status } });
+            if (!requests)
+                return res.status(404).send({ message: "No requests found" });
+            return res.status(200).send(requests);
+        } else if (req.role === "ADMIN") {
+            const requests = await prisma.request.findMany( { where: { status: req.params.status } });
+            if (!requests)
+                return res.status(404).send({ message: "No requests found" });
+            return res.status(200).send(requests);
+        } else {
+            return res.status(403).json({ message: "You are not allowed." });
+        }
+    } catch (err) {
         console.log(err);
-        return res.status(500).send({ message: "Error deleting request" });
+        return res.status(500).send({ message: "Error getting requests" });
     }
-}
-
-// Utility controllers SOLO ADMINS 
+};
 
 export const acceptRequest = async (req, res) => {
-    try{
+    try {
         const { id } = req.params;
-        console.log(status.ACCEPTED);
-        const acceptedRequest = await prisma.request.update({where: {id: id}, data: {status: status.ACCEPTED}});
-        if (!acceptedRequest) res.status(404).send({ message: "Request not found" });
-        await prisma.project.update({where: {id: acceptedRequest.projectId}, data: {status: status.ACCEPTED}});
-        return res.send(acceptedRequest);
-    } catch(err){
+        const acceptedRequest = await prisma.request.update({
+            where: { id: id },
+            data: { status: status.ACCEPTED },
+        });
+        if (!acceptedRequest)
+            res.status(404).send({ message: "Request not found" });
+        await prisma.project.update({
+            where: { id: acceptedRequest.projectId },
+            data: { status: status.ACCEPTED },
+        });
+        return res.status(200).send(acceptedRequest);
+    } catch (err) {
         console.log(err);
         return res.status(500).send({ message: "Error accepting request" });
     }
-}
+};
 
 export const rejectRequest = async (req, res) => {
-    try{
+    try {
         const { id } = req.params;
-        const rejectedRequest = await prisma.request.update({where: {id: id}, data: {status: status.REJECTED}});
-        if (!rejectedRequest) res.status(404).send({ message: "Request not found" });
-        await prisma.project.update({where: {id: acceptedRequest.projectId}, data: {status: status.REJECTED}});
-        return res.send(rejectedRequest);
-    } catch(err){
+        const rejectedRequest = await prisma.request.update({
+            where: { id: id },
+            data: { status: status.REJECTED },
+        });
+        if (!rejectedRequest)
+            res.status(404).send({ message: "Request not found" });
+        await prisma.project.update({
+            where: { id: acceptedRequest.projectId },
+            data: { status: status.REJECTED },
+        });
+        return res.status(200).send(rejectedRequest);
+    } catch (err) {
         console.log(err);
         return res.status(500).send({ message: "Error rejecting request" });
     }
-}
+};
