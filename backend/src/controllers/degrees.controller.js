@@ -44,8 +44,7 @@ export const updateDegree = async (req, res) => {
         const { id } = req.params;
         // console.log(req.params);
         const updatedDegree = await prisma.degree.update({where: {id: id}, data: req.body});
-        if (!updatedDegree) return res.status(404).send({ message: "Degree not updated" });
-
+        
         return res.status(200).send(updatedDegree);
     } catch(error) {
         console.log(error);
@@ -57,7 +56,6 @@ export const deleteDegree = async (req, res) => {
     try {
         const { id } = req.params;
         const deletedDegree = await prisma.degree.delete({where: {id: id}});
-        if (!deletedDegree) return res.status(404).send({ message: "Degree not deleted" });
 
         return res.status(200).send(deletedDegree);
     } catch(error) {
