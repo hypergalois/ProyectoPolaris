@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createDegree, deleteDegree, getDegree, getDegrees, updateDegree } from "../controllers/degrees.contoller.js";
+import { createDegree, deleteDegree, getDegree, getDegrees, updateDegree } from "../controllers/degrees.controller.js";
 import { validateSchema } from "../middlewares/validator.middleware.js";
 import { degreeSchema } from "../schemas/degree.schema.js";
 

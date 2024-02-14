@@ -5,6 +5,8 @@ import prisma from '../config/prisma.client.js';
 export const getProjects = async (req, res) => {
     try {
         const projects = await prisma.project.findMany();
+        if (!projects) res.status(404).send({ message: "No projects found" });
+
         res.status(200).send(projects);
     } catch(error) {
         console.log(error);
@@ -42,6 +44,8 @@ export const getProject = async (req, res) => {
     try {
         const { id } = req.params;
         const project = await prisma.project.findUnique({where: {id: id}});
+        if (!project) res.status(404).send({ message: "Project not found" });
+
         res.status(200).send(project);
     } catch(error) {
         console.log(error);
