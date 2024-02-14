@@ -39,8 +39,8 @@ model User {
   academicCourse String?
 
   // Solo para coordinadores tienen un departamento
-  headOfDepartmentId String?     @unique @db.ObjectId
-  headOfDepartment   Department? @relation(fields: [headOfDepartmentId], references: [id])
+  //headOfDepartmentId String?     @unique @db.ObjectId
+  //headOfDepartment   Department? @relation(fields: [headOfDepartmentId], references: [id])
 
   degreeId String? @db.ObjectId
   degree   Degree? @relation(fields: [degreeId], references: [id])
@@ -85,8 +85,8 @@ model Project {
   externalLinks   String[]
   uploadedContent String[]
 
-  departmentId String?     @db.ObjectId
-  Department   Department? @relation(fields: [departmentId], references: [id])
+  areaId String? @db.ObjectId
+  area   Area?   @relation(fields: [areaId], references: [id])
 
   impliedStudentsIDs String[] @db.ObjectId
   impliedStudents    User[]   @relation(fields: [impliedStudentsIDs], references: [id], name: "involvedAsStudent")
@@ -105,15 +105,15 @@ model Degree {
 
   name String
 
-  departmentId String?     @db.ObjectId
-  department   Department? @relation(fields: [departmentId], references: [id])
+  areaId String? @db.ObjectId
+  area   Area?   @relation(fields: [areaId], references: [id])
 
   users User[]
 
   @@map("degrees")
 }
 
-model Department {
+model Area {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
   name String @unique
@@ -122,9 +122,7 @@ model Department {
 
   projects Project[]
 
-  headOfDepartment User?
-
-  @@map("departments")
+  @@map("areas")
 }
 
 model Request {

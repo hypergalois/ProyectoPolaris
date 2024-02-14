@@ -9,8 +9,8 @@ async function main() {
     })
     console.log("Test data created");
 
-    await prisma.department.deleteMany({})
-    await prisma.department.createMany({
+    await prisma.area.deleteMany({})
+    await prisma.area.createMany({
         data: [
             { name: "Animación" },
             { name: "Efectos Visuales" },
@@ -24,66 +24,66 @@ async function main() {
             { name: "Negocio y Marketing" }
         ]
     })
-    const departments = await prisma.department.findMany()
-    console.log(departments)
+    const areas = await prisma.area.findMany()
+    console.log(areas)
     await prisma.degree.deleteMany({})
     await prisma.degree.createMany({
             data: [
                 {
                     name: "Grado en Animación + Titulo Propio en Arte para Videojuegos",
-                    departmentId: departments[0].id
+                    areaId: areas[0].id
                 },
                 {
                     name: "Grado en Animación",
-                    departmentId: departments[0].id
+                    areaId: areas[0].id
                 },
                 {
                     name: "Grado en Efectos Visuales",
-                    departmentId: departments[1].id
+                    areaId: areas[1].id
                 },
                 {
                     name: "Ciclo de Grado Superior en Animaciones 3D, Juegos y Entornos Interactivos",
-                    departmentId: departments[1].id
+                    areaId: areas[1].id
                 },
                 {
                     name: "Grado en Diseño Digital",
-                    departmentId: departments[2].id
+                    areaId: areas[2].id
                 },
                 {
                     name: "Ciclo de Grado Superior en Artes Plásticas y Diseño en Ilustración",
-                    departmentId: departments[2].id
+                    areaId: areas[2].id
                 },
                 {
                     name: "Grado en Diseño de Productos Interactivos + Título Propio en Technical Design para Unreal Engine",
-                    departmentId: departments[3].id
+                    areaId: areas[3].id
                 },
                 {
                     name: "Grado en Ingeniería del Software",
-                    departmentId: departments[4].id
+                    areaId: areas[4].id
                 },
                 {
                     name: "Doble Grado en Matemática Computacional e Ingeniería del Software",
-                    departmentId: departments[5].id
+                    areaId: areas[5].id
                 },
                 {
                     name: "Doble Grado en Física Computacional e Ingeniería del Software",
-                    departmentId: departments[5].id
+                    areaId: areas[5].id
                 },
                 {
                     name: "Ciclo de Grado Superior en Administración de Sistemas Informáticos en Red",
-                    departmentId: departments[4].id
+                    areaId: areas[4].id
                 },
                 {
                     name: "Ciclo de Grado Superior en Desarrollo de Aplicaciones Multiplataforma Dual",
-                    departmentId: departments[4].id
+                    areaId: areas[4].id
                 },
                 {
                     name: "Ciclo de Grado Superior en Desarrollo de Aplicaciones Web",
-                    departmentId: departments[4].id
+                    areaId: areas[4].id
                 },
                 {
                     name: "Ciclo de Grado Superior en Desarrollo de Aplicaciones Multiplataforma",
-                    departmentId: departments[4].id
+                    areaId: areas[4].id
                 }
             ]
         })

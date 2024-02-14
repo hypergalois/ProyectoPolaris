@@ -7,14 +7,14 @@ const router = Router();
 
 // Main routes
 
-router.get("/areas", getAreas);
+router.get("/area", getAreas);
 
-router.get("/areas/:id", getArea);
+router.get("/area/:id", getArea);
 
-router.post("/areas", validateSchema(areaSchema), createArea);
+router.post("/area", validateSchema(areaSchema), createArea);
 
-router.put("/areas/:id", updateArea);
+router.put("/area/:id", updateArea);
 
-router.delete("/areas/:id", deleteArea);
+router.delete("/area/:id", deleteArea);
 
 export default router;
