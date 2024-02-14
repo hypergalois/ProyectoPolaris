@@ -18,24 +18,23 @@ export const getArea = async (req, res) => {
     try {
         const { id } = req.params;
         const area = await prisma.area.findUnique({where: {id: id}});
-        if (!area) res.status(404).send({ message: "Area not found" });
+        if (!area) return res.status(404).send({ message: "Area not found" });
 
-        res.status(200).send(area);
+        return res.status(200).send(area);
     } catch(error) {
         console.log(error);
-        res.status(500).send({ message: error.message });
+        return res.status(500).send({ message: error.message });
     }
 }
 
 export const createArea = async (req, res) => {
     try {
         const newArea = await prisma.area.create({data: req.body});
-        if (!newArea) res.status(404).send({ message: "Area not created" });
 
-        res.status(200).send(newArea);
+        return res.status(200).send(newArea);
     } catch(error) {
         console.log(error);
-        res.status(500).send({ message: error.message });
+        return res.status(500).send({ message: error.message });
     }
 }
 
@@ -43,12 +42,11 @@ export const updateArea = async (req, res) => {
     try {
         const { id } = req.params;
         const updatedArea = await prisma.area.update({where: {id: id}, data: req.body});
-        if (!updatedArea) res.status(404).send({ message: "Area not updated" });
 
-        res.status(200).send(updatedArea);
+        return res.status(200).send(updatedArea);
     } catch(error) {
         console.log(error);
-        res.status(500).send({ message: error.message });
+        return res.status(500).send({ message: error.message });
     }
 }
 
@@ -56,9 +54,9 @@ export const deleteArea = async (req, res) => {
     try {
         const { id } = req.params;
         const deletedArea = await prisma.area.delete({where: {id: id}});
-        res.status(200).send(deletedArea);
+        return res.status(200).send(deletedArea);
     } catch(error) {
         console.log(error);
-        res.status(500).send({ message: error.message });
+        return res.status(500).send({ message: error.message });
     }
 }
