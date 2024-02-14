@@ -10,7 +10,7 @@ const HomePage = () => {
             
             <HomePageBar />
             <div className="flex justify-center h-screen">
-                <form className="mx-auto text-center">
+                <div className="mx-auto text-center">
                     <div className="text-4xl">
                         <h1>BIENVENIDO</h1>
                     </div>
@@ -22,7 +22,7 @@ const HomePage = () => {
                         <p>¿Olvidaste tu contraseña? <a className="underline decoration-solid decoration-1" href="/forgot-password">Recupérala</a></p>
                         <p>¿Eres nuevo en U-Tad? <Link className="underline decoration-solid decoration-1" to="/register">Registrate</Link></p>
                     </footer>
-                </form>
+                </div>
             </div>
         </div>
     )
