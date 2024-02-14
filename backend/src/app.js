@@ -4,6 +4,8 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import prisma from './config/prisma.client.js';
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpecs from './docs/swagger.js';
 import { authRequired } from './middlewares/authRequired.middleware.js';
 
 dotenv.config();
@@ -27,6 +29,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/uploads", authRequired, express.static("uploads"));
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecs, { explorer: true }))
 
 app.use('/api', authRoutes);
 app.use('/api', projectRoutes);
