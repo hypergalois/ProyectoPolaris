@@ -11,7 +11,7 @@ const prisma = new PrismaClient();
 
 export const register = async (req, res) => {
     console.log(req.body)
-    const { username, email, password } = req.body;
+    const { username, email, password, fullName } = req.body;
     // console.log(username, email, password);
 
     try {
@@ -29,6 +29,7 @@ export const register = async (req, res) => {
 
         const newUser = await prisma.user.create({
             data: {
+                fullName: fullName,
                 username: username,
                 email: email,
                 passwordHash: hashedPassword
