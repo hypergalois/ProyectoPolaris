@@ -24,28 +24,34 @@ const LoginForm = () => {
       <div>
         {loginErrors.map((error, index) => <div key={index}>{error.message}</div>)}
       </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <p>Email</p>
-        <input
-          type="email"
-          {...register("email", {
-            required: true,
-            pattern: /^\S+@\S+$/i
-          })}
-        />
-        {errors.email && <p>Hace falta un email</p>}
-
-        <p>Password</p>
-        <input
-          type="password"
-          {...register("password", {
-            required: true,
-            minLength: 6
-          })}
-        />
-        {errors.password && <p>Hace falta una contraseña</p>}
-
-        <button type="submit">Log In</button>
+      <form onSubmit={handleSubmit(onSubmit)} className="p-4">
+        <div className="mb-4"> 
+          <input
+            className="w-5/12 h-10 px-6 rounded-xl"
+            type="email"
+            {...register("email", {
+              required: true,
+              pattern: /^\S+@\S+$/i
+            })}
+            placeholder="Usuario o correo"
+          />
+          {errors.email && <p>Hace falta un email</p>}
+        </div>
+        <div className="mb-4">
+          <input
+            className="w-5/12 h-10 px-6 rounded-xl"
+            type="password"
+            {...register("password", {
+              required: true,
+              minLength: 6
+            })}
+            placeholder="Contraseña"
+          />
+          {errors.password && <p>Hace falta una contraseña</p>}
+        </div>
+        <div className="mb-4">
+          <button className="w-5/12 h-10 px-6 rounded-xl bg-[#333333] text-white" type="submit">INICIAR SESIÓN</button>
+        </div>
       </form>
     </div>
   );

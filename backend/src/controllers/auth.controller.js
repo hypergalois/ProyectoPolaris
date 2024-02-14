@@ -1,13 +1,10 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import prisma from '../config/prisma.client.js';
 
 import { createAccessToken } from '../libs/jwt.js';
 
-import { PrismaClient } from '@prisma/client';
-
 const secret = process.env.TOKEN_SECRET;
-
-const prisma = new PrismaClient();
 
 export const register = async (req, res) => {
     console.log(req.body)
@@ -27,6 +24,7 @@ export const register = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, salt);
 
+        // Y meter los datos aqui que falten
         const newUser = await prisma.user.create({
             data: {
                 fullName: fullName,
@@ -46,7 +44,7 @@ export const register = async (req, res) => {
         });
 
         // Aquí no deberia retornar id ni role ni createdAt ni updatedAt, ya que van en el token
-        return res.json({
+        return res.status(200).json({
             // id: newUser.id,
             username: newUser.username,
             email: newUser.email,
@@ -72,8 +70,7 @@ export const login = async (req, res) => {
         
         if (!foundUser) return res.status(400).json({ message: "There doesn't exist an user with that email. Try registering instead." });
 
-        // Seguro que no hace falta el await?
-        const passwordsMatch = await bcrypt.compare(password, foundUser.passwordHash);
+        const passwordsMatch = bcrypt.compare(password, foundUser.passwordHash);
 
         if (!passwordsMatch) return res.status(400).json({ message: "The password is incorrect. Try again." });
 
@@ -84,7 +81,7 @@ export const login = async (req, res) => {
             secure: true,
         });
 
-        return res.json({
+        return res.status(200).json({
             // id: foundUser.id,
             username: foundUser.username,
             email: foundUser.email,
@@ -110,7 +107,7 @@ export const profile = async (req, res) => {
     // const { id } = req.params;
 
     // console.log(req.params)
-    console.log(req.userId)
+    // console.log(req.userId)
 
     try {
         const userFound = await prisma.user.findUnique({
@@ -136,8 +133,8 @@ export const profile = async (req, res) => {
 
 export const verifyToken = async (req, res) => {
     const { token } = req.cookies;
-    console.log(req.cookies);
-    console.log(token);
+    // console.log(req.cookies);
+    // console.log(token);
 
     if (!token) return res.status(401).json({ message: "No token provided." });
 
