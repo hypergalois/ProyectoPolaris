@@ -5,7 +5,7 @@ import prisma from '../config/prisma.client.js';
 export const getProjects = async (req, res) => {
     try {
         const projects = await prisma.project.findMany();
-        if (!projects) res.status(404).send({ message: "No projects found" });
+        if (!projects) res.status(404).send({ message: "Projects not found" });
 
         res.status(200).send(projects);
     } catch(error) {
@@ -17,11 +17,9 @@ export const getProjects = async (req, res) => {
 export const createProject = async (req, res) => {
     try {
         const files = req.files ? req.files.map(file => process.env.PUBLIC_URL+file.destination+file.filename) : []
-
-        const { id } = await prisma.department.findFirst({where: {name: req.body.departmentName}, select: {id: true}});
-        delete req.body.departmentName;
-
-        const newProject = await prisma.project.create({data: {...req.body, uploadedContent: files, departmentId: id}});
+        if (!files) res.status(404).send({ message: "Project without files" });
+        const newProject = await prisma.project.create({data: {...req.body, uploadedContent: files}});
+        if (!newProject) res.status(404).send({ message: "Project not created" });
 
         await prisma.request.create({
             data: {
@@ -57,6 +55,7 @@ export const updateProject = async (req, res) => {
     try {
         const { id } = req.params;
         const updatedProject = await prisma.project.update({where: {id: id}, data: {...req.body, state: "PENDING"}});
+        if (!updatedProject) res.status(404).send({ message: "Project not found" });
 
         await prisma.request.create({
             data: {
@@ -79,6 +78,8 @@ export const deleteProject = async (req, res) => {
     try {
         const { id } = req.params;
         const deletedProject = await prisma.project.delete({where: {id: id}});
+        if (!deletedProject) res.status(404).send({ message: "Project not found" });
+
         res.status(200).send(deletedProject);
     } catch(error) {
         console.log(error);

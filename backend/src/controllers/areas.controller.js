@@ -5,7 +5,7 @@ import prisma from '../config/prisma.client.js';
 export const getAreas = async (req, res) => {
     try {
         const areas = await prisma.area.findMany();
-        if (!areas) return res.status(404).send({ message: "No areas found" });
+        if (!areas) return res.status(404).send({ message: "Areas not found" });
 
         return res.status(200).send(areas);
     } catch(error) {
@@ -56,6 +56,7 @@ export const deleteArea = async (req, res) => {
     try {
         const { id } = req.params;
         const deletedArea = await prisma.area.delete({where: {id: id}});
+        if (!deletedArea) res.status(404).send({ message: "Area not found" });
         res.status(200).send(deletedArea);
     } catch(error) {
         console.log(error);
