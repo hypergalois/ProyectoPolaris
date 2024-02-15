@@ -1,27 +1,26 @@
 import { z } from 'zod';
-import { academicRole } from '../config/tags';
+import { academicRoleList } from '../config/tags.js';
 
 // TODO: Añadir validacion de cargo y comprobar promocion si es alumni y si no departamento
 
 export const registerSchema = z.object({
-    fullName: z.string().refine(fullName => {
+    fullName: z.string({
+        required_error: 'Full name is required'
+    }).refine(fullName => {
         const parts = fullName.split(' ');
-      
         return parts.length >= 3;
-      }, {
+    }, {
         message: 'fullName must include at least 2 surnames'
-      }).required({
-        message: 'fullName is required'
     }),
     username: z.string({
         required_error: 'Username is required'
     }),
     email: z.string({
         required_error: 'Email is required'
-      }).refine(email => {
+    }).refine(email => {
         // Check if the email ends with @live.u-tad.com or @u-tad.com
         return email.endsWith('@live.u-tad.com') || email.endsWith('@u-tad.com');
-      }, {
+    }, {
         message: 'Email must end with @live.u-tad.com or @u-tad.com'
     }),
     password: z.string({
@@ -31,20 +30,19 @@ export const registerSchema = z.object({
         required_error: 'Academic role is required'
     }).refine(role => {
         // Check if the role is one of the values in the academicRole object
-        return Object.values(academicRole).includes(role);
+        return Object.values(academicRoleList).includes(role);
     }, {
-        message: `Academic role must be one of ${Object.values(academicRole).join(', ')}`
+        message: `Academic role must be one of ${Object.values(academicRoleList).join(', ')}`
     }),
-    
 });
 
 export const loginSchema = z.object({
     email: z.string({
         required_error: 'Email is required'
-      }).refine(email => {
+    }).refine(email => {
         // Check if the email ends with @live.u-tad.com or @u-tad.com
         return email.endsWith('@live.u-tad.com') || email.endsWith('@u-tad.com');
-      }, {
+    }, {
         message: 'Email must end with @live.u-tad.com or @u-tad.com'
     }),
     password: z.string({

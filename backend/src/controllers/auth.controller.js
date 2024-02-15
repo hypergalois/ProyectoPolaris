@@ -9,7 +9,8 @@ const secret = process.env.TOKEN_SECRET;
 
 export const register = async (req, res) => {
     console.log(req.body)
-    const { username, email, password, fullName, academicRole } = req.body;
+    const { username, email, password, fullName, academicRole} = req.body;
+    let role;
     // console.log(username, email, password);
 
     try {
