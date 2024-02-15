@@ -5,6 +5,7 @@ import prisma from '../config/prisma.client.js';
 export const getAreas = async (req, res) => {
     try {
         const areas = await prisma.area.findMany();
+        console.log(areas);
         if (!areas) return res.status(404).send({ message: "Areas not found" });
 
         return res.status(200).send(areas);

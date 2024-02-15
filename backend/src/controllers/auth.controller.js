@@ -3,13 +3,13 @@ import jwt from 'jsonwebtoken';
 import prisma from '../config/prisma.client.js';
 
 import { createAccessToken } from '../libs/jwt.js';
-import { academicRoleList } from '../config/tags.js';
+import { academicRoleList, roles } from '../config/tags.js';
 
 const secret = process.env.TOKEN_SECRET;
 
 export const register = async (req, res) => {
     console.log(req.body)
-    const { username, email, password, fullName, academicRole} = req.body;
+    const { username, email, password, fullName, academicRole, academicCourse} = req.body;
     let role;
     // console.log(username, email, password);
 
@@ -26,21 +26,12 @@ export const register = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        switch(academicRole) {
-            case academicRoleList.STUDENT:
-            case academicRoleList.EXSTUDENT:
-              role = 'USER';
-              break;
-            case academicRoleList.TEACHER:
-              role = 'CREATOR';
-              break;
-            case academicRoleList.DEPARTAMENT:
-            case academicRoleList.COORDINATOR:
-              role = 'ADMINISTRADOR';
-              break;
-            default:
-              role = 'USER';
-          }
+        if (email.endsWith('@u-tad.com')) {
+            if(academicRole === academicRoleList.TEACHER) role = roles.CREATOR;
+            else res.status(400).json({ message: "You can only register as a teacher with an @u-tad.com email."});
+        } else {
+            role = roles.USER;
+        }
 
         // Y meter los datos aqui que falten
         const newUser = await prisma.user.create({
@@ -50,7 +41,8 @@ export const register = async (req, res) => {
                 email: email,
                 passwordHash: hashedPassword,
                 academicRole: academicRole,
-                role: role}
+                role: role,
+                academicCourse: academicCourse}
         });
 
         // console.log(newUser);
@@ -95,6 +87,8 @@ export const login = async (req, res) => {
 
         const accessToken = await createAccessToken({ id: foundUser.id, role: foundUser.role });
 
+        console.log(accessToken)
+
         res.cookie("token", accessToken, {
             sameSite: "none",
             secure: true,
@@ -124,14 +118,12 @@ export const logout = async (req, res) => {
 
 export const profile = async (req, res) => {
     // const { id } = req.params;
-
-    // console.log(req.params)
     // console.log(req.userId)
 
     try {
         const userFound = await prisma.user.findUnique({
             where: {
-                id: req.userId
+                id: req.body.userId
             }
         });
     

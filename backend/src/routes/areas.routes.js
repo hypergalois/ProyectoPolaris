@@ -42,7 +42,7 @@ const router = Router();
  *             example:
  *               message: Areas not found
  */
-router.get("/area", getAreas);
+router.get("/areas", getAreas);
 
 /**
  * @swagger

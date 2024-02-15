@@ -34,6 +34,8 @@ export const registerSchema = z.object({
     }, {
         message: `Academic role must be one of ${Object.values(academicRoleList).join(', ')}`
     }),
+    promotion: z.string().optional(),
+    academicCourse: z.string().optional()
 });
 
 export const loginSchema = z.object({
