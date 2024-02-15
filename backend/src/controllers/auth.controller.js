@@ -3,13 +3,14 @@ import jwt from 'jsonwebtoken';
 import prisma from '../config/prisma.client.js';
 
 import { createAccessToken } from '../libs/jwt.js';
+import { academicRoleList } from '../config/tags.js';
 
 const secret = process.env.TOKEN_SECRET;
 
 export const register = async (req, res) => {
-    // console.log(req.body)
-    // TODO Meter más datos
-    const { username, email, password } = req.body;
+    console.log(req.body)
+    const { username, email, password, fullName, academicRole} = req.body;
+    let role;
     // console.log(username, email, password);
 
     try {
@@ -25,13 +26,31 @@ export const register = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, salt);
 
+        switch(academicRole) {
+            case academicRoleList.STUDENT:
+            case academicRoleList.EXSTUDENT:
+              role = 'USER';
+              break;
+            case academicRoleList.TEACHER:
+              role = 'CREATOR';
+              break;
+            case academicRoleList.DEPARTAMENT:
+            case academicRoleList.COORDINATOR:
+              role = 'ADMINISTRADOR';
+              break;
+            default:
+              role = 'USER';
+          }
+
         // Y meter los datos aqui que falten
         const newUser = await prisma.user.create({
             data: {
+                fullName: fullName,
                 username: username,
                 email: email,
-                passwordHash: hashedPassword
-            }
+                passwordHash: hashedPassword,
+                academicRole: academicRole,
+                role: role}
         });
 
         // console.log(newUser);

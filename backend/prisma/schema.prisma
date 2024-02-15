@@ -22,6 +22,14 @@ enum Status {
   REJECTED
 }
 
+enum academicRole {
+  ALUMNO
+  EXALUMNO
+  PROFESOR
+  COORDINADOR
+  DEPARTMENTO
+}
+
 model User {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
@@ -33,6 +41,8 @@ model User {
   passwordHash  String?
 
   role Role? @default(USER)
+
+  academicRole academicRole?
 
   position       String?
   promotion      String?
@@ -75,7 +85,7 @@ model Project {
   keywords       String[]
   awards         String[]
 
-  subject         String? 
+  subject         String?
   personalProject Boolean?
 
   academicCourse String?
@@ -103,15 +113,12 @@ model Project {
 model Degree {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
-  name String
+  name String @unique
 
-  areaId String? @db.ObjectId
-  area   Area?   @relation(fields: [areaId], references: [id])
+  areasId String[] @db.ObjectId
+  areas   Area[]   @relation(fields: [areasId], references: [id])
 
   users User[]
-
-  createdAt DateTime? @default(now())
-  updatedAt DateTime? @updatedAt
 
   @@map("degrees")
 }
@@ -121,12 +128,10 @@ model Area {
 
   name String @unique
 
-  degrees Degree[]
+  degreesId String[] @db.ObjectId
+  degrees   Degree[] @relation(fields: [degreesId], references: [id])
 
   projects Project[]
-
-  createdAt DateTime? @default(now())
-  updatedAt DateTime? @updatedAt
 
   @@map("areas")
 }

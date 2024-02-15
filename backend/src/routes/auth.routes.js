@@ -3,14 +3,13 @@ import { register, login, logout, profile, verifyToken, refreshToken } from "../
 
 import { registerSchema, loginSchema } from "../schemas/auth.schema.js";
 import { authRequired } from "../middlewares/authRequired.middleware.js";
+import { validateSchema } from "../middlewares/validator.middleware.js";
 
 const router = Router();
 
-// TODO, validateSchema(registerSchema)
-router.post("/register", register);
+router.post("/register",validateSchema(registerSchema), register);
 
-// TODO validateSchema(loginSchema)
-router.post("/login", login);
+router.post("/login", validateSchema(loginSchema), login);
 
 router.post("/logout", logout);
 
