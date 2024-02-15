@@ -31,6 +31,10 @@ const options = {
                 type: "string",
                 enum: ["PENDING", "ACCEPTED", "REJECTED"],
             },
+            AcademicRole: {
+                type: "string",
+                enum: ["ALUMNO", "EXALUMNO", "TEACHER", "COORDINATOR", "DEPARTAMENT_STAFF"],
+            },
             User: {
                 type: "object",
                 properties: {

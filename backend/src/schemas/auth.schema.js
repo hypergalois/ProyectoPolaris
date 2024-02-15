@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { academicRole } from '../config/tags';
 
 // TODO: Añadir validacion de cargo y comprobar promocion si es alumni y si no departamento
 
@@ -25,7 +26,16 @@ export const registerSchema = z.object({
     }),
     password: z.string({
         required_error: 'Password is required'
-    })
+    }),
+    academicRole: z.string({
+        required_error: 'Academic role is required'
+    }).refine(role => {
+        // Check if the role is one of the values in the academicRole object
+        return Object.values(academicRole).includes(role);
+    }, {
+        message: `Academic role must be one of ${Object.values(academicRole).join(', ')}`
+    }),
+    
 });
 
 export const loginSchema = z.object({

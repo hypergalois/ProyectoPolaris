@@ -10,4 +10,13 @@ const status = {
     REJECTED: 'REJECTED'
 };
 
-export { roles, status };
+const academicRoleList = {
+    STUDENT: 'ALUMNO',
+    EXSTUDENT: 'EXALUMNO',
+    TEACHER: 'PROFESOR',
+    COORDINATOR: 'COORDINADOR',
+    DEPARTAMENT: 'DEPARTAMENTO',
+};
+
+
+export { roles, status,  academicRoleList };
