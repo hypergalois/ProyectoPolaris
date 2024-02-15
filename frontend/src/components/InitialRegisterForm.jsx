@@ -9,12 +9,18 @@ const InitialRegisterForm = () => {
     // eslint-disable-next-line no-unused-vars
     const [email, setEmail] = useState('');
     const navigate = useNavigate();
-  
+    var noEmailUtad = true
+
     const onSubmit = (data) => {
         // Actualiza el estado del email
-        setEmail(data.email);
-        
-        navigate(`/registerSecond`, { state: { email: data.email } });
+
+        noEmailUtad=(data.email.endsWith('@u-tad.com') || data.email.endsWith('@live.u-tad.com'));
+
+        if(noEmailUtad){
+            setEmail(data.email);
+            
+            navigate(`/registerSecond`, { state: { email: data.email } });
+        }
     };
 
     return (
@@ -50,6 +56,10 @@ const InitialRegisterForm = () => {
                     {
                         errors.email && (
                             <p className="mb-2 text-white">Hace falta un email</p>
+                        )
+                        }{
+                        !noEmailUtad && (
+                            <p className="mb-2 text-white">Tiene que ser @u-tad.com o @live.u-tad.com</p>
                         )
                     }
                 </div>

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const SecondaryRegisterForm = () => {
 
@@ -12,6 +12,20 @@ const SecondaryRegisterForm = () => {
     const location = useLocation();
 
     const { email } = location.state || {};
+    const isUdEmailUtad = email.endsWith('@u-tad.com');
+    const isUdEmailLive = email.endsWith('@live.u-tad.com');
+
+    const [academicRole, setAcademicRole] = useState("1"); // Define academicRole state
+
+    const years = [];
+    for (let year = 2012; year <= 2022; year++) {
+      years.push(year+"/"+(year+1));
+    }
+
+    // Handler for select change event
+    const handleAcademicRoleChange = (event) => {
+        setAcademicRole(event.target.value); // Update academicRole state
+    }
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -69,7 +83,7 @@ const SecondaryRegisterForm = () => {
                         placeholder="Apellidos"
                     />
                     {
-                        errors.username && (
+                        errors.usersecondname && (
                             <p className="mb-2">Hace falta los apellidos</p>
                         )
                     }
@@ -86,19 +100,70 @@ const SecondaryRegisterForm = () => {
                         placeholder="Usuario (opcional)"
                     />
                 </div>
-                <div className="mb-4">
-                    <select className="w3-select w-full p-4 rounded-2xl" name="job" defaultValue="1">
-                        <option value="1" disabled hidden>Cargo</option>
-                        <option value="1">Option 1</option>
-                        <option value="2">Option 2</option>
-                        <option value="3">Option 3</option>
-                    </select>
-                    {
-                        errors.job && (
-                            <p className="mb-2">Hace falta un cargo</p>
-                        )
-                    }
-                </div>
+                {isUdEmailLive && (
+                    <div className="mb-4 flex">
+                        <div>
+                            <select className="w3-select w-full p-4 rounded-2xl" name="academicRole" defaultValue="1" onChange={handleAcademicRoleChange}>
+                                <option value="1" disabled hidden>Cargo</option>
+                                <option value="STUDENT">Alumno</option>
+                                <option value="EXSTUDENT">Exalumno</option>
+                            </select>
+                            {
+                                errors.academicRole && (
+                                    <p className="mb-2">Hace falta un cargo</p>
+                                )
+                            }
+                        </div>
+                        {academicRole=="EXSTUDENT" && (
+                            <div className="flex-none">
+                                <select className="w-full p-4 rounded-2xl" name="promocion" defaultValue="">
+                                    <option value="" disabled hidden>Promocion</option>
+                                    {years.map(year => (
+                                    <option key={year} value={year}>
+                                        {year}
+                                    </option>
+                                    ))}
+                                </select>
+                                {
+                                    errors.promocion && (
+                                        <p className="mb-2">Hace falta un cargo</p>
+                                    )
+                                }
+                            </div>
+                        )}
+                    </div>
+                )}
+                {isUdEmailUtad && (
+                    <div className="mb-4 flex">
+                        <div className="grow">
+                            <select className="w3-select p-4 rounded-2xl" name="academicRole" defaultValue="1" onChange={handleAcademicRoleChange}>
+                                <option value="1" disabled hidden>Cargo</option>
+                                <option value="TEACHER">Profesor</option>
+                                <option value="COORDINATOR">Coordinador</option>
+                                <option value="DEPARTAMENT">Departamento</option>
+                            </select>
+                            {
+                                errors.academicRole && (
+                                    <p className="mb-2">Hace falta un cargo</p>
+                                )
+                            }
+                        </div>
+                        {academicRole=="DEPARTAMENT" && (
+                            <div className="flex-none">
+                                <select className="w3-select w-full p-4 rounded-2xl" name="departamento" defaultValue="1">
+                                    <option value="1" disabled hidden>Que departamento?</option>
+                                    <option value="MATES">MATES</option>
+                                    <option value="DIPI">DIPI</option>
+                                </select>
+                                {
+                                    errors.job && (
+                                        <p className="mb-2">Hace falta un cargo</p>
+                                    )
+                                }
+                            </div>
+                        )}
+                    </div>
+                )}
                 <div className="mb-4">
                     <select className="w3-select text-black w-full p-4 rounded-2xl overflow-hidden" name="grade" defaultValue="1">
                         <option value="1" disabled hidden>Titulación</option>
