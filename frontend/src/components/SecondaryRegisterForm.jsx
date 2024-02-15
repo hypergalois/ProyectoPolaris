@@ -77,7 +77,7 @@ const SecondaryRegisterForm = () => {
                 <div className="mb-4">
                     <input 
                         className="w-full p-4 rounded-2xl"
-                        type="email" {
+                        type="text" {
                         ...register("user", {
                             required: false,
                             minLength: 3,
@@ -87,7 +87,8 @@ const SecondaryRegisterForm = () => {
                     />
                 </div>
                 <div className="mb-4">
-                    <select className="w3-select w-full p-4 rounded-2xl" name="job">
+                    <select className="w3-select w-full p-4 rounded-2xl" name="job" defaultValue="1">
+                        <option value="1" disabled hidden>Cargo</option>
                         <option value="1">Option 1</option>
                         <option value="2">Option 2</option>
                         <option value="3">Option 3</option>
@@ -99,10 +100,18 @@ const SecondaryRegisterForm = () => {
                     }
                 </div>
                 <div className="mb-4">
-                    <select className="w3-select text-black w-full p-4 rounded-2xl" name="grade">
-                        <option value="1">Option 1</option>
-                        <option value="2">Option 2</option>
-                        <option value="3">Option 3</option>
+                    <select className="w3-select text-black w-full p-4 rounded-2xl overflow-hidden" name="grade" defaultValue="1">
+                        <option value="1" disabled hidden>Titulación</option>
+                        <option value="VIDEOJUEGOS">VIDEOJUEGOS</option>
+                        <option value="ANIMACIÓN">ANIMACIÓN</option>
+                        <option value="EFECTOS VISUALES">EFECTOS VISUALES</option>
+                        <option value="DISEÑO DIGITAL">DISEÑO DIGITAL</option>
+                        <option value="REALIDAD VIRTUAL">REALIDAD VIRTUAL</option>
+                        <option value="INGENIERÍA">INGENIERÍA</option>
+                        <option value="FÍSICA Y MATEMÁTICAS">FÍSICA Y MATEMÁTICAS</option>
+                        <option value="CIBERSEGURIDAD">CIBERSEGURIDAD</option>
+                        <option value="INTELIGENCIA ARTIFICIAL">INTELIGENCIA ARTIFICIAL</option>
+                        <option value="NEGOCIO Y MARKETING">NEGOCIO Y MARKETING</option>
                     </select>
                     {
                         errors.grade && (
