@@ -2,13 +2,7 @@ import prisma from "../config/prisma.client.js";
 import { status } from "../config/tags.js";
 
 // Main controllers
-// TODO. Esto me lo dejo para hacer mañana miercoles o jueves
 
-// Solo van a tener request los admin, los user y creators solo pueden ver las que han hecho ellos
-// Habria que hacer otro get, para respuestas de admin, y otro para respuestas de user y creator Gon: ??? No entiendo esto
-// Otro get quizas para las aceptadas y las rechazadas y para las pendientes Gon: Hecho un getRequestByStatus que sirve para esos casos (pendientes, aceptadas, rechazadas)
-
-// requests al ser const no llega la información al ultimo send por lo que me he metido un send en cada apartado, otra opcion es hacer una variable local en la función
 export const getRequests = async (req, res) => {
     try {
         if (req.role === "USER" || "CREATOR") {
@@ -30,7 +24,7 @@ export const getRequests = async (req, res) => {
     }
 };
 
-// De nuevo, aqui hay que mirar la logica Gon: Probablemente la borremos ya que un admin no va a entrar en un menú con una sola request sino en un menú con todas las requests
+// Probablmenete acabe borrado ya que no se use
 export const getRequest = async (req, res) => {
     try {
         const { id } = req.params;
@@ -45,6 +39,7 @@ export const getRequest = async (req, res) => {
     }
 };
 
+// Probablmenete acabe borrado ya que no se use
 export const updateRequest = async (req, res) => {
     try {
         const { id } = req.params;
