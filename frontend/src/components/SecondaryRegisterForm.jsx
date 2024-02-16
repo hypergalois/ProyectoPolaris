@@ -102,7 +102,7 @@ const SecondaryRegisterForm = () => {
                 </div>
                 {isUdEmailLive && (
                     <div className="mb-4 flex">
-                        <div>
+                        <div className="w-full">
                             <select className="w3-select w-full p-4 rounded-2xl" name="academicRole" defaultValue="1" onChange={handleAcademicRoleChange}>
                                 <option value="1" disabled hidden>Cargo</option>
                                 <option value="STUDENT">Alumno</option>
@@ -115,7 +115,7 @@ const SecondaryRegisterForm = () => {
                             }
                         </div>
                         {academicRole=="EXSTUDENT" && (
-                            <div className="flex-none">
+                            <div className="flex-none w-1/2">
                                 <select className="w-full p-4 rounded-2xl" name="promocion" defaultValue="">
                                     <option value="" disabled hidden>Promocion</option>
                                     {years.map(year => (
@@ -135,8 +135,8 @@ const SecondaryRegisterForm = () => {
                 )}
                 {isUdEmailUtad && (
                     <div className="mb-4 flex">
-                        <div className="grow">
-                            <select className="w3-select p-4 rounded-2xl" name="academicRole" defaultValue="1" onChange={handleAcademicRoleChange}>
+                        <div className="w-full">
+                            <select className="w3-select w-full p-4 rounded-2xl" name="academicRole" defaultValue="1" onChange={handleAcademicRoleChange}>
                                 <option value="1" disabled hidden>Cargo</option>
                                 <option value="TEACHER">Profesor</option>
                                 <option value="COORDINATOR">Coordinador</option>
@@ -149,8 +149,8 @@ const SecondaryRegisterForm = () => {
                             }
                         </div>
                         {academicRole=="DEPARTAMENT" && (
-                            <div className="flex-none">
-                                <select className="w3-select w-full p-4 rounded-2xl" name="departamento" defaultValue="1">
+                            <div className="flex-none w-1/2">
+                                <select className="w-full p-4 rounded-2xl" name="departamento" defaultValue="1">
                                     <option value="1" disabled hidden>Que departamento?</option>
                                     <option value="MATES">MATES</option>
                                     <option value="DIPI">DIPI</option>
