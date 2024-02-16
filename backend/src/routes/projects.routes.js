@@ -8,7 +8,6 @@ import { projectSchema, updateProjectSchema } from "../schemas/project.schema.js
 const router = Router();
 
 // Main routes
-// TODO: Poner authRequired a todas las rutas cuando esté más avanzado el proyecto
 
 router.get("/projects", authRequired, getProjects);
 
