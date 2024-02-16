@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createDegree, deleteDegree, getDegree, getDegrees, updateDegree } from "../controllers/degrees.controller.js";
+import { createDegree, deleteDegree, getDegree, getDegrees, updateDegree, getDegreesNames } from "../controllers/degrees.controller.js";
 import { validateSchema } from "../middlewares/validator.middleware.js";
 import { degreeSchema } from "../schemas/degree.schema.js";
 
@@ -186,5 +186,10 @@ router.put("/degrees/:id", updateDegree);
  *               message: Degree not deleted
  */
 router.delete("/degrees/:id", deleteDegree);
+
+// Utility routes
+
+// Si pongo solo /api/degrees/names, entra en conflicto con el get por id
+router.get("/degrees/names/form", getDegreesNames)
 
 export default router;

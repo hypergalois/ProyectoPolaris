@@ -5,23 +5,26 @@ async function main() {
     await prisma.area.deleteMany({});
     await prisma.area.createMany({
         data: [
-            { name: "Animación" },
-            { name: "Efectos Visuales" },
-            { name: "Diseño Digital" },
-            { name: "Videojuegos" },
-            { name: "Ingeniería" },
-            { name: "Física y Matemáticas" },
-            { name: "Ciberseguridad" },
-            { name: "Inteligencia Artificial" },
-            { name: "Realidad Virtual" },
-            { name: "Negocio y Marketing" },
-        ],
+            { name: "Animación" }, // 0
+            { name: "Efectos Visuales" }, // 1
+            { name: "Diseño Digital" }, // 2
+            { name: "Videojuegos" }, // 3
+            { name: "Ingeniería" }, // 4
+            { name: "Física y Matemáticas" }, // 5
+            { name: "Ciberseguridad" }, // 6
+            { name: "Inteligencia Artificial" }, // 7
+            { name: "Realidad Virtual" }, // 8
+            { name: "Negocio y Marketing" } // 9
+        ]
     });
     const areas = await prisma.area.findMany();
-    console.log(areas);
     await prisma.degree.deleteMany({});
     await prisma.degree.createMany({
         data: [
+            {
+                name: "Ciclo de Grado Superior en Animaciones 3D, Juegos y Entornos Interactivos",
+                areasId: [areas[0].id, areas[1].id, areas[2].id],
+            },
             {
                 name: "Grado en Animación + Titulo Propio en Arte para Videojuegos",
                 areasId: [areas[0].id],
@@ -35,11 +38,11 @@ async function main() {
                 areasId: [areas[1].id],
             },
             {
-                name: "Ciclo de Grado Superior en Animaciones 3D, Juegos y Entornos Interactivos",
-                areasId: [areas[1].id],
+                name: "Grado en Diseño Digital",
+                areasId: [areas[2].id],
             },
             {
-                name: "Grado en Diseño Digital",
+                name: "Ciclo de Grado Superior en Artes Plásticas y Diseño en Animación",
                 areasId: [areas[2].id],
             },
             {
@@ -47,7 +50,15 @@ async function main() {
                 areasId: [areas[2].id],
             },
             {
+                name: "Grado en Animación + Título Propio en Arte para Videojuegos",
+                areasId: [areas[3].id],
+            },
+            {
                 name: "Grado en Diseño de Productos Interactivos + Título Propio en Technical Design para Unreal Engine",
+                areasId: [areas[3].id],
+            },
+            {
+                name: "Grado en Ingeniería del Software + Título Propio en Ingeniería de Videojuegos",
                 areasId: [areas[3].id],
             },
             {
@@ -55,12 +66,28 @@ async function main() {
                 areasId: [areas[4].id],
             },
             {
+                name: "Grado en Ingeniería del Software + Especialización en Programación Gráfica y RV",
+                areasId: [areas[4].id, areas[8].id],
+            },
+            {
+                name: "Grado en Ingeniería del Software + Especialización en Ingeniería de Datos IA",
+                areasId: [areas[4].id, areas[7].id],
+            },
+            {
+                name: "Grado en Ingeniería del Software + Título Propio en Ingeniería de Videojuegos",
+                areasId: [areas[4].id],
+            },
+            {
+                name: "Grado en Ingeniería del Software + Especialización en Ciberseguridad",
+                areasId: [areas[4].id, areas[6].id],
+            },
+            {
                 name: "Doble Grado en Matemática Computacional e Ingeniería del Software",
-                areasId: [areas[5].id],
+                areasId: [areas[4].id, areas[5].id, areas[7].id],
             },
             {
                 name: "Doble Grado en Física Computacional e Ingeniería del Software",
-                areasId: [areas[5].id],
+                areasId: [areas[4].id, areas[5].id, areas[7].id],
             },
             {
                 name: "Ciclo de Grado Superior en Administración de Sistemas Informáticos en Red",
@@ -78,6 +105,14 @@ async function main() {
                 name: "Ciclo de Grado Superior en Desarrollo de Aplicaciones Multiplataforma",
                 areasId: [areas[4].id],
             },
+            {
+                name: "Grado en Dirección de Empresas de Entretenimiento Digital",
+                areasId: [areas[9].id],
+            },
+            {
+                name: "Ciclo de Grado Superior en Marketing y Publicidad + Título Propio en E-commerce y Marketplaces",
+                areasId: [areas[9].id],
+            }
         ],
     });
 }

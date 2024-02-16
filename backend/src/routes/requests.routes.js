@@ -2,6 +2,7 @@ import { Router } from "express";
 import { checkRole } from "../middlewares/checkRole.middleware.js";
 import { roles } from "../config/tags.js";
 import { getRequest, getRequests, updateRequest, acceptRequest, rejectRequest, getRequestsByStatus } from "../controllers/requests.controller.js";
+import { authRequired } from '../middlewares/authRequired.middleware.js';
 
 /**
  * @swagger
@@ -48,7 +49,7 @@ const router = Router();
  *             example:
  *               message: Requests not found
  */
-router.get("/requests", getRequests);
+router.get("/requests", authRequired, getRequests);
 
 /**
  * @swagger
@@ -84,7 +85,7 @@ router.get("/requests", getRequests);
  *             example:
  *               message: Request not found
  */
-router.get("/requests/:id", getRequest);
+router.get("/requests/:id", authRequired, getRequest);
 
 /**
  * @swagger
@@ -125,7 +126,7 @@ router.get("/requests/:id", getRequest);
  *             example:
  *               message: Request not updated
  */
-router.put("/requests/:id", checkRole([roles.ADMIN]), updateRequest);
+router.put("/requests/:id", authRequired, checkRole([roles.ADMIN]), updateRequest);
 
 // Utility routes
 
@@ -154,7 +155,7 @@ router.put("/requests/:id", checkRole([roles.ADMIN]), updateRequest);
  *             example:
  *               message: No requests found
  */
-router.get("/requests/status/:status", getRequestsByStatus);
+router.get("/requests/status/:status", authRequired, getRequestsByStatus);
 
 /**
  * @swagger
@@ -190,7 +191,7 @@ router.get("/requests/status/:status", getRequestsByStatus);
  *             example:
  *               message: Request not accepted
  */
-router.post("/requests/accept/:id", checkRole([roles.ADMIN]), acceptRequest);
+router.post("/requests/accept/:id", authRequired, checkRole([roles.ADMIN]), acceptRequest);
 
 /**
  * @swagger
@@ -228,6 +229,6 @@ router.post("/requests/accept/:id", checkRole([roles.ADMIN]), acceptRequest);
  *             example:
  *               message: Request not rejected
  */
-router.post("/requests/reject/:id", checkRole([roles.ADMIN]), rejectRequest);
+router.post("/requests/reject/:id", authRequired, checkRole([roles.ADMIN]), rejectRequest);
 
 export default router;

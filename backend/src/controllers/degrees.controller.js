@@ -63,3 +63,17 @@ export const deleteDegree = async (req, res) => {
         return res.status(500).send({ message: error.message });
     }
 }
+
+// Utility controllers
+
+export const getDegreesNames = async (req, res) => {
+    try {
+        const degrees = await prisma.degree.findMany({select: {id: true, name: true}});
+        if (!degrees) return res.status(404).send({ message: "No degrees found" });
+
+        return res.status(200).send(degrees);
+    } catch(error) {
+        console.log(error);
+        return res.status(500).send({ message: error.message });
+    }
+}
