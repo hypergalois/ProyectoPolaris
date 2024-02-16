@@ -190,8 +190,76 @@ router.delete("/degrees/:id", deleteDegree);
 // Utility routes
 
 // Si pongo solo /api/degrees/names, entra en conflicto con el get por id
+
+/**
+ * @swagger
+ * /api/degrees/names/form:
+ *   get:
+ *     summary: Get degrees with their names
+ *     tags:
+ *       - Degrees
+ *     responses:
+ *       200:
+ *         description: Successful response with an array of degrees
+ *         content:
+ *           application/json:
+ *             example:
+ *               - id: 1
+ *                 name: Bachelor's Degree
+ *               - id: 2
+ *                 name: Master's Degree
+ *       404:
+ *         description: No degrees found
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: No degrees found
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: Internal server error
+ */
 router.get("/degrees/names/form", getDegreesNames);
 
+/**
+ * @swagger
+ * /api/degrees/area/{id}:
+ *   get:
+ *     summary: Get degrees by area
+ *     tags:
+ *       - Degrees
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The ID of the area
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Successful response with an array of degrees
+ *         content:
+ *           application/json:
+ *             example:
+ *               - id: 1
+ *                 name: Computer Science
+ *               - id: 2
+ *                 name: Information Technology
+ *       404:
+ *         description: No degrees found for the specified area
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: No degrees found
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: Internal server error
+ */
 router.get("/degrees/area/:id", getDegreesByArea);
 
 export default router;
