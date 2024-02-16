@@ -1,5 +1,6 @@
 import LoginForm from "../components/LoginForm";
 import HomePageBar from "../components/HomePageBar";
+import HomePageAnimation from "../components/HomePageAnimation";
 import { Link } from "react-router-dom";
 
 //class="flex-none flex items-center justify-center w-9 h-9 rounded-md text-slate-300 border border-slate-200"
@@ -7,7 +8,7 @@ import { Link } from "react-router-dom";
 const HomePage = () => {
     return (
         <div className="bg-[#858585] text-white  items-center">  
-            
+            <HomePageAnimation/>
             <HomePageBar />
             <div className="flex justify-center h-screen">
                 <div className="mx-auto text-center">
