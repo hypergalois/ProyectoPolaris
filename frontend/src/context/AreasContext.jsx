@@ -1,7 +1,7 @@
 import { createContext, useState, useContext, useEffect } from 'react';
-import { getDegreesRequest } from '../api/areas-degrees';
+import { getDegreesRequest } from '../api/areas-degrees.js';
 
-export const ProjectsContext = createContext();
+export const AreasContext = createContext();
 
 export const useAreas = () => {
     const context = useContext(AreasContext);

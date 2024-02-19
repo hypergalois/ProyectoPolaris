@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import Select from "react-select";
 import { useProjects } from "../context/ProjectsContext";
+import { useAreas } from "../context/AreasContext";
 
 const classNumberOptions = [
     {value : 1, label : "1º"},
@@ -30,7 +31,7 @@ const ProjectForm = () => {
         control,
         name: "awards"
     });
-    const { degrees, getDegrees, errors : projectContextErrors } = useProjects()
+    const { degrees, getDegrees, errors : areasContextErrors } = useAreas()
 
     const degreeOptions = Array();
     
