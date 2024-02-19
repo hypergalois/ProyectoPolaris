@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useState, useEffect } from "react";
+import { dregreesRequest } from "../api/register.js";
 
 const SecondaryRegisterForm = () => {
 
@@ -17,6 +18,7 @@ const SecondaryRegisterForm = () => {
 
     const [academicRole, setAcademicRole] = useState("1"); // Define academicRole state
 
+    const departments = dregreesRequest();
     const years = [];
     for (let year = 2012; year <= 2022; year++) {
       years.push(year+"/"+(year+1));
@@ -150,10 +152,13 @@ const SecondaryRegisterForm = () => {
                         </div>
                         {academicRole=="DEPARTAMENT" && (
                             <div className="flex-none w-1/2">
-                                <select className="w-full p-4 rounded-2xl" name="departamento" defaultValue="1">
-                                    <option value="1" disabled hidden>Que departamento?</option>
-                                    <option value="MATES">MATES</option>
-                                    <option value="DIPI">DIPI</option>
+                                <select className="w-full p-4 rounded-2xl" name="departamento" defaultValue="">
+                                    <option value="" disabled hidden>Que departamento?</option>
+                                    {departments.map(departments => (
+                                    <option key={departments} value={departments}>
+                                        {departments}
+                                    </option>
+                                    ))}
                                 </select>
                                 {
                                     errors.job && (
