@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useState, useEffect } from "react";
-import { degreesRequest } from "../api/register.js";
+import { degreesRequest } from "../api/areas-degrees.js";
 
 const SecondaryRegisterForm = () => {
 
