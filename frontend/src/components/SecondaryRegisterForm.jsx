@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useState, useEffect } from "react";
-import { dregreesRequest } from "../api/register.js";
+import { degreesRequest } from "../api/register.js";
 
 const SecondaryRegisterForm = () => {
 
@@ -18,7 +18,9 @@ const SecondaryRegisterForm = () => {
 
     const [academicRole, setAcademicRole] = useState("1"); // Define academicRole state
 
-    const departments = dregreesRequest();
+    const departments = [];
+    const degrees = awayt degreesRequest();
+    console.log(degrees.then())
     const years = [];
     for (let year = 2012; year <= 2022; year++) {
       years.push(year+"/"+(year+1));
