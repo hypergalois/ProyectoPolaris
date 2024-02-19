@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect } from 'react';
-import { getDegreesRequest } from '../api/areas-degrees.js';
+import { getAreasRequest, getDegreesRequest, getDegreesByAreaRequest } from '../api/areas-degrees.js';
 
 export const AreasContext = createContext();
 
@@ -12,13 +12,41 @@ export const useAreas = () => {
 }
 
 export const AreasProvider = ({ children }) => {
+    const [areas, setAreas] = useState(null);
     const [degrees, setDegrees] = useState(null);
+    const [degreesByArea, setDegreesByArea] = useState(null);
     const [errors, setErrors] = useState([]);
 
+    const getAreas = async () => {
+        try {
+            const response = await getAreasRequest();
+            setAreas(response.data);
+        } catch (error) {
+            if (Array.isArray(error.response.data)) {
+                setErrors(error.response.data);
+            } else {
+                setErrors([error.response.data]);
+            }
+        }
+    }
+    
     const getDegrees = async () => {
         try {
             const response = await getDegreesRequest();
             setDegrees(response.data);
+        } catch (error) {
+            if (Array.isArray(error.response.data)) {
+                setErrors(error.response.data);
+            } else {
+                setErrors([error.response.data]);
+            }
+        }
+    }
+
+    const getDegreesByArea = async (areaId) => {
+        try {
+            const response = await getDegreesByAreaRequest(areaId);
+            setDegreesByArea(response.data);
         } catch (error) {
             if (Array.isArray(error.response.data)) {
                 setErrors(error.response.data);
@@ -38,7 +66,7 @@ export const AreasProvider = ({ children }) => {
     }, [errors]);
 
     return (
-        <AreasContext.Provider value={{ degrees, getDegrees, errors }}>
+        <AreasContext.Provider value={{ areas, getAreas, degrees, getDegrees, degreesByArea, getDegreesByArea, errors }}>
             {children}
         </AreasContext.Provider>
     )
