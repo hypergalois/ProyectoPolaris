@@ -95,6 +95,9 @@ model Project {
   externalLinks   String[]
   uploadedContent String[]
 
+  areaId String? @db.ObjectId
+  area   Area?   @relation(fields: [areaId], references: [id])
+
   degreeId String? @db.ObjectId
   degree   Degree? @relation(fields: [degreeId], references: [id])
 
@@ -104,7 +107,7 @@ model Project {
   impliedProfessorsIDs String[] @db.ObjectId
   impliedProfessors    User[]   @relation(fields: [impliedProfessorsIDs], references: [id], name: "involvedAsProfessor")
 
-  createdAt DateTime?  @default(now())
+  createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
 
   @@map("projects")
@@ -129,8 +132,9 @@ model Area {
 
   name String @unique
 
-  degreesId String[] @db.ObjectId
-  degrees   Degree[] @relation(fields: [degreesId], references: [id])
+  degreesId String[]  @db.ObjectId
+  degrees   Degree[]  @relation(fields: [degreesId], references: [id])
+  Project   Project[]
 
   @@map("areas")
 }
