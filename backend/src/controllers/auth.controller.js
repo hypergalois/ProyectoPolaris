@@ -9,7 +9,8 @@ const secret = process.env.TOKEN_SECRET;
 
 export const register = async (req, res) => {
     console.log(req.body)
-    const { username, email, password, fullName, academicRole, academicCourse} = req.body;
+    const { email, password, fullName, academicRole, academicCourse} = req.body;
+    let { username } = req.body;
     let role;
     // console.log(username, email, password);
 
@@ -26,12 +27,16 @@ export const register = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, salt);
 
+        // Control de rol segun email
         if (email.endsWith('@u-tad.com')) {
             if(academicRole === academicRoleList.TEACHER) role = roles.CREATOR;
             else res.status(400).json({ message: "You can only register as a teacher with an @u-tad.com email."});
         } else {
             role = roles.USER;
         }
+
+        // Control de usuario en caso de ser vacio asignar primera parte del email
+        if(username === undefined) username = email.split('@')[0];
 
         // Y meter los datos aqui que falten
         const newUser = await prisma.user.create({
@@ -44,8 +49,6 @@ export const register = async (req, res) => {
                 role: role,
                 academicCourse: academicCourse}
         });
-
-        // console.log(newUser);
 
         const accessToken = await createAccessToken({ id: newUser.id, role: newUser.role });
 

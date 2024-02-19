@@ -12,9 +12,7 @@ export const registerSchema = z.object({
     }, {
         message: 'fullName must include at least 2 surnames'
     }),
-    username: z.string({
-        required_error: 'Username is required'
-    }),
+    username: z.string().optional(),
     email: z.string({
         required_error: 'Email is required'
     }).refine(email => {
