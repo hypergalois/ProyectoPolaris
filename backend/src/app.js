@@ -33,10 +33,10 @@ app.use("/uploads", authRequired, express.static("uploads"));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecs, { explorer: true }))
 
 app.use('/api', authRoutes);
-app.use('/api', authRequired, projectRoutes);
+app.use('/api', projectRoutes);
 app.use('/api', degreeRoutes);
 app.use('/api', areaRoutes);
-app.use('/api', authRequired, requestRoutes);
+app.use('/api', requestRoutes);
 app.use('/api', testRoutes);
 
 app.on('close', () => {
