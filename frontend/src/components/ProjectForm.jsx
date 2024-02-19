@@ -4,14 +4,14 @@ import Select from "react-select";
 import { useProjects } from "../context/ProjectsContext";
 import { useAreas } from "../context/AreasContext";
 
-const classNumberOptions = [
+const courseOptions = [
     {value : 1, label : "1º"},
     {value : 2, label : "2º"},
     {value : 3, label : "3º"},
     {value : 4, label : "4º"},
     {value : 5, label : "5º"}
 ];
-const classLetterOptions = [
+const letterOptions = [
     {value : "A", label : "A"},
     {value : "B", label : "B"},
     {value : "C", label : "C"}
@@ -36,7 +36,7 @@ const ProjectForm = () => {
     const degreeOptions = Array();
     
     useEffect(() => {
-        getDegrees()
+        getDegrees();
 
         appendStudent({ student : "" });
         appendTeacher({ teacher : "" });
@@ -52,6 +52,26 @@ const ProjectForm = () => {
     }, [degrees])
 
     const onSubmit = (data) => {
+        const newProject = {
+            title : data.projectTitle,
+            type : null,
+            description : null,
+            summary : null,
+            report : null,
+            differentiator : null,
+            keywords : null,
+            awards : null,
+            subject : null,
+            personalProject : null,
+            academicCourse : null,
+            course : data.classNumber,
+            letter : null,
+            externalLinks : null,
+            uploadedContent : null,
+            degreeId : null,
+            impliedStudents : null,
+            impliedProfessors : null
+        };
         console.log(data);
     }
 
@@ -77,15 +97,15 @@ const ProjectForm = () => {
             <div>
                 <h3>Curso</h3>
                 <Select
-                    options={classNumberOptions}
-                    onChange={(selectedClassNumber) => { setValue("classNumber", selectedClassNumber) }}
+                    options={courseOptions}
+                    onChange={(selectedCourse) => { setValue("course", selectedCourse) }}
                 />
             </div>
             <div>
                 <h3>Clase</h3>
                 <Select
-                    options={classLetterOptions}
-                    onChange={(selectedClassLetter) => { setValue("classLetter", selectedClassLetter) }}
+                    options={letterOptions}
+                    onChange={(selectedLetter) => { setValue("letter", selectedLetter) }}
                 />
             </div>
             <div>
