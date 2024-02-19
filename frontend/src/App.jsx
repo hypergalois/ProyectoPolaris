@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
+import { AreasProvider } from "./context/AreasContext";
 
 import NavBar from "./components/Navbar";
 
@@ -41,6 +42,7 @@ import HomePageLanding from "./components/HomePageLanding";
 function App() {
   return (
     <AuthProvider>
+    <AreasProvider>
       <Router>
         <main>
           <Routes>
@@ -52,6 +54,7 @@ function App() {
           </Routes>
         </main>
       </Router>
+    </AreasProvider>
     </AuthProvider>
   )
 }

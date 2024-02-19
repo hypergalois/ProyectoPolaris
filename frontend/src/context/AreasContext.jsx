@@ -1,17 +1,17 @@
 import { createContext, useState, useContext, useEffect } from 'react';
-import { getDegreesRequest } from '../api/projects';
+import { getDegreesRequest } from '../api/areas-degrees';
 
 export const ProjectsContext = createContext();
 
-export const useProjects = () => {
-    const context = useContext(ProjectsContext);
+export const useAreas = () => {
+    const context = useContext(AreasContext);
     if (!context) {
-        throw new Error('useProjects must be used within an ProjectsProvider');
+        throw new Error('useAreas must be used within an AreasProvider');
     }
     return context;
 }
 
-export const ProjectsProvider = ({ children }) => {
+export const AreasProvider = ({ children }) => {
     const [degrees, setDegrees] = useState(null);
     const [errors, setErrors] = useState([]);
 
@@ -38,8 +38,8 @@ export const ProjectsProvider = ({ children }) => {
     }, [errors]);
 
     return (
-        <ProjectsContext.Provider value={{ degrees, getDegrees, errors }}>
+        <AreasContext.Provider value={{ degrees, getDegrees, errors }}>
             {children}
-        </ProjectsContext.Provider>
+        </AreasContext.Provider>
     )
 }
