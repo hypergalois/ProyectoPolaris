@@ -1,30 +1,43 @@
-import { useState } from 'react';
-import { CSSTransition } from 'react-transition-group';
 import projectLogo from "../../public/logo-projects.png";
+import { useState, useEffect } from 'react';
 
 const HomePageAnimation = () => {
-  const [showTransition, setShowTransition] = useState(true);
+  
+  const [isVisible, setIsVisible] = useState(true);
+
+  const handleAnimationEnd = () => {
+    // Oculta el elemento después de la animación
+    setIsVisible(false);
+  };
+
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setLoaded(true);
+    }, 100);
+
+    return () => clearTimeout(timeoutId);
+  }, []);
 
   return (
-    
-    <CSSTransition
-      in={showTransition}
-      timeout={500}
-      classNames={{
-        enter: "transition-transform ease-in-out duration-500 transform translate-x-full",
-        enterActive: "transform translate-x-0",
-        exit: "transform translate-x-0",
-        exitActive: "transition-transform ease-in-out duration-500 transform -translate-x-full",
-      }}
-      unmountOnExit
-      onExited={setShowTransition(false)}
-    >
-      <div className="absolute top-0 left-0 w-full h-full bg-white z-1000">
-        <div className='flex items-center justify-center'>
-          <img src={projectLogo} className="h-auto w-auto" />
+    <>
+      {isVisible && (
+        <div
+          className="absolute bg-[#858585]"
+          style={{
+            transition: 'transform 3s ease-out',
+            transform: loaded ? 'translateX(-100%)' : 'translateX(0)',
+          }}
+          onTransitionEnd={handleAnimationEnd}
+        >
+          {/* Contenido del elemento */}
+          <div className="flex items-center justify-center w-screen h-screen">
+            <img src={projectLogo} alt="Project Logo" />
+          </div>
         </div>
-      </div>
-    </CSSTransition>
+      )}
+    </>
   );
 };
 

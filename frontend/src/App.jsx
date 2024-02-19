@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
+import { AreasProvider } from "./context/AreasContext";
 
 import NavBar from "./components/Navbar";
 
@@ -41,17 +42,19 @@ import HomePageLanding from "./components/HomePageLanding";
 function App() {
   return (
     <AuthProvider>
+    <AreasProvider>
       <Router>
         <main>
           <Routes>
             <Route path="/" element={<HomePageLogin />} />
             <Route path="/register" element={<HomePageRegister />} />
             <Route path="/registerSecond" element={<HomePageRegisterSecond />} />
-            {/* <Route path="/projects/new" element={<ProjectFormPage />} /> */}
+            <Route path="/projects/new" element={<ProjectFormPage />} />
             {/* <Route path="/projects/search" element={<ProjectSearchPage />}></Route> */}
           </Routes>
         </main>
       </Router>
+    </AreasProvider>
     </AuthProvider>
   )
 }

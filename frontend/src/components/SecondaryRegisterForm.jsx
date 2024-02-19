@@ -17,6 +17,9 @@ const SecondaryRegisterForm = () => {
 
     const [academicRole, setAcademicRole] = useState("1"); // Define academicRole state
 
+    const departments = [];
+    //const degrees = degreesRequest();
+    //console.log(degrees.then())
     const years = [];
     for (let year = 2012; year <= 2022; year++) {
       years.push(year+"/"+(year+1));
@@ -150,10 +153,13 @@ const SecondaryRegisterForm = () => {
                         </div>
                         {academicRole=="DEPARTAMENT" && (
                             <div className="flex-none w-1/2">
-                                <select className="w-full p-4 rounded-2xl" name="departamento" defaultValue="1">
-                                    <option value="1" disabled hidden>Que departamento?</option>
-                                    <option value="MATES">MATES</option>
-                                    <option value="DIPI">DIPI</option>
+                                <select className="w-full p-4 rounded-2xl" name="departamento" defaultValue="">
+                                    <option value="" disabled hidden>Que departamento?</option>
+                                    {departments.map(departments => (
+                                    <option key={departments} value={departments}>
+                                        {departments}
+                                    </option>
+                                    ))}
                                 </select>
                                 {
                                     errors.job && (
