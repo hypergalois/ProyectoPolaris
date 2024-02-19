@@ -19,7 +19,7 @@ const SecondaryRegisterForm = () => {
     const [academicRole, setAcademicRole] = useState("1"); // Define academicRole state
 
     const departments = [];
-    const degrees = awayt degreesRequest();
+    const degrees = degreesRequest();
     console.log(degrees.then())
     const years = [];
     for (let year = 2012; year <= 2022; year++) {
