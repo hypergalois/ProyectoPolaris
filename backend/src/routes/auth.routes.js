@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { register, login, logout, profile, verifyToken, refreshToken } from "../controllers/auth.controller.js";
+import { register, login, logout, profile, verifyToken, getemail, refreshToken } from "../controllers/auth.controller.js";
 
 import { registerSchema, loginSchema } from "../schemas/auth.schema.js";
 import { authRequired } from "../middlewares/authRequired.middleware.js";
@@ -12,6 +12,8 @@ router.post("/register",validateSchema(registerSchema), register);
 router.post("/login", validateSchema(loginSchema), login);
 
 router.post("/logout", logout);
+
+router.get("/getemail", getemail);
 
 router.get("/profile", authRequired, profile);
 

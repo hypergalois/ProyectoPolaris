@@ -7,6 +7,23 @@ import { academicRoleList, roles } from '../config/tags.js';
 
 const secret = process.env.TOKEN_SECRET;
 
+export const getemail = async (req, res) => {
+    try {
+        const userFound = await prisma.user.findUnique({
+            where: {
+                email: req.body.email
+            }
+        });
+    
+        if (userFound) return res.status(400).json({ message: "Usuario ya registrado." });
+    
+        return res.json({ message: "User not registered" });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: error.message });
+    }
+}
+
 export const register = async (req, res) => {
     console.log(req.body)
     const { email, password, fullName, academicRole, academicCourse} = req.body;
