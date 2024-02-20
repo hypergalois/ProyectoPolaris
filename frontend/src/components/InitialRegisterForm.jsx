@@ -22,7 +22,7 @@ const InitialRegisterForm = () => {
 		if (noEmailUtad) {
 			setEmail(data.email);
 
-			navigate(`/registerSecond`, { state: { email: data.email } });
+			navigate(`/register/details`, { state: { email: data.email } });
 		}
 	};
 

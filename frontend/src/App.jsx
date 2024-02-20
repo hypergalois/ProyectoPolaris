@@ -12,9 +12,9 @@ import ForgotPassword from "./pages/ForgotPassword";
 import HomePage from "./pages/HomePage";
 
 import ProfilePage from "./pages/ProfilePage";
-import ProjectFormPage from "./pages/ProjectFormPage";
-import ProjectHomePage from "./pages/ProjectHomePage";
-import ProjectDetailPage from "./pages/ProjectDetailPage";
+import ProjectsFormPage from "./pages/ProjectsFormPage";
+import ProjectsHomePage from "./pages/ProjectsHomePage";
+import ProjectsDetailPage from "./pages/ProjectsDetailPage";
 
 import AdminDashboardPage from "./pages/AdminDashboardPage";
 
@@ -37,20 +37,20 @@ function App() {
 							{/* Pagina de registro secundaria, termina el registro */}
 							<Route path="/register/details" element={<HomePageRegisterDetails />} />
 							{/* Dejo la pagina de añadir proyectos fuera de la ruta protegida para poder probarla */}
-							<Route path="/projects/new" element={<ProjectFormPage />} />
+							<Route path="/projects/new" element={<ProjectsFormPage />} />
 							<Route element={<ProtectedRoute />} />
 							{/* Pagina home pero que salen proyectos y noticias una vez estas logeado */}
 							<Route path="/home" element={<HomePage />} />
 							{/* Pagina perfil donde se veran las peticiones */}
 							<Route path="/profile" element={<ProfilePage />} />
 							{/* Pagina de proyectos para buscarlos */}
-							<Route path="/projects" element={<ProjectHomePage />} />
+							<Route path="/projects" element={<ProjectsHomePage />} />
 							{/* Pagina para el formulario de proyectos nuevos */}
-							<Route path="/projects/new" element={<ProjectFormPage />} />
+							<Route path="/projects/new" element={<ProjectsFormPage />} />
 							{/* Pagina para ver un proyecto en detalle */}
-							<Route path="/projects/:id" element={<ProjectDetailPage />} />
+							<Route path="/projects/:id" element={<ProjectsDetailPage />} />
 							{/* Pagina para editar un proyecto, es el mismo formulario pero populating */}
-							<Route path="/projects/:id/edit" element={<ProjectFormPage />} />
+							<Route path="/projects/:id/edit" element={<ProjectsFormPage />} />
 							{/* Posible admin dashboard, puede que OoS (MOsCoW) */}
 							<Route path="/admin" element={<AdminDashboardPage />} />
 							<Route />
