@@ -115,6 +115,15 @@ async function main() {
 			},
 		],
 	});
+
+	// await prisma.subject.deleteMany({});
+	// await prisma.subject.createMany({
+	// 	data: [
+	// 		{
+	// 			name: "Historia del Arte"
+	// 		}
+	// 	]
+	// });
 }
 
 main()
