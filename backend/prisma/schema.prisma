@@ -113,6 +113,17 @@ model Project {
   @@map("projects")
 }
 
+model Subject {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  name String @unique
+
+  degreesId String[] @db.ObjectId
+  degrees   Degree[] @relation(fields: [degreesId], references: [id])
+
+  @@map("subjects")
+}
+
 model Degree {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
@@ -120,6 +131,9 @@ model Degree {
 
   areasId String[] @db.ObjectId
   areas   Area[]   @relation(fields: [areasId], references: [id])
+
+  subjectsId String[] @db.ObjectId
+  subjects   Subject[] @relation(fields: [subjectsId], references: [id])
 
   projects Project[]
   users    User[]
@@ -160,3 +174,5 @@ model Request {
 
   @@map("requests")
 }
+
+

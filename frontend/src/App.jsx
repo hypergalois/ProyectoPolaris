@@ -7,6 +7,7 @@ import NavBar from "./components/Navbar";
 import LandingPageLogin from "./pages/LandingPageLogin";
 import LandingPageRegister from "./pages/LandingPageRegister";
 import HomePageRegisterDetails from "./pages/LandingPageRegisterDetails";
+import ForgotPassword from "./pages/ForgotPassword";
 
 import HomePage from "./pages/HomePage";
 
@@ -29,6 +30,8 @@ function App() {
 						<Routes>
 							{/* Home page sin logearse, sale el formulario de login */}
 							<Route path="/" element={<LandingPageLogin />} />
+							{/* Pagina de recuperar contraseña */}
+							<Route path="/forgot-password" element={<ForgotPassword />} />
 							{/* Pagina de registro, solo pide dos datos inciales */}
 							<Route path="/register" element={<LandingPageRegister />} />
 							{/* Pagina de registro secundaria, termina el registro */}
