@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 // eslint-disable-next-line no-unused-vars
 import { Link, useNavigate } from "react-router-dom";
+import { useUser } from "../context/UserContext";
 
 const InitialRegisterForm = () => {
 	const {
@@ -11,6 +12,7 @@ const InitialRegisterForm = () => {
 	} = useForm();
 	// eslint-disable-next-line no-unused-vars
 	const [email, setEmail] = useState("");
+	const { email : emailTrue, getEmail, errors: userErrors } = useUser();
 	const navigate = useNavigate();
 	var noEmailUtad = true;
 
@@ -20,15 +22,28 @@ const InitialRegisterForm = () => {
 		noEmailUtad = data.email.endsWith("@u-tad.com") || data.email.endsWith("@live.u-tad.com");
 
 		if (noEmailUtad) {
-			setEmail(data.email);
-
-			navigate(`/register/details`, { state: { email: data.email } });
+			getEmail(data.email)
+			console.log(emailTrue);
+			if(emailTrue){
+				setEmail(data.email);
+				navigate(`/register/details`, { state: { email: data.email } });
+			}
 		}
 	};
 
 	return (
 		<div>
 			<form onSubmit={handleSubmit(onSubmit)}>
+				<div>
+					{
+						userErrors.map((error, index) =>
+						(
+							<div key={index}>{error.message}</div>
+
+						))
+					}
+
+				</div>
 				<div className="mb-4 text-black">
 					<input
 						className="w-5/12 p-4 rounded-2xl"
