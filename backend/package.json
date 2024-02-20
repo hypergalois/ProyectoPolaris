@@ -6,12 +6,17 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/index.js",
+    "dev": "nodemon ./src/index.js",
     "seed": "node prisma/seed.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@opentelemetry/auto-instrumentations-node": "^0.41.1",
+    "@opentelemetry/id-generator-aws-xray": "^1.2.1",
+    "@opentelemetry/node": "^0.24.0",
+    "@opentelemetry/sdk-node": "^0.48.0",
+    "@opentelemetry/tracing": "^0.24.0",
     "@prisma/client": "^5.9.1",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
