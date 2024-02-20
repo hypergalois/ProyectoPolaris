@@ -7,7 +7,7 @@ import { academicRoleList, roles } from "../config/tags.js";
 
 const secret = process.env.TOKEN_SECRET;
 
-export const getEmail = async (req, res) => {
+export const checkEmail = async (req, res) => {
 	try {
 		console.log(req)
 		const userFound = await prisma.user.findUnique({

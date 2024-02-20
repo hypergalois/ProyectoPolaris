@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { register, login, logout, profile, verifyToken, getEmail, refreshToken } from "../controllers/auth.controller.js";
+import { register, login, logout, profile, verifyToken, checkEmail, refreshToken } from "../controllers/auth.controller.js";
 
 import { registerSchema, loginSchema } from "../schemas/auth.schema.js";
 import { authRequired } from "../middlewares/authRequired.middleware.js";
@@ -163,7 +163,7 @@ router.post("/logout", logout);
  */
 
 
-router.get("/getEmail", getEmail);
+router.post("/checkEmail", checkEmail);
 
 /**
  * @swagger
