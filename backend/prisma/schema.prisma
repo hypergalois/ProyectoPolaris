@@ -78,16 +78,11 @@ model Project {
   Request Request[]
 
   title       String
-  type        String?
   description String?
 
-  summary        String?
-  report         String?
-  differentiator String?
-  keywords       String[]
-  awards         String[]
+  keywords String[]
+  awards   String[]
 
-  subject         String?
   personalProject Boolean?
 
   academicCourse String?
@@ -96,6 +91,8 @@ model Project {
 
   externalLinks   String[]
   uploadedContent String[]
+
+  subject String?
 
   areaId String? @db.ObjectId
   area   Area?   @relation(fields: [areaId], references: [id])
@@ -134,7 +131,7 @@ model Degree {
   areasId String[] @db.ObjectId
   areas   Area[]   @relation(fields: [areasId], references: [id])
 
-  subjectsId String[] @db.ObjectId
+  subjectsId String[]  @db.ObjectId
   subjects   Subject[] @relation(fields: [subjectsId], references: [id])
 
   projects Project[]
@@ -176,5 +173,3 @@ model Request {
 
   @@map("requests")
 }
-
-
