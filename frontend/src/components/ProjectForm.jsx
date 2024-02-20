@@ -1,23 +1,31 @@
 import { useState, useEffect, useRef } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
-import { useDropzone } from "react-dropzone"
 import Select from "react-select";
-import { useProjects } from "../context/ProjectsContext";
 import { useAreas } from "../context/AreasContext";
 import DropzoneComponent from "./DropzoneComponent";
+import { postProjectsRequest } from "../api/projects"
 
 const courseOptions = [
-	{ value: 1, label: "1º" },
-	{ value: 2, label: "2º" },
-	{ value: 3, label: "3º" },
-	{ value: 4, label: "4º" },
-	{ value: 5, label: "5º" },
+	{ value: "1", label: "1º" },
+	{ value: "2", label: "2º" },
+	{ value: "3", label: "3º" },
+	{ value: "4", label: "4º" },
+	{ value: "5", label: "5º" },
 ];
 const letterOptions = [
 	{ value: "A", label: "A" },
 	{ value: "B", label: "B" },
 	{ value: "C", label: "C" },
 ];
+
+const postProject = async (project) => {
+    try {
+        const response = await postProjectsRequest(project);
+        console.log(response);
+    } catch (error) {
+        console.log(error.response);
+    }
+};
 
 const ProjectForm = () => {
     const { register, control, handleSubmit, formState: { errors }, setValue } = useForm();
@@ -78,7 +86,7 @@ const ProjectForm = () => {
             summary : null,
             report : null,
             differentiator : null,
-            keywords : null,
+            keywords : [],
             awards : data.awards?.filter(value => value !== ""),
             subject : data.subject,
             personalProject : false,
@@ -92,7 +100,8 @@ const ProjectForm = () => {
             impliedProfessors : data.impliedTeachers?.filter(value => value !== "")
         };
         console.log(newProject);
-        console.log(data);
+        
+        postProject(newProject);
     }
 
     return(
