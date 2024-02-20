@@ -158,7 +158,7 @@ const SecondaryRegisterForm = () => {
                 <div className="mb-4">
                     <input 
                         className="w-full p-4 rounded-2xl"
-                        type="text" {
+                        type="password" {
                         ...register("password", {
                             required: true,
                             minLength: 3,
