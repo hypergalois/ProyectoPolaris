@@ -1,21 +1,21 @@
-const roles = {
+const rolesEnum = {
 	ADMIN: "ADMIN",
 	CREATOR: "CREATOR",
 	USER: "USER",
 };
 
-const status = {
+const statusEnum = {
 	PENDING: "PENDING",
 	ACCEPTED: "ACCEPTED",
 	REJECTED: "REJECTED",
 };
 
-const academicRoleList = {
-	STUDENT: "ALUMNO",
-	EXSTUDENT: "EXALUMNO",
-	TEACHER: "PROFESOR",
-	COORDINATOR: "COORDINADOR",
-	DEPARTAMENT: "DEPARTAMENTO",
+const academicRoleEnum = {
+	ALUMN: "ALUMN",
+	ALUMNI: "ALUMNI",
+	PROFESSOR: "PROFESSOR",
+	COORDINATOR: "COORDINATOR",
+	EMPLOYEE: "EMPLOYEE",
 };
 
-export { roles, status, academicRoleList };
+export { rolesEnum, statusEnum, academicRoleEnum };
