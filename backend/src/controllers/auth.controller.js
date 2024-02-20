@@ -9,6 +9,7 @@ const secret = process.env.TOKEN_SECRET;
 
 export const getEmail = async (req, res) => {
 	try {
+		console.log(req)
 		const userFound = await prisma.user.findUnique({
 			where: {
 				email: req.body.email,
