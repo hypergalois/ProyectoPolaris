@@ -13,16 +13,14 @@ export const useUser = () => {
 };
 
 export const UserProvider = ({ children }) => {
-	const [email, setEmail] = useState(null);
+	const [existEmail, setExistEmail] = useState(false);
 	const [perfil, setProfile] = useState(null);
 	const [errors, setErrors] = useState([]);
 
-	const getEmail = async (email) => {
+	const getExistEmail = async (email) => {
 		try {
-			if(email){
-				const response = await getEmailRequest(email);
-				response==200 ? setEmail(true) : setEmail(false)
-			}
+			const response = await getEmailRequest(email);
+			response==200 ? setExistEmail(true) : setExistEmail(false)
 		} catch (error) {
 			if (Array.isArray(error.response.data)) {
 				setErrors(error.response.data);
@@ -54,5 +52,5 @@ export const UserProvider = ({ children }) => {
 		}
 	}, [errors]);
 
-	return <UserContext.Provider value={{ email, getEmail, perfil, getProfile, errors }}>{children}</UserContext.Provider>;
+	return <UserContext.Provider value={{ existEmail, getExistEmail, perfil, getProfile, errors }}>{children}</UserContext.Provider>;
 };

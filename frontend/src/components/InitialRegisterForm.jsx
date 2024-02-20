@@ -12,7 +12,7 @@ const InitialRegisterForm = () => {
 	} = useForm();
 	// eslint-disable-next-line no-unused-vars
 	const [email, setEmail] = useState("");
-	const { email : emailTrue, getEmail, errors: userErrors } = useUser();
+	const { existEmail : emailTrue, getExistEmail, errors: userErrors } = useUser();
 	const navigate = useNavigate();
 	var noEmailUtad = true;
 
@@ -22,7 +22,7 @@ const InitialRegisterForm = () => {
 		noEmailUtad = data.email.endsWith("@u-tad.com") || data.email.endsWith("@live.u-tad.com");
 
 		if (noEmailUtad) {
-			getEmail(data.email)
+			getExistEmail(data.email)
 			console.log(emailTrue);
 			if(emailTrue){
 				setEmail(data.email);
