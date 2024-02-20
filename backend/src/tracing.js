@@ -1,42 +1,33 @@
+// tracing.js
 "use strict";
-
-import {
-    BasicTracerProvider,
-    ConsoleSpanExporter,
-    SimpleSpanProcessor,
-} from "@opentelemetry/tracing";
+import process from "process";
+import opentelemetry from "@opentelemetry/sdk-node";
+import { getNodeAutoInstrumentations } from "@opentelemetry/auto-instrumentations-node";
 import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-http";
 import { Resource } from "@opentelemetry/resources";
 import { SemanticResourceAttributes } from "@opentelemetry/semantic-conventions";
 
-import opentelemetry from "@opentelemetry/sdk-node";
-import { getNodeAutoInstrumentations } from "@opentelemetry/auto-instrumentations-node";
+export default function initTracer() {
+    const exporterOptions = {
+        url: "http://localhost:4318/v1/traces",
+    };
 
-const exporter = new OTLPTraceExporter({
-    url: "http://localhost:4318/v1/traces",
-});
+    const traceExporter = new OTLPTraceExporter(exporterOptions);
+    const sdk = new opentelemetry.NodeSDK({
+        traceExporter,
+        instrumentations: [getNodeAutoInstrumentations()],
+        resource: new Resource({
+            [SemanticResourceAttributes.SERVICE_NAME]:
+                "proyecto-polaris-backend",
+        }),
+    });
 
-const provider = new BasicTracerProvider({
-    resource: new Resource({
-        [SemanticResourceAttributes.SERVICE_NAME]: "proyecto-polaris",
-    }),
-});
-// export spans to console (useful for debugging)
-provider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
-// export spans to opentelemetry collector
-provider.addSpanProcessor(new SimpleSpanProcessor(exporter));
+    sdk.start();
 
-provider.register();
-const sdk = new opentelemetry.NodeSDK({
-    traceExporter: exporter,
-    instrumentations: [getNodeAutoInstrumentations()],
-});
-
-sdk.start();
-
-process.on("SIGTERM", () => {
-    sdk.shutdown()
-        .then(() => console.log("Tracing terminated"))
-        .catch((error) => console.log("Error terminating tracing", error))
-        .finally(() => process.exit(0));
-});
+    process.on("SIGTERM", () => {
+        sdk.shutdown()
+            .then(() => console.log("Tracing terminated"))
+            .catch((error) => console.log("Error terminating tracing", error))
+            .finally(() => process.exit(0));
+    });
+}
