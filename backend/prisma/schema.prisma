@@ -23,11 +23,11 @@ enum Status {
 }
 
 enum academicRole {
-  ALUMNO
-  EXALUMNO
-  PROFESOR
-  COORDINADOR
-  DEPARTMENTO
+  ALUMN
+  ALUMNI
+  PROFESSOR
+  COORDINATOR
+  EMPLOYEE
 }
 
 model User {
