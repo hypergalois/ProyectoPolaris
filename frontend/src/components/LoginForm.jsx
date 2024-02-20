@@ -50,7 +50,7 @@ const LoginForm = () => {
 						type="password"
 						{...register("password", {
 							required: true,
-							minLength: 6,
+							minLength: 3,
 						})}
 						placeholder="Contraseña"
 					/>
