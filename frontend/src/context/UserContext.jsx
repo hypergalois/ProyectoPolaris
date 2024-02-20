@@ -1,13 +1,13 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import { getEmail, getProfile } from "../api/auth";
+import { getEmailRequest, getProfileRequest } from "../api/user";
 import Cookies from "js-cookie";
 
 export const UserContext = createContext();
 
-export const useProfile = () => {
+export const useUser = () => {
 	const context = useContext(UserContext);
 	if (!context) {
-		throw new Error("useAuth must be used within an UserProvider");
+		throw new Error("useUser must be used within an UserProvider");
 	}
 	return context;
 };
@@ -19,8 +19,10 @@ export const UserProvider = ({ children }) => {
 
 	const getEmail = async (email) => {
 		try {
-			const response = await getEmail(email);
-			response==200 ? setEmail(true) : setEmail(false)
+			if(email){
+				const response = await getEmailRequest(email);
+				response==200 ? setEmail(true) : setEmail(false)
+			}
 		} catch (error) {
 			if (Array.isArray(error.response.data)) {
 				setErrors(error.response.data);
@@ -32,7 +34,7 @@ export const UserProvider = ({ children }) => {
 
 	const getProfile = async () => {
 		try {
-			const response = await getProfile();
+			const response = await getProfileRequest();
 			setProfile(response.data)
 		} catch (error) {
 			if (Array.isArray(error.response.data)) {
