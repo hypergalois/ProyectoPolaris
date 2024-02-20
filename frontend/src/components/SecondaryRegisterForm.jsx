@@ -52,9 +52,12 @@ const SecondaryRegisterForm = () => {
     }, [degrees])
 
     const onSubmit = handleSubmit(async (data) => {
-        data.username = data.username + " " + data.usersecondname
+        data.fullName = data.username + " " + data.usersecondname + " " + data.userthirdname
+        delete data.username;
         delete data.usersecondname;
+        delete data.userthirdname;
         data.user = !data.user ? data.email.split('@')[0] : data.user;
+        console.log(data)
         await registerUser(data);
     });
 
@@ -111,10 +114,27 @@ const SecondaryRegisterForm = () => {
                             minLength: 3,
                             maxLength: 20
                         })}
-                        placeholder="Apellidos"
+                        placeholder="Primer Apellido"
                     />
                     {
                         errors.usersecondname && (
+                            <p className="mb-2">Hace falta los apellidos</p>
+                        )
+                    }
+                </div>
+                <div className="mb-4">
+                    <input
+                        className="w-full p-4 rounded-2xl"
+                        type="text" {
+                        ...register("userthirdname", {
+                            required: true,
+                            minLength: 3,
+                            maxLength: 20
+                        })}
+                        placeholder="Segundo Apellido"
+                    />
+                    {
+                        errors.userthirdname && (
                             <p className="mb-2">Hace falta los apellidos</p>
                         )
                     }
@@ -136,6 +156,23 @@ const SecondaryRegisterForm = () => {
                         )
                     }
                 </div>
+                <div className="mb-4">
+                    <input 
+                        className="w-full p-4 rounded-2xl"
+                        type="text" {
+                        ...register("password", {
+                            required: true,
+                            minLength: 3,
+                            maxLength: 20
+                        })}
+                        placeholder="Contraseña"
+                    />
+                    {
+                        errors.user && (
+                            <p className="mb-2">Tiene que tener entre 3 y 20 caracteres</p>
+                        )
+                    }
+                </div>
                 {isUdEmailLive && (
                     <div className="mb-4 flex">
                         <div className="w-full">
@@ -150,8 +187,8 @@ const SecondaryRegisterForm = () => {
                                 onChange={handleAcademicRoleChange}
                             >
                                 <option value="1" disabled hidden>Cargo</option>
-                                <option value="STUDENT">Alumno</option>
-                                <option value="EXSTUDENT">Exalumno</option>
+                                <option value="ALUMNO">Alumno</option>
+                                <option value="EXALUMNO">Exalumno</option>
                             </select>
                             {
                                 errors.academicRole && (
@@ -159,7 +196,7 @@ const SecondaryRegisterForm = () => {
                                 )
                             }
                         </div>
-                        {academicRole=="EXSTUDENT" && (
+                        {academicRole=="EXALUMNO" && (
                             <div className="flex-none w-1/2">
                                 <select 
                                     className="w-full p-4 rounded-2xl" 
@@ -200,9 +237,9 @@ const SecondaryRegisterForm = () => {
                                 onChange={handleAcademicRoleChange}
                             >
                                 <option value="1" disabled hidden>Cargo</option>
-                                <option value="TEACHER">Profesor</option>
-                                <option value="COORDINATOR">Coordinador</option>
-                                <option value="DEPARTAMENT">Departamento</option>
+                                <option value="PROFESOR">Profesor</option>
+                                <option value="COORDINADOR">Coordinador</option>
+                                <option value="DEPARTAMENTO">Departamento</option>
                             </select>
                             {
                                 errors.academicRole && (
@@ -210,7 +247,7 @@ const SecondaryRegisterForm = () => {
                                 )
                             }
                         </div>
-                        {academicRole=="DEPARTAMENT" && (
+                        {academicRole=="DEPARTAMENTO" && (
                             <div className="flex-none w-1/2">
                                 <select 
                                     className="w-full p-4 rounded-2xl" 
