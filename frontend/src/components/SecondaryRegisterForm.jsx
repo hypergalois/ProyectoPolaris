@@ -33,7 +33,7 @@ const SecondaryRegisterForm = () => {
 
     useEffect(() => {
         if (isAuthenticated) {
-            navigate('/profile');
+            navigate('/projects');
         }
     }, [isAuthenticated, navigate])
 
@@ -57,7 +57,6 @@ const SecondaryRegisterForm = () => {
         delete data.usersecondname;
         delete data.userthirdname;
         data.user = !data.user ? data.email.split('@')[0] : data.user;
-        console.log(data)
         await registerUser(data);
     });
 

@@ -15,11 +15,12 @@ const LoginForm = () => {
 
 	useEffect(() => {
 		if (isAuthenticated) {
-			navigate("/profile");
+			navigate("/projects");
 		}
 	}, [isAuthenticated, navigate]);
 
 	const onSubmit = async (data) => {
+        console.log(data)
 		await loginUser(data);
 	};
 
@@ -39,7 +40,7 @@ const LoginForm = () => {
 							required: true,
 							pattern: /^\S+@\S+$/i,
 						})}
-						placeholder="Usuario o correo"
+						placeholder="Correo"
 					/>
 					{errors.email && <p>Hace falta un email</p>}
 				</div>
