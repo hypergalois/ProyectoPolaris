@@ -5,22 +5,22 @@ import { Navigate, Outlet } from "react-router-dom";
 import NavBar from "./components/Navbar";
 
 function ProtectedRoute() {
-  const { loading, isAuthenticated } = useAuth();
+	const { loading, isAuthenticated } = useAuth();
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+	if (loading) {
+		return <p>Loading...</p>;
+	}
 
-  if (!loading && !isAuthenticated) {
-    return <Navigate to="/" replace />;
-  }
+	if (!loading && !isAuthenticated) {
+		return <Navigate to="/" replace />;
+	}
 
-  return (
-    <>
-      <NavBar />
-      <Outlet />
-    </>
-  );
+	return (
+		<>
+			<NavBar />
+			<Outlet />
+		</>
+	);
 }
 
 export default ProtectedRoute;
