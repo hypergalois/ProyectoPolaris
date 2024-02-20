@@ -7,16 +7,16 @@ import { useAreas } from "../context/AreasContext";
 import DropzoneComponent from "./DropzoneComponent";
 
 const courseOptions = [
-    {value : 1, label : "1º"},
-    {value : 2, label : "2º"},
-    {value : 3, label : "3º"},
-    {value : 4, label : "4º"},
-    {value : 5, label : "5º"}
+	{ value: 1, label: "1º" },
+	{ value: 2, label: "2º" },
+	{ value: 3, label: "3º" },
+	{ value: 4, label: "4º" },
+	{ value: 5, label: "5º" },
 ];
 const letterOptions = [
-    {value : "A", label : "A"},
-    {value : "B", label : "B"},
-    {value : "C", label : "C"}
+	{ value: "A", label: "A" },
+	{ value: "B", label: "B" },
+	{ value: "C", label: "C" },
 ];
 
 const ProjectForm = () => {
@@ -42,22 +42,14 @@ const ProjectForm = () => {
     });
 
     const degreeOptions = [];
-    
-    useEffect(() => {
-        getDegrees();
 
-        appendStudent({ student : "" });
-        appendTeacher({ teacher : "" });
-        appendAward({ award : "" });
-    }, []);
+	useEffect(() => {
+		getDegrees();
 
-    useEffect(() => {
-        if(degrees) {
-            degrees.map((degree) => {
-                degreeOptions.push({ value : degree.id, label : degree.name });
-            })
-        }
-    }, [degrees])
+		appendStudent({ student: "" });
+		appendTeacher({ teacher: "" });
+		appendAward({ award: "" });
+	}, []);
 
     useEffect(() => {
         setValue("uploadedContent", uploadedFiles);
