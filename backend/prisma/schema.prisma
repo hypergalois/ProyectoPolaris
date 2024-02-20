@@ -48,6 +48,8 @@ model User {
   promotion      String?
   academicCourse String?
 
+  department String?
+
   // Solo para coordinadores tienen un departamento
   //headOfDepartmentId String?     @unique @db.ObjectId
   //headOfDepartment   Department? @relation(fields: [headOfDepartmentId], references: [id])

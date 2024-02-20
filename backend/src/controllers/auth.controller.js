@@ -26,7 +26,7 @@ export const getEmail = async (req, res) => {
 
 export const register = async (req, res) => {
 	console.log(req.body);
-	const { email, password, fullName, academicRole, academicCourse } = req.body;
+	const { email, password, fullName, academicRole, academicCourse, department, promotion } = req.body;
 	let { username } = req.body;
 	let role;
 	// console.log(username, email, password);
@@ -71,6 +71,8 @@ export const register = async (req, res) => {
 				academicRole: academicRole,
 				role: role,
 				academicCourse: academicCourse,
+                department: department,
+                promotion: promotion
 			},
 		});
 
