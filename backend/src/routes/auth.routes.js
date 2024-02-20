@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { register, login, logout, profile, verifyToken, checkEmail, refreshToken } from "../controllers/auth.controller.js";
+import { register, login, logout, profile, verifyToken, checkEmailRegister, refreshToken } from "../controllers/auth.controller.js";
 
 import { registerSchema, loginSchema } from "../schemas/auth.schema.js";
 import { authRequired } from "../middlewares/authRequired.middleware.js";
@@ -162,8 +162,7 @@ router.post("/logout", logout);
  *         description: Error interno del servidor
  */
 
-
-router.post("/checkEmail", checkEmail);
+router.post("/checkEmailRegister", checkEmailRegister);
 
 /**
  * @swagger
@@ -213,7 +212,6 @@ router.post("/checkEmail", checkEmail);
  *       '500':
  *         description: Error interno del servidor
  */
-
 
 router.get("/profile", authRequired, profile);
 
@@ -272,7 +270,6 @@ router.get("/profile", authRequired, profile);
  *                   type: string
  *                   description: Mensaje de error indicando que el usuario asociado al token no fue encontrado.
  */
-
 
 router.get("/verify", verifyToken);
 

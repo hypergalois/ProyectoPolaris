@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { academicRoleList } from "../config/tags.js";
+import { academicRoleEnum } from "../config/tags.js";
 
 // TODO: Añadir validacion de cargo y comprobar promocion si es alumni y si no departamento
 
@@ -41,10 +41,10 @@ export const registerSchema = z.object({
 		.refine(
 			(role) => {
 				// Check if the role is one of the values in the academicRole object
-				return Object.values(academicRoleList).includes(role);
+				return Object.values(academicRoleEnum).includes(role);
 			},
 			{
-				message: `Academic role must be one of ${Object.values(academicRoleList).join(", ")}`,
+				message: `Academic role must be one of ${Object.values(academicRoleEnum).join(", ")}`,
 			}
 		),
 	promotion: z.string().optional(),

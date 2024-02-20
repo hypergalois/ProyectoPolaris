@@ -81,11 +81,7 @@ const ProjectForm = () => {
     const onSubmit = (data) => {
         const newProject = {
             title : data.projectTitle,
-            type : null,
             description : data.projectDescription,
-            summary : null,
-            report : null,
-            differentiator : null,
             keywords : [],
             awards : data.awards?.filter(value => value !== ""),
             subject : data.subject,
@@ -96,8 +92,8 @@ const ProjectForm = () => {
             externalLinks : data.externalLinks?.filter(value => value !== ""),
             uploadedContent : data.uploadedContent,
             degreeId : data.degree,
-            impliedStudents : data.impliedStudents?.filter(value => value !== ""),
-            impliedProfessors : data.impliedTeachers?.filter(value => value !== "")
+            impliedStudentsIDs : [] /*data.impliedStudents?.filter(value => value !== "")*/,
+            impliedProfessorsIDs : [] /*data.impliedTeachers?.filter(value => value !== "")*/
         };
         console.log(newProject);
         

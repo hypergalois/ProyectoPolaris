@@ -3,21 +3,28 @@ import jwt from "jsonwebtoken";
 import prisma from "../config/prisma.client.js";
 
 import { createAccessToken } from "../libs/jwt.js";
-import { academicRoleList, roles } from "../config/tags.js";
+import { academicRoleEnum, rolesEnum } from "../config/tags.js";
 
 const secret = process.env.TOKEN_SECRET;
 
-export const checkEmail = async (req, res) => {
+// Ruta que se usa en el registro para comprobar si el email ya esta registrado
+export const checkEmailRegister = async (req, res) => {
+	const { email } = req.body;
+	console.log(email);
+
 	try {
 		const userFound = await prisma.user.findUnique({
 			where: {
-				email: req.body.email,
+				email: email,
 			},
 		});
 
-		if (userFound) return res.status(400).json({ message: "User is already registered." });
+		// Solo tengo en cuenta que hay dos posibles casos, este o el @u-tad.
+		const isStudent = email.endsWith("@live.u-tad.com");
 
-		return res.status(200).json({ message: "User not registered" });
+		if (userFound) return res.status(400).json({ message: "User is already registered.", isStudent });
+
+		return res.status(200).json({ message: "User is not registered.", isStudent });
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ message: error.message });
@@ -25,11 +32,9 @@ export const checkEmail = async (req, res) => {
 };
 
 export const register = async (req, res) => {
-	console.log(req.body);
-	const { email, password, fullName, academicRole, academicCourse, department, promotion } = req.body;
-	let { username } = req.body;
-	let role;
-    
+	// console.log(req.body);
+	const { email, username, password, fullName, academicRole, academicCourse, department, promotion } = req.body;
+
 	try {
 		const foundUser = await prisma.user.findUnique({
 			where: {
@@ -46,19 +51,18 @@ export const register = async (req, res) => {
 
 		const hashedPassword = await bcrypt.hash(password, salt);
 
-		// Control de rol segun email
+		// Asignación automatica de rol según el email
 		if (email.endsWith("@u-tad.com")) {
-			if (academicRole === academicRoleList.TEACHER) role = roles.CREATOR;
-			else
-				return res.status(400).json({
-					message: "You can only register as a teacher with an @u-tad.com email.",
-				});
+			const role = rolesEnum.CREATOR;
+		} else if (email.endsWith("@live.u-tad.com")) {
+			const role = rolesEnum.USER;
 		} else {
-			role = roles.USER;
+			// Nunca deberia llegar a este caso
+			return res.status(400).json({ message: "The email is not valid." });
 		}
 
 		// Control de usuario en caso de ser vacio asignar primera parte del email
-		if (username === undefined) username = email.split("@")[0];
+		if (!username) username = email.split("@")[0];
 
 		// Y meter los datos aqui que falten
 		const newUser = await prisma.user.create({
@@ -70,8 +74,8 @@ export const register = async (req, res) => {
 				academicRole: academicRole,
 				role: role,
 				academicCourse: academicCourse,
-                department: department,
-                promotion: promotion
+				department: department,
+				promotion: promotion,
 			},
 		});
 
@@ -156,11 +160,12 @@ export const logout = async (req, res) => {
 export const profile = async (req, res) => {
 	// const { id } = req.params;
 	// console.log(req.userId)
+	const { userId } = req.body;
 
 	try {
 		const userFound = await prisma.user.findUnique({
 			where: {
-				id: req.body.userId,
+				id: userId,
 			},
 		});
 
