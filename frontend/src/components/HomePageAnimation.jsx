@@ -1,8 +1,6 @@
-import projectLogo from "../../public/logo-projects.png";
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 const HomePageAnimation = () => {
-  
   const [isVisible, setIsVisible] = useState(true);
 
   const handleAnimationEnd = () => {
@@ -26,14 +24,14 @@ const HomePageAnimation = () => {
         <div
           className="absolute bg-[#858585]"
           style={{
-            transition: 'transform 3s ease-out',
-            transform: loaded ? 'translateX(-100%)' : 'translateX(0)',
+            transition: "transform 3s ease-out",
+            transform: loaded ? "translateX(-100%)" : "translateX(0)",
           }}
           onTransitionEnd={handleAnimationEnd}
         >
           {/* Contenido del elemento */}
           <div className="flex items-center justify-center w-screen h-screen">
-            <img src={projectLogo} alt="Project Logo" />
+            <img src="/logo-projects.png" alt="Project Logo" />
           </div>
         </div>
       )}
@@ -42,5 +40,3 @@ const HomePageAnimation = () => {
 };
 
 export default HomePageAnimation;
-
-
