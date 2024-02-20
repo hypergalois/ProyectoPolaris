@@ -60,7 +60,7 @@ const InitialRegisterForm = () => {
 				</div>
 				<div className="mb-4">
 					<button type="submit" className="w-5/12 p-4 rounded-xl bg-[#333333] text-white">
-						Registrarse 2
+						Registrarse
 					</button>
 				</div>
 			</form>
