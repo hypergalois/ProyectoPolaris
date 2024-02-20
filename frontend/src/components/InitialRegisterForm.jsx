@@ -22,11 +22,7 @@ const InitialRegisterForm = () => {
 		noEmailUtad = data.email.endsWith("@u-tad.com") || data.email.endsWith("@live.u-tad.com");
 
 		if (noEmailUtad) {
-			var emailObject = {
-				email: data.email
-			};
-			console.log(emailObject)
-			getExistEmail(emailObject)
+			getExistEmail(data)
 			if(emailTrue){
 				setEmail(data.email);
 				navigate(`/register/details`, { state: { email: data.email } });
