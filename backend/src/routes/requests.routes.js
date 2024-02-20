@@ -2,7 +2,7 @@ import { Router } from "express";
 import { checkRole } from "../middlewares/checkRole.middleware.js";
 import { roles } from "../config/tags.js";
 import { getRequest, getRequests, updateRequest, acceptRequest, rejectRequest, getRequestsByStatus } from "../controllers/requests.controller.js";
-import { authRequired } from '../middlewares/authRequired.middleware.js';
+import { authRequired } from "../middlewares/authRequired.middleware.js";
 
 /**
  * @swagger

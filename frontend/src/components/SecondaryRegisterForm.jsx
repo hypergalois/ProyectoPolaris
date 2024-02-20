@@ -13,11 +13,11 @@ const SecondaryRegisterForm = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const { email } = location.state || {};
-    const isUdEmailUtad = email.endsWith('@u-tad.com');
-    const isUdEmailLive = email.endsWith('@live.u-tad.com');
+	const { email } = location.state || {};
+	const isUdEmailUtad = email.endsWith("@u-tad.com");
+	const isUdEmailLive = email.endsWith("@live.u-tad.com");
 
-    const [academicRole, setAcademicRole] = useState("1"); // Define academicRole state
+	const [academicRole, setAcademicRole] = useState("1"); // Define academicRole state
 
     const departments = [];
     const [degreeOptions, setDegreeOptions] = useState([]);
@@ -26,10 +26,10 @@ const SecondaryRegisterForm = () => {
       years.push(year+"/"+(year+1));
     }
 
-    // Handler for select change event
-    const handleAcademicRoleChange = (event) => {
-        setAcademicRole(event.target.value); // Update academicRole state
-    }
+	// Handler for select change event
+	const handleAcademicRoleChange = (event) => {
+		setAcademicRole(event.target.value); // Update academicRole state
+	};
 
     useEffect(() => {
         if (isAuthenticated) {

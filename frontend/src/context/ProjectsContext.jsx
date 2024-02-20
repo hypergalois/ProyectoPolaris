@@ -1,45 +1,41 @@
-import { createContext, useState, useContext, useEffect } from 'react';
-import { getDegreesRequest } from '../api/projects';
+import { createContext, useState, useContext, useEffect } from "react";
+import { getDegreesRequest } from "../api/projects";
 
 export const ProjectsContext = createContext();
 
 export const useProjects = () => {
-    const context = useContext(ProjectsContext);
-    if (!context) {
-        throw new Error('useProjects must be used within an ProjectsProvider');
-    }
-    return context;
-}
+	const context = useContext(ProjectsContext);
+	if (!context) {
+		throw new Error("useProjects must be used within an ProjectsProvider");
+	}
+	return context;
+};
 
 export const ProjectsProvider = ({ children }) => {
-    const [degrees, setDegrees] = useState(null);
-    const [errors, setErrors] = useState([]);
+	const [degrees, setDegrees] = useState(null);
+	const [errors, setErrors] = useState([]);
 
-    const getDegrees = async () => {
-        try {
-            const response = await getDegreesRequest();
-            setDegrees(response.data);
-        } catch (error) {
-            if (Array.isArray(error.response.data)) {
-                setErrors(error.response.data);
-            } else {
-                setErrors([error.response.data]);
-            }
-        }
-    }
+	const getDegrees = async () => {
+		try {
+			const response = await getDegreesRequest();
+			setDegrees(response.data);
+		} catch (error) {
+			if (Array.isArray(error.response.data)) {
+				setErrors(error.response.data);
+			} else {
+				setErrors([error.response.data]);
+			}
+		}
+	};
 
-    useEffect(() => {
-        if (errors.length > 0) {
-            const timer = setTimeout(() => {
-                setErrors([]);
-            }, 5000);
-            return () => clearTimeout(timer);
-        }
-    }, [errors]);
+	useEffect(() => {
+		if (errors.length > 0) {
+			const timer = setTimeout(() => {
+				setErrors([]);
+			}, 5000);
+			return () => clearTimeout(timer);
+		}
+	}, [errors]);
 
-    return (
-        <ProjectsContext.Provider value={{ degrees, getDegrees, errors }}>
-            {children}
-        </ProjectsContext.Provider>
-    )
-}
+	return <ProjectsContext.Provider value={{ degrees, getDegrees, errors }}>{children}</ProjectsContext.Provider>;
+};

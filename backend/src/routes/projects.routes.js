@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { createProject, deleteProject, getProject, getProjectByCategory, getProjectByDate, getProjectByStatus, getProjectByTitle, getProjectByUser, getProjects, updateProject } from "../controllers/projects.controllers.js";
 import { uploadFile } from "../middlewares/uploadFile.middleware.js";
-import { authRequired } from "../middlewares/authRequired.middleware.js"
+import { authRequired } from "../middlewares/authRequired.middleware.js";
 import { validateSchema } from "../middlewares/validator.middleware.js";
 import { projectSchema, updateProjectSchema } from "../schemas/project.schema.js";
 

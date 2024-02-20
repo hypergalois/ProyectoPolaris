@@ -48,6 +48,8 @@ model User {
   promotion      String?
   academicCourse String?
 
+  department String?
+
   // Solo para coordinadores tienen un departamento
   //headOfDepartmentId String?     @unique @db.ObjectId
   //headOfDepartment   Department? @relation(fields: [headOfDepartmentId], references: [id])
@@ -75,7 +77,7 @@ model Project {
   status  Status?   @default(PENDING)
   Request Request[]
 
-  title       String?
+  title       String
   type        String?
   description String?
 
@@ -98,16 +100,30 @@ model Project {
   areaId String? @db.ObjectId
   area   Area?   @relation(fields: [areaId], references: [id])
 
+  degreeId String? @db.ObjectId
+  degree   Degree? @relation(fields: [degreeId], references: [id])
+
   impliedStudentsIDs String[] @db.ObjectId
   impliedStudents    User[]   @relation(fields: [impliedStudentsIDs], references: [id], name: "involvedAsStudent")
 
   impliedProfessorsIDs String[] @db.ObjectId
   impliedProfessors    User[]   @relation(fields: [impliedProfessorsIDs], references: [id], name: "involvedAsProfessor")
 
-  createdAt DateTime  @default(now())
+  createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
 
   @@map("projects")
+}
+
+model Subject {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  name String @unique
+
+  degreesId String[] @db.ObjectId
+  degrees   Degree[] @relation(fields: [degreesId], references: [id])
+
+  @@map("subjects")
 }
 
 model Degree {
@@ -118,7 +134,11 @@ model Degree {
   areasId String[] @db.ObjectId
   areas   Area[]   @relation(fields: [areasId], references: [id])
 
-  users User[]
+  subjectsId String[] @db.ObjectId
+  subjects   Subject[] @relation(fields: [subjectsId], references: [id])
+
+  projects Project[]
+  users    User[]
 
   @@map("degrees")
 }
@@ -128,10 +148,9 @@ model Area {
 
   name String @unique
 
-  degreesId String[] @db.ObjectId
-  degrees   Degree[] @relation(fields: [degreesId], references: [id])
-
-  projects Project[]
+  degreesId String[]  @db.ObjectId
+  degrees   Degree[]  @relation(fields: [degreesId], references: [id])
+  Project   Project[]
 
   @@map("areas")
 }
@@ -157,3 +176,5 @@ model Request {
 
   @@map("requests")
 }
+
+

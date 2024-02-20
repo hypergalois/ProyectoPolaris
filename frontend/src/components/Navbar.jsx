@@ -4,45 +4,43 @@ import { Link } from "react-router-dom";
 import React from "react";
 
 function NavBar() {
+	// Yago, Aitor, dependiendo de si el usuario esta logeado o no, haremos conditional rendering
+	// y mostraremos unos botones u otros
+	// Para acceder al estado de autenticacion, usamos el hook useAuth
 
-    // Yago, Aitor, dependiendo de si el usuario esta logeado o no, haremos conditional rendering
-    // y mostraremos unos botones u otros
-    // Para acceder al estado de autenticacion, usamos el hook useAuth
+	const { isAuthenticated } = useAuth();
 
-    const { isAuthenticated } = useAuth();
-
-    return (
-        <nav>
-            <div>
-                <Link to="/">UTAD PROYECTOS</Link>
-            </div>
-            <ul>
-                {isAuthenticated ? (
-                    <React.Fragment>
-                        <li>
-                            <Link to="/projects/new">Añadir proyecto</Link>
-                        </li>
-                        <li>
-                            <Link to="/logout">Logout</Link>
-                        </li>
-                        <li>
-                            <Link to="/profile">Profile</Link>
-                        </li>
-                    </React.Fragment>
-                ) :
-                    (
-                        <React.Fragment>
-                            <li>
-                                <Link to="/login">Login</Link>
-                            </li>
-                            <li>
-                                <Link to="/register">Register</Link>
-                            </li>
-                        </React.Fragment>
-                    )}
-            </ul>
-        </nav>
-    )
+	return (
+		<nav>
+			<div>
+				<Link to="/">UTAD PROYECTOS</Link>
+			</div>
+			<ul>
+				{isAuthenticated ? (
+					<React.Fragment>
+						<li>
+							<Link to="/projects/new">Añadir proyecto</Link>
+						</li>
+						<li>
+							<Link to="/logout">Logout</Link>
+						</li>
+						<li>
+							<Link to="/profile">Profile</Link>
+						</li>
+					</React.Fragment>
+				) : (
+					<React.Fragment>
+						<li>
+							<Link to="/login">Login</Link>
+						</li>
+						<li>
+							<Link to="/register">Register</Link>
+						</li>
+					</React.Fragment>
+				)}
+			</ul>
+		</nav>
+	);
 }
 
 export default NavBar;
