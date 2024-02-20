@@ -1,5 +1,3 @@
-import check from "../../public/check.jpg";
-
 const HomePageLanding = () => {
 	return (
 		<div className="p-10">
@@ -7,7 +5,7 @@ const HomePageLanding = () => {
 			<h1 className="text-6xl text-[#858585] font-bold mb-8">Descubre disfruta.</h1>
 			<div className="flex">
 				<div className="w-2/12">
-					<img src={check} alt="Descripción de la imagen" className="w-16" />
+					<img src="/check.jpg" alt="Descripción de la imagen" className="w-16" />
 				</div>
 				<div className="w-10/12 pl-4">
 					<h2 className="text-xl font-semibold mb-2">Explora los proyectos de alumnos y alumni de todos los grados de U-tad.</h2>
@@ -16,7 +14,7 @@ const HomePageLanding = () => {
 			</div>
 			<div className="flex">
 				<div className="w-2/12">
-					<img src={check} alt="Descripción de la imagen" className="w-16" />
+					<img src="/check.jpg" alt="Descripción de la imagen" className="w-16" />
 				</div>
 				<div className="w-10/12 pl-4">
 					<h2 className="text-xl font-semibold mb-2">Sube y comparte tus propios proyectos con la comunidad de U-tad.</h2>
