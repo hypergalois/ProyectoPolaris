@@ -51,7 +51,7 @@ export const register = async (req, res) => {
 		if (email.endsWith("@u-tad.com")) {
 			if (academicRole === academicRoleList.TEACHER) role = roles.CREATOR;
 			else
-				res.status(400).json({
+				return res.status(400).json({
 					message: "You can only register as a teacher with an @u-tad.com email.",
 				});
 		} else {
