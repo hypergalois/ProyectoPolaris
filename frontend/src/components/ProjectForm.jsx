@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { useDropzone } from "react-dropzone"
 import Select from "react-select";
@@ -26,36 +26,50 @@ const ProjectForm = () => {
 
     const { fields : linkFields, append : appendLink } = useFieldArray({
         control,
-        name: "externalLinks"
+        name: "links"
     });
     const { fields : studentFields, append : appendStudent } = useFieldArray({
         control,
-        name: "impliedStudents"
+        name: "students"
     });
     const { fields : teacherFields, append : appendTeacher } = useFieldArray({
         control,
-        name: "impliedTeachers"
+        name: "teachers"
     });
     const { fields : awardFields, append : appendAward } = useFieldArray({
         control,
-        name: "awards"
+        name: "obteinedAwards"
     });
 
-    const degreeOptions = [];
+    const degreeOptions = useRef([]);
 
 	useEffect(() => {
 		getDegrees();
 
-		appendStudent({ student: "" });
-		appendTeacher({ teacher: "" });
+		appendStudent({ impliedStudent: "" });
+		appendTeacher({ impliedTeacher: "" });
 		appendAward({ award: "" });
 	}, []);
+
+    useEffect(() => {
+        if(degrees) {
+            degrees.map((degree) => {
+                const newDegree = { value : degree.id, label : degree.name };
+                const isIndegreeOptions = degreeOptions.current.some(degreeOption => {
+                    return JSON.stringify(degreeOption) === JSON.stringify(newDegree)
+                });
+                if(!isIndegreeOptions){
+                    degreeOptions.current.push(newDegree);
+                }
+            })
+        }
+    }, [degrees]);
 
     useEffect(() => {
         setValue("uploadedContent", uploadedFiles);
         console.log(uploadedFiles);
     }, [uploadedFiles])
-
+    
     const onSubmit = (data) => {
         const newProject = {
             title : data.projectTitle,
@@ -65,19 +79,20 @@ const ProjectForm = () => {
             report : null,
             differentiator : null,
             keywords : null,
-            awards : data.awards,
+            awards : data.awards?.filter(value => value !== ""),
             subject : data.subject,
             personalProject : false,
             academicCourse : data.academicCourse,
             course : data.course,
             letter : data.letter,
-            externalLinks : data.externalLinks.map(object => object.link).filter(value => value !== ""),
+            externalLinks : data.externalLinks?.filter(value => value !== ""),
             uploadedContent : data.uploadedContent,
             degreeId : data.degree,
-            impliedStudents : data.impliedStudents.map(object => object.student).filter(value => value !== ""),
-            impliedProfessors : data.impliedTeachers.map(object => object.teacher).filter(value => value !== "")
+            impliedStudents : data.impliedStudents?.filter(value => value !== ""),
+            impliedProfessors : data.impliedTeachers?.filter(value => value !== "")
         };
         console.log(newProject);
+        console.log(data);
     }
 
     return(
@@ -95,7 +110,7 @@ const ProjectForm = () => {
             <div>
                 <h3>Grado</h3>
                 <Select
-                    options={degreeOptions}
+                    options={degreeOptions.current}
                     onChange={(selectedDgree) => { setValue("degree", selectedDgree.value) }}
                 />
             </div>
@@ -156,12 +171,12 @@ const ProjectForm = () => {
                     <div key={field.id}>
                     <input
                         type="url"
-                        {...register(`externalLink.${index}`)}
+                        {...register(`externalLinks.${index}`)}
                         placeholder="URL"
                     />
                     </div>
                 ))}
-                <button type="button" onClick={() => appendLink({ link : "" })}>
+                <button type="button" onClick={() => appendLink({ externalLink : "" })}>
                     Añadir recurso externo
                 </button>
             </div>
@@ -180,14 +195,14 @@ const ProjectForm = () => {
                     <div key={field.id}>
                     <input
                         type="text"
-                        {...register(`student.${index}`, {
+                        {...register(`impliedStudents.${index}`, {
                             required : (index === 0)
                         })}
                         placeholder="Estudiante implicado"
                     />
                     </div>
                 ))}
-                <button type="button" onClick={() => appendStudent({ student : "" })}>
+                <button type="button" onClick={() => appendStudent({ impliedStudent : "" })}>
                     Añadir estudiante
                 </button>
             </div>
@@ -197,12 +212,12 @@ const ProjectForm = () => {
                     <div key={field.id}>
                     <input
                         type="text"
-                        {...register(`teacher.${index}`)}
+                        {...register(`impliedTeachers.${index}`)}
                         placeholder="Profesor implicado"
                     />
                     </div>
                 ))}
-                <button type="button" onClick={() => appendTeacher({ teacher : "" })}>
+                <button type="button" onClick={() => appendTeacher({ impliedTeacher : "" })}>
                     Añadir profesor
                 </button>
             </div>
@@ -212,7 +227,7 @@ const ProjectForm = () => {
                     <div key={field.id}>
                     <input
                         type="text"
-                        {...register(`award.${index}`)}
+                        {...register(`awards.${index}`)}
                         placeholder="Premio"
                     />
                     </div>
