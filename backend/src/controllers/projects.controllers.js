@@ -17,9 +17,6 @@ export const getProjects = async (req, res) => {
 };
 
 export const createProject = async (req, res) => {
-	console.log(req.role);
-	console.log(req.body);
-
 	try {
 		const files = req.files ? req.files.map((file) => process.env.PUBLIC_URL + file.destination + file.filename) : [];
 		console.log(files);
@@ -47,7 +44,6 @@ export const createProject = async (req, res) => {
 				data: {
 					...req.body,
 					uploadedContent: files,
-					departmentId: id,
 					status: status.ACCEPTED,
 				},
 			});
