@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { checkRole } from "../middlewares/checkRole.middleware.js";
-import { roles } from "../config/tags.js";
+import { rolesEnum } from "../config/tags.js";
 import { getRequest, getRequests, updateRequest, acceptRequest, rejectRequest, getRequestsByStatus } from "../controllers/requests.controller.js";
 import { authRequired } from "../middlewares/authRequired.middleware.js";
 
@@ -126,7 +126,7 @@ router.get("/requests/:id", authRequired, getRequest);
  *             example:
  *               message: Request not updated
  */
-router.put("/requests/:id", authRequired, checkRole([roles.ADMIN]), updateRequest);
+router.put("/requests/:id", authRequired, checkRole([rolesEnum.ADMIN]), updateRequest);
 
 // Utility routes
 
@@ -191,7 +191,7 @@ router.get("/requests/status/:status", authRequired, getRequestsByStatus);
  *             example:
  *               message: Request not accepted
  */
-router.post("/requests/accept/:id", authRequired, checkRole([roles.ADMIN]), acceptRequest);
+router.post("/requests/accept/:id", authRequired, checkRole([rolesEnum.ADMIN]), acceptRequest);
 
 /**
  * @swagger
@@ -229,6 +229,6 @@ router.post("/requests/accept/:id", authRequired, checkRole([roles.ADMIN]), acce
  *             example:
  *               message: Request not rejected
  */
-router.post("/requests/reject/:id", authRequired, checkRole([roles.ADMIN]), rejectRequest);
+router.post("/requests/reject/:id", authRequired, checkRole([rolesEnum.ADMIN]), rejectRequest);
 
 export default router;

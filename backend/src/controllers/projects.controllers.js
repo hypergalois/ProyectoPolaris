@@ -1,5 +1,5 @@
 import prisma from "../config/prisma.client.js";
-import { status } from "../config/tags.js";
+import { statusEnum } from "../config/tags.js";
 
 // Main controllers
 
@@ -44,7 +44,7 @@ export const createProject = async (req, res) => {
 				data: {
 					...req.body,
 					uploadedContent: files,
-					status: status.ACCEPTED,
+					status: statusEnum.ACCEPTED,
 				},
 			});
 			if (!newProject) return res.status(404).send({ message: "Project not created" });
@@ -80,7 +80,7 @@ export const updateProject = async (req, res) => {
 		if (req.role === "USER" || "CREATOR") {
 			const updatedProject = await prisma.project.update({
 				where: { id: id },
-				data: { ...req.body, status: status.PENDING },
+				data: { ...req.body, status: statusEnum.PENDING },
 			});
 
 			await prisma.request.create({

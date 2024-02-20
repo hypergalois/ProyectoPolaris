@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import prisma from "../config/prisma.client.js";
 
 import { createAccessToken } from "../libs/jwt.js";
-import { academicRoleList, roles } from "../config/tags.js";
+import { academicRoleEnum, rolesEnum } from "../config/tags.js";
 
 const secret = process.env.TOKEN_SECRET;
 
@@ -29,7 +29,7 @@ export const register = async (req, res) => {
 	const { email, password, fullName, academicRole, academicCourse, department, promotion } = req.body;
 	let { username } = req.body;
 	let role;
-    
+
 	try {
 		const foundUser = await prisma.user.findUnique({
 			where: {
@@ -48,13 +48,13 @@ export const register = async (req, res) => {
 
 		// Control de rol segun email
 		if (email.endsWith("@u-tad.com")) {
-			if (academicRole === academicRoleList.TEACHER) role = roles.CREATOR;
+			if (academicRole === academicRoleEnum.TEACHER) role = rolesEnum.CREATOR;
 			else
 				return res.status(400).json({
 					message: "You can only register as a teacher with an @u-tad.com email.",
 				});
 		} else {
-			role = roles.USER;
+			role = rolesEnum.USER;
 		}
 
 		// Control de usuario en caso de ser vacio asignar primera parte del email
@@ -70,8 +70,8 @@ export const register = async (req, res) => {
 				academicRole: academicRole,
 				role: role,
 				academicCourse: academicCourse,
-                department: department,
-                promotion: promotion
+				department: department,
+				promotion: promotion,
 			},
 		});
 

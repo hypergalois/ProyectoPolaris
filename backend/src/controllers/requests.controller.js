@@ -1,20 +1,19 @@
 import prisma from "../config/prisma.client.js";
-import { status } from "../config/tags.js";
-import { roles } from "../config/tags.js";
+import { statusEnum, rolesEnum } from "../config/tags.js";
 
 // Main controllers
 
 export const getRequests = async (req, res) => {
 	try {
-        console.log(req.role)
-		if (req.role === roles.USER || req.role === roles.CREATOR) {
+		console.log(req.role);
+		if (req.role === rolesEnum.USER || req.role === rolesEnum.CREATOR) {
 			const requests = await prisma.request.findMany({
 				where: { requesterId: req.userId },
 			});
 			if (!requests) return res.status(404).send({ message: "No requests found" });
 			return res.status(200).send(requests);
-		} else if (req.role === roles.ADMIN) {
-            console.log("ADMIN")
+		} else if (req.role === rolesEnum.ADMIN) {
+			console.log("ADMIN");
 			const requests = await prisma.request.findMany();
 			if (!requests) return res.status(404).send({ message: "No requests found" });
 			return res.status(200).send(requests);
@@ -62,13 +61,13 @@ export const updateRequest = async (req, res) => {
 
 export const getRequestsByStatus = async (req, res) => {
 	try {
-		if (req.role === roles.USER || req.role === roles.CREATOR) {
+		if (req.role === rolesEnum.USER || req.role === rolesEnum.CREATOR) {
 			const requests = await prisma.request.findMany({
 				where: { requesterId: req.userId, status: req.params.status },
 			});
 			if (!requests) return res.status(404).send({ message: "No requests found" });
 			return res.status(200).send(requests);
-		} else if (req.role === roles.ADMIN) {
+		} else if (req.role === rolesEnum.ADMIN) {
 			const requests = await prisma.request.findMany({
 				where: { status: req.params.status },
 			});
@@ -88,12 +87,12 @@ export const acceptRequest = async (req, res) => {
 		const { id } = req.params;
 		const acceptedRequest = await prisma.request.update({
 			where: { id: id },
-			data: { status: status.ACCEPTED },
+			data: { status: statusEnum.ACCEPTED },
 		});
 		if (!acceptedRequest) res.status(404).send({ message: "Request not found" });
 		await prisma.project.update({
 			where: { id: acceptedRequest.projectId },
-			data: { status: status.ACCEPTED },
+			data: { status: statusEnum.ACCEPTED },
 		});
 		return res.status(200).send(acceptedRequest);
 	} catch (err) {
@@ -107,12 +106,12 @@ export const rejectRequest = async (req, res) => {
 		const { id } = req.params;
 		const rejectedRequest = await prisma.request.update({
 			where: { id: id },
-			data: { status: status.REJECTED },
+			data: { status: statusEnum.REJECTED },
 		});
 		if (!rejectedRequest) res.status(404).send({ message: "Request not found" });
 		await prisma.project.update({
 			where: { id: acceptedRequest.projectId },
-			data: { status: status.REJECTED },
+			data: { status: statusEnum.REJECTED },
 		});
 		return res.status(200).send(rejectedRequest);
 	} catch (err) {
