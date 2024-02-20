@@ -1,17 +1,20 @@
 import prisma from "../config/prisma.client.js";
 import { status } from "../config/tags.js";
+import { roles } from "../config/tags.js";
 
 // Main controllers
 
 export const getRequests = async (req, res) => {
 	try {
-		if (req.role === "USER" || "CREATOR") {
+        console.log(req.role)
+		if (req.role === roles.USER || req.role === roles.CREATOR) {
 			const requests = await prisma.request.findMany({
 				where: { requesterId: req.userId },
 			});
 			if (!requests) return res.status(404).send({ message: "No requests found" });
 			return res.status(200).send(requests);
-		} else if (req.role === "ADMIN") {
+		} else if (req.role === roles.ADMIN) {
+            console.log("ADMIN")
 			const requests = await prisma.request.findMany();
 			if (!requests) return res.status(404).send({ message: "No requests found" });
 			return res.status(200).send(requests);
@@ -59,13 +62,13 @@ export const updateRequest = async (req, res) => {
 
 export const getRequestsByStatus = async (req, res) => {
 	try {
-		if (req.role === "USER" || "CREATOR") {
+		if (req.role === roles.USER || req.role === roles.CREATOR) {
 			const requests = await prisma.request.findMany({
 				where: { requesterId: req.userId, status: req.params.status },
 			});
 			if (!requests) return res.status(404).send({ message: "No requests found" });
 			return res.status(200).send(requests);
-		} else if (req.role === "ADMIN") {
+		} else if (req.role === roles.ADMIN) {
 			const requests = await prisma.request.findMany({
 				where: { status: req.params.status },
 			});
