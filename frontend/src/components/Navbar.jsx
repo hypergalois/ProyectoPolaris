@@ -9,11 +9,15 @@ function NavBar() {
 	// y mostraremos unos botones u otros
 	// Para acceder al estado de autenticacion, usamos el hook useAuth
 
-	const { isAuthenticated } = useAuth();
+	const { logout: logout, isAuthenticated } = useAuth();
 	const navigate = useNavigate();
 
-	const handleClick = () => {
+	const handleClickImage = () => {
 		navigate(`/home`);
+	};
+	const handleClickLogout = async () => {
+		await logout();
+		navigate(`/`);
 	};
 
 	return (
@@ -23,7 +27,7 @@ function NavBar() {
 					src="/logo-projects.png" // Reemplaza 'url_de_tu_imagen.jpg' con la URL de tu imagen
 					alt="Logo Izquierda"
 					className="h-16 w-auto cursor-pointer"
-					onClick={handleClick}
+					onClick={handleClickImage}
 				/>
 			</div>
 			<div className="flex items-center">
@@ -36,16 +40,21 @@ function NavBar() {
 							<Link to="/projects/new">Añadir proyecto</Link>
 						</div>
 						<div>
-							<Link to="/logout">Logout</Link>
+							<Link to="/profile">Profile</Link>
 						</div>
 						<div>
-							<Link to="/profile">Profile</Link>
+							<a
+								className="cursor-pointer"
+								onClick={handleClickLogout}
+							>
+								Logout
+							</a>
 						</div>
 					</React.Fragment>
 				) : (
 					<React.Fragment>
 						<div>
-							<Link to="/login">Login</Link>
+							<Link to="/">Login</Link>
 						</div>
 						<div>
 							<Link to="/register">Register</Link>

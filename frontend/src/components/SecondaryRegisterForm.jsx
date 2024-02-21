@@ -33,7 +33,7 @@ const SecondaryRegisterForm = () => {
 
     useEffect(() => {
         if (isAuthenticated) {
-            navigate('/projects');
+            navigate('/home');
         }
     }, [isAuthenticated, navigate])
 
