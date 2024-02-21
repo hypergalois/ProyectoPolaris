@@ -17,16 +17,16 @@ const HomePage = () => {
 					<div className="text-8xl text-[#858585] font-bold mb-8">
 						<h1>¡Bienvenido!</h1>
 					</div>
-					<div className="text-xl font-semibold mb-12">
+					<div className="text-xl font-semibold mb-16">
 						<h2>Descubre y conecta con los proyectos que están dando forma al futuro digital en U-Tad</h2>
 					</div>
 					<LoginForm />
-					<footer className="text-xl">
+					<footer className="text-sm">
 						<p>
 							¿Olvidaste tu contraseña?{" "}
-							<a className="underline decoration-solid decoration-1" href="/forgot-password">
+							<Link className="underline decoration-solid decoration-1" to="/forgot-password">
 								Recupérala
-							</a>
+							</Link>
 						</p>
 						<p>
 							¿Eres nuevo en U-Tad?{" "}

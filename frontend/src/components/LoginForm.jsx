@@ -40,6 +40,7 @@ const LoginForm = () => {
 							pattern: /^\S+@\S+$/i,
 						})}
 						placeholder="Correo"
+						autoComplete="email"
 					/>
 					{errors.email && <p>Hace falta un email</p>}
 				</div>
@@ -52,6 +53,7 @@ const LoginForm = () => {
 							minLength: 3,
 						})}
 						placeholder="Contraseña"
+						autoComplete="current-password"
 					/>
 					{errors.password && <p>Hace falta una contraseña</p>}
 				</div>

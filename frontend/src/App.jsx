@@ -3,8 +3,6 @@ import { AuthProvider } from "./context/AuthContext";
 import { AreasProvider } from "./context/AreasContext";
 import { UserProvider } from "./context/UserContext";
 
-import NavBar from "./components/Navbar";
-
 import LandingPageLogin from "./pages/LandingPageLogin";
 import LandingPageRegister from "./pages/LandingPageRegister";
 import HomePageRegisterDetails from "./pages/LandingPageRegisterDetails";
@@ -12,12 +10,12 @@ import ForgotPassword from "./pages/ForgotPassword";
 
 import HomePage from "./pages/HomePage";
 
-import ProfilePage from "./pages/ProfilePage";
+import DashboardPage from "./pages/DashboardPage";
 import ProjectsFormPage from "./pages/ProjectsFormPage";
 import ProjectsHomePage from "./pages/ProjectsHomePage";
 import ProjectsDetailPage from "./pages/ProjectsDetailPage";
 
-import AdminDashboardPage from "./pages/AdminDashboardPage";
+import SettingsPage from "./pages/SettingsPage";
 
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -29,6 +27,7 @@ function App() {
 				<UserProvider>
 					<Router>
 						<main>
+							{/* Seria cutre pero se puede mostrar navbarnoauth o navbarauth dependiendo del estado */}
 							<Routes>
 								{/* Home page sin logearse, sale el formulario de login */}
 								<Route path="/" element={<LandingPageLogin />} />
@@ -40,22 +39,22 @@ function App() {
 								<Route path="/register/details" element={<HomePageRegisterDetails />} />
 								{/* Dejo la pagina de añadir proyectos fuera de la ruta protegida para poder probarla */}
 								<Route path="/projects/new" element={<ProjectsFormPage />} />
-								<Route element={<ProtectedRoute />} />
-								{/* Pagina home pero que salen proyectos y noticias una vez estas logeado */}
-								<Route path="/home" element={<HomePage />} />
-								{/* Pagina perfil donde se veran las peticiones */}
-								<Route path="/profile" element={<ProfilePage />} />
-								{/* Pagina de proyectos para buscarlos */}
-								<Route path="/projects" element={<ProjectsHomePage />} />
-								{/* Pagina para el formulario de proyectos nuevos */}
-								<Route path="/projects/new" element={<ProjectsFormPage />} />
-								{/* Pagina para ver un proyecto en detalle */}
-								<Route path="/projects/:id" element={<ProjectsDetailPage />} />
-								{/* Pagina para editar un proyecto, es el mismo formulario pero populating */}
-								<Route path="/projects/:id/edit" element={<ProjectsFormPage />} />
-								{/* Posible admin dashboard, puede que OoS (MOsCoW) */}
-								<Route path="/admin" element={<AdminDashboardPage />} />
-								<Route />
+								<Route element={<ProtectedRoute />}>
+									{/* Pagina home pero que salen proyectos y noticias una vez estas logeado */}
+									<Route path="/home" element={<HomePage />} />
+									{/* Pagina dashboard donde se veran las peticiones */}
+									<Route path="/dashboard" element={<DashboardPage />} />
+									{/* Pagina de proyectos para buscarlos */}
+									<Route path="/projects" element={<ProjectsHomePage />} />
+									{/* Pagina para el formulario de proyectos nuevos */}
+									<Route path="/projects/new" element={<ProjectsFormPage />} />
+									{/* Pagina para ver un proyecto en detalle */}
+									<Route path="/projects/:id" element={<ProjectsDetailPage />} />
+									{/* Pagina para editar un proyecto, es el mismo formulario pero populating */}
+									<Route path="/projects/:id/edit" element={<ProjectsFormPage />} />
+									{/* Pagina de ajustes, puede ser solo para admin */}
+									<Route path="/settings" element={<SettingsPage />} />
+								</Route>
 							</Routes>
 						</main>
 					</Router>

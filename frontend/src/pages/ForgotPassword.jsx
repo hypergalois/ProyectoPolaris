@@ -1,10 +1,12 @@
 import React from "react";
+import NavBarNoAuth from "../components/NavBarNoAuth";
 
 function ForgotPassword() {
 	return (
-		<div>
+		<>
+			<NavBarNoAuth />
 			<h1>ForgotPassword</h1>
-		</div>
+		</>
 	);
 }
 

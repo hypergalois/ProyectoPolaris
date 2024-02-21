@@ -2,7 +2,8 @@ import { useAuth } from "./context/AuthContext";
 import { Navigate, Outlet } from "react-router-dom";
 
 // Voy a meter la navbar aqui, solo se renderiza cuando esta logeado
-import NavBar from "./components/Navbar";
+import NavBarAuth from "./components/NavBarAuth";
+import NavBarNoAuth from "./components/NavBarNoAuth";
 
 function ProtectedRoute() {
 	const { loading, isAuthenticated } = useAuth();
@@ -17,7 +18,7 @@ function ProtectedRoute() {
 
 	return (
 		<>
-			<NavBar />
+			{isAuthenticated ? <NavBarAuth /> : <NavBarNoAuth />}
 			<Outlet />
 		</>
 	);
