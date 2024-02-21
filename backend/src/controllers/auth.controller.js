@@ -12,6 +12,8 @@ export const checkEmailRegister = async (req, res) => {
 	const { email } = req.body;
 	console.log(email);
 
+    let userExists = false;
+
 	try {
 		const userFound = await prisma.user.findUnique({
 			where: {
@@ -22,9 +24,10 @@ export const checkEmailRegister = async (req, res) => {
 		// Solo tengo en cuenta que hay dos posibles casos, este o el @u-tad.
 		const isStudent = email.endsWith("@live.u-tad.com");
 
-		if (userFound) return res.status(400).json({ message: "User is already registered.", isStudent });
+		if (userFound) res.userExists = true;
 
-		return res.status(200).json({ message: "User is not registered.", isStudent });
+        return res
+
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ message: error.message });
@@ -53,8 +56,14 @@ export const register = async (req, res) => {
 
 		// Asignación automatica de rol según el email
 		if (email.endsWith("@u-tad.com")) {
-			const role = rolesEnum.CREATOR;
+            if (academicRole === academicRoleEnum.ALUMN || academicRole === academicRoleEnum.ALUMNI) {
+                return res.status(400).json({ message: "The academic role is not valid." });
+            }
+			const  role = rolesEnum.CREATOR;
 		} else if (email.endsWith("@live.u-tad.com")) {
+            if (academicRole === academicRoleEnum.EMPLOYEE || academicRole === academicRoleEnum.COORDINATOR || academicRole === academicRoleEnum.PROFESSOR ) {
+                return res.status(400).json({ message: "The academic role is not valid." });
+            }
 			const role = rolesEnum.USER;
 		} else {
 			// Nunca deberia llegar a este caso
