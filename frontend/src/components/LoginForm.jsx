@@ -33,7 +33,7 @@ const LoginForm = () => {
 			<form onSubmit={handleSubmit(onSubmit)} className="p-4">
 				<div className="mb-4">
 					<input
-						className="w-5/12 h-10 px-6 rounded-xl text-black"
+						className="w-5/12 h-10 px-6 text-black p-4 rounded-2xl"
 						type="email"
 						{...register("email", {
 							required: true,
@@ -45,7 +45,7 @@ const LoginForm = () => {
 				</div>
 				<div className="mb-4">
 					<input
-						className="w-5/12 h-10 px-6 rounded-xl text-black"
+						className="w-5/12 h-10 px-6 text-black p-4 rounded-2xl"
 						type="password"
 						{...register("password", {
 							required: true,
@@ -57,7 +57,7 @@ const LoginForm = () => {
 				</div>
 				<div className="mb-4">
 					<button className="w-5/12 h-10 px-6 rounded-xl bg-[#333333] text-white" type="submit">
-						INICIAR SESIÓN
+						Iniciar sesión
 					</button>
 				</div>
 			</form>
