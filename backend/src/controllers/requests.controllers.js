@@ -83,7 +83,6 @@ export const getRequestsByStatus = async (req, res) => {
 	}
 };
 
-// Falta comprobar que es ADMIN	
 export const acceptRequest = async (req, res) => {
 	try {
 		const { id } = req.params;
