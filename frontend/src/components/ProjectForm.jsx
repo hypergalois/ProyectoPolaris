@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import Select from "react-select";
+import { useAuth } from "../context/AuthContext"
 import { useAreas } from "../context/AreasContext";
 import DropzoneComponent from "./DropzoneComponent";
 import { postProjectsRequest } from "../api/projects"
@@ -18,9 +19,9 @@ const letterOptions = [
 	{ value: "C", label: "C" },
 ];
 
-const postProject = async (project) => {
+const postProject = async (project, token) => {
     try {
-        const response = await postProjectsRequest(project);
+        const response = await postProjectsRequest(project, token);
         console.log(response);
     } catch (error) {
         console.log(error.response);
@@ -30,7 +31,9 @@ const postProject = async (project) => {
 const ProjectForm = () => {
     const { register, control, handleSubmit, formState: { errors }, setValue } = useForm();
     const { degrees, getDegrees, errors : areasContextErrors } = useAreas();
-    const [uploadedFiles, setUploadedFiles] = useState([])
+    const { userToken } = useAuth();
+
+    const [uploadedFiles, setUploadedFiles] = useState([]);
 
     const { fields : linkFields, append : appendLink } = useFieldArray({
         control,
@@ -57,6 +60,7 @@ const ProjectForm = () => {
 		appendStudent({ impliedStudent: "" });
 		appendTeacher({ impliedTeacher: "" });
 		appendAward({ award: "" });
+        console.log(userToken);
 	}, []);
 
     useEffect(() => {
@@ -86,12 +90,12 @@ const ProjectForm = () => {
         formData.append("description", data.projectDescription);
         //formData.append("keywords", JSON.stringify([]));
         //formData.append("personalProject", false);
-        //formData.append("awards", JSON.stringify(data.awards?.filter(value => value !== "")));
+        formData.append("awards", data.awards?.filter(value => value !== ""));
         formData.append("subject", data.subject);
         formData.append("academicCourse", data.academicCourse);
         formData.append("course", data.course);
         formData.append("letter", data.letter);
-        //formData.append("externalLinks", JSON.stringify(data.externalLinks?.filter(value => value !== "")));
+        formData.append("externalLinks", data.externalLinks?.filter(value => value !== ""));
         formData.append("degreeId", data.degree);
         //formData.append("impliedStudentsIDs", JSON.stringify([])); // data.impliedStudents?.filter(value => value !== ""));
         //formData.append("impliedProfessorsIDs", JSON.stringify([])); // data.impliedTeachers?.filter(value => value !== ""));
@@ -103,7 +107,7 @@ const ProjectForm = () => {
     
         console.log(data);
 
-        postProject(formData);
+        postProject(formData, userToken);
     };
 
     return(
