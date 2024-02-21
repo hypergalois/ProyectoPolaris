@@ -60,7 +60,6 @@ const ProjectForm = () => {
 		appendStudent({ impliedStudent: "" });
 		appendTeacher({ impliedTeacher: "" });
 		appendAward({ award: "" });
-        console.log(userToken);
 	}, []);
 
     useEffect(() => {
@@ -90,12 +89,12 @@ const ProjectForm = () => {
         formData.append("description", data.projectDescription);
         //formData.append("keywords", JSON.stringify([]));
         //formData.append("personalProject", false);
-        formData.append("awards", data.awards?.filter(value => value !== ""));
+        //formData.append("awards", data.awards?.filter(value => value !== ""));
         formData.append("subject", data.subject);
         formData.append("academicCourse", data.academicCourse);
         formData.append("course", data.course);
         formData.append("letter", data.letter);
-        formData.append("externalLinks", data.externalLinks?.filter(value => value !== ""));
+        //formData.append("externalLinks", data.externalLinks?.filter(value => value !== ""));
         formData.append("degreeId", data.degree);
         //formData.append("impliedStudentsIDs", JSON.stringify([])); // data.impliedStudents?.filter(value => value !== ""));
         //formData.append("impliedProfessorsIDs", JSON.stringify([])); // data.impliedTeachers?.filter(value => value !== ""));
@@ -106,6 +105,7 @@ const ProjectForm = () => {
         });
     
         console.log(data);
+        console.log(userToken);
 
         postProject(formData, userToken);
     };
