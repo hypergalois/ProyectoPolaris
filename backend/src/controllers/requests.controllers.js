@@ -6,13 +6,14 @@ import { statusEnum, rolesEnum } from "../config/tags.js";
 export const getRequests = async (req, res) => {
 	try {
 		console.log(req.role);
+		// Si es USER o CREATOR, solo puede ver sus propias requests
 		if (req.role === rolesEnum.USER || req.role === rolesEnum.CREATOR) {
 			const requests = await prisma.request.findMany({
 				where: { requesterId: req.userId },
 			});
 			if (!requests) return res.status(404).json({ message: "No requests found" });
 			return res.status(200).json(requests);
-
+		// Si es ADMIN, puede ver todas las requests
 		} else if (req.role === rolesEnum.ADMIN) {
 			console.log("ADMIN");
 			const requests = await prisma.request.findMany();
@@ -21,9 +22,9 @@ export const getRequests = async (req, res) => {
 		} else {
 			return res.status(403).json({ message: "You are not allowed." });
 		}
-	} catch (err) {
-		console.log(err);
-		return res.status(500).json({ message: "Error getting requests" });
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ message: error.message });
 	}
 };
 
@@ -35,13 +36,12 @@ export const getRequest = async (req, res) => {
 		if (!request) return res.status(404).json({ message: "Request not found" });
 
 		return res.status(200).json(request);
-	} catch (err) {
-		console.log(err);
-		return res.status(500).json({ message: "Error getting request" });
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ message: error.message });
 	}
 };
 
-// Probablmenete acabe borrado ya que no se use
 export const updateRequest = async (req, res) => {
 	try {
 		const { id } = req.params;
@@ -52,9 +52,9 @@ export const updateRequest = async (req, res) => {
 		if (!updatedRequest) res.status(404).json({ message: "Request not found" });
 
 		return res.status(200).json(updatedRequest);
-	} catch (err) {
-		console.log(err);
-		return res.status(500).json({ message: "Error updating request" });
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ message: error.message });
 	}
 };
 
@@ -77,12 +77,13 @@ export const getRequestsByStatus = async (req, res) => {
 		} else {
 			return res.status(403).json({ message: "You are not allowed." });
 		}
-	} catch (err) {
-		console.log(err);
-		return res.status(500).json({ message: "Error getting requests" });
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ message: error.message });
 	}
 };
 
+// Falta comprobar que es ADMIN	
 export const acceptRequest = async (req, res) => {
 	try {
 		const { id } = req.params;
@@ -91,14 +92,16 @@ export const acceptRequest = async (req, res) => {
 			data: { status: statusEnum.ACCEPTED },
 		});
 		if (!acceptedRequest) res.status(404).json({ message: "Request not found" });
-		await prisma.project.update({
+		const acceptedProject = await prisma.project.update({
 			where: { id: acceptedRequest.projectId },
 			data: { status: statusEnum.ACCEPTED },
 		});
+		if (!acceptedProject) res.status(404).json({ message: "Project not found" });
+
 		return res.status(200).json(acceptedRequest);
-	} catch (err) {
-		console.log(err);
-		return res.status(500).json({ message: "Error accepting request" });
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ message: error.message });
 	}
 };
 
@@ -115,8 +118,8 @@ export const rejectRequest = async (req, res) => {
 			data: { status: statusEnum.REJECTED },
 		});
 		return res.status(200).json(rejectedRequest);
-	} catch (err) {
-		console.log(err);
-		return res.status(500).json({ message: "Error rejecting request" });
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ message: error.message });
 	}
 };
