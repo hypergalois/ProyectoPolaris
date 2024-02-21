@@ -22,9 +22,9 @@ export const checkEmailRegister = async (req, res) => {
 		// Solo tengo en cuenta que hay dos posibles casos, este o el @u-tad.
 		const isStudent = email.endsWith("@live.u-tad.com");
 
-		if (userFound) return res.status(400).json({ message: "User is already registered.", isStudent });
+		if (userFound) return res.status(400).json({ message: "User is already registered.", userFound: true, isStudent });
 
-		return res.status(200).json({ message: "User is not registered.", isStudent });
+		return res.status(200).json({ message: "User is not registered.", userFound: false, isStudent });
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ message: error.message });
