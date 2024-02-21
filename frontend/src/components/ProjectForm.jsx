@@ -97,7 +97,22 @@ const ProjectForm = () => {
         };
         console.log(newProject);
         
+        const formData = new FormData();
+        Object.entries(newProject).map(([key, value]) => {
+            if(key === "uploadedContent"){
+                value.map((file, index) => { formData.append(`${key}_${index}`, file) });
+            }
+            else{
+                formData.append(key, value);
+            }
+        });
+
         postProject(newProject);
+        const projectData = {};
+        for (let [key, value] of formData.entries()) {
+            projectData[key] = value;
+        }
+        console.log(projectData);
     }
 
     return(
