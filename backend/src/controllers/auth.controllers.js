@@ -58,8 +58,14 @@ export const register = async (req, res) => {
 
 		// Asignación automatica de rol según el email
 		if (email.endsWith("@u-tad.com")) {
+            if (academicRole === academicRoleEnum.ALUMN || academicRole === academicRoleEnum.ALUMNI) {
+                return res.status(400).json({ message: "The academic role is not valid." });
+            }
 			role = rolesEnum.CREATOR;
 		} else if (email.endsWith("@live.u-tad.com")) {
+            if (academicRole === academicRoleEnum.EMPLOYEE || academicRole === academicRoleEnum.PROFESSOR || academicRole === academicRoleEnum.COORDINATOR) {
+                return res.status(400).json({ message: "The academic role is not valid." });
+            }
 			role = rolesEnum.USER;
 		} else {
 			// Nunca deberia llegar a este caso
