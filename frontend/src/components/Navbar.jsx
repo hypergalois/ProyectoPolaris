@@ -30,19 +30,19 @@ function NavBar() {
 					onClick={handleClickImage}
 				/>
 			</div>
-			<div className="flex items-center">
+			<div className="flex items-center w-1/3">
 				{isAuthenticated ? (
 					<React.Fragment>
-						<div>
-							<Link to="/projects">UTAD PROYECTOS</Link>
+						<div className="w-auto p-4">
+							<Link to="/projects">Proyectos</Link>
 						</div>
-						<div>
+						<div className="w-auto p-4">
 							<Link to="/projects/new">Añadir proyecto</Link>
 						</div>
-						<div>
+						<div className="w-auto p-4">
 							<Link to="/profile">Profile</Link>
 						</div>
-						<div>
+						<div className="w-auto p-4">
 							<a
 								className="cursor-pointer"
 								onClick={handleClickLogout}
@@ -53,10 +53,10 @@ function NavBar() {
 					</React.Fragment>
 				) : (
 					<React.Fragment>
-						<div>
+						<div className="w-auto p-4">
 							<Link to="/">Login</Link>
 						</div>
-						<div>
+						<div className="w-auto p-4">
 							<Link to="/register">Register</Link>
 						</div>
 					</React.Fragment>

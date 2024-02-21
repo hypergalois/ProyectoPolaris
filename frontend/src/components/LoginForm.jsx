@@ -20,7 +20,6 @@ const LoginForm = () => {
 	}, [isAuthenticated, navigate]);
 
 	const onSubmit = async (data) => {
-        console.log(data)
 		await loginUser(data);
 	};
 
