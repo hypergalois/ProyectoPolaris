@@ -1,5 +1,5 @@
 import prisma from "../config/prisma.client.js";
-import { statusEnum } from "../config/tags.js";
+import { statusEnum, rolesEnum } from "../config/tags.js";
 
 // Main controllers
 
@@ -20,14 +20,16 @@ export const createProject = async (req, res) => {
 		const files = req.files ? req.files.map((file) => process.env.PUBLIC_URL + file.destination + file.filename) : [];
 		console.log(files);
 
-		if (req.role === "USER" || "CREATOR") {
+		if (req.role === rolesEnum.USER || req.role === rolesEnum.CREATOR) {
 			const newProject = await prisma.project.create({
-				data: { ...req.body, uploadedContent: files },
+				// Especifico que status es PENDING, para no depender del valor por defecto
+				data: { ...req.body, uploadedContent: files, status: statusEnum.PENDING},
 			});
 			if (!newProject) return res.status(404).json({ message: "Project not created" });
 
 			const newRequest = await prisma.request.create({
 				data: {
+					status: statusEnum.PENDING,
 					projectId: newProject.id,
 					requesterId: req.userId,
 					projectTitle: newProject.title,
@@ -38,7 +40,8 @@ export const createProject = async (req, res) => {
 			if (!newRequest) return res.status(404).json({ message: "Request not created" });
 
 			return res.status(200).json(newProject);
-		} else if (req.role === "ADMIN") {
+		// Si es admin, no se crea una request
+		} else if (req.role === rolesEnum.ADMIN) {
 			const newProject = await prisma.project.create({
 				data: {
 					...req.body,
@@ -76,13 +79,15 @@ export const updateProject = async (req, res) => {
 	const { id } = req.params;
 
 	try {
-		if (req.role === "USER" || "CREATOR") {
+		if (req.role === rolesEnum.USER || req.role === rolesEnum.CREATOR) {
 			const updatedProject = await prisma.project.update({
 				where: { id: id },
 				data: { ...req.body, status: statusEnum.PENDING },
 			});
 
-			await prisma.request.create({
+			if (!updatedProject) return res.status(404).json({ message: "Project not found" });
+
+			const newRequest = await prisma.request.create({
 				data: {
 					projectId: updatedProject.id,
 					requesterId: req.userId,
@@ -92,12 +97,16 @@ export const updateProject = async (req, res) => {
 				},
 			});
 
+			if (!newRequest) return res.status(404).json({ message: "Request not created" });
+
 			return res.status(200).json(updatedProject);
-		} else if (req.role === "ADMIN") {
+		} else if (req.role === rolesEnum.ADMIN) {
 			const updatedProject = await prisma.project.update({
 				where: { id: id },
 				data: { ...req.body, status: statusEnum.ACCEPTED },
 			});
+
+			if (!updatedProject) return res.status(404).json({ message: "Project not found" });
 
 			return res.status(200).json(updatedProject);
 		} else {
@@ -111,12 +120,15 @@ export const updateProject = async (req, res) => {
 
 // Solo admin puede borrar proyectos
 export const deleteProject = async (req, res) => {
-	if (req.role === "ADMIN") {
+	if (req.role === rolesEnum.ADMIN) {
 		try {
 			const { id } = req.params;
 			const deletedProject = await prisma.project.delete({
 				where: { id: id },
 			});
+
+			if (!deletedProject) return res.status(404).json({ message: "Project not found" });
+
 			return res.status(200).json(deletedProject);
 		} catch (error) {
 			console.log(error);
@@ -135,6 +147,9 @@ export const getProjectByUser = async (req, res) => {
 		const projects = await prisma.project.findMany({
 			where: { impliedStudentsIDs: userId },
 		});
+
+		if (!projects) return res.status(404).json({ message: "No projects found" });
+
 		return res.status(200).json(projects);
 	} catch (error) {
 		console.log(error);
@@ -148,6 +163,9 @@ export const getProjectByCategory = async (req, res) => {
 		const projects = await prisma.project.findMany({
 			where: { category: category },
 		});
+
+		if (!projects) return res.status(404).json({ message: "No projects found" });
+
 		return res.status(200).json(projects);
 	} catch (error) {
 		console.log(error);
@@ -161,6 +179,9 @@ export const getProjectByStatus = async (req, res) => {
 		const projects = await prisma.project.findMany({
 			where: { status: status },
 		});
+
+		if (!projects) return res.status(404).json({ message: "No projects found" });
+
 		return res.status(200).json(projects);
 	} catch (error) {
 		console.log(error);
@@ -174,6 +195,9 @@ export const getProjectByDate = async (req, res) => {
 		const projects = await prisma.project.findMany({
 			where: { date: date },
 		});
+
+		if (!projects) return res.status(404).json({ message: "No projects found" });
+
 		return res.status(200).json(projects);
 	} catch (error) {
 		console.log(error);
@@ -187,6 +211,9 @@ export const getProjectByTitle = async (req, res) => {
 		const projects = await prisma.project.findMany({
 			where: { title: title },
 		});
+
+		if (!projects) return res.status(404).json({ message: "No projects found" });
+
 		return res.status(200).json(projects);
 	} catch (error) {
 		console.log(error);
