@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getAreas, getArea, createArea, updateArea, deleteArea } from "../controllers/areas.controller.js";
+import { getAreas, getArea, createArea, updateArea, deleteArea } from "../controllers/areas.controllers.js";
 import { validateSchema } from "../middlewares/validator.middleware.js";
 import { areaSchema } from "../schemas/area.schema.js";
 
