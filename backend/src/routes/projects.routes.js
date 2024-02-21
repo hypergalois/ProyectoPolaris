@@ -14,7 +14,7 @@ router.get("/projects", authRequired, getProjects);
 router.get("/projects/:id", authRequired, getProject);
 
 // validateSchema(projectSchema), authRequired
-router.post("/projects", uploadFile.array("files", 5), createProject);
+router.post("/projects", authRequired, uploadFile.array("files", 5), createProject);
 
 router.put("/projects/:id", authRequired, validateSchema(updateProjectSchema), updateProject);
 
