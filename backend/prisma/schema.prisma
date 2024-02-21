@@ -36,7 +36,6 @@ model User {
   fullName String?
 
   email         String?  @unique
-  emailVerified Boolean? @default(false)
   username      String?  @unique
   passwordHash  String?
 
