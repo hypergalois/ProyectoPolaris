@@ -1,1 +1,2 @@
-// TODO: contexto de los proyectos
+import { createContext, useContext, useState, useEffect } from "react";
+import 
