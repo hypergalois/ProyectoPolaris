@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import prisma from "../config/prisma.client.js";
 
 import { createAccessToken } from "../libs/jwt.js";
-import { rolesEnum } from "../config/tags.js";
+import { rolesEnum, academicRoleEnum } from "../config/tags.js";
 
 const secret = process.env.TOKEN_SECRET;
 
@@ -57,6 +57,7 @@ export const register = async (req, res) => {
 		console.log(email)
 
 		// Asignación automatica de rol según el email
+		// La comprobación subsiguiente de academicRole es innecesaria ya que
 		if (email.endsWith("@u-tad.com")) {
             if (academicRole === academicRoleEnum.ALUMN || academicRole === academicRoleEnum.ALUMNI) {
                 return res.status(400).json({ message: "The academic role is not valid." });
