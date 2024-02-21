@@ -7,7 +7,6 @@ export const getProjects = async (req, res) => {
 	try {
 		const projects = await prisma.project.findMany();
 		if (!projects) return res.status(404).send({ message: "No projects found" });
-		if (!projects) res.status(404).send({ message: "Projects not found" });
 
 		return res.status(200).send(projects);
 	} catch (error) {
@@ -33,7 +32,7 @@ export const createProject = async (req, res) => {
 					requesterId: req.userId,
 					projectTitle: newProject.title,
 					description: newProject.description,
-					academicCourse: newProject.academicCourse
+					academicCourse: newProject.academicCourse,
 				},
 			});
 			if (!newRequest) return res.status(404).send({ message: "Request not created" });
@@ -97,7 +96,7 @@ export const updateProject = async (req, res) => {
 		} else if (req.role === "ADMIN") {
 			const updatedProject = await prisma.project.update({
 				where: { id: id },
-				data: { ...req.body, status: status.ACCEPTED },
+				data: { ...req.body, status: statusEnum.ACCEPTED },
 			});
 
 			return res.status(200).send(updatedProject);
@@ -176,7 +175,7 @@ export const getProjectByDate = async (req, res) => {
 			where: { date: date },
 		});
 		return res.status(200).send(projects);
-	} catch (err) {
+	} catch (error) {
 		console.log(error);
 		return res.status(500).send({ message: error.message });
 	}
