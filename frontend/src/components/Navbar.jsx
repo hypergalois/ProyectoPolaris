@@ -34,10 +34,15 @@ function NavBar() {
 				{isAuthenticated ? (
 					<React.Fragment>
 						<div className="w-auto p-4">
-							<Link to="/projects">Proyectos</Link>
+							<Link to="/projects">Home</Link>
 						</div>
 						<div className="w-auto p-4">
 							<Link to="/projects/new">Añadir proyecto</Link>
+						</div>
+						<div className="w-auto p-4">
+							<a>
+								Notificaciones
+							</a>
 						</div>
 						<div className="w-auto p-4">
 							<Link to="/profile">Profile</Link>
