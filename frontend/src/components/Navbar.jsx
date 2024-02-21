@@ -3,7 +3,6 @@ import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import React from "react";
 
-
 function NavBar() {
 	// Yago, Aitor, dependiendo de si el usuario esta logeado o no, haremos conditional rendering
 	// y mostraremos unos botones u otros
@@ -43,10 +42,7 @@ function NavBar() {
 							<Link to="/profile">Profile</Link>
 						</div>
 						<div className="w-auto p-4">
-							<a
-								className="cursor-pointer"
-								onClick={handleClickLogout}
-							>
+							<a className="cursor-pointer" onClick={handleClickLogout}>
 								Logout
 							</a>
 						</div>

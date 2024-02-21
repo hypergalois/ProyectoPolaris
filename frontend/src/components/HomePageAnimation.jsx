@@ -22,7 +22,7 @@ const HomePageAnimation = () => {
 		<>
 			{isVisible && (
 				<div
-					className="absolute bg-[#858585]"
+					className="absolute"
 					style={{
 						transition: "transform 3s ease-out",
 						transform: loaded ? "translateX(-100%)" : "translateX(0)",
