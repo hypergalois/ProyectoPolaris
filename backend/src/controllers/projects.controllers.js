@@ -33,7 +33,7 @@ export const createProject = async (req, res) => {
 					requesterId: req.userId,
 					projectTitle: newProject.title,
 					description: newProject.description,
-					academicCourse: newProject.academicCourse,
+					academicCourse: newProject.academicCourse
 				},
 			});
 			if (!newRequest) return res.status(404).send({ message: "Request not created" });

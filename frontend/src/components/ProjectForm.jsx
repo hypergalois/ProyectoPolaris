@@ -74,46 +74,37 @@ const ProjectForm = () => {
     }, [degrees]);
 
     useEffect(() => {
-        setValue("uploadedContent", uploadedFiles);
+        setValue("files", uploadedFiles);
         console.log(uploadedFiles);
     }, [uploadedFiles])
     
-    const onSubmit = (data) => {
-        const newProject = {
-            title : data.projectTitle,
-            description : data.projectDescription,
-            keywords : [],
-            awards : data.awards?.filter(value => value !== ""),
-            subject : data.subject,
-            personalProject : false,
-            academicCourse : data.academicCourse,
-            course : data.course,
-            letter : data.letter,
-            externalLinks : data.externalLinks?.filter(value => value !== ""),
-            uploadedContent : data.uploadedContent,
-            degreeId : data.degree,
-            impliedStudentsIDs : [] /*data.impliedStudents?.filter(value => value !== "")*/,
-            impliedProfessorsIDs : [] /*data.impliedTeachers?.filter(value => value !== "")*/
-        };
-        console.log(newProject);
-        
+    const onSubmit = async (data) => {
         const formData = new FormData();
-        Object.entries(newProject).map(([key, value]) => {
-            if(key === "uploadedContent"){
-                value.map((file, index) => { formData.append(`${key}_${index}`, file) });
-            }
-            else{
-                formData.append(key, value);
-            }
+    
+        // Agrega los datos del proyecto a FormData
+        formData.append("title", data.projectTitle);
+        formData.append("description", data.projectDescription);
+        //formData.append("keywords", JSON.stringify([]));
+        //formData.append("personalProject", false);
+        //formData.append("awards", JSON.stringify(data.awards?.filter(value => value !== "")));
+        formData.append("subject", data.subject);
+        formData.append("academicCourse", data.academicCourse);
+        formData.append("course", data.course);
+        formData.append("letter", data.letter);
+        //formData.append("externalLinks", JSON.stringify(data.externalLinks?.filter(value => value !== "")));
+        formData.append("degreeId", data.degree);
+        //formData.append("impliedStudentsIDs", JSON.stringify([])); // data.impliedStudents?.filter(value => value !== ""));
+        //formData.append("impliedProfessorsIDs", JSON.stringify([])); // data.impliedTeachers?.filter(value => value !== ""));
+    
+        // Agrega los archivos a FormData
+        data.files.forEach((file, index) => {
+            formData.append("files", file);
         });
+    
+        console.log(data);
 
-        postProject(newProject);
-        const projectData = {};
-        for (let [key, value] of formData.entries()) {
-            projectData[key] = value;
-        }
-        console.log(projectData);
-    }
+        postProject(formData);
+    };
 
     return(
         <form onSubmit={handleSubmit(onSubmit)}>
