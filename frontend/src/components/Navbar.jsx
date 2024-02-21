@@ -30,7 +30,7 @@ function NavBar() {
 					onClick={handleClickImage}
 				/>
 			</div>
-			<div className="flex items-center w-1/3">
+			<div className="flex items-center w-auto">
 				{isAuthenticated ? (
 					<React.Fragment>
 						<div className="w-auto p-4">
