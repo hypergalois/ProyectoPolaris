@@ -5,24 +5,24 @@ import prisma from "../config/prisma.client.js";
 export const getDegrees = async (req, res) => {
 	try {
 		const degrees = await prisma.degree.findMany();
-		if (!degrees) return res.status(404).send({ message: "No degrees found" });
+		if (!degrees) return res.status(404).json({ message: "No degrees found" });
 
-		return res.status(200).send(degrees);
+		return res.status(200).json(degrees);
 	} catch (error) {
 		console.log(error);
-		return res.status(500).send({ message: error.message });
+		return res.status(500).json({ message: error.message });
 	}
 };
 
 export const createDegree = async (req, res) => {
 	try {
 		const newDegree = await prisma.degree.create({ data: { ...req.body } });
-		if (!newDegree) return res.status(404).send({ message: "Degree not created" });
+		if (!newDegree) return res.status(404).json({ message: "Degree not created" });
 
-		return res.status(200).send(newDegree);
+		return res.status(200).json(newDegree);
 	} catch (error) {
 		console.log(error);
-		return res.status(500).send({ message: error.message });
+		return res.status(500).json({ message: error.message });
 	}
 };
 
@@ -30,12 +30,12 @@ export const getDegree = async (req, res) => {
 	try {
 		const { id } = req.params;
 		const degree = await prisma.degree.findUnique({ where: { id: id } });
-		if (!degree) return res.status(404).send({ message: "Degree not found" });
+		if (!degree) return res.status(404).json({ message: "Degree not found" });
 
-		return res.status(200).send(degree);
+		return res.status(200).json(degree);
 	} catch (error) {
 		console.log(error);
-		return res.status(500).send({ message: error.message });
+		return res.status(500).json({ message: error.message });
 	}
 };
 
@@ -48,10 +48,10 @@ export const updateDegree = async (req, res) => {
 			data: req.body,
 		});
 
-		return res.status(200).send(updatedDegree);
+		return res.status(200).json(updatedDegree);
 	} catch (error) {
 		console.log(error);
-		return res.status(500).send({ message: error.message });
+		return res.status(500).json({ message: error.message });
 	}
 };
 
@@ -60,10 +60,10 @@ export const deleteDegree = async (req, res) => {
 		const { id } = req.params;
 		const deletedDegree = await prisma.degree.delete({ where: { id: id } });
 
-		return res.status(200).send(deletedDegree);
+		return res.status(200).json(deletedDegree);
 	} catch (error) {
 		console.log(error);
-		return res.status(500).send({ message: error.message });
+		return res.status(500).json({ message: error.message });
 	}
 };
 
@@ -74,12 +74,12 @@ export const getDegreesNames = async (req, res) => {
 		const degrees = await prisma.degree.findMany({
 			select: { id: true, name: true },
 		});
-		if (!degrees) return res.status(404).send({ message: "No degrees found" });
+		if (!degrees) return res.status(404).json({ message: "No degrees found" });
 
-		return res.status(200).send(degrees);
+		return res.status(200).json(degrees);
 	} catch (error) {
 		console.log(error);
-		return res.status(500).send({ message: error.message });
+		return res.status(500).json({ message: error.message });
 	}
 };
 
@@ -89,11 +89,11 @@ export const getDegreesByArea = async (req, res) => {
 		const degrees = await prisma.degree.findMany({
 			where: { areasId: { has: id } },
 		});
-		if (!degrees) return res.status(404).send({ message: "No degrees found" });
+		if (!degrees) return res.status(404).json({ message: "No degrees found" });
 
-		return res.status(200).send(degrees);
+		return res.status(200).json(degrees);
 	} catch (error) {
 		console.log(error);
-		return res.status(500).send({ message: error.message });
+		return res.status(500).json({ message: error.message });
 	}
 };

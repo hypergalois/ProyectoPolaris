@@ -1,17 +1,17 @@
 import prisma from "../config/prisma.client.js";
-import { statusEnum } from "../config/tags.js";
+import { statusEnum, rolesEnum } from "../config/tags.js";
 
 // Main controllers
 
 export const getProjects = async (req, res) => {
 	try {
 		const projects = await prisma.project.findMany();
-		if (!projects) return res.status(404).send({ message: "No projects found" });
+		if (!projects) return res.status(404).json({ message: "No projects found" });
 
-		return res.status(200).send(projects);
+		return res.status(200).json(projects);
 	} catch (error) {
 		console.log(error);
-		return res.status(500).send({ message: error.message });
+		return res.status(500).json({ message: error.message });
 	}
 };
 
@@ -20,14 +20,16 @@ export const createProject = async (req, res) => {
 		const files = req.files ? req.files.map((file) => process.env.PUBLIC_URL + file.destination + file.filename) : [];
 		console.log(files);
 
-		if (req.role === "USER" || "CREATOR") {
+		if (req.role === rolesEnum.USER || req.role === rolesEnum.CREATOR) {
 			const newProject = await prisma.project.create({
-				data: { ...req.body, uploadedContent: files },
+				// Especifico que status es PENDING, para no depender del valor por defecto
+				data: { ...req.body, uploadedContent: files, status: statusEnum.PENDING},
 			});
-			if (!newProject) return res.status(404).send({ message: "Project not created" });
+			if (!newProject) return res.status(404).json({ message: "Project not created" });
 
 			const newRequest = await prisma.request.create({
 				data: {
+					status: statusEnum.PENDING,
 					projectId: newProject.id,
 					requesterId: req.userId,
 					projectTitle: newProject.title,
@@ -35,10 +37,11 @@ export const createProject = async (req, res) => {
 					academicCourse: newProject.academicCourse,
 				},
 			});
-			if (!newRequest) return res.status(404).send({ message: "Request not created" });
+			if (!newRequest) return res.status(404).json({ message: "Request not created" });
 
-			return res.status(200).send(newProject);
-		} else if (req.role === "ADMIN") {
+			return res.status(200).json(newProject);
+		// Si es admin, no se crea una request
+		} else if (req.role === rolesEnum.ADMIN) {
 			const newProject = await prisma.project.create({
 				data: {
 					...req.body,
@@ -46,15 +49,15 @@ export const createProject = async (req, res) => {
 					status: statusEnum.ACCEPTED,
 				},
 			});
-			if (!newProject) return res.status(404).send({ message: "Project not created" });
+			if (!newProject) return res.status(404).json({ message: "Project not created" });
 
-			return res.status(200).send(newProject);
+			return res.status(200).json(newProject);
 		} else {
-			return res.status(403).send({ message: "You are not allowed" });
+			return res.status(403).json({ message: "You are not allowed" });
 		}
 	} catch (error) {
 		console.log(error);
-		return res.status(500).send({ message: error.message });
+		return res.status(500).json({ message: error.message });
 	}
 };
 
@@ -63,12 +66,12 @@ export const getProject = async (req, res) => {
 
 	try {
 		const project = await prisma.project.findUnique({ where: { id: id } });
-		if (!project) return res.status(404).send({ message: "Project not found" });
+		if (!project) return res.status(404).json({ message: "Project not found" });
 
-		return res.status(200).send(project);
+		return res.status(200).json(project);
 	} catch (error) {
 		console.log(error);
-		return res.status(500).send({ message: error.message });
+		return res.status(500).json({ message: error.message });
 	}
 };
 
@@ -76,13 +79,15 @@ export const updateProject = async (req, res) => {
 	const { id } = req.params;
 
 	try {
-		if (req.role === "USER" || "CREATOR") {
+		if (req.role === rolesEnum.USER || req.role === rolesEnum.CREATOR) {
 			const updatedProject = await prisma.project.update({
 				where: { id: id },
 				data: { ...req.body, status: statusEnum.PENDING },
 			});
 
-			await prisma.request.create({
+			if (!updatedProject) return res.status(404).json({ message: "Project not found" });
+
+			const newRequest = await prisma.request.create({
 				data: {
 					projectId: updatedProject.id,
 					requesterId: req.userId,
@@ -92,38 +97,45 @@ export const updateProject = async (req, res) => {
 				},
 			});
 
-			return res.status(200).send(updatedProject);
-		} else if (req.role === "ADMIN") {
+			if (!newRequest) return res.status(404).json({ message: "Request not created" });
+
+			return res.status(200).json(updatedProject);
+		} else if (req.role === rolesEnum.ADMIN) {
 			const updatedProject = await prisma.project.update({
 				where: { id: id },
 				data: { ...req.body, status: statusEnum.ACCEPTED },
 			});
 
-			return res.status(200).send(updatedProject);
+			if (!updatedProject) return res.status(404).json({ message: "Project not found" });
+
+			return res.status(200).json(updatedProject);
 		} else {
-			return res.status(403).send({ message: "You are not allowed" });
+			return res.status(403).json({ message: "You are not allowed" });
 		}
 	} catch (error) {
 		console.log(error);
-		return res.status(500).send({ message: error.message });
+		return res.status(500).json({ message: error.message });
 	}
 };
 
 // Solo admin puede borrar proyectos
 export const deleteProject = async (req, res) => {
-	if (req.role === "ADMIN") {
+	if (req.role === rolesEnum.ADMIN) {
 		try {
 			const { id } = req.params;
 			const deletedProject = await prisma.project.delete({
 				where: { id: id },
 			});
-			return res.status(200).send(deletedProject);
+
+			if (!deletedProject) return res.status(404).json({ message: "Project not found" });
+
+			return res.status(200).json(deletedProject);
 		} catch (error) {
 			console.log(error);
-			return res.status(500).send({ message: error.message });
+			return res.status(500).json({ message: error.message });
 		}
 	} else {
-		return res.status(403).send({ message: "You are not allowed" });
+		return res.status(403).json({ message: "You are not allowed" });
 	}
 };
 
@@ -135,10 +147,13 @@ export const getProjectByUser = async (req, res) => {
 		const projects = await prisma.project.findMany({
 			where: { impliedStudentsIDs: userId },
 		});
-		return res.status(200).send(projects);
+
+		if (!projects) return res.status(404).json({ message: "No projects found" });
+
+		return res.status(200).json(projects);
 	} catch (error) {
 		console.log(error);
-		return res.status(500).send({ message: error.message });
+		return res.status(500).json({ message: error.message });
 	}
 };
 
@@ -148,10 +163,13 @@ export const getProjectByCategory = async (req, res) => {
 		const projects = await prisma.project.findMany({
 			where: { category: category },
 		});
-		return res.status(200).send(projects);
+
+		if (!projects) return res.status(404).json({ message: "No projects found" });
+
+		return res.status(200).json(projects);
 	} catch (error) {
 		console.log(error);
-		return res.status(500).send({ message: error.message });
+		return res.status(500).json({ message: error.message });
 	}
 };
 
@@ -161,10 +179,13 @@ export const getProjectByStatus = async (req, res) => {
 		const projects = await prisma.project.findMany({
 			where: { status: status },
 		});
-		return res.status(200).send(projects);
+
+		if (!projects) return res.status(404).json({ message: "No projects found" });
+
+		return res.status(200).json(projects);
 	} catch (error) {
 		console.log(error);
-		return res.status(500).send({ message: error.message });
+		return res.status(500).json({ message: error.message });
 	}
 };
 
@@ -174,10 +195,13 @@ export const getProjectByDate = async (req, res) => {
 		const projects = await prisma.project.findMany({
 			where: { date: date },
 		});
-		return res.status(200).send(projects);
+
+		if (!projects) return res.status(404).json({ message: "No projects found" });
+
+		return res.status(200).json(projects);
 	} catch (error) {
 		console.log(error);
-		return res.status(500).send({ message: error.message });
+		return res.status(500).json({ message: error.message });
 	}
 };
 
@@ -187,9 +211,12 @@ export const getProjectByTitle = async (req, res) => {
 		const projects = await prisma.project.findMany({
 			where: { title: title },
 		});
-		return res.status(200).send(projects);
+
+		if (!projects) return res.status(404).json({ message: "No projects found" });
+
+		return res.status(200).json(projects);
 	} catch (error) {
 		console.log(error);
-		return res.status(500).send({ message: error.message });
+		return res.status(500).json({ message: error.message });
 	}
 };

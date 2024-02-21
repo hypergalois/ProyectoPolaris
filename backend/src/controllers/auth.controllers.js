@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import prisma from "../config/prisma.client.js";
 
 import { createAccessToken } from "../libs/jwt.js";
-import { academicRoleEnum, rolesEnum } from "../config/tags.js";
+import { rolesEnum, academicRoleEnum } from "../config/tags.js";
 
 const secret = process.env.TOKEN_SECRET;
 
@@ -22,9 +22,9 @@ export const checkEmailRegister = async (req, res) => {
 		// Solo tengo en cuenta que hay dos posibles casos, este o el @u-tad.
 		const isStudent = email.endsWith("@live.u-tad.com");
 
-		if (userFound) return res.status(400).json({ message: "User is already registered.", isStudent });
+		if (userFound) return res.status(400).json({ message: "User is already registered.", userExists: true, isStudent });
 
-		return res.status(200).json({ message: "User is not registered.", isStudent });
+		return res.status(200).json({ message: "User is not registered.", userExists: false, isStudent });
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ message: error.message });
@@ -33,7 +33,10 @@ export const checkEmailRegister = async (req, res) => {
 
 export const register = async (req, res) => {
 	// console.log(req.body);
-	const { email, username, password, fullName, academicRole, academicCourse, department, promotion } = req.body;
+	const { email, password, fullName, academicRole, academicCourse, department, promotion } = req.body;
+	// No puede ser constante porque si no se asigna el valor por defecto
+	let { username } = req.body;
+	let role;
 
 	try {
 		const foundUser = await prisma.user.findUnique({
@@ -44,18 +47,27 @@ export const register = async (req, res) => {
 
 		if (foundUser)
 			return res.status(400).json({
-				message: "The email is already in use. Please log in instead.",
+				message: "The email is already in use. Please log in instead.", userExists: true
 			});
 
 		const salt = await bcrypt.genSalt(10);
 
 		const hashedPassword = await bcrypt.hash(password, salt);
 
+		console.log(email)
+
 		// Asignación automatica de rol según el email
+		// La comprobación subsiguiente de academicRole es innecesaria ya que
 		if (email.endsWith("@u-tad.com")) {
-			const role = rolesEnum.CREATOR;
+            if (academicRole === academicRoleEnum.ALUMN || academicRole === academicRoleEnum.ALUMNI) {
+                return res.status(400).json({ message: "The academic role is not valid." });
+            }
+			role = rolesEnum.CREATOR;
 		} else if (email.endsWith("@live.u-tad.com")) {
-			const role = rolesEnum.USER;
+            if (academicRole === academicRoleEnum.EMPLOYEE || academicRole === academicRoleEnum.PROFESSOR || academicRole === academicRoleEnum.COORDINATOR) {
+                return res.status(400).json({ message: "The academic role is not valid." });
+            }
+			role = rolesEnum.USER;
 		} else {
 			// Nunca deberia llegar a este caso
 			return res.status(400).json({ message: "The email is not valid." });
@@ -63,6 +75,8 @@ export const register = async (req, res) => {
 
 		// Control de usuario en caso de ser vacio asignar primera parte del email
 		if (!username) username = email.split("@")[0];
+
+		// console.log(role);
 
 		// Y meter los datos aqui que falten
 		const newUser = await prisma.user.create({
@@ -89,14 +103,9 @@ export const register = async (req, res) => {
 			secure: true,
 		});
 
-		// Aquí no deberia retornar id ni role ni createdAt ni updatedAt, ya que van en el token
 		return res.status(200).json({
-			// id: newUser.id,
 			username: newUser.username,
 			email: newUser.email,
-			// role: newUser.role,
-			// createdAt: newUser.createdAt,
-			// updatedAt: newUser.updatedAt
 		});
 	} catch (error) {
 		console.log(error);
@@ -116,12 +125,12 @@ export const login = async (req, res) => {
 
 		if (!foundUser)
 			return res.status(400).json({
-				message: "There doesn't exist an user with that email. Try registering instead.",
+				message: "There doesn't exist an user with that email. Try registering instead.", userExists: false
 			});
 
 		const passwordsMatch = bcrypt.compare(password, foundUser.passwordHash);
 
-		if (!passwordsMatch) return res.status(400).json({ message: "The password is incorrect. Try again." });
+		if (!passwordsMatch) return res.status(400).json({ message: "The password is incorrect. Try again.", userExists: true, passwordsMatch: false });
 
 		const accessToken = await createAccessToken({
 			id: foundUser.id,
@@ -136,12 +145,8 @@ export const login = async (req, res) => {
 		});
 
 		return res.status(200).json({
-			// id: foundUser.id,
 			username: foundUser.username,
 			email: foundUser.email,
-			role: foundUser.role,
-			// createdAt: foundUser.createdAt,
-			// updatedAt: foundUser.updatedAt
 		});
 	} catch (error) {
 		console.log(error);
@@ -169,9 +174,9 @@ export const profile = async (req, res) => {
 			},
 		});
 
-		if (!userFound) return res.status(404).json({ message: "User not found." });
+		if (!userFound) return res.status(404).json({ message: "User not found.", userExists: false });
 
-		return res.json({
+		return res.status(200).json({
 			id: userFound.id,
 			username: userFound.username,
 			email: userFound.email,
@@ -201,14 +206,11 @@ export const verifyToken = async (req, res) => {
 			},
 		});
 
-		if (!userFound) return res.status(404).json({ message: "User not found." });
+		if (!userFound) return res.status(404).json({ message: "User not found.", userExists: false });
 
-		return res.json({
-			// id: userFound.id,
+		return res.status(200).json({
 			username: userFound.username,
 			email: userFound.email,
-			// createdAt: userFound.createdAt,
-			// updatedAt: userFound.updatedAt
 		});
 	});
 };
