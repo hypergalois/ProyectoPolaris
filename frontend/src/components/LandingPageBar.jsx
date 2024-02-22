@@ -5,7 +5,7 @@ const LandingPageBar = () => {
 				<img src="/logo-projects.png" alt="Logo Izquierda" className="h-16 w-auto" />
 			</div>
 			<div className="flex items-center">
-				<img src="full-logo-utad.png" alt="Logo Derecha" className="h-16 w-auto" />
+				<img src="/full-logo-utad.png" alt="Logo Derecha" className="h-16 w-auto" />
 			</div>
 		</nav>
 	);

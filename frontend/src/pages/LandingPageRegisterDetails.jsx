@@ -6,7 +6,7 @@ const HomePageRegister = () => {
 	return (
 		<>
 			<NavBarNoAuth />
-			<div className="bg-[#858585] text-white  items-center">
+			<div className="items-center">
 				<LandingPageBar />
 				<div className="flex justify-center h-screen">
 					<div className="mx-auto text-center">
