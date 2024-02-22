@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createProject, deleteProject, getProject, getProjectByCategory, getProjectByDate, getProjectByStatus, getProjectByTitle, getProjectByUser, getProjects, updateProject } from "../controllers/projects.controllers.js";
+import { createProject, deleteProject, getProject, getProjectByCategory, getProjectByDate, getProjectByStatus, getProjectByTitle, getProjectByUser, getProjects, getProjectsHome, updateProject } from "../controllers/projects.controllers.js";
 import { uploadFile } from "../middlewares/uploadFile.middleware.js";
 import { authRequired } from "../middlewares/authRequired.middleware.js";
 import { validateSchema } from "../middlewares/validator.middleware.js";
@@ -10,6 +10,8 @@ const router = Router();
 // Main routes
 
 router.get("/projects", authRequired, getProjects);
+
+router.get("/projects/home", authRequired, getProjectsHome);
 
 router.get("/projects/:id", authRequired, getProject);
 

@@ -15,6 +15,33 @@ export const getProjects = async (req, res) => {
 	}
 };
 
+export const getProjectsHome = async (req, res) => {
+    try {
+        const projects = await prisma.project.findMany({
+            where: { status: statusEnum.ACCEPTED },
+            take: 10,
+            orderBy: { createdAt: "desc" },
+            select: {
+                id: true,
+                title: true,
+                description: true,
+                subject: true,
+                degree: {
+                    select: {
+                        name: true
+                    }
+                }
+            }
+        });
+        if (!projects) return res.status(404).json({ message: "No projects found" });
+
+        return res.status(200).json(projects);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: error.message });
+    }
+};
+
 export const createProject = async (req, res) => {
 	try {
 		const files = req.files ? req.files.map((file) => process.env.PUBLIC_URL + file.destination + file.filename) : [];
