@@ -3,7 +3,7 @@ import React from "react";
 const ProjectCard = ({ project }) => {
 	return (
 		<div className="max-w-sm rounded overflow-hidden shadow-lg">
-			<img className="w-full" src={project.thumbnail} alt={project.title} />
+			<img className="w-full" src={"http://localhost:5173/full-logo-utad.webp"} alt={project.title} />
 			<div className="px-6 py-4">
 				<div className="font-bold text-xl mb-2">{project.title}</div>
 				<p className="text-gray-700 text-base">{project.description}</p>
