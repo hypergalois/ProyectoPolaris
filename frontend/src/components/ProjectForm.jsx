@@ -275,7 +275,7 @@ const ProjectForm = () => {
                 </button>
             </div>
             <div>
-                <input type="submit" />
+                <button type="submit">Enviar</button>
             </div>
         </form>
     );
