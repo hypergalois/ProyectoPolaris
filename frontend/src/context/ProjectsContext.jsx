@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { getProjectsRequest, getProjectRequest, createProjectRequest, deleteProjectRequest, updateProjectRequest } from "../api/projects";
+import { getProjectsRequest, getProjectsHomeRequest, getProjectRequest, createProjectRequest, deleteProjectRequest, updateProjectRequest } from "../api/projects";
 
 const ProjectsContext = createContext();
 
@@ -26,6 +26,15 @@ export const ProjectsProvider = ({ children }) => {
 	const getProjects = async () => {
 		try {
 			const res = await getProjectsRequest();
+			setProjects(res.data);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const getProjectsHome = async () => {
+		try {
+			const res = await getProjectsHomeRequest();
 			setProjects(res.data);
 		} catch (error) {
 			console.log(error);
@@ -65,6 +74,7 @@ export const ProjectsProvider = ({ children }) => {
 				projects,
 				createProject,
 				getProjects,
+				getProjectsHome,
 				getProject,
 				deleteProject,
 				updateProject,

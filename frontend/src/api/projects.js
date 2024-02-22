@@ -10,6 +10,8 @@ export const postProjectsRequest = (projectData, token) =>
 
 export const getProjectsRequest = () => axiosInstance.get("/projects");
 
+export const getProjectsHomeRequest = () => axiosInstance.get("/projects/home");
+
 export const getProjectRequest = (id) => axiosInstance.get(`/projects/${id}`);
 
 export const createProjectRequest = (project) => axiosInstance.post("/projects", project);

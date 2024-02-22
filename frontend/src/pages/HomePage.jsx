@@ -3,11 +3,11 @@ import { useProjects } from "../context/ProjectsContext";
 import ProjectCard from "../components/ProjectCard";
 
 function HomePage() {
-	const { projects, getProjects } = useProjects();
+	const { projects, getProjectsHome } = useProjects();
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		getProjects().then(() => setLoading(false));
+		getProjectsHome().then(() => setLoading(false));
 	}, []);
 
 	if (projects.length === 0) {
