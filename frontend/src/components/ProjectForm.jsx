@@ -120,17 +120,23 @@ const ProjectForm = () => {
 		formData.append("degreeId", data.degree);
 
 		// Agrega los datos de tipo array del proyecto a FormData
-		data.awards
-			?.filter((value) => value !== "")
-			?.forEach((value, index) => {
-				formData.append("awards", value);
-			});
 
-		data.externalLinks
-			?.filter((value) => value !== "")
-			?.forEach((value, index) => {
-				formData.append("externalLinks", value);
-			});
+		// TODO FALTA ARREGLAR ESTO:
+		// - Cuando se elimina, realmente el dato sigue ahi
+		// - Comprobar que si hay campos vacios no se envian
+		// - Hacer que se convierta a array incluso si solo hay un elemento o ninguno
+
+		// data.awards
+		// 	?.filter((value) => value !== "")
+		// 	?.forEach((value, index) => {
+		// 		formData.append("awards", value);
+		// 	});
+
+		// data.externalLinks
+		// 	?.filter((value) => value !== "")
+		// 	?.forEach((value, index) => {
+		// 		formData.append("externalLinks", value);
+		// 	});
 
 		// data.impliedStudents?.filter(value => value !== "")?.forEach((value, index) => {
 		//     formData.append("impliedStudents", value);
@@ -148,18 +154,10 @@ const ProjectForm = () => {
 		});
 
 		console.log(data);
-		// console.log(userToken);
 
-		createProject(formData)
-			.then((response) => {
-				if (response.status === 200) {
-					console.log("Proyecto creado");
-					navigate("/home");
-				}
-			})
-			.catch((error) => {
-				console.error("Error creating project:", error);
-			});
+		createProject(formData);
+
+		navigate("/home");
 	};
 
 	return (
