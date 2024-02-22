@@ -1,13 +1,5 @@
 import { axiosInstance } from "./axios";
 
-export const postProjectsRequest = (projectData, token) =>
-	axiosInstance.post("/projects", projectData, {
-		headers: {
-			"Content-Type": "multipart/form-data",
-			Authorization: `Bearer ${token}`,
-		},
-	});
-
 export const getProjectsRequest = () => axiosInstance.get("/projects");
 
 export const getProjectsHomeRequest = () => axiosInstance.get("/projects/home");
