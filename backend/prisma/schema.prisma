@@ -35,9 +35,9 @@ model User {
 
   fullName String?
 
-  email         String?  @unique
-  username      String?  @unique
-  passwordHash  String?
+  email        String? @unique
+  username     String? @unique
+  passwordHash String?
 
   role Role? @default(USER)
 
@@ -88,7 +88,7 @@ model Project {
   course         String?
   letter         String?
 
-  thumbnail String?
+  thumbnail       String?
   externalLinks   String[]
   uploadedContent String[]
 
