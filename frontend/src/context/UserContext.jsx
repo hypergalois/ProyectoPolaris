@@ -20,7 +20,7 @@ export const UserProvider = ({ children }) => {
 	const getExistEmail = async (email) => {
 		try {
 			const response = await checkEmailRequest(email);
-			response.status==200 ? setExistEmail(true) : setExistEmail(false)
+			response.status == 200 ? setExistEmail(true) : setExistEmail(false);
 		} catch (error) {
 			if (Array.isArray(error.response.data)) {
 				setErrors(error.response.data);
@@ -33,7 +33,7 @@ export const UserProvider = ({ children }) => {
 	const getProfile = async () => {
 		try {
 			const response = await getProfileRequest();
-			setProfile(response.data)
+			setProfile(response.data);
 		} catch (error) {
 			if (Array.isArray(error.response.data)) {
 				setErrors(error.response.data);

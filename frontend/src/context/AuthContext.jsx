@@ -111,7 +111,7 @@ export const AuthProvider = ({ children }) => {
 	}, []);
 
 	useEffect(() => {
-		if(isAuthenticated) {
+		if (isAuthenticated) {
 			const cookies = Cookies.get();
 			userToken.current = cookies.token;
 		}
@@ -127,7 +127,7 @@ export const AuthProvider = ({ children }) => {
 				loading,
 				errors,
 				isAuthenticated,
-				userToken : userToken.current
+				userToken: userToken.current,
 			}}
 		>
 			{children}
