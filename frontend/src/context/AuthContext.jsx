@@ -53,6 +53,7 @@ export const AuthProvider = ({ children }) => {
 			setUser(null);
 			setIsAuthenticated(false);
 			Cookies.remove("token");
+			userToken.current = null;
 		} catch (error) {
 			console.log(error);
 		}
