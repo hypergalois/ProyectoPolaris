@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { useForm, useFieldArray } from "react-hook-form";
 import Select from "react-select";
 import { useAuth } from "../context/AuthContext"
@@ -23,13 +24,15 @@ const postProject = async (project, token) => {
     try {
         const response = await postProjectsRequest(project, token);
         console.log(response);
+        return response.status;
     } catch (error) {
-        console.log(error.response);
+        throw error;
     }
 };
 
 const ProjectForm = () => {
     const { register, control, handleSubmit, formState: { errors }, setValue } = useForm();
+    const navigate = useNavigate();
     const { degrees, getDegrees, errors : areasContextErrors } = useAreas();
     const { userToken } = useAuth();
 
@@ -119,7 +122,15 @@ const ProjectForm = () => {
         console.log(data);
         console.log(userToken);
 
-        postProject(formData, userToken);
+        postProject(formData, userToken)
+        .then(status => {
+            if(status === 200){
+                navigate("/home");
+            }
+        })
+        .catch(error => {
+            console.log(`Ha ocurrido un en el método POST:\n${error.response}`);
+        });
     };
 
     return(
