@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const HomePageAnimation = () => {
+const LandingPageAnimation = () => {
 	const [isVisible, setIsVisible] = useState(true);
 
 	const handleAnimationEnd = () => {
@@ -39,4 +39,4 @@ const HomePageAnimation = () => {
 	);
 };
 
-export default HomePageAnimation;
+export default LandingPageAnimation;

@@ -1,16 +1,16 @@
-import HomePageBar from "../components/HomePageBar";
 import InitialRegisterForm from "../components/InitialRegisterForm";
 import HomePageLanding from "../components/HomePageLanding";
 
 import NavBarNoAuth from "../components/NavBarNoAuth";
 
 import { Link } from "react-router-dom";
+import LandingPageBar from "../components/LandingPageBar";
 
 const HomePageRegister = () => {
 	return (
 		<>
 			<NavBarNoAuth />
-			<HomePageBar />
+			<LandingPageBar />
 			<div className="flex px-8">
 				<div className="flex-1">
 					<HomePageLanding />
