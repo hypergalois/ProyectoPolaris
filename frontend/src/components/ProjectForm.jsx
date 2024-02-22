@@ -84,22 +84,34 @@ const ProjectForm = () => {
     const onSubmit = async (data) => {
         const formData = new FormData();
     
-        // Agrega los datos del proyecto a FormData
+        // Agrega los datos simples del proyecto a FormData
         formData.append("title", data.projectTitle);
         formData.append("description", data.projectDescription);
-        //formData.append("keywords", JSON.stringify([]));
         //formData.append("personalProject", false);
-        //formData.append("awards", data.awards?.filter(value => value !== ""));
         formData.append("subject", data.subject);
         formData.append("academicCourse", data.academicCourse);
         formData.append("course", data.course);
         formData.append("letter", data.letter);
-        //formData.append("externalLinks", data.externalLinks?.filter(value => value !== ""));
         formData.append("degreeId", data.degree);
-        //formData.append("impliedStudentsIDs", JSON.stringify([])); // data.impliedStudents?.filter(value => value !== ""));
-        //formData.append("impliedProfessorsIDs", JSON.stringify([])); // data.impliedTeachers?.filter(value => value !== ""));
+
+        // Agrega los datos de tipo array del proyecto a FormData
+        data.awards?.filter(value => value !== "")?.forEach((value, index) => {
+            formData.append("awards", value);
+        });
+        data.externalLinks?.filter(value => value !== "")?.forEach((value, index) => {
+            formData.append("externalLinks", value);
+        });
+        // data.impliedStudents?.filter(value => value !== "")?.forEach((value, index) => {
+        //     formData.append("impliedStudents", value);
+        // });
+        // data.impliedTeachers?.filter(value => value !== "")?.forEach((value, index) => {
+        //     formData.append("impliedTeachers", value);
+        // });
+        // data.keywords?.filter(value => value !== "")?.forEach((value, index) => {
+        //     formData.append("keywords", value);
+        // });
     
-        // Agrega los archivos a FormData
+        // Agrega los archivos del proyecto a FormData
         data.files.forEach((file, index) => {
             formData.append("files", file);
         });
