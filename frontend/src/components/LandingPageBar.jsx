@@ -1,6 +1,4 @@
-// TODO: PONER TODOS LOS PATHS COMO CONSTANTES EN UN ARCHIVO DE CONFIGURACIÓN
-
-const HomePageBar = () => {
+const LandingPageBar = () => {
 	return (
 		<nav className="flex justify-between items-center p-8">
 			<div className="flex items-center">
@@ -13,4 +11,4 @@ const HomePageBar = () => {
 	);
 };
 
-export default HomePageBar;
+export default LandingPageBar;

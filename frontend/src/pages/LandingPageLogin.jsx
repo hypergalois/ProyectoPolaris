@@ -1,17 +1,17 @@
 import LoginForm from "../components/LoginForm";
-import HomePageBar from "../components/HomePageBar";
-import HomePageAnimation from "../components/HomePageAnimation";
+import LandingPageBar from "../components/LandingPageBar.jsx";
 
 import NavBarNoAuth from "../components/NavBarNoAuth.jsx";
 
 import { Link } from "react-router-dom";
+import LandingPageAnimation from "../components/LandingPageAnimation.jsx";
 
 const HomePage = () => {
 	return (
 		<div className="items-center h-screen">
-			<HomePageAnimation />
+			<LandingPageAnimation />
 			<NavBarNoAuth />
-			<HomePageBar />
+			<LandingPageBar />
 			<div className="flex justify-center">
 				<div className="mx-auto text-center">
 					<div className="text-8xl text-[#858585] font-bold mb-8">
