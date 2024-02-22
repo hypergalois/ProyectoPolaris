@@ -17,6 +17,8 @@ import ProjectsDetailPage from "./pages/ProjectsDetailPage";
 
 import SettingsPage from "./pages/SettingsPage";
 
+import NotFoundPage from "./pages/NotFoundPage";
+
 import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
@@ -29,6 +31,8 @@ function App() {
 						<main>
 							{/* Seria cutre pero se puede mostrar navbarnoauth o navbarauth dependiendo del estado */}
 							<Routes>
+								{/* Pagina 404 */}
+								<Route path="*" element={<NotFoundPage />} />
 								{/* Home page sin logearse, sale el formulario de login */}
 								<Route path="/" element={<LandingPageLogin />} />
 								{/* Pagina de recuperar contraseña */}

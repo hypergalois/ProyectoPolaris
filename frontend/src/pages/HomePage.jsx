@@ -1,4 +1,7 @@
 import React from "react";
+import { useProjects } from "../context/ProjectsContext";
+import { useState, useEffect } from "react";
+// import { ProjectCard } from "../components/ProjectCard";
 
 function HomePage() {
 	return (
