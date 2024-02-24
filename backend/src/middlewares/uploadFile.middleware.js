@@ -17,9 +17,14 @@ const storage = multer.diskStorage({
 		}
 	},
 	filename: function (req, file, callback) {
-		const ext = file.originalname.split(".").pop();
-		const filename = uuidv4() + "." + ext;
-		callback(null, filename);
+        if (file.originalname.split(".")[0] === "thumbnail") {
+            callback(null, file.originalname);
+        } else {
+            const ext = file.originalname.split(".").pop();
+            const filename = uuidv4() + "." + ext;
+            callback(null, filename);
+        
+        }
 	},
 });
 

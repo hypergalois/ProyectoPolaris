@@ -44,13 +44,14 @@ export const getProjectsHome = async (req, res) => {
 
 export const createProject = async (req, res) => {
 	try {
-		const files = req.files ? req.files.map((file) => process.env.PUBLIC_URL + file.destination + file.filename) : [];
-		console.log(files);
+
+        const files = req.files ? req.files.map((file) => process.env.PUBLIC_URL + file.destination + file.filename) : [];
+        const thumbnail = files.find((file) => file.includes("thumbnail")) ?? "http://localhost:5173/full-logo-utad.webp";
+        const projectfiles = files.filter((file) => !file.includes("thumbnail"));
 
 		if (req.role === rolesEnum.USER || req.role === rolesEnum.CREATOR) {
 			const newProject = await prisma.project.create({
-				// Especifico que status es PENDING, para no depender del valor por defecto
-				data: { ...req.body, uploadedContent: files, status: statusEnum.PENDING},
+				data: { ...req.body, uploadedContent: projectfiles, status: statusEnum.PENDING, thumbnail: thumbnail},
 			});
 			if (!newProject) return res.status(404).json({ message: "Project not created" });
 
