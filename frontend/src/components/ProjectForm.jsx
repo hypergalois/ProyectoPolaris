@@ -26,6 +26,7 @@ const ProjectForm = () => {
 		handleSubmit,
 		formState: { errors },
 		setValue,
+		getValues
 	} = useForm();
 
 	const { createProject, errors: projectsContextErrors } = useProjects();
@@ -121,32 +122,30 @@ const ProjectForm = () => {
 
 		// Agrega los datos de tipo array del proyecto a FormData
 
-		// TODO FALTA ARREGLAR ESTO:
-		// - Cuando se elimina, realmente el dato sigue ahi
-		// - Comprobar que si hay campos vacios no se envian
-		// - Hacer que se convierta a array incluso si solo hay un elemento o ninguno
+		// const externalLinks = data.externalLinks ?
+		// data.externalLinks.filter((value) => value.trim().length !== 0) :
+		// [];
+		// formData.append("externalLinks", JSON.stringify(externalLinks));
 
-		// data.awards
-		// 	?.filter((value) => value !== "")
-		// 	?.forEach((value, index) => {
-		// 		formData.append("awards", value);
-		// 	});
+		// const impliedStudents = data.impliedStudents ?
+		// data.impliedStudents.filter((value) => value.trim().length !== 0) :
+		// [];
+		// formData.append("impliedStudents", JSON.stringify(impliedStudents));
 
-		// data.externalLinks
-		// 	?.filter((value) => value !== "")
-		// 	?.forEach((value, index) => {
-		// 		formData.append("externalLinks", value);
-		// 	});
+		// const impliedTeachers = data.impliedTeachers ?
+		// data.impliedTeachers.filter((value) => value.trim().length !== 0) :
+		// [];
+		// formData.append("impliedProfessors", JSON.stringify(impliedTeachers));
 
-		// data.impliedStudents?.filter(value => value !== "")?.forEach((value, index) => {
-		//     formData.append("impliedStudents", value);
-		// });
-		// data.impliedTeachers?.filter(value => value !== "")?.forEach((value, index) => {
-		//     formData.append("impliedTeachers", value);
-		// });
-		// data.keywords?.filter(value => value !== "")?.forEach((value, index) => {
-		//     formData.append("keywords", value);
-		// });
+		// const awards = data.awards ?
+		// data.awards.filter((value) => value.trim().length !== 0) :
+		// [];
+		// formData.append("awards", JSON.stringify(awards));
+
+		// const keywords = data.keywords ?
+		// data.keywords.filter((value) => value.trim().length !== 0) :
+		// [];
+		// formData.append("keywords", JSON.stringify(keywords));
 
 		// Agrega los archivos del proyecto a FormData
 		data.files.forEach((file, index) => {
@@ -260,6 +259,7 @@ const ProjectForm = () => {
 								type="button"
 								onClick={() => {
 									removeLink(index);
+									setValue(`externalLinks.${index}`, "");
 								}}
 								className="ml-2 bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
 							>
@@ -297,11 +297,12 @@ const ProjectForm = () => {
 								placeholder="Estudiante implicado"
 								className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 							/>
-							{studentFields.length > 1 && (
+							{index > 0 && (
 								<button
 									type="button"
 									onClick={() => {
 										removeStudent(index);
+										setValue(`impliedStudents.${index}`, "");
 									}}
 									className="ml-2 bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
 								>
@@ -331,6 +332,7 @@ const ProjectForm = () => {
 								type="button"
 								onClick={() => {
 									removeTeacher(index);
+									setValue(`impliedTeachers.${index}`, "");
 								}}
 								className="ml-2 bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
 							>
@@ -354,6 +356,7 @@ const ProjectForm = () => {
 								type="button"
 								onClick={() => {
 									removeAward(index);
+									setValue(`awards.${index}`, "");
 								}}
 								className="ml-2 bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
 							>
