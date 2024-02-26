@@ -35,9 +35,12 @@ model User {
 
   fullName String?
 
-  email        String? @unique
-  username     String? @unique
-  passwordHash String?
+  email         String?  @unique
+  emailVerified Boolean? @default(false)
+  username      String?  @unique
+
+  passwordHash       String?
+  resetPasswordToken String?
 
   role Role? @default(USER)
 
