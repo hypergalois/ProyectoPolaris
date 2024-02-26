@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect, useRef } from "react";
-import { registerRequest, loginRequest, verifyTokenRequest, logoutRequest } from "../api/auth";
+import { registerRequest, loginRequest, verifyTokenRequest, logoutRequest, forgotPasswordRequest, resetPasswordRequest } from "../api/auth";
 import Cookies from "js-cookie";
 
 export const AuthContext = createContext();
@@ -59,15 +59,29 @@ export const AuthProvider = ({ children }) => {
 		}
 	};
 
-	// const verifyToken = async () => {
-	//     try {
-	//         const response = await verifyTokenRequest();
-	//         setUser(response.data);
-	//         setIsAuthenticated(true);
-	//     } catch (error) {
-	//         console.log(error);
-	//     }
-	// }
+	const forgotPassword = async (email) => {
+		try {
+			await forgotPasswordRequest(email);
+		} catch (error) {
+			if (Array.isArray(error.response.data)) {
+				setErrors(error.response.data);
+			} else {
+				setErrors([error.response.data]);
+			}
+		}
+	};
+
+	const resetPassword = async (data) => {
+		try {
+			await resetPasswordRequest(data);
+		} catch (error) {
+			if (Array.isArray(error.response.data)) {
+				setErrors(error.response.data);
+			} else {
+				setErrors([error.response.data]);
+			}
+		}
+	};
 
 	// Para que desaparezcan los errores
 	useEffect(() => {

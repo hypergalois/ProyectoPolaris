@@ -10,6 +10,7 @@ const LoginForm = () => {
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
+
 	const { login: loginUser, isAuthenticated, errors: loginErrors } = useAuth();
 	const navigate = useNavigate();
 
@@ -33,7 +34,7 @@ const LoginForm = () => {
 			<form onSubmit={handleSubmit(onSubmit)} className="p-4">
 				<div className="mb-4">
 					<input
-						className="w-5/12 h-10 px-6 text-black p-3 rounded-2xl"
+						className="w-5/12 h-10 px-6 text-black p-6 rounded-2xl"
 						type="email"
 						{...register("email", {
 							required: true,
@@ -46,7 +47,7 @@ const LoginForm = () => {
 				</div>
 				<div className="mb-4">
 					<input
-						className="w-5/12 h-10 px-6 text-black p-3 rounded-2xl"
+						className="w-5/12 h-10 px-6 text-black p-6 rounded-2xl"
 						type="password"
 						{...register("password", {
 							required: true,
@@ -58,7 +59,7 @@ const LoginForm = () => {
 					{errors.password && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta una contraseña</p>}
 				</div>
 				<div className="mb-4">
-					<button className="w-5/12 h-10 px-6 rounded-xl bg-[#333333] text-white" type="submit">
+					<button className="w-5/12 h-12 px-6 rounded-xl bg-[#333333] text-white font-semibold" type="submit">
 						Iniciar sesión
 					</button>
 				</div>
