@@ -21,7 +21,7 @@ export const updateProjectRequest = (id, project) => axiosInstance.put(`/project
 export const deleteProjectRequest = (id) => axiosInstance.delete(`/projects/${id}`);
 
 // Estas son para la busqueda
-export const getProjectsByUser = (userId) => axiosInstance.get(`/projects/user/${userId}`);
+export const getProjectsByUserRequest = (userId) => axiosInstance.get(`/projects/user/${userId}`);
 
 export const getProjectsByCategory = (category) => axiosInstance.get(`/projects/category/${category}`);
 

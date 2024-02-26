@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, useRef } from "react";
-import { getProjectsRequest, getProjectsByUser, getProjectsHomeRequest, getProjectRequest, createProjectRequest, deleteProjectRequest, updateProjectRequest } from "../api/projects";
+import { getProjectsRequest, getProjectsByUserRequest, getProjectsHomeRequest, getProjectRequest, createProjectRequest, deleteProjectRequest, updateProjectRequest } from "../api/projects";
 
 const ProjectsContext = createContext();
 
@@ -53,7 +53,7 @@ export const ProjectsProvider = ({ children }) => {
 
 	const getProjectsByUser = async (id) => {
 		try {
-			const res = await getProjectsByUser(id);
+			const res = await getProjectsByUserRequest(id);
 			setRequestedProject(res.data);
 		} catch (error) {
 			console.log(error);
