@@ -213,7 +213,7 @@ router.post("/checkEmailRegister", checkEmailRegister);
  *         description: Error interno del servidor
  */
 
-router.get("/profile", authRequired, profile);
+router.post("/profile", authRequired, profile);
 
 /**
  * @swagger
