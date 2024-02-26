@@ -17,11 +17,13 @@ import areaRoutes from "./routes/areas.routes.js";
 import requestRoutes from "./routes/requests.routes.js";
 import testRoutes from "./routes/test.routes.js";
 
+const CLIENT_URL = process.env.CLIENT_URL;
+
 const app = express();
 
 app.use(
 	cors({
-		origin: "http://localhost:5173",
+		origin: CLIENT_URL,
 		credentials: true,
 	})
 );

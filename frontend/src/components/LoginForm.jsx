@@ -33,7 +33,7 @@ const LoginForm = () => {
 			<form onSubmit={handleSubmit(onSubmit)} className="p-4">
 				<div className="mb-4">
 					<input
-						className="w-5/12 h-10 px-6 text-black p-4 rounded-2xl"
+						className="w-5/12 h-10 px-6 text-black p-3 rounded-2xl"
 						type="email"
 						{...register("email", {
 							required: true,
@@ -42,11 +42,11 @@ const LoginForm = () => {
 						placeholder="Correo"
 						autoComplete="email"
 					/>
-					{errors.email && <p>Hace falta un email</p>}
+					{errors.email && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta un email</p>}
 				</div>
 				<div className="mb-4">
 					<input
-						className="w-5/12 h-10 px-6 text-black p-4 rounded-2xl"
+						className="w-5/12 h-10 px-6 text-black p-3 rounded-2xl"
 						type="password"
 						{...register("password", {
 							required: true,
@@ -55,7 +55,7 @@ const LoginForm = () => {
 						placeholder="Contraseña"
 						autoComplete="current-password"
 					/>
-					{errors.password && <p>Hace falta una contraseña</p>}
+					{errors.password && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta una contraseña</p>}
 				</div>
 				<div className="mb-4">
 					<button className="w-5/12 h-10 px-6 rounded-xl bg-[#333333] text-white" type="submit">

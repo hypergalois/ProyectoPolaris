@@ -11,7 +11,7 @@ const HomePageRegister = () => {
 		<>
 			<NavBarNoAuth />
 			<LandingPageBar />
-			<div className="flex px-8">
+			<div className="flex px-16">
 				<div className="flex-1">
 					<HomePageLanding />
 				</div>

@@ -6,6 +6,7 @@ import { createAccessToken } from "../libs/jwt.js";
 import { rolesEnum, academicRoleEnum } from "../config/tags.js";
 
 const secret = process.env.TOKEN_SECRET;
+const BCRYPT_SALT_ROUNDS = process.env.BCRYPT_SALT_ROUNDS;
 
 // Ruta que se usa en el registro para comprobar si el email ya esta registrado
 export const checkEmailRegister = async (req, res) => {
@@ -47,26 +48,27 @@ export const register = async (req, res) => {
 
 		if (foundUser)
 			return res.status(400).json({
-				message: "The email is already in use. Please log in instead.", userExists: true
+				message: "The email is already in use. Please log in instead.",
+				userExists: true,
 			});
 
-		const salt = await bcrypt.genSalt(10);
+		const salt = await bcrypt.genSalt(BCRYPT_SALT_ROUNDS);
 
 		const hashedPassword = await bcrypt.hash(password, salt);
 
-		console.log(email)
+		console.log(email);
 
 		// Asignación automatica de rol según el email
 		// La comprobación subsiguiente de academicRole es innecesaria ya que
 		if (email.endsWith("@u-tad.com")) {
-            if (academicRole === academicRoleEnum.ALUMN || academicRole === academicRoleEnum.ALUMNI) {
-                return res.status(400).json({ message: "The academic role is not valid." });
-            }
+			if (academicRole === academicRoleEnum.ALUMN || academicRole === academicRoleEnum.ALUMNI) {
+				return res.status(400).json({ message: "The academic role is not valid." });
+			}
 			role = rolesEnum.CREATOR;
 		} else if (email.endsWith("@live.u-tad.com")) {
-            if (academicRole === academicRoleEnum.EMPLOYEE || academicRole === academicRoleEnum.PROFESSOR || academicRole === academicRoleEnum.COORDINATOR) {
-                return res.status(400).json({ message: "The academic role is not valid." });
-            }
+			if (academicRole === academicRoleEnum.EMPLOYEE || academicRole === academicRoleEnum.PROFESSOR || academicRole === academicRoleEnum.COORDINATOR) {
+				return res.status(400).json({ message: "The academic role is not valid." });
+			}
 			role = rolesEnum.USER;
 		} else {
 			// Nunca deberia llegar a este caso
@@ -125,7 +127,8 @@ export const login = async (req, res) => {
 
 		if (!foundUser)
 			return res.status(400).json({
-				message: "There doesn't exist an user with that email. Try registering instead.", userExists: false
+				message: "There doesn't exist an user with that email. Try registering instead.",
+				userExists: false,
 			});
 
 		const passwordsMatch = bcrypt.compare(password, foundUser.passwordHash);

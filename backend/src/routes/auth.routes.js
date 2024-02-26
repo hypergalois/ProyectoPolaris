@@ -273,4 +273,8 @@ router.post("/profile", authRequired, profile);
 
 router.get("/verify", verifyToken);
 
+router.post("/forgotPassword");
+
+router.post("/resetPassword");
+
 export default router;

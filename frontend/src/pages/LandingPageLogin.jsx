@@ -31,7 +31,7 @@ const HomePage = () => {
 						<p>
 							¿Eres nuevo en U-Tad?{" "}
 							<Link className="underline decoration-solid decoration-1" to="/register">
-								Registrate
+								Regístrate
 							</Link>
 						</p>
 					</footer>

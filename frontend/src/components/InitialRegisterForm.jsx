@@ -40,7 +40,7 @@ const InitialRegisterForm = () => {
 				</div>
 				<div className="mb-4 text-black">
 					<input
-						className="w-5/12 p-4 rounded-2xl"
+						className="w-5/12 p-3 rounded-2xl"
 						type="text"
 						{...register("username", {
 							required: true,
@@ -49,11 +49,11 @@ const InitialRegisterForm = () => {
 						})}
 						placeholder="Nombre"
 					/>
-					{errors.username && <p className="mb-2 text-white mt-4 text-red-500 font-semibold">Hace falta un nombre de usuario</p>}
+					{errors.username && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta un nombre de usuario</p>}
 				</div>
 				<div className="mb-4 text-black">
 					<input
-						className="w-5/12 p-4 rounded-2xl"
+						className="w-5/12 p-3 rounded-2xl"
 						type="email"
 						{...register("email", {
 							required: true,
