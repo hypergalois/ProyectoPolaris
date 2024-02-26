@@ -1,19 +1,40 @@
 import React from "react";
 import { useUser } from "../context/UserContext";
+import { useProjects } from "../context/ProjectsContext";
 import { useState, useEffect } from "react";
 
 const ProfileDetails = ({ project }) => {
 
 	const { profil, getProfile, errors: profileErrors } = useUser();
+	const { projects, getProjectsByUser, errors: proyectsErrors } = useProjects();
+	const [newProfile, seNewProfile] = useState([]);
 
-	useEffect(() => {
+	useEffect(()  => {
         getProfile()
     }, [])
+
+	useEffect(() => {
+        if (profil) {
+			const entriesArray = Object.entries(profil);
+			seNewProfile(entriesArray);
+			getProjectsByUser(entriesArray.id)
+		}
+    }, [profil])
+
+	useEffect(() => {
+        if (projects) {
+			console.log(projects)
+		}
+    }, [projects])
 
 	return (
 		<div className="max-w-sm rounded overflow-hidden shadow-lg">
 			<h1>Details</h1>
-			<p>{profil}</p>
+			{newProfile.map(([key, value]) => (
+				<div key={key}>
+				<strong>{key}:</strong> {value}
+				</div>
+			))}
 		</div>
 	);
 };

@@ -14,7 +14,7 @@ export const useUser = () => {
 
 export const UserProvider = ({ children }) => {
 	const [existEmail, setExistEmail] = useState(false);
-	const [profil, setProfile] = useState(null);
+	const [profil, setProfile] = useState([]);
 	const [errors, setErrors] = useState([]);
 
 	const getExistEmail = async (email) => {
