@@ -8,6 +8,7 @@ import LandingPageLogin from "./pages/LandingPageLogin";
 import LandingPageRegister from "./pages/LandingPageRegister";
 import HomePageRegisterDetails from "./pages/LandingPageRegisterDetails";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 import HomePage from "./pages/HomePage";
 
@@ -43,6 +44,8 @@ function App() {
 										<Route path="/" element={<LandingPageLogin />} />
 										{/* Pagina de recuperar contraseña */}
 										<Route path="/forgot-password" element={<ForgotPasswordPage />} />
+										{/* Pagina de resetear contraseña */}
+										<Route path="/reset-password" element={<ResetPasswordPage />} />
 										{/* Pagina de registro, solo pide dos datos inciales */}
 										<Route path="/register" element={<LandingPageRegister />} />
 										{/* Pagina de registro secundaria, termina el registro */}
