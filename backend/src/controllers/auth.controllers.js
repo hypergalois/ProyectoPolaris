@@ -32,6 +32,28 @@ export const checkEmailRegister = async (req, res) => {
 	}
 };
 
+export const forgotPassword = async (req, res) => {
+	const { email } = req.body;
+
+	try {
+		const userFound = await prisma.user.findUnique({
+			where: {
+				email: email,
+			},
+		});
+
+		if (!userFound) return res.status(400).json({ message: "User not found.", userExists: false });
+
+		// Aqui se enviaria el correo con el link para cambiar la contraseña
+		// console.log(userFound);
+
+		return res.status(200).json({ message: "Email sent successfully.", userExists: true });
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ message: error.message });
+	}
+};
+
 export const register = async (req, res) => {
 	// console.log(req.body);
 	const { email, password, fullName, academicRole, academicCourse, department, promotion } = req.body;
