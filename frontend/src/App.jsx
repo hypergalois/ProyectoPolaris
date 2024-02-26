@@ -19,6 +19,8 @@ import SettingsPage from "./pages/SettingsPage";
 
 import NotFoundPage from "./pages/NotFoundPage";
 
+import ProfilePage from "./pages/NotFoundPage";
+
 import ProtectedRoute from "./ProtectedRoute";
 import { ProjectsProvider } from "./context/ProjectsContext";
 
@@ -60,6 +62,8 @@ function App() {
 										<Route path="/projects/:id/edit" element={<ProjectsFormPage />} />
 										{/* Pagina de ajustes, puede ser solo para admin */}
 										<Route path="/settings" element={<SettingsPage />} />
+										{/* Pagina de ajustes, puede ser solo para admin */}
+										<Route path="/profile" element={<ProfilePage />} />
 									</Route>
 								</Routes>
 							</main>
