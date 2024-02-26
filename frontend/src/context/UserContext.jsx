@@ -14,7 +14,7 @@ export const useUser = () => {
 
 export const UserProvider = ({ children }) => {
 	const [existEmail, setExistEmail] = useState(false);
-	const [perfil, setProfile] = useState(null);
+	const [profil, setProfile] = useState(null);
 	const [errors, setErrors] = useState([]);
 
 	const getExistEmail = async (email) => {
@@ -52,5 +52,5 @@ export const UserProvider = ({ children }) => {
 		}
 	}, [errors]);
 
-	return <UserContext.Provider value={{ existEmail, getExistEmail, perfil, getProfile, errors }}>{children}</UserContext.Provider>;
+	return <UserContext.Provider value={{ existEmail, getExistEmail, profil, getProfile, errors }}>{children}</UserContext.Provider>;
 };
