@@ -19,7 +19,7 @@ import SettingsPage from "./pages/SettingsPage";
 
 import NotFoundPage from "./pages/NotFoundPage";
 
-import ProfilePage from "./pages/NotFoundPage";
+import ProfilePage from "./pages/ProfilePage";
 
 import ProtectedRoute from "./ProtectedRoute";
 import { ProjectsProvider } from "./context/ProjectsContext";
