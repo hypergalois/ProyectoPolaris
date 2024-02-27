@@ -27,8 +27,10 @@ export const handleForgotPassword = async (req, res) => {
 		// Send email with reset link to user
 		console.log(`http://localhost:5173/reset-password?resetToken=${resetToken}`);
 		// const resetLink = `http://localhost:3000/reset-password/${resetToken}`;
+		return true;
 	} catch (error) {
 		console.log(error);
-		return res.status(500).json({ message: error.message });
+		// return res.status(500).json({ message: error.message });
+		return false;
 	}
 };

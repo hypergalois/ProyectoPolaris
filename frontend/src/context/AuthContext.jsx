@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }) => {
 	const [loading, setLoading] = useState(true);
 	const [errors, setErrors] = useState([]);
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
+	const [isResetTokenValid, setIsResetTokenValid] = useState(false);
 	const userToken = useRef(null);
 
 	const register = async (user) => {
@@ -62,6 +63,7 @@ export const AuthProvider = ({ children }) => {
 	const forgotPassword = async (email) => {
 		try {
 			await forgotPasswordRequest(email);
+			setIsResetTokenValid(true);
 		} catch (error) {
 			if (Array.isArray(error.response.data)) {
 				setErrors(error.response.data);
@@ -74,6 +76,7 @@ export const AuthProvider = ({ children }) => {
 	const resetPassword = async (data) => {
 		try {
 			await resetPasswordRequest(data);
+			setIsResetTokenValid(false);
 		} catch (error) {
 			if (Array.isArray(error.response.data)) {
 				setErrors(error.response.data);
@@ -139,9 +142,12 @@ export const AuthProvider = ({ children }) => {
 				register,
 				login,
 				logout,
+				forgotPassword,
+				resetPassword,
 				loading,
 				errors,
 				isAuthenticated,
+				isResetTokenValid,
 				userToken: userToken.current,
 			}}
 		>

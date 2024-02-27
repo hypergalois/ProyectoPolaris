@@ -4,6 +4,7 @@ import prisma from "../config/prisma.client.js";
 
 import { createAccessToken } from "../libs/jwt.js";
 import { rolesEnum, academicRoleEnum } from "../config/tags.js";
+import { handleForgotPassword } from "../services/auth.services.js";
 
 const secret = process.env.TOKEN_SECRET;
 const BCRYPT_SALT_ROUNDS = process.env.BCRYPT_SALT_ROUNDS;
@@ -46,6 +47,8 @@ export const forgotPassword = async (req, res) => {
 
 		// Aqui se enviaria el correo con el link para cambiar la contraseña
 		// console.log(userFound);
+		const isHandled = await handleForgotPassword(req, res);
+		if (!isHandled) return res.status(500).json({ message: "Error handling forgot password." });
 
 		return res.status(200).json({ message: "Email sent successfully.", userExists: true });
 	} catch (error) {
