@@ -92,11 +92,8 @@ const ProjectForm = () => {
 		if(projectId) getProject(projectId);
 
 		if (studentFields.length === 0) {
-			appendStudent({ impliedStudent: "" });
+			updateStudent(0, "");
 		}
-		console.log(studentFields.length);
-		// if (teacherFields.length === 0) appendTeacher({ impliedTeacher: "" });
-		// if (awardFields.length === 0) appendAward({ award: "" });
 	}, []);
 
 	useEffect(() => {
