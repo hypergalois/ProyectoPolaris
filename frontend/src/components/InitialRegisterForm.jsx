@@ -9,29 +9,20 @@ const InitialRegisterForm = () => {
 		register,
 		handleSubmit,
 		formState: { errors },
+		getValues,
 	} = useForm();
 	// eslint-disable-next-line no-unused-vars
 	const [email, setEmail] = useState("");
 	const { existEmail, getExistEmail, errors: userErrors } = useUser();
 	const navigate = useNavigate();
-	var noEmailUtad = true;
 
-	useEffect(() => {
-        if (existEmail) {
-			console.log("entra", existEmail)
-			//navigate(`/register/details`, { state: { email: email } });
-		}
-    }, [existEmail])
+	const getExistEmailRequest = async (email) => {
+		getExistEmail({'email': email})
+		return await existEmail;
+	};
 
 	const onSubmit = (data) => {
-		// Actualiza el estado del email
-		
-		noEmailUtad = data.email.endsWith("@u-tad.com") || data.email.endsWith("@live.u-tad.com");
-
-		if (noEmailUtad) {
-			getExistEmail(data);
-			setEmail(data.email);
-		}
+		navigate(`/register/details`, { state: { email: data.email } });
 	};
 
 	return (
@@ -62,12 +53,17 @@ const InitialRegisterForm = () => {
 					type="email"
 					{...register("email", {
 						required: true,
-						pattern: /^\S+@\S+$/i,
+						pattern: {
+							value: /^[a-zA-Z0-9._%+-]+@(u-tad\.com|live\.u-tad\.com)$/i,
+							message: 'El correo tiene que ser de la Utad',
+						},
+						validate: {
+							checkUrl: async () => await getExistEmailRequest(getValues('email')) || 'El correo ya esta en uso', 
+						}
 					})}
 					placeholder="Correo de la Utad"
 				/>
-				{errors.email && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta un email</p>}
-				{!noEmailUtad && <p className="mb-2  mt-4 text-red-500 font-semibold">Tiene que ser @u-tad.com o @live.u-tad.com</p>}
+				{errors.email && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.email.message}</p>}
 			</div>
 			<div className="mb-8">
 				<p className="text-xs">Creando una cuenta aceptas los Términos de Uso y la Política de Privacidad.</p>

@@ -13,14 +13,13 @@ export const useUser = () => {
 };
 
 export const UserProvider = ({ children }) => {
-	const [existEmail, setExistEmail] = useState(true);
+	const [existEmail, setExistEmail] = useState(false);
 	const [profil, setProfile] = useState([]);
 	const [errors, setErrors] = useState([]);
 
 	const getExistEmail = async (email) => {
 		try {
 			const response = await checkEmailRequest(email);
-			console.log(response.data.userExists)
 			setExistEmail(!response.data.userExists)
 		} catch (error) {
 			if (Array.isArray(error.response.data)) {
