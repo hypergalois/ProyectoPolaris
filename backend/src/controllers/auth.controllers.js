@@ -182,6 +182,8 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
 	const { email, password } = req.body;
+	console.log(email);
+	console.log(password);
 
 	try {
 		const foundUser = await prisma.user.findUnique({
@@ -196,7 +198,8 @@ export const login = async (req, res) => {
 				userExists: false,
 			});
 
-		const passwordsMatch = bcrypt.compare(password, foundUser.passwordHash);
+		const passwordsMatch = await bcrypt.compare(password, foundUser.passwordHash);
+		console.log(passwordsMatch);
 
 		if (!passwordsMatch) return res.status(400).json({ message: "The password is incorrect. Try again.", userExists: true, passwordsMatch: false });
 
