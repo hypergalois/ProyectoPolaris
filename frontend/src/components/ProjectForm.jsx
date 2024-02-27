@@ -164,30 +164,30 @@ const ProjectForm = () => {
 
 		// Agrega los datos de tipo array del proyecto a FormData
 
-		// const externalLinks = data.externalLinks ?
-		// data.externalLinks.filter((value) => value.trim().length !== 0) :
-		// [];
-		// formData.append("externalLinks", JSON.stringify(externalLinks));
+		const externalLinks = data.externalLinks ?
+		data.externalLinks.filter((value) => value.trim().length !== 0) :
+		[];
+		formData.append("externalLinks", JSON.stringify(externalLinks));
 
-		// const impliedStudents = data.impliedStudents ?
-		// data.impliedStudents.filter((value) => value.trim().length !== 0) :
-		// [];
-		// formData.append("impliedStudents", JSON.stringify(impliedStudents));
+		const impliedStudents = data.impliedStudents ?
+		data.impliedStudents.filter((value) => value.trim().length !== 0) :
+		[];
+		formData.append("impliedStudentsIDs", JSON.stringify(impliedStudents));
 
-		// const impliedTeachers = data.impliedTeachers ?
-		// data.impliedTeachers.filter((value) => value.trim().length !== 0) :
-		// [];
-		// formData.append("impliedProfessors", JSON.stringify(impliedTeachers));
+		const impliedTeachers = data.impliedTeachers ?
+		data.impliedTeachers.filter((value) => value.trim().length !== 0) :
+		[];
+		formData.append("impliedTeachersIDs", JSON.stringify(impliedTeachers));
 
-		// const awards = data.awards ?
-		// data.awards.filter((value) => value.trim().length !== 0) :
-		// [];
-		// formData.append("awards", JSON.stringify(awards));
+		const awards = data.awards ?
+		data.awards.filter((value) => value.trim().length !== 0) :
+		[];
+		formData.append("awards", JSON.stringify(awards));
 
-		// const keywords = data.keywords ?
-		// data.keywords.filter((value) => value.trim().length !== 0) :
-		// [];
-		// formData.append("keywords", JSON.stringify(keywords));
+		const keywords = data.keywords ?
+		data.keywords.filter((value) => value.trim().length !== 0) :
+		[];
+		formData.append("keywords", JSON.stringify(keywords));
 
 		// Agrega los archivos del proyecto a FormData
 		data.files.forEach((file, index) => {
@@ -343,7 +343,7 @@ const ProjectForm = () => {
 					{studentFields.map((field, index) => (
 						<div key={field.id} className="flex items-center gap-2">
 							<input
-								type="text"
+								type="email"
 								{...register(`impliedStudents.${index}`, {
 									required: index === 0,
 								})}
@@ -376,7 +376,7 @@ const ProjectForm = () => {
 					{teacherFields.map((field, index) => (
 						<div key={field.id} className="flex items-center gap-2">
 							<input
-								type="text"
+								type="email"
 								{...register(`impliedTeachers.${index}`)}
 								placeholder="Profesor implicado"
 								className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
