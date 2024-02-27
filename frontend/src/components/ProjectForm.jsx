@@ -343,7 +343,7 @@ const ProjectForm = () => {
 					{studentFields.map((field, index) => (
 						<div key={field.id} className="flex items-center gap-2">
 							<input
-								type="text"
+								type="email"
 								{...register(`impliedStudents.${index}`, {
 									required: index === 0,
 								})}
@@ -376,7 +376,7 @@ const ProjectForm = () => {
 					{teacherFields.map((field, index) => (
 						<div key={field.id} className="flex items-center gap-2">
 							<input
-								type="text"
+								type="email"
 								{...register(`impliedTeachers.${index}`)}
 								placeholder="Profesor implicado"
 								className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
