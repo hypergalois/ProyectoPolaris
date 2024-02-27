@@ -17,7 +17,8 @@ export const AuthProvider = ({ children }) => {
 	const [loading, setLoading] = useState(true);
 	const [errors, setErrors] = useState([]);
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
-	const [isResetTokenValid, setIsResetTokenValid] = useState(false);
+	// const [isResetTokenValid, setIsResetTokenValid] = useState(false);
+	const [isResetTokenSent, setIsResetTokenSent] = useState(false);
 	const userToken = useRef(null);
 
 	const register = async (user) => {
@@ -64,7 +65,11 @@ export const AuthProvider = ({ children }) => {
 		try {
 			await forgotPasswordRequest(email);
 			console.log("Email enviado");
-			setIsResetTokenValid(true);
+			// Por que?
+			// Si es valido o no lo determina el backend no yo
+			// setIsResetTokenValid(true);
+			// Me habia confundido con el valido, se trata de saber si esta enviado
+			setIsResetTokenSent(true);
 		} catch (error) {
 			if (Array.isArray(error.response.data)) {
 				setErrors(error.response.data);
@@ -77,7 +82,10 @@ export const AuthProvider = ({ children }) => {
 	const resetPassword = async (data) => {
 		try {
 			await resetPasswordRequest(data);
-			setIsResetTokenValid(false);
+			// setIsResetTokenValid(false);
+			setIsResetTokenSent(false);
+			// TODO Ver como autentico
+			// setIsAuthenticated(true);
 		} catch (error) {
 			if (Array.isArray(error.response.data)) {
 				setErrors(error.response.data);
@@ -148,7 +156,7 @@ export const AuthProvider = ({ children }) => {
 				loading,
 				errors,
 				isAuthenticated,
-				isResetTokenValid,
+				isResetTokenSent,
 				userToken: userToken.current,
 			}}
 		>

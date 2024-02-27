@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-const ResetPasswordForm = () => {
+const ResetPasswordForm = (resetToken) => {
 	const {
 		register,
 		handleSubmit,
@@ -20,7 +20,19 @@ const ResetPasswordForm = () => {
 	}, [isAuthenticated, navigate]);
 
 	const onSubmit = async (data) => {
-		await resetPassword(data);
+		// console.log(resetToken);
+		// console.log(data);
+		if (data.password !== data.passwordRepeated) {
+			return forgotPasswordErrors.push({ message: "Las contraseñas no coinciden." });
+		}
+		const resetData = {
+			resetToken: resetToken.resetToken,
+			password: data.password,
+		};
+
+		console.log(resetData);
+		await resetPassword(resetData);
+		navigate("/");
 	};
 
 	return (
@@ -50,7 +62,7 @@ const ResetPasswordForm = () => {
 					<input
 						className="w-8/12 h-10 px-6 text-black p-6 rounded-2xl"
 						type="password"
-						{...register("password", {
+						{...register("passwordRepeated", {
 							required: true,
 							minLength: 3,
 						})}

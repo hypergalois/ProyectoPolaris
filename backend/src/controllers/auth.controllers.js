@@ -7,7 +7,7 @@ import { rolesEnum, academicRoleEnum } from "../config/tags.js";
 import { handleForgotPassword } from "../services/auth.services.js";
 
 const secret = process.env.TOKEN_SECRET;
-const BCRYPT_SALT_ROUNDS = process.env.BCRYPT_SALT_ROUNDS;
+const BCRYPT_SALT_ROUNDS = parseInt(process.env.BCRYPT_SALT_ROUNDS);
 
 // Ruta que se usa en el registro para comprobar si el email ya esta registrado
 export const checkEmailRegister = async (req, res) => {
@@ -60,7 +60,12 @@ export const forgotPassword = async (req, res) => {
 
 // TODO SIN CHECKEAR
 export const resetPassword = async (req, res) => {
-	const { email, password } = req.body;
+	// console.log(req.body);
+	// console.log(req);
+	const { password } = req.body;
+	const email = req.email;
+	// console.log(email);
+	// console.log(password);
 
 	try {
 		const userFound = await prisma.user.findUnique({
@@ -83,6 +88,7 @@ export const resetPassword = async (req, res) => {
 				passwordHash: hashedPassword,
 			},
 		});
+		if (!updatedUser) return res.status(500).json({ message: "Error updating user." });
 
 		return res.status(200).json({ message: "Password updated successfully.", userExists: true });
 	} catch (error) {
@@ -240,8 +246,6 @@ export const profile = async (req, res) => {
 			id: userFound.id,
 			username: userFound.username,
 			email: userFound.email,
-			createdAt: userFound.createdAt,
-			updatedAt: userFound.updatedAt,
 		});
 	} catch (error) {
 		console.log(error);

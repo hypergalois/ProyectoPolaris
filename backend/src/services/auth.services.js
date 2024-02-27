@@ -15,6 +15,7 @@ export const handleForgotPassword = async (req, res, email) => {
 
 		// Ya hemos comprobado que el usuario existe antes
 		// Creamos un token de reset
+		// TODO: Le metemos el email solamente
 		const resetToken = await createResetPasswordToken({ email: req.body.email });
 
 		// Le metemos el token al usuario

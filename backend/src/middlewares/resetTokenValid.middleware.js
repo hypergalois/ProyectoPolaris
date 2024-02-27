@@ -6,15 +6,18 @@ dotenv.config();
 const secret = process.env.TOKEN_SECRET;
 
 export const resetTokenValid = async (req, res, next) => {
-	const { token } = req.params;
+	console.log(req.body);
+	const { resetToken } = req.body;
+	console.log(resetToken);
 
-	if (!token) return res.status(401).json({ message: "No token provided." });
+	if (!resetToken) return res.status(401).json({ message: "No token provided." });
 
-	jwt.verify(token, secret, (err, payload) => {
+	jwt.verify(resetToken, secret, (err, payload) => {
 		if (err) return res.status(403).json({ message: "Invalid token." });
 
 		// Solo necesitamos el email en principio
 		req.email = payload.email;
+		console.log(req.email);
 
 		next();
 	});
