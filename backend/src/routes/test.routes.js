@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { authRequired } from "../middlewares/authRequired.middleware.js";
 import { checkRole } from "../middlewares/checkRole.middleware.js";
+import { testController } from "../controllers/test.controllers.js";
 
 const router = Router();
 
@@ -31,5 +32,7 @@ router.get("/whatRole", authRequired, (req, res) => {
 router.get("/checkRole", authRequired, checkRole(["ADMIN", "USER", "CREATOR"]), (req, res) => {
 	res.status(200).json({ message: "You are allowed." });
 });
+
+router.get("/test", authRequired, testController);
 
 export default router;

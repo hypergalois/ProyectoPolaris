@@ -9,11 +9,11 @@ const HomePageLanding = () => {
 				<div className="w-10/12 pl-4">
 					<h2 className="text-xl font-semibold mb-2">Explora los proyectos de alumnos y alumni de todos los grados de U-tad.</h2>
 					<p>
-						Podrás acceder a un repositorio de proyectos realizados por los alumnos y antiguos alumnos de U-tad, filtrar el contenido en base a tus necesidades y conocer el trabajo
-						realizado en otros grados.
+						Podrás acceder a un repositorio de proyectos realizados por los alumnos de U-tad, filtrar el contenido en base a tus necesidades y conocer el trabajo realizado en otros grados.
 					</p>
 				</div>
 			</div>
+			<br />
 			<div className="flex">
 				<div className="w-2/12">
 					<img src="/check.png" alt="Descripción de la imagen" className="w-16" />

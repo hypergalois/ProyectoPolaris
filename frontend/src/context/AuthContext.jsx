@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect, useRef } from "react";
-import { registerRequest, loginRequest, verifyTokenRequest, logoutRequest } from "../api/auth";
+import { registerRequest, loginRequest, verifyTokenRequest, logoutRequest, forgotPasswordRequest, resetPasswordRequest } from "../api/auth";
 import Cookies from "js-cookie";
 
 export const AuthContext = createContext();
@@ -17,6 +17,8 @@ export const AuthProvider = ({ children }) => {
 	const [loading, setLoading] = useState(true);
 	const [errors, setErrors] = useState([]);
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
+	// const [isResetTokenValid, setIsResetTokenValid] = useState(false);
+	const [isResetTokenSent, setIsResetTokenSent] = useState(false);
 	const userToken = useRef(null);
 
 	const register = async (user) => {
@@ -59,15 +61,39 @@ export const AuthProvider = ({ children }) => {
 		}
 	};
 
-	// const verifyToken = async () => {
-	//     try {
-	//         const response = await verifyTokenRequest();
-	//         setUser(response.data);
-	//         setIsAuthenticated(true);
-	//     } catch (error) {
-	//         console.log(error);
-	//     }
-	// }
+	const forgotPassword = async (email) => {
+		try {
+			await forgotPasswordRequest(email);
+			console.log("Email enviado");
+			// Por que?
+			// Si es valido o no lo determina el backend no yo
+			// setIsResetTokenValid(true);
+			// Me habia confundido con el valido, se trata de saber si esta enviado
+			setIsResetTokenSent(true);
+		} catch (error) {
+			if (Array.isArray(error.response.data)) {
+				setErrors(error.response.data);
+			} else {
+				setErrors([error.response.data]);
+			}
+		}
+	};
+
+	const resetPassword = async (data) => {
+		try {
+			await resetPasswordRequest(data);
+			// setIsResetTokenValid(false);
+			setIsResetTokenSent(false);
+			// TODO Ver como autentico
+			// setIsAuthenticated(true);
+		} catch (error) {
+			if (Array.isArray(error.response.data)) {
+				setErrors(error.response.data);
+			} else {
+				setErrors([error.response.data]);
+			}
+		}
+	};
 
 	// Para que desaparezcan los errores
 	useEffect(() => {
@@ -125,9 +151,12 @@ export const AuthProvider = ({ children }) => {
 				register,
 				login,
 				logout,
+				forgotPassword,
+				resetPassword,
 				loading,
 				errors,
 				isAuthenticated,
+				isResetTokenSent,
 				userToken: userToken.current,
 			}}
 		>

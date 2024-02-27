@@ -17,17 +17,20 @@ import areaRoutes from "./routes/areas.routes.js";
 import requestRoutes from "./routes/requests.routes.js";
 import testRoutes from "./routes/test.routes.js";
 
+const CLIENT_URL = process.env.CLIENT_URL;
+
 const app = express();
 
 app.use(
 	cors({
-		origin: "http://localhost:5173",
+		origin: CLIENT_URL,
 		credentials: true,
 	})
 );
 
 app.use(morgan("dev"));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use("/uploads", authRequired, express.static("uploads"));
@@ -40,6 +43,18 @@ app.use("/api", degreeRoutes);
 app.use("/api", areaRoutes);
 app.use("/api", requestRoutes);
 app.use("/api", testRoutes);
+
+// process.on("unhandledRejection", (reason, promise) => {
+// 	// Mandarlo a Slack
+// 	console.error("Unhandled Rejection at:", promise, "reason:", reason);
+// 	server.close(() => process.exit(1));
+// });
+
+// process.on("uncaughtException", (error) => {
+// 	// Mandarlo a Slack
+// 	console.error("Uncaught Exception thrown", error);
+// 	server.close(() => process.exit(1));
+// });
 
 app.on("close", () => {
 	prisma.$disconnect();

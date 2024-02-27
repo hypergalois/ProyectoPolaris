@@ -31,49 +31,49 @@ const InitialRegisterForm = () => {
 	};
 
 	return (
-		<div>
-			<form onSubmit={handleSubmit(onSubmit)}>
-				<div>
-					{userErrors.map((error, index) => (
-						<div key={index}>{error.message}</div>
-					))}
-				</div>
-				<div className="mb-4 text-black">
-					<input
-						className="w-5/12 p-4 rounded-2xl"
-						type="text"
-						{...register("username", {
-							required: true,
-							minLength: 3,
-							maxLength: 20,
-						})}
-						placeholder="Nombre"
-					/>
-					{errors.username && <p className="mb-2 text-white mt-4 text-red-500 font-semibold">Hace falta un nombre de usuario</p>}
-				</div>
-				<div className="mb-4 text-black">
-					<input
-						className="w-5/12 p-4 rounded-2xl"
-						type="email"
-						{...register("email", {
-							required: true,
-							pattern: /^\S+@\S+$/i,
-						})}
-						placeholder="Correo de la Utad"
-					/>
-					{errors.email && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta un email</p>}
-					{!noEmailUtad && <p className="mb-2  mt-4 text-red-500 font-semibold">Tiene que ser @u-tad.com o @live.u-tad.com</p>}
-				</div>
-				<div className="mb-8">
-					<p className="text-xs">Creando una cuenta aceptas los Términos de Uso y la Política de Privacidad.</p>
-				</div>
-				<div className="mb-4">
-					<button type="submit" className="w-5/12 p-4 rounded-xl bg-[#333333] text-white font-semibold">
-						Registrarse
-					</button>
-				</div>
-			</form>
-		</div>
+		<form onSubmit={handleSubmit(onSubmit)}>
+			<div>
+				{userErrors.map((error, index) => (
+					<div className="mt-4 text-red-500 font-semibold" key={index}>
+						{error.message}
+					</div>
+				))}
+			</div>
+			<div className="mb-4 text-black">
+				<input
+					className="w-7/12 p-3 rounded-2xl"
+					type="text"
+					{...register("username", {
+						required: true,
+						minLength: 3,
+						maxLength: 20,
+					})}
+					placeholder="Nombre"
+				/>
+				{errors.username && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta un nombre de usuario</p>}
+			</div>
+			<div className="mb-4 text-black">
+				<input
+					className="w-7/12 p-3 rounded-2xl"
+					type="email"
+					{...register("email", {
+						required: true,
+						pattern: /^\S+@\S+$/i,
+					})}
+					placeholder="Correo de la Utad"
+				/>
+				{errors.email && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta un email</p>}
+				{!noEmailUtad && <p className="mb-2  mt-4 text-red-500 font-semibold">Tiene que ser @u-tad.com o @live.u-tad.com</p>}
+			</div>
+			<div className="mb-8">
+				<p className="text-xs">Creando una cuenta aceptas los Términos de Uso y la Política de Privacidad.</p>
+			</div>
+			<div className="mb-4">
+				<button type="submit" className="w-7/12 h-12  rounded-xl bg-[#333333] text-white font-semibold">
+					Registrarse
+				</button>
+			</div>
+		</form>
 	);
 };
 

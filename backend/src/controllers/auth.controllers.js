@@ -4,8 +4,10 @@ import prisma from "../config/prisma.client.js";
 
 import { createAccessToken } from "../libs/jwt.js";
 import { rolesEnum, academicRoleEnum } from "../config/tags.js";
+import { handleForgotPassword } from "../services/auth.services.js";
 
 const secret = process.env.TOKEN_SECRET;
+const BCRYPT_SALT_ROUNDS = parseInt(process.env.BCRYPT_SALT_ROUNDS);
 
 // Ruta que se usa en el registro para comprobar si el email ya esta registrado
 export const checkEmailRegister = async (req, res) => {
@@ -31,6 +33,70 @@ export const checkEmailRegister = async (req, res) => {
 	}
 };
 
+export const forgotPassword = async (req, res) => {
+	const { email } = req.body;
+	console.log(email);
+
+	try {
+		const userFound = await prisma.user.findUnique({
+			where: {
+				email: email,
+			},
+		});
+
+		if (!userFound) return res.status(400).json({ message: "User not found.", userExists: false });
+
+		// Aqui se enviaria el correo con el link para cambiar la contraseña
+		// console.log(userFound);
+		const isHandled = await handleForgotPassword(req, res);
+		if (!isHandled) return res.status(500).json({ message: "Error handling forgot password." });
+
+		return res.status(200).json({ message: "Email sent successfully.", userExists: true });
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ message: error.message });
+	}
+};
+
+// TODO SIN CHECKEAR
+export const resetPassword = async (req, res) => {
+	// console.log(req.body);
+	// console.log(req);
+	const { password } = req.body;
+	const email = req.email;
+	// console.log(email);
+	// console.log(password);
+
+	try {
+		const userFound = await prisma.user.findUnique({
+			where: {
+				email: email,
+			},
+		});
+
+		if (!userFound) return res.status(400).json({ message: "User not found.", userExists: false });
+
+		const salt = await bcrypt.genSalt(BCRYPT_SALT_ROUNDS);
+
+		const hashedPassword = await bcrypt.hash(password, salt);
+
+		const updatedUser = await prisma.user.update({
+			where: {
+				id: userFound.id,
+			},
+			data: {
+				passwordHash: hashedPassword,
+			},
+		});
+		if (!updatedUser) return res.status(500).json({ message: "Error updating user." });
+
+		return res.status(200).json({ message: "Password updated successfully.", userExists: true });
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ message: error.message });
+	}
+};
+
 export const register = async (req, res) => {
 	// console.log(req.body);
 	const { email, password, fullName, academicRole, academicCourse, department, promotion } = req.body;
@@ -47,26 +113,27 @@ export const register = async (req, res) => {
 
 		if (foundUser)
 			return res.status(400).json({
-				message: "The email is already in use. Please log in instead.", userExists: true
+				message: "The email is already in use. Please log in instead.",
+				userExists: true,
 			});
 
-		const salt = await bcrypt.genSalt(10);
+		const salt = await bcrypt.genSalt(BCRYPT_SALT_ROUNDS);
 
 		const hashedPassword = await bcrypt.hash(password, salt);
 
-		console.log(email)
+		console.log(email);
 
 		// Asignación automatica de rol según el email
 		// La comprobación subsiguiente de academicRole es innecesaria ya que
 		if (email.endsWith("@u-tad.com")) {
-            if (academicRole === academicRoleEnum.ALUMN || academicRole === academicRoleEnum.ALUMNI) {
-                return res.status(400).json({ message: "The academic role is not valid." });
-            }
+			if (academicRole === academicRoleEnum.ALUMN || academicRole === academicRoleEnum.ALUMNI) {
+				return res.status(400).json({ message: "The academic role is not valid." });
+			}
 			role = rolesEnum.CREATOR;
 		} else if (email.endsWith("@live.u-tad.com")) {
-            if (academicRole === academicRoleEnum.EMPLOYEE || academicRole === academicRoleEnum.PROFESSOR || academicRole === academicRoleEnum.COORDINATOR) {
-                return res.status(400).json({ message: "The academic role is not valid." });
-            }
+			if (academicRole === academicRoleEnum.EMPLOYEE || academicRole === academicRoleEnum.PROFESSOR || academicRole === academicRoleEnum.COORDINATOR) {
+				return res.status(400).json({ message: "The academic role is not valid." });
+			}
 			role = rolesEnum.USER;
 		} else {
 			// Nunca deberia llegar a este caso
@@ -115,6 +182,8 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
 	const { email, password } = req.body;
+	console.log(email);
+	console.log(password);
 
 	try {
 		const foundUser = await prisma.user.findUnique({
@@ -125,10 +194,12 @@ export const login = async (req, res) => {
 
 		if (!foundUser)
 			return res.status(400).json({
-				message: "There doesn't exist an user with that email. Try registering instead.", userExists: false
+				message: "There doesn't exist an user with that email. Try registering instead.",
+				userExists: false,
 			});
 
-		const passwordsMatch = bcrypt.compare(password, foundUser.passwordHash);
+		const passwordsMatch = await bcrypt.compare(password, foundUser.passwordHash);
+		console.log(passwordsMatch);
 
 		if (!passwordsMatch) return res.status(400).json({ message: "The password is incorrect. Try again.", userExists: true, passwordsMatch: false });
 
@@ -178,8 +249,6 @@ export const profile = async (req, res) => {
 			id: userFound.id,
 			username: userFound.username,
 			email: userFound.email,
-			createdAt: userFound.createdAt,
-			updatedAt: userFound.updatedAt,
 		});
 	} catch (error) {
 		console.log(error);

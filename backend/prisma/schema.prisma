@@ -35,9 +35,12 @@ model User {
 
   fullName String?
 
-  email        String? @unique
-  username     String? @unique
-  passwordHash String?
+  email         String?  @unique
+  emailVerified Boolean? @default(false)
+  username      String?  @unique
+
+  passwordHash       String?
+  resetPasswordToken String?
 
   role Role? @default(USER)
 
@@ -48,10 +51,6 @@ model User {
   academicCourse String?
 
   department String?
-
-  // Solo para coordinadores tienen un departamento
-  //headOfDepartmentId String?     @unique @db.ObjectId
-  //headOfDepartment   Department? @relation(fields: [headOfDepartmentId], references: [id])
 
   degreeId String? @db.ObjectId
   degree   Degree? @relation(fields: [degreeId], references: [id])
@@ -70,6 +69,17 @@ model User {
   @@map("users")
 }
 
+model Award {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  name String @unique
+
+  projectsId String[]  @db.ObjectId
+  projects   Project[] @relation(fields: [projectsId], references: [id])
+
+  @@map("awards")
+}
+
 model Project {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
@@ -80,7 +90,9 @@ model Project {
   description String?
 
   keywords String[]
-  awards   String[]
+
+  awardsId String[] @db.ObjectId
+  awards   Award[]  @relation(fields: [awardsId], references: [id])
 
   personalProject Boolean?
 
