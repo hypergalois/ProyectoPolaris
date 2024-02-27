@@ -7,17 +7,16 @@ const ProfileDetails = ({ project }) => {
 
 	const { profil, getProfile, errors: profileErrors } = useUser();
 	const { projects, getProjectsByUser, errors: proyectsErrors } = useProjects();
-	const [newProfile, setNewProfile] = useState([]);
 
 	useEffect(()  => {
         getProfile()
     }, [])
 
 	useEffect(() => {
-        if (profil) {
+        if (profil.id) {
 			getProjectsByUser(profil.id);
 		}
-    }, [profil])
+    }, [profil.id])
 
 
 
