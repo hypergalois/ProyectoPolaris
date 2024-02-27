@@ -29,7 +29,7 @@ const ProjectForm = () => {
 		getValues
 	} = useForm();
 
-	const { requestedProject, getProject, createProject, errors: projectsContextErrors } = useProjects();
+	const { requestedProject, getProject, createProject, updateProject, errors: projectsContextErrors } = useProjects();
 
 	const navigate = useNavigate();
 
@@ -196,7 +196,12 @@ const ProjectForm = () => {
 
 		console.log(data);
 
-		createProject(formData);
+		if(projectId) {
+			updateProject(projectId, formData);
+		}
+		else{
+			createProject(formData);
+		}
 
 		navigate("/home");
 	};
