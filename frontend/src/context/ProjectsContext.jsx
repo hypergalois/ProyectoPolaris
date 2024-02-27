@@ -54,7 +54,7 @@ export const ProjectsProvider = ({ children }) => {
 	const getProjectsByUser = async (id) => {
 		try {
 			const res = await getProjectsByUserRequest(id);
-			setRequestedProject(res.data);
+			setProjects(res.data);
 		} catch (error) {
 			console.log(error);
 		}

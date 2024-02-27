@@ -222,7 +222,7 @@ export const getProjectByUser = async (req, res) => {
     try {
         const { userId } = req.params;
         const projects = await prisma.project.findMany({
-            where: { impliedStudentsIDs: userId },
+            where: { impliedStudentsIDs: { has: userId } },
         });
 
         if (!projects)
