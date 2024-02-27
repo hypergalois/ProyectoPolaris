@@ -34,7 +34,9 @@ const InitialRegisterForm = () => {
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<div>
 				{userErrors.map((error, index) => (
-					<div key={index}>{error.message}</div>
+					<div className="mt-4 text-red-500 font-semibold" key={index}>
+						{error.message}
+					</div>
 				))}
 			</div>
 			<div className="mb-4 text-black">

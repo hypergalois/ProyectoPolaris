@@ -6,15 +6,15 @@ import ForgotPasswordForm from "../components/ForgotPasswordForm";
 import { useAuth } from "../context/AuthContext";
 
 function ForgotPassword() {
-	const { isSuccess } = useAuth();
+	const { isResetTokenValid } = useAuth();
 
 	return (
 		<>
 			<NavBarNoAuth />
 			<LandingPageBar />
-			<div className="mx-auto max-w-lg p-4 rounded-3xl bg-[#858585] text-white text-center mt-16">
+			<div className="mx-auto max-w-lg p-4 rounded-3xl bg-[#858585] text-white text-center mt-12">
 				<h1 className="mb-4 text-2xl font-bold">REESTABLECER CONTRASEÑA</h1>
-				{!isSuccess ? (
+				{!isResetTokenValid ? (
 					<>
 						<h2 className="mb-4">
 							¿Te acordaste de la contraseña?{" "}

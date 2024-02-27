@@ -28,7 +28,9 @@ const LoginForm = () => {
 		<div>
 			<div>
 				{loginErrors.map((error, index) => (
-					<div key={index}>{error.message}</div>
+					<div className="mt-4 text-red-500 font-semibold" key={index}>
+						{error.message}
+					</div>
 				))}
 			</div>
 			<form onSubmit={handleSubmit(onSubmit)} className="p-4">

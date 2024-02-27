@@ -63,6 +63,7 @@ export const AuthProvider = ({ children }) => {
 	const forgotPassword = async (email) => {
 		try {
 			await forgotPasswordRequest(email);
+			console.log("Email enviado");
 			setIsResetTokenValid(true);
 		} catch (error) {
 			if (Array.isArray(error.response.data)) {

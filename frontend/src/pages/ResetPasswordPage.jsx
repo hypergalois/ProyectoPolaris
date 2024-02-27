@@ -11,7 +11,7 @@ const ResetPasswordPage = () => {
 		<>
 			<NavBarNoAuth />
 			<LandingPageBar />
-			<div className="mx-auto max-w-lg p-4 rounded-3xl bg-[#858585] text-white text-center mt-16">
+			<div className="mx-auto max-w-lg p-4 rounded-3xl bg-[#858585] text-white text-center mt-12">
 				<h1 className="mb-4 text-2xl font-bold">REESTABLECER CONTRASEÑA</h1>
 				<h2 className="mb-4">Escribe tu nueva contraseña dos veces.</h2>
 				<ResetPasswordForm />
