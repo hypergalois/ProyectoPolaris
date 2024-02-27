@@ -1,9 +1,10 @@
 import { Router } from "express";
-import { register, login, logout, profile, verifyToken, checkEmailRegister, refreshToken } from "../controllers/auth.controllers.js";
+import { register, login, logout, profile, verifyToken, checkEmailRegister, forgotPassword, resetPassword } from "../controllers/auth.controllers.js";
 
 import { registerSchema, loginSchema } from "../schemas/auth.schema.js";
 import { authRequired } from "../middlewares/authRequired.middleware.js";
 import { validateSchema } from "../middlewares/validator.middleware.js";
+import { resetTokenValid } from "../middlewares/resetTokenValid.middleware.js";
 
 const router = Router();
 
@@ -273,8 +274,8 @@ router.post("/profile", authRequired, profile);
 
 router.get("/verify", verifyToken);
 
-router.post("/forgotPassword");
+router.post("/forgotPassword", forgotPassword);
 
-router.post("/resetPassword");
+router.post("/resetPassword", resetTokenValid, resetPassword);
 
 export default router;

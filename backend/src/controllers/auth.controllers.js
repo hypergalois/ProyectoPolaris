@@ -35,6 +35,7 @@ export const checkEmailRegister = async (req, res) => {
 
 export const forgotPassword = async (req, res) => {
 	const { email } = req.body;
+	console.log(email);
 
 	try {
 		const userFound = await prisma.user.findUnique({
@@ -51,6 +52,39 @@ export const forgotPassword = async (req, res) => {
 		if (!isHandled) return res.status(500).json({ message: "Error handling forgot password." });
 
 		return res.status(200).json({ message: "Email sent successfully.", userExists: true });
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ message: error.message });
+	}
+};
+
+// TODO SIN CHECKEAR
+export const resetPassword = async (req, res) => {
+	const { email, password } = req.body;
+
+	try {
+		const userFound = await prisma.user.findUnique({
+			where: {
+				email: email,
+			},
+		});
+
+		if (!userFound) return res.status(400).json({ message: "User not found.", userExists: false });
+
+		const salt = await bcrypt.genSalt(BCRYPT_SALT_ROUNDS);
+
+		const hashedPassword = await bcrypt.hash(password, salt);
+
+		const updatedUser = await prisma.user.update({
+			where: {
+				id: userFound.id,
+			},
+			data: {
+				passwordHash: hashedPassword,
+			},
+		});
+
+		return res.status(200).json({ message: "Password updated successfully.", userExists: true });
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ message: error.message });

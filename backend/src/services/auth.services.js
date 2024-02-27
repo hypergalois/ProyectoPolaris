@@ -1,7 +1,12 @@
-export const handleForgotPassword = async (req, res) => {
+import prisma from "../config/prisma.client.js";
+import { createResetPasswordToken } from "../libs/jwt.js";
+
+export const handleForgotPassword = async (req, res, email) => {
 	try {
 		// Viene del middleware del token
-		const { email } = req.email;
+		const { email } = req.body;
+		console.log(email);
+
 		const userFound = await prisma.user.findUnique({
 			where: {
 				email,
@@ -18,7 +23,7 @@ export const handleForgotPassword = async (req, res) => {
 				email,
 			},
 			data: {
-				resetToken: resetToken,
+				resetPasswordToken: resetToken,
 			},
 		});
 
