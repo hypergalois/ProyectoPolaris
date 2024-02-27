@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useForm, useFieldArray, get, set } from "react-hook-form";
 import Select from "react-select";
 import { useAreas } from "../context/AreasContext";
@@ -29,9 +29,11 @@ const ProjectForm = () => {
 		getValues
 	} = useForm();
 
-	const { createProject, errors: projectsContextErrors } = useProjects();
+	const { requestedProject, getProject, createProject, errors: projectsContextErrors } = useProjects();
 
 	const navigate = useNavigate();
+
+	const { id: projectId } = useParams();
 
 	const { degrees, getDegrees, errors: areasContextErrors } = useAreas();
 
@@ -41,6 +43,7 @@ const ProjectForm = () => {
 		fields: linkFields,
 		append: appendLink,
 		remove: removeLink,
+		update: updateLink
 	} = useFieldArray({
 		control,
 		name: "links",
@@ -50,6 +53,7 @@ const ProjectForm = () => {
 		fields: studentFields,
 		append: appendStudent,
 		remove: removeStudent,
+		update: updateStudent
 	} = useFieldArray({
 		control,
 		name: "students",
@@ -59,6 +63,7 @@ const ProjectForm = () => {
 		fields: teacherFields,
 		append: appendTeacher,
 		remove: removeTeacher,
+		update: updateTeacher
 	} = useFieldArray({
 		control,
 		name: "teachers",
@@ -68,17 +73,23 @@ const ProjectForm = () => {
 		fields: awardFields,
 		append: appendAward,
 		remove: removeAward,
+		update: updateAward
 	} = useFieldArray({
 		control,
 		name: "obteinedAwards",
 	});
 
 	const degreeOptions = useRef([]);
+	const [selectedCourseOption, setSelectedCourseOption] = useState("");
+	const [selectedLetterOption, setSelectedLetterOption] = useState("");
+	const [selectedDegreeOption, setSelectedDegreeOption] = useState("");
 
 	// No se como hacer que solo salga un estudiante
 	useEffect(() => {
 		console.log("useEffect");
+		console.log(projectId);
 		getDegrees();
+		if(projectId) getProject(projectId);
 
 		if (studentFields.length === 0) {
 			appendStudent({ impliedStudent: "" });
@@ -103,6 +114,40 @@ const ProjectForm = () => {
 	}, [degrees]);
 
 	useEffect(() => {
+		if(degreeOptions.current.length > 0 && requestedProject) {
+			console.log(requestedProject);
+			setValue("title", requestedProject.title);
+			setValue("description", requestedProject.description);
+			setValue("subject", requestedProject.subject);
+			setValue("academicCourse", requestedProject.academicCourse);
+
+			setValue("course", requestedProject.course);
+			setSelectedCourseOption(courseOptions.filter(({value}) => value === requestedProject.course));
+			setValue("letter", requestedProject.letter);
+			setSelectedLetterOption(letterOptions.filter(({value}) => value === requestedProject.letter));
+			setValue("degree", requestedProject.degreeId);
+			setSelectedDegreeOption(degreeOptions.current.filter(({value}) => value === requestedProject.degreeId));
+
+			requestedProject.externalLinks.map((value, index) => {
+				updateLink(index, value);
+				setValue(`externalLinks.${index}`, value);
+			});
+			requestedProject.impliedStudentsIDs.map((value, index) => {
+				updateStudent(index, value);
+				setValue(`impliedStudents.${index}`, value);
+			});
+			requestedProject.impliedProfessorsIDs.map((value, index) => {
+				updateTeacher(index, value);
+				setValue(`impliedTeachers.${index}`, value);
+			});
+			requestedProject.awardsId.map((value, index) => {
+				updateAward(index, value);
+				setValue(`awards.${index}`, value);
+			});
+		}
+	}, [degreeOptions, requestedProject]);
+
+	useEffect(() => {
 		setValue("files", uploadedFiles);
 		console.log(uploadedFiles);
 	}, [uploadedFiles]);
@@ -111,8 +156,8 @@ const ProjectForm = () => {
 		const formData = new FormData();
 
 		// Agrega los datos simples del proyecto a FormData
-		formData.append("title", data.projectTitle);
-		formData.append("description", data.projectDescription);
+		formData.append("title", data.title);
+		formData.append("description", data.description);
 		//formData.append("personalProject", false);
 		formData.append("subject", data.subject);
 		formData.append("academicCourse", data.academicCourse);
@@ -166,7 +211,7 @@ const ProjectForm = () => {
 					<h3 className="block text-gray-700 text-sm font-bold mb-2">Título</h3>
 					<input
 						type="text"
-						{...register("projectTitle", {
+						{...register("title", {
 							required: true,
 						})}
 						placeholder="Título del proyecto"
@@ -178,9 +223,11 @@ const ProjectForm = () => {
 					<h3 className="block text-gray-700 text-sm font-bold mb-2">Grado</h3>
 					<Select
 						options={degreeOptions.current}
-						onChange={(selectedDgree) => {
-							setValue("degree", selectedDgree.value);
+						onChange={(selectedDegree) => {
+							setValue("degree", selectedDegree.value);
+							setSelectedDegreeOption(selectedDegree);
 						}}
+						value={selectedDegreeOption}
 						className="w-full  border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 					/>
 				</div>
@@ -191,7 +238,9 @@ const ProjectForm = () => {
 						options={courseOptions}
 						onChange={(selectedCourse) => {
 							setValue("course", selectedCourse.value);
+							setSelectedCourseOption(selectedCourse);
 						}}
+						value={selectedCourseOption}
 						className="w-full  border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 					/>
 				</div>
@@ -202,7 +251,9 @@ const ProjectForm = () => {
 						options={letterOptions}
 						onChange={(selectedLetter) => {
 							setValue("letter", selectedLetter.value);
+							setSelectedLetterOption(selectedLetter);
 						}}
+						value={selectedLetterOption}
 						className="w-full  border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 					/>
 				</div>
@@ -277,7 +328,7 @@ const ProjectForm = () => {
 				<div className="mb-4">
 					<h3 className="block text-gray-700 text-sm font-bold mb-2">Descripción del proyecto</h3>
 					<textarea
-						{...register("projectDescription", {
+						{...register("description", {
 							required: true,
 						})}
 						placeholder="Descripción del proyecto"
