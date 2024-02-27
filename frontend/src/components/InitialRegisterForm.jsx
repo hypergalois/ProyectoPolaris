@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 // eslint-disable-next-line no-unused-vars
 import { Link, useNavigate } from "react-router-dom";
@@ -12,21 +12,25 @@ const InitialRegisterForm = () => {
 	} = useForm();
 	// eslint-disable-next-line no-unused-vars
 	const [email, setEmail] = useState("");
-	const { existEmail: emailTrue, getExistEmail, errors: userErrors } = useUser();
+	const { existEmail, getExistEmail, errors: userErrors } = useUser();
 	const navigate = useNavigate();
 	var noEmailUtad = true;
 
+	useEffect(() => {
+        if (existEmail) {
+			console.log("entra", existEmail)
+			//navigate(`/register/details`, { state: { email: email } });
+		}
+    }, [existEmail])
+
 	const onSubmit = (data) => {
 		// Actualiza el estado del email
-
+		
 		noEmailUtad = data.email.endsWith("@u-tad.com") || data.email.endsWith("@live.u-tad.com");
 
 		if (noEmailUtad) {
 			getExistEmail(data);
-			if (emailTrue) {
-				setEmail(data.email);
-				navigate(`/register/details`, { state: { email: data.email } });
-			}
+			setEmail(data.email);
 		}
 	};
 
