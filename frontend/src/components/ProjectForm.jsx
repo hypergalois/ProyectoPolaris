@@ -164,30 +164,30 @@ const ProjectForm = () => {
 
 		// Agrega los datos de tipo array del proyecto a FormData
 
-		// const externalLinks = data.externalLinks ?
-		// data.externalLinks.filter((value) => value.trim().length !== 0) :
-		// [];
-		// formData.append("externalLinks", JSON.stringify(externalLinks));
+		const externalLinks = data.externalLinks ?
+		data.externalLinks.filter((value) => value.trim().length !== 0) :
+		[];
+		formData.append("externalLinks", JSON.stringify(externalLinks));
 
-		// const impliedStudents = data.impliedStudents ?
-		// data.impliedStudents.filter((value) => value.trim().length !== 0) :
-		// [];
-		// formData.append("impliedStudents", JSON.stringify(impliedStudents));
+		const impliedStudents = data.impliedStudents ?
+		data.impliedStudents.filter((value) => value.trim().length !== 0) :
+		[];
+		formData.append("impliedStudentsIDs", JSON.stringify(impliedStudents));
 
-		// const impliedTeachers = data.impliedTeachers ?
-		// data.impliedTeachers.filter((value) => value.trim().length !== 0) :
-		// [];
-		// formData.append("impliedProfessors", JSON.stringify(impliedTeachers));
+		const impliedTeachers = data.impliedTeachers ?
+		data.impliedTeachers.filter((value) => value.trim().length !== 0) :
+		[];
+		formData.append("impliedTeachersIDs", JSON.stringify(impliedTeachers));
 
-		// const awards = data.awards ?
-		// data.awards.filter((value) => value.trim().length !== 0) :
-		// [];
-		// formData.append("awards", JSON.stringify(awards));
+		const awards = data.awards ?
+		data.awards.filter((value) => value.trim().length !== 0) :
+		[];
+		formData.append("awards", JSON.stringify(awards));
 
-		// const keywords = data.keywords ?
-		// data.keywords.filter((value) => value.trim().length !== 0) :
-		// [];
-		// formData.append("keywords", JSON.stringify(keywords));
+		const keywords = data.keywords ?
+		data.keywords.filter((value) => value.trim().length !== 0) :
+		[];
+		formData.append("keywords", JSON.stringify(keywords));
 
 		// Agrega los archivos del proyecto a FormData
 		data.files.forEach((file, index) => {

@@ -8,6 +8,7 @@ function DashboardPage() {
 
     useEffect(() => {
         getRequestsData().then(() => setLoading(false));
+        console.log(requests);
     }, []);
 
     if (requests.length === 0) {
