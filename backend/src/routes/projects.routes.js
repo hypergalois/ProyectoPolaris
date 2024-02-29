@@ -134,7 +134,6 @@ router.get("/projects/:id", authRequired, getProject);
  *                 type: array
  *                 items:
  *                   type: string
- *               // Add other properties as necessary
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -345,7 +344,7 @@ router.get("/projects/keyword/:keyword", authRequired, getProjectByStatus);
  *       - in: path
  *         name: date
  *         required: true
- *         description: Date of the projects to retrieve (format: YYYY-MM-DD).
+ *         description: "Date of the projects to retrieve (format: YYYY-MM-DD)."
  *         schema:
  *           type: string
  *           format: date
