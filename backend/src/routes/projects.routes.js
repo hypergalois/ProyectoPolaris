@@ -3,6 +3,8 @@ import { createProject, deleteProject, getProject, getProjectByCategory, getProj
 import { uploadFile } from "../middlewares/uploadFile.middleware.js";
 import { authRequired } from "../middlewares/authRequired.middleware.js";
 import { validateSchema } from "../middlewares/validator.middleware.js";
+import { checkRole } from "../middlewares/checkRole.middleware.js";
+import { rolesEnum } from "../config/tags.js";
 import { projectSchema, updateProjectSchema } from "../schemas/project.schema.js";
 
 const router = Router();
@@ -226,7 +228,7 @@ router.put("/projects/:id", authRequired, validateSchema(updateProjectSchema), u
  *         description: Internal server error.
  */
 
-router.delete("/projects/:id", authRequired, deleteProject);
+router.delete("/projects/:id", authRequired, checkRole([rolesEnum.ADMIN]), deleteProject);
 
 // Searching routes
 

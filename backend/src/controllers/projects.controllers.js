@@ -85,7 +85,7 @@ export const createProject = async (req, res) => {
         req.body.keywords = JSON.parse(req.body.keywords);
         req.body.awards = JSON.parse(req.body.awards);
 
-        if (req.role === rolesEnum.USER || req.role === rolesEnum.CREATOR) {
+        if (req.role === rolesEnum.USER) {
             const newProject = await prisma.project.create({
                 data: {
                     ...req.body,
@@ -112,7 +112,7 @@ export const createProject = async (req, res) => {
 
             return res.status(200).json(newProject);
             // Si es admin, no se crea una request
-        } else if (req.role === rolesEnum.ADMIN) {
+        } else if (req.role === rolesEnum.ADMIN  || req.role === rolesEnum.CREATOR) {
             const newProject = await prisma.project.create({
                 data: {
                     ...req.body,
@@ -151,12 +151,12 @@ export const getProject = async (req, res) => {
 export const updateProject = async (req, res) => {
     const { id } = req.params;
 
-    try {
-        if (req.role === rolesEnum.USER || req.role === rolesEnum.CREATOR) {
-            const updatedProject = await prisma.project.update({
-                where: { id: id },
-                data: { ...req.body, status: statusEnum.PENDING },
-            });
+	try {
+		if (req.role === rolesEnum.USER) {
+			const updatedProject = await prisma.project.update({
+				where: { id: id },
+				data: { ...req.body, status: statusEnum.PENDING },
+			});
 
             if (!updatedProject)
                 return res.status(404).json({ message: "Project not found" });
@@ -174,12 +174,12 @@ export const updateProject = async (req, res) => {
             if (!newRequest)
                 return res.status(404).json({ message: "Request not created" });
 
-            return res.status(200).json(updatedProject);
-        } else if (req.role === rolesEnum.ADMIN) {
-            const updatedProject = await prisma.project.update({
-                where: { id: id },
-                data: { ...req.body, status: statusEnum.ACCEPTED },
-            });
+			return res.status(200).json(updatedProject);
+		} else if (req.role === rolesEnum.ADMIN || req.role === rolesEnum.CREATOR) {
+			const updatedProject = await prisma.project.update({
+				where: { id: id },
+				data: { ...req.body, status: statusEnum.ACCEPTED },
+			});
 
             if (!updatedProject)
                 return res.status(404).json({ message: "Project not found" });
@@ -196,24 +196,17 @@ export const updateProject = async (req, res) => {
 
 // Solo admin puede borrar proyectos
 export const deleteProject = async (req, res) => {
-    if (req.role === rolesEnum.ADMIN) {
-        try {
-            const { id } = req.params;
-            const deletedProject = await prisma.project.delete({
-                where: { id: id },
-            });
-
-            if (!deletedProject)
-                return res.status(404).json({ message: "Project not found" });
-
-            return res.status(200).json(deletedProject);
-        } catch (error) {
-            console.log(error);
-            return res.status(500).json({ message: error.message });
-        }
-    } else {
-        return res.status(403).json({ message: "You are not allowed" });
-    }
+	try {
+		const { id } = req.params;
+		const deletedProject = await prisma.project.delete({
+			where: { id: id },
+		});
+		if (!deletedProject) return res.status(404).json({ message: "Project not found" });
+		return res.status(200).json(deletedProject);
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ message: error.message });
+	}
 };
 
 // Controllers for searching projects
