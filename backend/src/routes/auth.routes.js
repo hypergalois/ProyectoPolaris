@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { register, login, logout, profile, verifyToken, checkEmailRegister, forgotPassword, resetPassword } from "../controllers/auth.controllers.js";
+import { register, login, logout, profile, verifyToken, checkEmailRegister, forgotPassword, resetPassword, getUserRole } from "../controllers/auth.controllers.js";
 
 import { registerSchema, loginSchema } from "../schemas/auth.schema.js";
 import { authRequired } from "../middlewares/authRequired.middleware.js";
@@ -273,6 +273,112 @@ router.post("/profile", authRequired, profile);
  */
 
 router.get("/verify", verifyToken);
+
+/**
+ * @swagger
+ * /getUserRole:
+ *   get:
+ *     summary: Get user role
+ *     description: Obtains the role of the authenticated user.
+ *     tags:
+ *       - User
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Successful operation. Returns the role of the authenticated user.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 role:
+ *                   type: string
+ *                   description: Role of the authenticated user.
+ *       404:
+ *         description: User not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message indicating that the user was not found.
+ *                 userExists:
+ *                   type: boolean
+ *                   description: Boolean indicating whether the user exists or not.
+ *       500:
+ *         description: Internal server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message indicating the internal server error.
+ */
+// todo añadir authRequired
+router.get("/getUserRole", authRequired, getUserRole);
+
+/**
+ * @swagger
+ * /forgotPassword:
+ *   post:
+ *     summary: Forgot password
+ *     description: Sends a password reset email to the user with the provided email address.
+ *     tags:
+ *       - Authentication
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 description: Email address of the user requesting password reset.
+ *     responses:
+ *       200:
+ *         description: Email sent successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Confirmation message indicating that the email was sent successfully.
+ *                 userExists:
+ *                   type: boolean
+ *                   description: Boolean indicating whether the user with the provided email address exists.
+ *       400:
+ *         description: User not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message indicating that the user was not found.
+ *                 userExists:
+ *                   type: boolean
+ *                   description: Boolean indicating whether the user exists or not.
+ *       500:
+ *         description: Internal server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message indicating the internal server error.
+ */
 
 router.post("/forgotPassword", forgotPassword);
 

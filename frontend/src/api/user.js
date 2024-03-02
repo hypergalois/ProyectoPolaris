@@ -5,3 +5,5 @@ import { axiosInstance } from "./axios";
 export const checkEmailRequest = (email) => axiosInstance.post("/checkEmailRegister", email);
 
 export const getProfileRequest = () => axiosInstance.post("/profile");
+
+export const getUserRoleRequest = () => axiosInstance.get("/getUserRole");

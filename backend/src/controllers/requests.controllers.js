@@ -5,7 +5,7 @@ import { statusEnum, rolesEnum } from "../config/tags.js";
 
 export const getRequests = async (req, res) => {
     try {
-        console.log(req.role);
+        console.log("request.controllers -> request -> ",req.role);
         // Si es USER o CREATOR, solo puede ver sus propias requests
         if (req.role === rolesEnum.USER || req.role === rolesEnum.CREATOR) {
             const requests = await prisma.request.findMany({

@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import { checkEmailRequest, getProfileRequest } from "../api/user";
+import { checkEmailRequest, getProfileRequest, getUserRoleRequest } from "../api/user";
 import Cookies from "js-cookie";
 
 export const UserContext = createContext();
@@ -14,6 +14,7 @@ export const useUser = () => {
 
 export const UserProvider = ({ children }) => {
 	const [existEmail, setExistEmail] = useState(false);
+    const [userRole, setUserRole] = useState(null);
 	const [profil, setProfile] = useState([]);
 	const [errors, setErrors] = useState([]);
 
@@ -43,6 +44,19 @@ export const UserProvider = ({ children }) => {
 		}
 	};
 
+    const getUserRole = async () => {
+        try {
+            const response = await getUserRoleRequest();
+            setUserRole(response.data.role);
+		} catch (error) {
+			if (Array.isArray(error.response.data)) {
+				setErrors(error.response.data);
+			} else {
+				setErrors([error.response.data]);
+			}
+		}
+    };
+
 	useEffect(() => {
 		if (errors.length > 0) {
 			const timer = setTimeout(() => {
@@ -52,5 +66,5 @@ export const UserProvider = ({ children }) => {
 		}
 	}, [errors]);
 
-	return <UserContext.Provider value={{ existEmail, getExistEmail, profil, getProfile, errors }}>{children}</UserContext.Provider>;
+	return <UserContext.Provider value={{ existEmail, getExistEmail, profil, userRole, getUserRole, getProfile, errors }}>{children}</UserContext.Provider>;
 };

@@ -15,6 +15,14 @@ function RequestCard({ request }) {
                 <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Año Academico: {request.academicCourse || "No especificado"}</span>
                 <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Subido por: {request.requester.fullName || "No especificado"}</span>
             </div>
+            <div className="px-6 py-4">
+                <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2">
+                    Aceptar
+                </button>
+                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                    Rechazar
+                </button>
+            </div>
         </div>
     );
 }

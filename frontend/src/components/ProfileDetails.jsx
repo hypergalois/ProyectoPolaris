@@ -1,6 +1,6 @@
 import React from "react";
 import { useUser } from "../context/UserContext";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 const ProfileDetails = ({ project }) => {
 

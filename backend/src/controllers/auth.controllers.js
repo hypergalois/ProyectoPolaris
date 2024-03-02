@@ -282,6 +282,26 @@ export const verifyToken = async (req, res) => {
 	});
 };
 
+export const getUserRole = async (req, res) => {
+	try {
+
+		const userFound = await prisma.user.findUnique({
+			where: {
+				id: req.userId,
+			},
+		});
+
+		if (!userFound) return res.status(434).json({ message: "User not found.", userExists: false });
+
+		return res.status(200).json({
+			role: userFound.role
+		});
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ message: error.message });
+	}
+};
+
 // I don't know to what extent this is necessary
 export const refreshToken = async (req, res) => {
 	const { token } = req.cookies;

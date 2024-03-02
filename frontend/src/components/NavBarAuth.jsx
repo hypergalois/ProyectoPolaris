@@ -3,16 +3,33 @@ import { Bars3Icon, XMarkIcon, ArrowRightEndOnRectangleIcon, PlusIcon } from "@h
 import { Fragment } from "react";
 
 import { useAuth } from "../context/AuthContext";
+import { useUser } from "../context/UserContext";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
-
-// Hay que manejar el estado de la navegacion, para saber en que pagina estamos, ya veremos como
-const navigation = [
-	{ name: "Projects", href: "/home", current: false },
-	{ name: "Dashboard", href: "/dashboard", current: false },
-];
 
 function NavBar() {
 	const { logout } = useAuth();
+
+    const {userRole, getUserRole} = useUser();
+
+	useEffect(()  => {
+        getUserRole()
+    }, [])
+
+    if (userRole === null) return null;
+
+    //console.log("NAVBARAUTH -> ", userRole)
+
+    let navigation = [
+        { name: "Projects", href: "/home", current: false }
+    ];
+
+    if (userRole === "ADMIN") {
+        navigation = [
+            { name: "Projects", href: "/home", current: false },
+            { name: "Dashboard", href: "/dashboard", current: false }
+        ];
+    }
 
 	return (
 		<Disclosure as="nav" className="bg-[#6a6767]">
