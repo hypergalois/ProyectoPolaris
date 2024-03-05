@@ -7,6 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon -r ./src/tracing.cjs ./src/index.js",
+    "start": "node ./src/index.js",
     "seed": "node prisma/seed.js"
   },
   "author": "",
