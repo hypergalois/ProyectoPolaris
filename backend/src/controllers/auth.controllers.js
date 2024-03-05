@@ -284,7 +284,6 @@ export const verifyToken = async (req, res) => {
 
 export const getUserRole = async (req, res) => {
 	try {
-
 		const userFound = await prisma.user.findUnique({
 			where: {
 				id: req.userId,
@@ -294,7 +293,7 @@ export const getUserRole = async (req, res) => {
 		if (!userFound) return res.status(434).json({ message: "User not found.", userExists: false });
 
 		return res.status(200).json({
-			role: userFound.role
+			role: userFound.role,
 		});
 	} catch (error) {
 		console.log(error);
