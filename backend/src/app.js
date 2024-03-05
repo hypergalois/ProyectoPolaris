@@ -21,9 +21,10 @@ const CLIENT_URL = process.env.CLIENT_URL;
 
 const app = express();
 
+// TODO: CAMBIAR ESTO A UNA VARIABLE DE ENTORNO
 app.use(
 	cors({
-		origin: CLIENT_URL || "http://localhost:5173",
+		origin: "https://proyectopolaris.up.railway.app" || "http://localhost:5173",
 		credentials: true,
 	})
 );
