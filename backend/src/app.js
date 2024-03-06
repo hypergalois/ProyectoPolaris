@@ -45,17 +45,20 @@ app.use("/api", areaRoutes);
 app.use("/api", requestRoutes);
 app.use("/api", testRoutes);
 
-// process.on("unhandledRejection", (reason, promise) => {
-// 	// Mandarlo a Slack
-// 	console.error("Unhandled Rejection at:", promise, "reason:", reason);
-// 	server.close(() => process.exit(1));
-// });
+process.on("unhandledRejection", (reason, promise) => {
+	console.error("Unhandled Rejection at:", promise, "reason:", reason);
+	// Mandarlo a Slack o sistema de monitoreo
+	// Aquí puedes integrar tu código para enviar el log a un sistema externo
+	// Ejemplo: sendErrorToMonitoringSystem(reason, promise);
+});
 
-// process.on("uncaughtException", (error) => {
-// 	// Mandarlo a Slack
-// 	console.error("Uncaught Exception thrown", error);
-// 	server.close(() => process.exit(1));
-// });
+process.on("uncaughtException", (error) => {
+	console.error("Uncaught Exception thrown", error);
+	// Mandarlo a Slack o sistema de monitoreo
+	// Aquí puedes integrar tu código para enviar el log a un sistema externo
+	// Ejemplo: sendErrorToMonitoringSystem(error);
+	// Considera la posibilidad de realizar una limpieza suave aquí si es necesario
+});
 
 app.on("close", () => {
 	prisma.$disconnect();
