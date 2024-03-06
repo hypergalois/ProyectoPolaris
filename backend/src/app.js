@@ -17,7 +17,8 @@ import areaRoutes from "./routes/areas.routes.js";
 import requestRoutes from "./routes/requests.routes.js";
 import testRoutes from "./routes/test.routes.js";
 
-const CLIENT_URL = process.env.CLIENT_URL;
+const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:5173";
+console.log("Client URL is:", CLIENT_URL);
 
 const app = express();
 
@@ -44,17 +45,20 @@ app.use("/api", areaRoutes);
 app.use("/api", requestRoutes);
 app.use("/api", testRoutes);
 
-// process.on("unhandledRejection", (reason, promise) => {
-// 	// Mandarlo a Slack
-// 	console.error("Unhandled Rejection at:", promise, "reason:", reason);
-// 	server.close(() => process.exit(1));
-// });
+process.on("unhandledRejection", (reason, promise) => {
+	console.error("Unhandled Rejection at:", promise, "reason:", reason);
+	// Mandarlo a Slack o sistema de monitoreo
+	// Aquí puedes integrar tu código para enviar el log a un sistema externo
+	// Ejemplo: sendErrorToMonitoringSystem(reason, promise);
+});
 
-// process.on("uncaughtException", (error) => {
-// 	// Mandarlo a Slack
-// 	console.error("Uncaught Exception thrown", error);
-// 	server.close(() => process.exit(1));
-// });
+process.on("uncaughtException", (error) => {
+	console.error("Uncaught Exception thrown", error);
+	// Mandarlo a Slack o sistema de monitoreo
+	// Aquí puedes integrar tu código para enviar el log a un sistema externo
+	// Ejemplo: sendErrorToMonitoringSystem(error);
+	// Considera la posibilidad de realizar una limpieza suave aquí si es necesario
+});
 
 app.on("close", () => {
 	prisma.$disconnect();
