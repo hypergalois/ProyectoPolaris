@@ -17,7 +17,7 @@ const InitialRegisterForm = () => {
 	const navigate = useNavigate();
 
 	const getExistEmailRequest = async (email) => {
-		getExistEmail({'email': email})
+		getExistEmail({ email: email });
 		return await existEmail;
 	};
 
@@ -55,11 +55,11 @@ const InitialRegisterForm = () => {
 						required: true,
 						pattern: {
 							value: /^[a-zA-Z0-9._%+-]+@(u-tad\.com|live\.u-tad\.com)$/i,
-							message: 'El correo tiene que ser de la Utad',
+							message: "El correo tiene que ser de la Utad",
 						},
 						validate: {
-							checkUrl: async () => await getExistEmailRequest(getValues('email')) || 'El correo ya esta en uso', 
-						}
+							checkUrl: async () => (await getExistEmailRequest(getValues("email"))) || "El correo ya esta en uso",
+						},
 					})}
 					placeholder="Correo de la Utad"
 				/>

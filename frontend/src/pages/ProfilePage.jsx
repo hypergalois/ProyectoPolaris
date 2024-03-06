@@ -7,9 +7,9 @@ function ProjectHomePage() {
 	return (
 		<>
 			<h1>PerfilePage</h1>
-			<ProfileDetails/>
-			<ProfileProjects/>
-			<ProfileUserManagement/>
+			<ProfileDetails />
+			<ProfileProjects />
+			<ProfileUserManagement />
 		</>
 	);
 }

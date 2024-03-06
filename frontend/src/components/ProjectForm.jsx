@@ -26,7 +26,7 @@ const ProjectForm = () => {
 		handleSubmit,
 		formState: { errors },
 		setValue,
-		getValues
+		getValues,
 	} = useForm();
 
 	const { requestedProject, getProject, createProject, updateProject, errors: projectsContextErrors } = useProjects();
@@ -43,7 +43,7 @@ const ProjectForm = () => {
 		fields: linkFields,
 		append: appendLink,
 		remove: removeLink,
-		update: updateLink
+		update: updateLink,
 	} = useFieldArray({
 		control,
 		name: "links",
@@ -53,7 +53,7 @@ const ProjectForm = () => {
 		fields: studentFields,
 		append: appendStudent,
 		remove: removeStudent,
-		update: updateStudent
+		update: updateStudent,
 	} = useFieldArray({
 		control,
 		name: "students",
@@ -63,7 +63,7 @@ const ProjectForm = () => {
 		fields: teacherFields,
 		append: appendTeacher,
 		remove: removeTeacher,
-		update: updateTeacher
+		update: updateTeacher,
 	} = useFieldArray({
 		control,
 		name: "teachers",
@@ -73,7 +73,7 @@ const ProjectForm = () => {
 		fields: awardFields,
 		append: appendAward,
 		remove: removeAward,
-		update: updateAward
+		update: updateAward,
 	} = useFieldArray({
 		control,
 		name: "obteinedAwards",
@@ -89,7 +89,7 @@ const ProjectForm = () => {
 		console.log("useEffect");
 		console.log(projectId);
 		getDegrees();
-		if(projectId) getProject(projectId);
+		if (projectId) getProject(projectId);
 
 		if (studentFields.length === 0) {
 			updateStudent(0, "");
@@ -111,7 +111,7 @@ const ProjectForm = () => {
 	}, [degrees]);
 
 	useEffect(() => {
-		if(degreeOptions.current.length > 0 && requestedProject) {
+		if (degreeOptions.current.length > 0 && requestedProject) {
 			console.log(requestedProject);
 			setValue("title", requestedProject.title);
 			setValue("description", requestedProject.description);
@@ -119,11 +119,11 @@ const ProjectForm = () => {
 			setValue("academicCourse", requestedProject.academicCourse);
 
 			setValue("course", requestedProject.course);
-			setSelectedCourseOption(courseOptions.filter(({value}) => value === requestedProject.course));
+			setSelectedCourseOption(courseOptions.filter(({ value }) => value === requestedProject.course));
 			setValue("letter", requestedProject.letter);
-			setSelectedLetterOption(letterOptions.filter(({value}) => value === requestedProject.letter));
+			setSelectedLetterOption(letterOptions.filter(({ value }) => value === requestedProject.letter));
 			setValue("degree", requestedProject.degreeId);
-			setSelectedDegreeOption(degreeOptions.current.filter(({value}) => value === requestedProject.degreeId));
+			setSelectedDegreeOption(degreeOptions.current.filter(({ value }) => value === requestedProject.degreeId));
 
 			requestedProject.externalLinks.map((value, index) => {
 				updateLink(index, value);
@@ -164,29 +164,19 @@ const ProjectForm = () => {
 
 		// Agrega los datos de tipo array del proyecto a FormData
 
-		const externalLinks = data.externalLinks ?
-		data.externalLinks.filter((value) => value.trim().length !== 0) :
-		[];
+		const externalLinks = data.externalLinks ? data.externalLinks.filter((value) => value.trim().length !== 0) : [];
 		formData.append("externalLinks", JSON.stringify(externalLinks));
 
-		const impliedStudents = data.impliedStudents ?
-		data.impliedStudents.filter((value) => value.trim().length !== 0) :
-		[];
+		const impliedStudents = data.impliedStudents ? data.impliedStudents.filter((value) => value.trim().length !== 0) : [];
 		formData.append("impliedStudentsIDs", JSON.stringify(impliedStudents));
 
-		const impliedTeachers = data.impliedTeachers ?
-		data.impliedTeachers.filter((value) => value.trim().length !== 0) :
-		[];
+		const impliedTeachers = data.impliedTeachers ? data.impliedTeachers.filter((value) => value.trim().length !== 0) : [];
 		formData.append("impliedTeachersIDs", JSON.stringify(impliedTeachers));
 
-		const awards = data.awards ?
-		data.awards.filter((value) => value.trim().length !== 0) :
-		[];
+		const awards = data.awards ? data.awards.filter((value) => value.trim().length !== 0) : [];
 		formData.append("awards", JSON.stringify(awards));
 
-		const keywords = data.keywords ?
-		data.keywords.filter((value) => value.trim().length !== 0) :
-		[];
+		const keywords = data.keywords ? data.keywords.filter((value) => value.trim().length !== 0) : [];
 		formData.append("keywords", JSON.stringify(keywords));
 
 		// Agrega los archivos del proyecto a FormData
@@ -196,10 +186,9 @@ const ProjectForm = () => {
 
 		console.log(data);
 
-		if(projectId) {
+		if (projectId) {
 			updateProject(projectId, formData);
-		}
-		else{
+		} else {
 			createProject(formData);
 		}
 
@@ -307,7 +296,12 @@ const ProjectForm = () => {
 					<h3 className="block text-gray-700 text-sm font-bold mb-2">Enlace a recursos externos</h3>
 					{linkFields.map((field, index) => (
 						<div key={field.id} className="flex items-center gap-2">
-							<input type="url" {...register(`externalLinks.${index}`)} placeholder="URL" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+							<input
+								type="url"
+								{...register(`externalLinks.${index}`)}
+								placeholder="URL"
+								className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+							/>
 							<button
 								type="button"
 								onClick={() => {
@@ -321,7 +315,11 @@ const ProjectForm = () => {
 						</div>
 					))}
 					<div className="flex justify-center mt-4">
-						<button type="button" onClick={() => appendLink({ externalLink: "" })} className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+						<button
+							type="button"
+							onClick={() => appendLink({ externalLink: "" })}
+							className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+						>
 							Añadir recurso externo
 						</button>
 					</div>
@@ -365,7 +363,11 @@ const ProjectForm = () => {
 						</div>
 					))}
 					<div className="flex justify-center mt-4">
-						<button type="button" onClick={() => appendStudent({ impliedStudent: "" })} className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+						<button
+							type="button"
+							onClick={() => appendStudent({ impliedStudent: "" })}
+							className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+						>
 							Añadir estudiante
 						</button>
 					</div>
@@ -394,7 +396,11 @@ const ProjectForm = () => {
 						</div>
 					))}
 					<div className="flex justify-center mt-4">
-						<button type="button" onClick={() => appendTeacher({ impliedTeacher: "" })} className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+						<button
+							type="button"
+							onClick={() => appendTeacher({ impliedTeacher: "" })}
+							className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+						>
 							Añadir profesor
 						</button>
 					</div>
@@ -404,7 +410,12 @@ const ProjectForm = () => {
 					<h3 className="block text-gray-700 text-sm font-bold mb-2">Premios</h3>
 					{awardFields.map((field, index) => (
 						<div key={field.id} className="flex items-center gap-2">
-							<input type="text" {...register(`awards.${index}`)} placeholder="Premio" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+							<input
+								type="text"
+								{...register(`awards.${index}`)}
+								placeholder="Premio"
+								className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+							/>
 							<button
 								type="button"
 								onClick={() => {
@@ -418,14 +429,21 @@ const ProjectForm = () => {
 						</div>
 					))}
 					<div className="flex justify-center mt-4">
-						<button type="button" onClick={() => appendAward({ award: "" })} className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+						<button
+							type="button"
+							onClick={() => appendAward({ award: "" })}
+							className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+						>
 							Añadir premio
 						</button>
 					</div>
 				</div>
 
 				<div className="flex justify-center mt-6">
-					<button type="submit" className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
+					<button
+						type="submit"
+						className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+					>
 						Enviar
 					</button>
 				</div>

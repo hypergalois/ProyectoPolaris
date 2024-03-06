@@ -10,26 +10,24 @@ import { Link } from "react-router-dom";
 function NavBar() {
 	const { logout } = useAuth();
 
-    const {userRole, getUserRole} = useUser();
+	const { userRole, getUserRole } = useUser();
 
-	useEffect(()  => {
-        getUserRole()
-    }, [])
+	useEffect(() => {
+		getUserRole();
+	}, []);
 
-    if (userRole === null) return null;
+	if (userRole === null) return null;
 
-    //console.log("NAVBARAUTH -> ", userRole)
+	//console.log("NAVBARAUTH -> ", userRole)
 
-    let navigation = [
-        { name: "Projects", href: "/home", current: false }
-    ];
+	let navigation = [{ name: "Projects", href: "/home", current: false }];
 
-    if (userRole === "ADMIN") {
-        navigation = [
-            { name: "Projects", href: "/home", current: false },
-            { name: "Dashboard", href: "/dashboard", current: false }
-        ];
-    }
+	if (userRole === "ADMIN") {
+		navigation = [
+			{ name: "Projects", href: "/home", current: false },
+			{ name: "Dashboard", href: "/dashboard", current: false },
+		];
+	}
 
 	return (
 		<Disclosure as="nav" className="bg-[#6a6767]">

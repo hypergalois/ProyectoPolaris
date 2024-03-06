@@ -1,11 +1,9 @@
 import React from "react";
-import { } from "../context/UserContext";
+import {} from "../context/UserContext";
 import { useState, useEffect } from "react";
 
 const ProfileUserManagement = ({ project }) => {
-
-	useEffect(() => {
-    }, [])
+	useEffect(() => {}, []);
 
 	return (
 		<div className="max-w-sm rounded overflow-hidden shadow-lg">
