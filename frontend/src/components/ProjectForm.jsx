@@ -196,9 +196,9 @@ const ProjectForm = () => {
 	};
 
 	return (
-		<div className="flex items-center justify-center min-h-screen">
-			<form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-lg bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-				<div className="mb-4">
+		<div className="flex items-center justify-center min-h-screen my-8">
+			<form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-fit bg-white  rounded px-8 pt-6 pb-8 mb-4 grid gap-4 md:grid-cols-2">
+				<div className="mb-4 md:col-span-2">
 					<h3 className="block text-gray-700 text-sm font-bold mb-2">Título</h3>
 					<input
 						type="text"
@@ -210,7 +210,18 @@ const ProjectForm = () => {
 					/>
 				</div>
 
-				<div className="mb-4">
+				<div className="mb-4 md:col-span-2">
+					<h3 className="block text-gray-700 text-sm font-bold mb-2">Descripción del proyecto</h3>
+					<textarea
+						{...register("description", {
+							required: true,
+						})}
+						placeholder="Descripción del proyecto"
+						className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+					></textarea>
+				</div>
+
+				<div className="mb-4 md:col-span-1">
 					<h3 className="block text-gray-700 text-sm font-bold mb-2">Grado</h3>
 					<Select
 						options={degreeOptions.current}
@@ -223,33 +234,7 @@ const ProjectForm = () => {
 					/>
 				</div>
 
-				<div className="mb-4">
-					<h3 className="block text-gray-700 text-sm font-bold mb-2">Curso</h3>
-					<Select
-						options={courseOptions}
-						onChange={(selectedCourse) => {
-							setValue("course", selectedCourse.value);
-							setSelectedCourseOption(selectedCourse);
-						}}
-						value={selectedCourseOption}
-						className="w-full  border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-					/>
-				</div>
-
-				<div className="mb-4">
-					<h3 className="block text-gray-700 text-sm font-bold mb-2">Clase</h3>
-					<Select
-						options={letterOptions}
-						onChange={(selectedLetter) => {
-							setValue("letter", selectedLetter.value);
-							setSelectedLetterOption(selectedLetter);
-						}}
-						value={selectedLetterOption}
-						className="w-full  border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-					/>
-				</div>
-
-				<div className="mb-4">
+				<div className="mb-4 md:col-span-1">
 					<h3 className="block text-gray-700 text-sm font-bold mb-2">Curso académico</h3>
 					<input
 						type="text"
@@ -265,78 +250,7 @@ const ProjectForm = () => {
 					/>
 				</div>
 
-				<div className="mb-4">
-					<h3 className="block text-gray-700 text-sm font-bold mb-2">Asignatura</h3>
-					<input
-						type="text"
-						{...register("subject", {
-							required: true,
-						})}
-						placeholder="Asignatura"
-						className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-					/>
-				</div>
-
-				<div className="mb-4">
-					<h3 className="block text-gray-700 text-sm font-bold mb-2">Archivos del proyecto</h3>
-					<DropzoneComponent uploadedFiles={uploadedFiles} setUploadedFiles={setUploadedFiles} />
-				</div>
-
-				{/* <div>
-                <h3>Memoria del proyecto</h3>
-                <input
-                    type="file"
-                    {...register("projectMemory", {
-                        required : false
-                    })}
-                />
-            </div> */}
-
-				<div className="mb-4">
-					<h3 className="block text-gray-700 text-sm font-bold mb-2">Enlace a recursos externos</h3>
-					{linkFields.map((field, index) => (
-						<div key={field.id} className="flex items-center gap-2">
-							<input
-								type="url"
-								{...register(`externalLinks.${index}`)}
-								placeholder="URL"
-								className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-							/>
-							<button
-								type="button"
-								onClick={() => {
-									removeLink(index);
-									setValue(`externalLinks.${index}`, "");
-								}}
-								className="ml-2 bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
-							>
-								Eliminar
-							</button>
-						</div>
-					))}
-					<div className="flex justify-center mt-4">
-						<button
-							type="button"
-							onClick={() => appendLink({ externalLink: "" })}
-							className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-						>
-							Añadir recurso externo
-						</button>
-					</div>
-				</div>
-
-				<div className="mb-4">
-					<h3 className="block text-gray-700 text-sm font-bold mb-2">Descripción del proyecto</h3>
-					<textarea
-						{...register("description", {
-							required: true,
-						})}
-						placeholder="Descripción del proyecto"
-						className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-					></textarea>
-				</div>
-
-				<div className="mb-4">
+				<div className="mb-4 md:col-span-2">
 					<h3 className="block text-gray-700 text-sm font-bold mb-2">Estudiantes implicados</h3>
 					{studentFields.map((field, index) => (
 						<div key={field.id} className="flex items-center gap-2">
@@ -373,7 +287,7 @@ const ProjectForm = () => {
 					</div>
 				</div>
 
-				<div className="mb-4">
+				<div className="mb-4 md:col-span-2">
 					<h3 className="block text-gray-700 text-sm font-bold mb-2">Profesores implicados</h3>
 					{teacherFields.map((field, index) => (
 						<div key={field.id} className="flex items-center gap-2">
@@ -406,7 +320,93 @@ const ProjectForm = () => {
 					</div>
 				</div>
 
-				<div className="mb-4">
+				<div className="mb-4 md:col-span-1">
+					<h3 className="block text-gray-700 text-sm font-bold mb-2">Curso</h3>
+					<Select
+						options={courseOptions}
+						onChange={(selectedCourse) => {
+							setValue("course", selectedCourse.value);
+							setSelectedCourseOption(selectedCourse);
+						}}
+						value={selectedCourseOption}
+						className="w-full  border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+					/>
+				</div>
+
+				<div className="mb-4 md:col-span-1">
+					<h3 className="block text-gray-700 text-sm font-bold mb-2">Clase</h3>
+					<Select
+						options={letterOptions}
+						onChange={(selectedLetter) => {
+							setValue("letter", selectedLetter.value);
+							setSelectedLetterOption(selectedLetter);
+						}}
+						value={selectedLetterOption}
+						className="w-full  border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+					/>
+				</div>
+
+				<div className="mb-4 md:col-span-2">
+					<h3 className="block text-gray-700 text-sm font-bold mb-2">Asignatura</h3>
+					<input
+						type="text"
+						{...register("subject", {
+							required: true,
+						})}
+						placeholder="Asignatura"
+						className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+					/>
+				</div>
+
+				<div className="mb-4 md:col-span-2">
+					<h3 className="block text-gray-700 text-sm font-bold mb-2">Archivos del proyecto</h3>
+					<DropzoneComponent uploadedFiles={uploadedFiles} setUploadedFiles={setUploadedFiles} />
+				</div>
+
+				{/* <div>
+                <h3>Memoria del proyecto</h3>
+                <input
+                    type="file"
+                    {...register("projectMemory", {
+                        required : false
+                    })}
+                />
+            </div> */}
+
+				<div className="mb-4 md:col-span-2">
+					<h3 className="block text-gray-700 text-sm font-bold mb-2">Enlace a recursos externos</h3>
+					{linkFields.map((field, index) => (
+						<div key={field.id} className="flex items-center gap-2">
+							<input
+								type="url"
+								{...register(`externalLinks.${index}`)}
+								placeholder="URL"
+								className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+							/>
+							<button
+								type="button"
+								onClick={() => {
+									removeLink(index);
+									setValue(`externalLinks.${index}`, "");
+								}}
+								className="ml-2 bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
+							>
+								Eliminar
+							</button>
+						</div>
+					))}
+					<div className="flex justify-center mt-4">
+						<button
+							type="button"
+							onClick={() => appendLink({ externalLink: "" })}
+							className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+						>
+							Añadir recurso externo
+						</button>
+					</div>
+				</div>
+
+				<div className="mb-4 md:col-span-2">
 					<h3 className="block text-gray-700 text-sm font-bold mb-2">Premios</h3>
 					{awardFields.map((field, index) => (
 						<div key={field.id} className="flex items-center gap-2">
@@ -439,10 +439,10 @@ const ProjectForm = () => {
 					</div>
 				</div>
 
-				<div className="flex justify-center mt-6">
+				<div className="mt-6 md:col-span-2 w-full">
 					<button
 						type="submit"
-						className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+						className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
 					>
 						Enviar
 					</button>
