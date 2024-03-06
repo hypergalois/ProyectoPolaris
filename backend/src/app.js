@@ -6,7 +6,6 @@ import dotenv from "dotenv";
 import prisma from "./config/prisma.client.js";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpecs from "./docs/swagger.js";
-import { authRequired } from "./middlewares/authRequired.middleware.js";
 
 dotenv.config();
 

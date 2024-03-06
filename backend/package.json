@@ -31,6 +31,7 @@
     "@sendgrid/mail": "^8.1.1",
     "@sentry/node": "^7.105.0",
     "@sentry/opentelemetry-node": "^7.105.0",
+    "@sentry/profiling-node": "^7.105.0",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
