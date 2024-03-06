@@ -17,15 +17,14 @@ import areaRoutes from "./routes/areas.routes.js";
 import requestRoutes from "./routes/requests.routes.js";
 import testRoutes from "./routes/test.routes.js";
 
-const CLIENT_URL = process.env.CLIENT_URL;
+const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:5173";
+console.log("Client URL is:", CLIENT_URL);
 
 const app = express();
 
-// TODO: CAMBIAR ESTO A UNA VARIABLE DE ENTORNO
-// "https://proyectopolaris.up.railway.app" || "http://localhost:5173"
 app.use(
 	cors({
-		origin: "https://proyectopolaris.up.railway.app",
+		origin: CLIENT_URL,
 		credentials: true,
 	})
 );
