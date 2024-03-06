@@ -4,12 +4,11 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 import Sentry from "@sentry/node";
-import { nodeProfilingIntegration } from "@sentry/profiling-node";
 
 import prisma from "./config/prisma.client.js";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpecs from "./docs/swagger.js";
-import { authRequired } from "./middlewares/auth.middleware.js";
+import { authRequired } from "./middlewares/authRequired.middleware.js";
 
 dotenv.config();
 
@@ -32,7 +31,6 @@ Sentry.init({
 		new Sentry.Integrations.Http({ tracing: true }),
 		// enable Express.js middleware tracing
 		new Sentry.Integrations.Express({ app }),
-		new ProfilingIntegration(),
 	],
 	// Performance Monitoring
 	tracesSampleRate: 1.0, //  Capture 100% of the transactions
