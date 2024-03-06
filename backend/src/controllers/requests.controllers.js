@@ -109,12 +109,14 @@ export const acceptRequest = async (req, res) => {
             where: { id: id },
             data: { status: statusEnum.ACCEPTED },
         });
+
         if (!acceptedRequest)
             res.status(404).json({ message: "Request not found" });
         const acceptedProject = await prisma.project.update({
             where: { id: acceptedRequest.projectId },
             data: { status: statusEnum.ACCEPTED },
         });
+        
         if (!acceptedProject)
             res.status(404).json({ message: "Project not found" });
 
@@ -128,16 +130,25 @@ export const acceptRequest = async (req, res) => {
 export const rejectRequest = async (req, res) => {
     try {
         const { id } = req.params;
+
+        //console.log(id)
+
         const rejectedRequest = await prisma.request.update({
             where: { id: id },
             data: { status: statusEnum.REJECTED },
         });
+
         if (!rejectedRequest)
             res.status(404).json({ message: "Request not found" });
+
+        //console.log(rejectedRequest)
+
         await prisma.project.update({
-            where: { id: acceptedRequest.projectId },
+            where: { id: rejectedRequest.projectId },
             data: { status: statusEnum.REJECTED },
         });
+
+
         return res.status(200).json(rejectedRequest);
     } catch (error) {
         console.log(error);

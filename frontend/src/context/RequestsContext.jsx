@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, useRef } from "react";
-import { getRequests, getRequestsByStatus } from "../api/requests";
+import { getRequests, getRequestsByStatus, acceptRequest, rejectRequest } from "../api/requests";
 import { useAuth } from "./AuthContext";
 
 const RequestsContext = createContext();
@@ -14,6 +14,7 @@ export const useRequests = () => {
 
 export const RequestsProvider = ({ children }) => {
 	const [requests, setRequests] = useState([]);
+    const [requestState, setRequestState] = useState('');
 	const [requestedRequest, setRequestedRequest] = useState({});
 
 	const { isAuthenticated } = useAuth();
@@ -22,10 +23,30 @@ export const RequestsProvider = ({ children }) => {
 		try {
 			const res = await getRequests();
 			setRequests(res.data);
+            setRequestState(res.data.status)
 		} catch (error) {
 			console.log(error);
 		}
 	};
+
+    const acceptRequestData = async (id) => {
+        try {
+			const res = await acceptRequest(id);
+            console.log(res.data)
+            setRequestState(res.data.status)
+		} catch (error) {
+			console.log(error);
+		}
+    };
+
+    const rejectRequestData = async (id) => {
+        try {
+			const res = await rejectRequest(id);
+            setRequestState(res.data.status)
+		} catch (error) {
+			console.log(error);
+		}
+    };
 
 	const getRequestsByStatusData = async (status) => {
 		try {
@@ -43,7 +64,7 @@ export const RequestsProvider = ({ children }) => {
 		}
 	}, [isAuthenticated]);
 
-	const requestsData = { requests, setRequests, requestedRequest, setRequestedRequest, getRequestsData, getRequestsByStatusData };
+	const requestsData = { requests, setRequests, requestedRequest, setRequestedRequest, getRequestsData, getRequestsByStatusData, acceptRequestData, rejectRequestData, requestState };
 
 	return <RequestsContext.Provider value={requestsData}>{children}</RequestsContext.Provider>;
 };
