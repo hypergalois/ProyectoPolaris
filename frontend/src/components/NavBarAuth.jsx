@@ -53,7 +53,8 @@ function NavBar() {
 							</div>
 							<div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 								<Link to="/projects" className="inline-flex items-center bg-blue-600 px-4 py-2 mr-2 rounded-full text-white hover:bg-blue-400 focus:outline-none">
-									<MagnifyingGlassIcon className="h-6 w-5" aria-hidden="true" />
+									Buscar Proyectos
+									<MagnifyingGlassIcon className="ml-2 h-6 w-5" aria-hidden="true" />
 								</Link>
 
 								<Link to="/projects/new" className="inline-flex items-center bg-blue-600 px-4 py-2 mr-2 rounded-full text-white hover:bg-blue-400 focus:outline-none">
@@ -62,7 +63,7 @@ function NavBar() {
 								</Link>
 
 								<Menu as="div" className="ml-3 relative">
-									<Menu.Button className="bg-gray-800 p-1 rounded-full text-gray-100 hover:text-white focus:outline-none">
+									<Menu.Button className="bg-gray-700 p-1 rounded-full text-gray-100 hover:text-white focus:outline-none">
 										<UserCircleIcon className="h-6 w-6" aria-hidden="true" />
 									</Menu.Button>
 									<Transition
