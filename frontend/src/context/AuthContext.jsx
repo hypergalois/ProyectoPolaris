@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect, useRef } from "react";
-import { registerRequest, loginRequest, verifyTokenRequest, logoutRequest, forgotPasswordRequest, resetPasswordRequest, verifyEmailRequest } from "../api/auth";
+import { registerRequest, loginRequest, verifyTokenRequest, logoutRequest, forgotPasswordRequest, resetPasswordRequest, verifyEmailRequest, checkEmailRequest, getProfileRequest, getUserRoleRequest } from "../api/auth";
 import Cookies from "js-cookie";
 
 export const AuthContext = createContext();
@@ -13,6 +13,9 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
+    const [existEmail, setExistEmail] = useState(false);
+	const [userRole, setUserRole] = useState(null);
+    const [profile, setProfile] = useState([]);
 	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [errors, setErrors] = useState([]);
@@ -59,6 +62,45 @@ export const AuthProvider = ({ children }) => {
 			userToken.current = null;
 		} catch (error) {
 			console.log(error);
+		}
+	};
+
+    const getExistEmail = async (email) => {
+		try {
+			const response = await checkEmailRequest(email);
+			setExistEmail(!response.data.userExists);
+		} catch (error) {
+			if (Array.isArray(error.response.data)) {
+				setErrors(error.response.data);
+			} else {
+				setErrors([error.response.data]);
+			}
+		}
+	};
+
+	const getProfile = async () => {
+		try {
+			const response = await getProfileRequest();
+			setProfile(response.data);
+		} catch (error) {
+			if (Array.isArray(error.response.data)) {
+				setErrors(error.response.data);
+			} else {
+				setErrors([error.response.data]);
+			}
+		}
+	};
+
+	const getUserRole = async () => {
+		try {
+			const response = await getUserRoleRequest();
+			setUserRole(response.data.role);
+		} catch (error) {
+			if (Array.isArray(error.response.data)) {
+				setErrors(error.response.data);
+			} else {
+				setErrors([error.response.data]);
+			}
 		}
 	};
 
@@ -159,12 +201,18 @@ export const AuthProvider = ({ children }) => {
 		<AuthContext.Provider
 			value={{
 				user,
+                userRole,
 				register,
 				login,
 				logout,
 				forgotPassword,
 				resetPassword,
 				verifyEmail,
+                existEmail,
+                getExistEmail,
+                profile,
+                getProfile,
+                getUserRole,
 				loading,
 				errors,
 				isAuthenticated,

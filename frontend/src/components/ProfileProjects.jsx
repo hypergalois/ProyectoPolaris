@@ -1,11 +1,11 @@
 import React from "react";
-import { useUser } from "../context/UserContext";
+import { useAuth } from "../context/AuthContext";
 import { useProjects } from "../context/ProjectsContext";
 import { useState, useEffect } from "react";
 import ProjectCard from "../components/ProjectCard";
 
 const ProfileRequests = ({ project }) => {
-	const { profil, getProfile, errors: profileErrors } = useUser();
+	const { profil, getProfile, errors: profileErrors } = useAuth();
 	const { projects, getProjectsByUser, errors: proyectsErrors } = useProjects();
 	const [loading, setLoading] = useState(true);
 

@@ -3,14 +3,11 @@ import { Bars3Icon, XMarkIcon, ArrowRightEndOnRectangleIcon, PlusIcon, Magnifyin
 import { Fragment } from "react";
 
 import { useAuth } from "../context/AuthContext";
-import { useUser } from "../context/UserContext";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 function NavBar() {
-	const { logout } = useAuth();
-
-	const { userRole, getUserRole } = useUser();
+	const { logout, userRole, getUserRole } = useAuth();
 
 	useEffect(() => {
 		getUserRole();

@@ -1,9 +1,9 @@
 import React from "react";
-import { useUser } from "../context/UserContext";
+import { useAuth } from "../context/AuthContext";
 import { useEffect } from "react";
 
 const ProfileDetails = ({ project }) => {
-	const { profile, getProfile, errors: profileErrors } = useUser();
+	const { profile, getProfile, errors: profileErrors } = useAuth();
 
 	useEffect(() => {
 		getProfile();
