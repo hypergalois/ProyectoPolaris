@@ -1,5 +1,4 @@
 import React from "react";
-import {} from "../context/UserContext";
 import { useState, useEffect } from "react";
 
 const ProfileUserManagement = ({ project }) => {

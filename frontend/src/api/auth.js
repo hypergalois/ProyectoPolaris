@@ -13,3 +13,9 @@ export const forgotPasswordRequest = (email) => axiosInstance.post("/forgotPassw
 export const resetPasswordRequest = (token, password) => axiosInstance.post("/resetPassword", token, password);
 
 export const verifyEmailRequest = (token) => axiosInstance.post("/verifyEmail", token);
+
+export const checkEmailRequest = (email) => axiosInstance.post("/checkEmailRegister", email);
+
+export const getProfileRequest = () => axiosInstance.post("/profile");
+
+export const getUserRoleRequest = () => axiosInstance.get("/getUserRole");

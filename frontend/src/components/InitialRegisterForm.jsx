@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 // eslint-disable-next-line no-unused-vars
 import { Link, useNavigate } from "react-router-dom";
-import { useUser } from "../context/UserContext";
+import { useAuth } from "../context/AuthContext";
 
 const InitialRegisterForm = () => {
 	const {
@@ -13,7 +13,7 @@ const InitialRegisterForm = () => {
 	} = useForm();
 	// eslint-disable-next-line no-unused-vars
 	const [email, setEmail] = useState("");
-	const { existEmail, getExistEmail, errors: userErrors } = useUser();
+	const { existEmail, getExistEmail, errors: userErrors } = useAuth();
 	const navigate = useNavigate();
 
 	const getExistEmailRequest = async (email) => {

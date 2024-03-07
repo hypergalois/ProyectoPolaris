@@ -4,7 +4,7 @@ import fs from "fs";
 
 const storage = multer.diskStorage({
 	destination: function (req, file, callback) {
-		const pathStorage = "uploads/";
+		const pathStorage = process.env.FILE_UPLOAD_PATH +"uploads/";
 		if (req.files.folderId) {
 			const destinationPath = pathStorage + req.files.folderId + "/";
 			callback(null, destinationPath);

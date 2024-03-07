@@ -196,6 +196,10 @@ router.post("/projects", authRequired, uploadFile.array("files", 5), createProje
 
 router.put("/projects/:id", authRequired, validateSchema(updateProjectSchema), updateProject);
 
+// router.put("/projects/:id", authRequired, validateSchema(updateProjectSchema), pinProject);
+
+// router.put("/projects/:id", authRequired, validateSchema(updateProjectSchema), unpinProject);
+
 /**
  * @swagger
  * /projects/{id}:

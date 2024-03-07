@@ -106,6 +106,8 @@ model Project {
   externalLinks   String[]
   uploadedContent String[]
 
+  pinned Boolean? @default(false)
+
   subject String?
 
   areaId String? @db.ObjectId

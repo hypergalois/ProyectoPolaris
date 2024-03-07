@@ -32,6 +32,7 @@ export const updateProjectSchema = z.object({
 	letter: z.string().optional(),
 	summary: z.string().optional(),
 	report: z.string().optional(),
+    pinned: z.boolean().optional(),
 	externalLink: z.array(z.string()).optional(),
 	awards: z.array(z.string()).optional(),
 	keywords: z.array(z.string()).optional(),

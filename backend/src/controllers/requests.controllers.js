@@ -5,7 +5,7 @@ import { statusEnum, rolesEnum } from "../config/tags.js";
 
 export const getRequests = async (req, res) => {
     try {
-        console.log("request.controllers -> request -> ",req.role);
+        //console.log("request.controllers -> request -> ",req.role);
         // Si es USER o CREATOR, solo puede ver sus propias requests
         if (req.role === rolesEnum.USER || req.role === rolesEnum.CREATOR) {
             const requests = await prisma.request.findMany({
@@ -79,6 +79,10 @@ export const updateRequest = async (req, res) => {
 
 export const getRequestsByStatus = async (req, res) => {
     try {
+
+        //console.log("STATE EN GETREUQESTSBYSTATUS:", req.params.status, req.role)
+
+         // En caso de ser USER o CREATOR, solo puede ver sus propias requests
         if (req.role === rolesEnum.USER || req.role === rolesEnum.CREATOR) {
             const requests = await prisma.request.findMany({
                 where: { requesterId: req.userId, status: req.params.status },
@@ -86,12 +90,19 @@ export const getRequestsByStatus = async (req, res) => {
             if (!requests)
                 return res.status(404).json({ message: "No requests found" });
             return res.status(200).json(requests);
+
+            // En caso de ser ADMIN, puede ver todas las requests
+            // TODO Cuando los usuarios estén bien creados volver a implementar el requester
         } else if (req.role === rolesEnum.ADMIN) {
             const requests = await prisma.request.findMany({
-                where: { status: req.params.status },
+                where: {
+                    status : req.params.status,
+    
+                }
             });
             if (!requests)
                 return res.status(404).json({ message: "No requests found" });
+
             return res.status(200).json(requests);
         } else {
             return res.status(403).json({ message: "You are not allowed." });
