@@ -1,5 +1,7 @@
 import React from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
 
 function VerifyEmailPage() {
 	// Tenemos que comprobar los parametros de la url
@@ -8,10 +10,14 @@ function VerifyEmailPage() {
 	const [searchParams] = useSearchParams();
 	const verifyToken = searchParams.get("verifyToken");
 	console.log(verifyToken);
+	const navigate = useNavigate();
+	const { isEmailVerified, verifyEmail } = useAuth();
 
 	//
 	useEffect(() => {
 		console.log(params);
+		verifyEmail(verifyToken);
+		if (isEmailVerified) navigate("/home");
 	}, [params]);
 
 	return (

@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect, useRef } from "react";
-import { registerRequest, loginRequest, verifyTokenRequest, logoutRequest, forgotPasswordRequest, resetPasswordRequest } from "../api/auth";
+import { registerRequest, loginRequest, verifyTokenRequest, logoutRequest, forgotPasswordRequest, resetPasswordRequest, verifyEmailRequest } from "../api/auth";
 import Cookies from "js-cookie";
 
 export const AuthContext = createContext();
@@ -96,6 +96,16 @@ export const AuthProvider = ({ children }) => {
 		}
 	};
 
+	const verifyEmail = async (token) => {
+		try {
+			await verifyEmailRequest(token);
+			setIsEmailVerified(true);
+		} catch (error) {
+			console.log(error);
+			setIsEmailVerified(false);
+		}
+	};
+
 	// Para que desaparezcan los errores
 	useEffect(() => {
 		if (errors.length > 0) {
@@ -154,6 +164,7 @@ export const AuthProvider = ({ children }) => {
 				logout,
 				forgotPassword,
 				resetPassword,
+				verifyEmail,
 				loading,
 				errors,
 				isAuthenticated,
