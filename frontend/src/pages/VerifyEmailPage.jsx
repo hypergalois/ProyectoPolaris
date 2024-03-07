@@ -13,12 +13,15 @@ function VerifyEmailPage() {
 	const navigate = useNavigate();
 	const { isEmailVerified, verifyEmail } = useAuth();
 
-	//
 	useEffect(() => {
-		console.log(params);
-		verifyEmail(verifyToken);
+		console.log(searchParams);
+		if (verifyToken) verifyEmail(verifyToken);
+	}, [verifyToken, verifyEmail]);
+
+	useEffect(() => {
+		console.log(isEmailVerified);
 		if (isEmailVerified) navigate("/home");
-	}, [params]);
+	}, [isEmailVerified]);
 
 	return (
 		<>

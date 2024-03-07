@@ -13,10 +13,12 @@ function ProtectedRoute() {
 	}
 
 	if (!loading && !isAuthenticated) {
+		console.log("Redirecting to login");
 		return <Navigate to="/" replace />;
 	}
 
 	if (!loading && isAuthenticated && !isEmailVerified) {
+		console.log("Redirecting to verify email");
 		return <Navigate to="/verify-email" replace />;
 	}
 
