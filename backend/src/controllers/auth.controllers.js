@@ -90,6 +90,7 @@ export const resetPassword = async (req, res) => {
 		});
 		if (!updatedUser) return res.status(500).json({ message: "Error updating user." });
 
+		// Aqui podriamos mandar un email informando de que la contraseña ha sido cambiada
 		return res.status(200).json({ message: "Password updated successfully.", userExists: true });
 	} catch (error) {
 		console.log(error);
@@ -208,6 +209,8 @@ export const verifyEmail = async (req, res) => {
 			sameSite: "none",
 			secure: true,
 		});
+
+		// Aqui podriamos mandar un email informando de que la cuenta ha sido verificada
 
 		return res.status(200).json({ message: "Email verified successfully.", userExists: true });
 	} catch (error) {}
