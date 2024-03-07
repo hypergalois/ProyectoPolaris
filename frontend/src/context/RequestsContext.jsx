@@ -53,6 +53,7 @@ export const RequestsProvider = ({ children }) => {
 			const res = await getRequestsByStatus(status);
             console.log(res.data)
 			setRequests(res.data);
+            setRequestState(res.data.status)
 		} catch (error) {
 			console.log(error);
 		}
@@ -60,10 +61,13 @@ export const RequestsProvider = ({ children }) => {
 
 	// Cambiado para que solo haga la peticion si esta autenticado
 	useEffect(() => {
-		if (isAuthenticated) {
-			getRequestsData();
-		}
-	}, [isAuthenticated]);
+        if (isAuthenticated) {
+            //getRequestsByStatusData("pending");
+            console.log("User authenticated, getting requests");
+        } else {
+            console.log("User not authenticated, not getting requests")
+        }
+    }, [isAuthenticated]);
 
 	const requestsData = { requests, setRequests, requestedRequest, setRequestedRequest, getRequestsData, getRequestsByStatusData, acceptRequestData, rejectRequestData, requestState };
 

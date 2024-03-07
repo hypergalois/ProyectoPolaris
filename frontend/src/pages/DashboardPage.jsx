@@ -5,7 +5,7 @@ import RequestCard from "../components/RequestCard";
 import { statusEnum } from "../../../backend/src/config/tags";
 
 function DashboardPage() {
-    const { requests, getRequestsByStatusData, requestState } = useRequests();
+    const { requests, getRequestsByStatusData, requestState, getRequestsData } = useRequests();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
