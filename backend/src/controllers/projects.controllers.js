@@ -19,8 +19,8 @@ export const getProjects = async (req, res) => {
 export const getProjectsHome = async (req, res) => {
     try {
         const projects = await prisma.project.findMany({
-            where: { status: statusEnum.ACCEPTED },
-            take: 10,
+            where: { status: statusEnum.ACCEPTED, pinned: true},
+            take: 9,
             orderBy: { createdAt: "desc" },
             select: {
                 id: true,
@@ -34,6 +34,9 @@ export const getProjectsHome = async (req, res) => {
                 },
             },
         });
+
+        console.log(projects);
+
         if (!projects)
             return res.status(404).json({ message: "No projects found" });
 

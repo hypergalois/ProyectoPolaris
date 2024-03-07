@@ -1,29 +1,28 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useProjects } from "../context/ProjectsContext";
 import { useAuth } from "../context/AuthContext";
 import { useEffect } from "react";
 import { rolesEnum } from "../../../backend/src/config/tags";
+import { useProjects } from "../context/ProjectsContext";
 
 const ProjectCard = ({ project }) => {
-    const { pinProjectRequest } = useProjects();
+	const navigate = useNavigate();
+    const { unpinProjectRequest } = useProjects();
     const { userRole, getUserRole } = useAuth();
 
-	useEffect(() => {
+    useEffect(() => {
 		getUserRole();
 	}, []);
 
-	if (userRole === null) return null;
-
-	const navigate = useNavigate();
+    if (userRole === null) return null;
 
 	const handleClick = (projectId) => {
 		// Navegar a otra página al hacer clic
 		navigate(`/projects/${projectId}`);
 	};
 
-    const handlePin = () => {
-		pinProjectRequest(project.id);
+    const handleUnPin = () => {
+		unpinProjectRequest(project.id);
 	};
 
 	return (
@@ -47,8 +46,8 @@ const ProjectCard = ({ project }) => {
 			</div>
             {userRole === rolesEnum.ADMIN && (
                 <div className="px-6 py-4 flex">
-                    <button onClick={handlePin} className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-500">
-                        {project.pinned ? "Pinned" : "Pin"}
+                    <button onClick={handleUnPin} className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-500">
+                        Unpin
                     </button>
                 </div>
             )}
