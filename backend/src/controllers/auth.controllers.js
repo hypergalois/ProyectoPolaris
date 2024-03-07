@@ -170,8 +170,8 @@ export const register = async (req, res) => {
 		// Pense que no hacia falta pero voy a poner cookie ya
 		// Crear el token de acceso
 		const accessToken = await createAccessToken({
-			id: userFound.id,
-			role: userFound.role,
+			id: newUser.id,
+			role: newUser.role,
 		});
 
 		res.cookie("token", accessToken, {
