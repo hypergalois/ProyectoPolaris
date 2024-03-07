@@ -1,4 +1,19 @@
+import React from "react";
+import { Link, useSearchParams } from "react-router-dom";
+
 function VerifyEmailPage() {
+	// Tenemos que comprobar los parametros de la url
+	// En un useEffect comprobamos si el token es valido, y si lo es, cambiamos el estado de isEmailVerified
+	// http://localhost:5173/verify-email?verifyToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Impvc2UuZGVsZ2FkbzJAbGl2ZS51LXRhZC5jb20iLCJpYXQiOjE3MDk3NzYzMDgsImV4cCI6MTcwOTgxMjMwOH0.3cN5X75U7-z7VnimzXn9tH9oyb-RqrT4U2D8NN-qcQc
+	const [searchParams] = useSearchParams();
+	const verifyToken = searchParams.get("verifyToken");
+	console.log(verifyToken);
+
+	//
+	useEffect(() => {
+		console.log(params);
+	}, [params]);
+
 	return (
 		<>
 			<div className="text-center grid min-h-full place-items-center px-6 my-16 py-32 sm:py-32 lg:px-8">
