@@ -1,14 +1,15 @@
 import { useState, useEffect }  from "react";
 import { useRequests } from "../context/RequestsContext";
 import RequestCard from "../components/RequestCard";
-import { getRequests } from "../api/requests";
+
+import { statusEnum } from "../../../backend/src/config/tags";
 
 function DashboardPage() {
-    const { requests, getRequestsData, requestState } = useRequests();
+    const { requests, getRequestsByStatusData, requestState } = useRequests();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        getRequestsData().then(() => setLoading(false));
+        getRequestsByStatusData(statusEnum.PENDING).then(() => setLoading(false));
         console.log(requests);
     }, [requestState]);
 
@@ -18,7 +19,7 @@ function DashboardPage() {
 
     return (
         <>
-            <div className="container mx-auto px-4">
+            {/* <div className="container mx-auto px-4">
                 <div className="flex justify-center mt-8">
                     <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-4">
                         Accepted
@@ -30,7 +31,7 @@ function DashboardPage() {
                         Pending
                     </button>
                 </div>
-            </div>
+            </div> */}
 
             <h1>Estas serían las peticiones más destacadas</h1>
             {loading ? (

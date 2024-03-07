@@ -51,6 +51,7 @@ export const RequestsProvider = ({ children }) => {
 	const getRequestsByStatusData = async (status) => {
 		try {
 			const res = await getRequestsByStatus(status);
+            console.log(res.data)
 			setRequests(res.data);
 		} catch (error) {
 			console.log(error);
