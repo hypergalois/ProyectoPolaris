@@ -488,7 +488,7 @@ const ProjectForm = () => {
 				<div className="mt-6 md:col-span-2 w-full">
 					<button
 						type="submit"
-						className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+						className="w-full bg-[#2d2d2d] hover:bg-[#3f3f3f] text-white font-bold py-3 px-6 rounded-lg shadow-lg focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
 					>
 						Enviar
 					</button>

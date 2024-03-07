@@ -1,5 +1,5 @@
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon, ArrowRightEndOnRectangleIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon, ArrowRightEndOnRectangleIcon, PlusIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Fragment } from "react";
 
 import { useAuth } from "../context/AuthContext";
@@ -20,17 +20,17 @@ function NavBar() {
 
 	//console.log("NAVBARAUTH -> ", userRole)
 
-	let navigation = [{ name: "Projects", href: "/home", current: false }];
+	let navigation = [{ name: "Proyectos", href: "/home", current: false }];
 
 	if (userRole === "ADMIN") {
 		navigation = [
-			{ name: "Projects", href: "/home", current: false },
+			{ name: "Proyectos", href: "/home", current: false },
 			{ name: "Dashboard", href: "/dashboard", current: false },
 		];
 	}
 
 	return (
-		<Disclosure as="nav" className="bg-[#6a6767]">
+		<Disclosure as="nav" className="bg-[#2d2d2d]">
 			{({ open }) => (
 				<>
 					<div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -50,7 +50,9 @@ function NavBar() {
 											<Link
 												to={item.href}
 												key={item.name}
-												className={`${item.current ? "bg-gray-900 text-white" : "text-gray-100 hover:bg-gray-700 hover:text-white"} px-3 py-2 rounded-md text-sm font-medium`}
+												className={`${
+													item.current ? "bg-gray-500 text-white" : "bg-gray-700 text-gray-100 hover:bg-gray-500 hover:text-white"
+												} px-3 py-2 rounded-md text-sm font-medium`}
 											>
 												{item.name}
 											</Link>
@@ -59,6 +61,10 @@ function NavBar() {
 								</div>
 							</div>
 							<div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+								<Link to="/projects" className="inline-flex items-center bg-blue-600 px-4 py-2 mr-2 rounded-full text-white hover:bg-blue-400 focus:outline-none">
+									<MagnifyingGlassIcon className="h-6 w-5" aria-hidden="true" />
+								</Link>
+
 								<Link to="/projects/new" className="inline-flex items-center bg-blue-600 px-4 py-2 mr-2 rounded-full text-white hover:bg-blue-400 focus:outline-none">
 									Nuevo Proyecto
 									<PlusIcon className="ml-2 h-5 w-5" aria-hidden="true" />
