@@ -3,7 +3,7 @@ import { useUser } from "../context/UserContext";
 import { useEffect } from "react";
 
 const ProfileDetails = ({ project }) => {
-	const { profil, getProfile, errors: profileErrors } = useUser();
+	const { profile, getProfile, errors: profileErrors } = useUser();
 
 	useEffect(() => {
 		getProfile();
@@ -12,7 +12,7 @@ const ProfileDetails = ({ project }) => {
 	return (
 		<div className="max-w-sm rounded overflow-hidden shadow-lg">
 			<h1>Details</h1>
-			{Object.entries(profil).map(([key, value]) => (
+			{Object.entries(profile).map(([key, value]) => (
 				<div key={key}>
 					<strong>{key}:</strong> {value}
 				</div>
