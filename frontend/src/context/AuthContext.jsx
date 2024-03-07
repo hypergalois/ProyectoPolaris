@@ -20,6 +20,7 @@ export const AuthProvider = ({ children }) => {
 	// const [isResetTokenValid, setIsResetTokenValid] = useState(false);
 	const [isResetTokenSent, setIsResetTokenSent] = useState(false);
 	const userToken = useRef(null);
+	const [isEmailVerified, setIsEmailVerified] = useState(false);
 
 	const register = async (user) => {
 		try {
@@ -157,6 +158,7 @@ export const AuthProvider = ({ children }) => {
 				errors,
 				isAuthenticated,
 				isResetTokenSent,
+				isEmailVerified,
 				userToken: userToken.current,
 			}}
 		>

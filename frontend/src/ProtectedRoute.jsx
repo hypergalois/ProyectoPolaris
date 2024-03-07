@@ -6,14 +6,18 @@ import NavBarAuth from "./components/NavBarAuth";
 import NavBarNoAuth from "./components/NavBarNoAuth";
 
 function ProtectedRoute() {
-	const { loading, isAuthenticated } = useAuth();
+	const { loading, isAuthenticated, isEmailVerified } = useAuth();
 
 	if (loading) {
-		return <p>Loading...</p>;
+		return <h1>Loading...</h1>;
 	}
 
 	if (!loading && !isAuthenticated) {
 		return <Navigate to="/" replace />;
+	}
+
+	if (!loading && isAuthenticated && !isEmailVerified) {
+		return <Navigate to="/verify-email" replace />;
 	}
 
 	return (
