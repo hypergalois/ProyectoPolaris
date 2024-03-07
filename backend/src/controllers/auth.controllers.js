@@ -161,6 +161,8 @@ export const register = async (req, res) => {
 			},
 		});
 
+		if (!newUser) return res.status(500).json({ message: "Error creating user." });
+
 		// Una vez creado el usuario, se le manda un email para verificar su cuenta
 		const isHandled = await handleVerifyEmail(req, res);
 		if (!isHandled) return res.status(500).json({ message: "Error handling verify email." });
