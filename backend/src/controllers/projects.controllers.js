@@ -88,8 +88,12 @@ export const createProject = async (req, res) => {
         req.body.keywords = JSON.parse(req.body.keywords);
         req.body.awards = JSON.parse(req.body.awards);
 
-        const { degreeId } = req.body;
-        
+        const { degreeId, impliedStudentsIDs, impliedTeachersIDs } = req.body;
+        delete req.body.degreeId;
+        delete req.body.impliedStudentsIDs;
+        delete req.body.impliedTeachersIDs;
+        delete req.body.awards;
+
         if (req.role === rolesEnum.USER) {
             const newProject = await prisma.project.create({
                 data: {
@@ -98,6 +102,12 @@ export const createProject = async (req, res) => {
                         connect: {
                           id: degreeId, // Reemplaza esto con el ID real del grado
                         },
+                    },
+                    impliedStudents: {
+                        connect: impliedStudentsIDs.map((id) => ({ id })),
+                    },
+                    impliedTeachers: {
+                        connect: impliedTeachersIDs.map((id) => ({ id })),
                     },
                     uploadedContent: projectfiles,
                     status: statusEnum.PENDING,
