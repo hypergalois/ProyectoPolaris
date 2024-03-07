@@ -4,7 +4,7 @@ import prisma from "../config/prisma.client.js";
 
 import { createAccessToken } from "../libs/jwt.js";
 import { rolesEnum, academicRoleEnum } from "../config/tags.js";
-import { handleForgotPassword } from "../services/auth.services.js";
+import { handleForgotPassword, handleVerifyEmail } from "../services/auth.services.js";
 
 const secret = process.env.TOKEN_SECRET;
 const BCRYPT_SALT_ROUNDS = parseInt(process.env.BCRYPT_SALT_ROUNDS);
@@ -160,9 +160,48 @@ export const register = async (req, res) => {
 			},
 		});
 
+		// Una vez creado el usuario, se le manda un email para verificar su cuenta
+		const isHandled = await handleVerifyEmail(req, res);
+		if (!isHandled) return res.status(500).json({ message: "Error handling verify email." });
+
+		return res.status(200).json({ message: "User registered successfully.", userExists: false });
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ message: error.message });
+	}
+};
+
+export const verifyEmail = async (req, res) => {
+	console.log(req.body);
+
+	// Aqui el token ya ha sido verificado y solo tenemos que cambiar el campo de emailVerified y settear la cookie
+
+	const { email } = req.body;
+
+	try {
+		const userFound = await prisma.user.findUnique({
+			where: {
+				email,
+			},
+		});
+
+		if (!userFound) return res.status(404).json({ message: "User not found.", userExists: false });
+
+		const updatedUser = await prisma.user.update({
+			where: {
+				email,
+			},
+			data: {
+				emailVerified: true,
+			},
+		});
+
+		if (!updatedUser) return res.status(500).json({ message: "Error updating user." });
+
+		// Crear el token de acceso
 		const accessToken = await createAccessToken({
-			id: newUser.id,
-			role: newUser.role,
+			id: userFound.id,
+			role: userFound.role,
 		});
 
 		res.cookie("token", accessToken, {
@@ -170,14 +209,8 @@ export const register = async (req, res) => {
 			secure: true,
 		});
 
-		return res.status(200).json({
-			username: newUser.username,
-			email: newUser.email,
-		});
-	} catch (error) {
-		console.log(error);
-		return res.status(500).json({ message: error.message });
-	}
+		return res.status(200).json({ message: "Email verified successfully.", userExists: true });
+	} catch (error) {}
 };
 
 export const login = async (req, res) => {

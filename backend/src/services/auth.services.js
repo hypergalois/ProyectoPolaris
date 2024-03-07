@@ -44,3 +44,24 @@ export const handleForgotPassword = async (req, res, email) => {
 		return false;
 	}
 };
+
+export const handleVerifyEmail = async (req, res, email) => {
+	try {
+		// Viene del middleware del token
+		const { email } = req.body;
+		console.log(email);
+
+		const userFound = await prisma.user.findUnique({
+			where: {
+				email,
+			},
+		});
+
+		// Ya hemos comprobado que el usuario existe antes
+		// Creamos un token de reset
+	} catch (error) {
+		console.log(error);
+		// return res.status(500).json({ message: error.message });
+		return false;
+	}
+};
