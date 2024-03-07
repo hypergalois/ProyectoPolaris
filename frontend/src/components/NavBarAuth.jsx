@@ -1,5 +1,5 @@
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon, ArrowRightEndOnRectangleIcon, PlusIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon, ArrowRightEndOnRectangleIcon, PlusIcon, MagnifyingGlassIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import { Fragment } from "react";
 
 import { useAuth } from "../context/AuthContext";
@@ -44,13 +44,7 @@ function NavBar() {
 								<div className="hidden sm:ml-6 sm:block">
 									<div className="flex space-x-4">
 										{navigation.map((item) => (
-											<Link
-												to={item.href}
-												key={item.name}
-												className={`${
-													item.current ? "bg-gray-500 text-white" : "bg-gray-700 text-gray-100 hover:bg-gray-500 hover:text-white"
-												} px-3 py-2 rounded-md text-sm font-medium`}
-											>
+											<Link to={item.href} key={item.name} className={`${item.current ? "bg-gray-500 text-white" : "bg-gray-700 text-gray-100 hover:bg-gray-500 hover:text-white"} px-3 py-2 rounded-md text-sm font-medium`}>
 												{item.name}
 											</Link>
 										))}
@@ -69,7 +63,7 @@ function NavBar() {
 
 								<Menu as="div" className="ml-3 relative">
 									<Menu.Button className="bg-gray-800 p-1 rounded-full text-gray-100 hover:text-white focus:outline-none">
-										<ArrowRightEndOnRectangleIcon className="h-6 w-6" aria-hidden="true" />
+										<UserCircleIcon className="h-6 w-6" aria-hidden="true" />
 									</Menu.Button>
 									<Transition
 										as={Fragment}
