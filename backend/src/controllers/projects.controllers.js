@@ -88,10 +88,17 @@ export const createProject = async (req, res) => {
         req.body.keywords = JSON.parse(req.body.keywords);
         req.body.awards = JSON.parse(req.body.awards);
 
+        const { degreeId } = req.body;
+        
         if (req.role === rolesEnum.USER) {
             const newProject = await prisma.project.create({
                 data: {
                     ...req.body,
+                    degree: {
+                        connect: {
+                          id: degreeId, // Reemplaza esto con el ID real del grado
+                        },
+                    },
                     uploadedContent: projectfiles,
                     status: statusEnum.PENDING,
                     thumbnail: thumbnail,
