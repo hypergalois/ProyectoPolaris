@@ -10,7 +10,7 @@ function DashboardPage() {
 
     useEffect(() => {
         getRequestsByStatusData(statusEnum.PENDING).then(() => setLoading(false));
-        console.log(requests);
+        //console.log(requests);
     }, [requestState]);
 
 	if (requests.length === 0) {
@@ -33,7 +33,6 @@ function DashboardPage() {
                 </div>
             </div> */}
 
-			<h1>Estas serían las peticiones más destacadas</h1>
 			{loading ? (
 				<p>Cargando peticiones...</p>
 			) : (
