@@ -18,11 +18,11 @@ function ProtectedRoute() {
 	}
 
 	// TODO: ESTO NO FUNCIONA Y HACE QUE SE SE VEA EN BLANCO
-	// if (!loading && isAuthenticated && !isEmailVerified) {
-	// 	// console.log(loading, isAuthenticated, isEmailVerified);
-	// 	console.log("Redirecting to verify email");
-	// 	return <Navigate to="/home" replace />;
-	// }
+	if (!loading && isAuthenticated && !isEmailVerified) {
+		// console.log(loading, isAuthenticated, isEmailVerified);
+		console.log("Redirecting to verify email");
+		return <Navigate to="/verify-email" replace />;
+	}
 
 	return (
 		<>
