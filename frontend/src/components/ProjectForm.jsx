@@ -13,11 +13,41 @@ const courseOptions = [
 	{ value: "4", label: "4º" },
 	{ value: "5", label: "5º" },
 ];
+
 const letterOptions = [
 	{ value: "A", label: "A" },
 	{ value: "B", label: "B" },
 	{ value: "C", label: "C" },
 ];
+
+function verifyPropertiesProject(proyecto) {
+	const expectedProperties = [
+		"id",
+		"status",
+		"title",
+		"description",
+		"keywords",
+		"awardsId",
+		"personalProject",
+		"academicCourse",
+		"course",
+		"letter",
+		"thumbnail",
+		"externalLinks",
+		"uploadedContent",
+		"subject",
+		"areaId",
+		"degreeId",
+		"impliedStudentsIDs",
+		"impliedProfessorsIDs",
+		"createdAt",
+		"updatedAt",
+	];
+
+	const allPropertiesPresent = expectedProperties.every((property) => property in proyecto);
+
+	return allPropertiesPresent;
+}
 
 const ProjectForm = () => {
 	const {
@@ -29,11 +59,13 @@ const ProjectForm = () => {
 		getValues,
 	} = useForm();
 
-	const { requestedProject, getProject, createProject, updateProject, errors: projectsContextErrors } = useProjects();
+	const [currentProject, setCurrentProject] = useState({});
+
+	const { getProject, createProject, updateProject, errors: projectsContextErrors } = useProjects();
 
 	const navigate = useNavigate();
 
-	const { id: projectId } = useParams();
+	const params = useParams();
 
 	const { degrees, getDegrees, errors: areasContextErrors } = useAreas();
 
@@ -76,7 +108,7 @@ const ProjectForm = () => {
 		update: updateAward,
 	} = useFieldArray({
 		control,
-		name: "obteinedAwards",
+		name: "obtainedAwards",
 	});
 
 	const degreeOptions = useRef([]);
@@ -86,14 +118,24 @@ const ProjectForm = () => {
 
 	// No se como hacer que solo salga un estudiante
 	useEffect(() => {
-		console.log("useEffect");
-		console.log(projectId);
+		// console.log("useEffect");
+		console.log("Params", params);
 		getDegrees();
-		if (projectId) getProject(projectId);
+
+		async function loadProject() {
+			const projectToEdit = await getProject(params.id);
+			setCurrentProject(projectToEdit);
+		}
+
+		if (params.id) {
+			loadProject();
+		}
 
 		if (studentFields.length === 0) {
 			updateStudent(0, "");
 		}
+
+		console.log("CurrentProject", currentProject);
 	}, []);
 
 	useEffect(() => {
@@ -111,42 +153,46 @@ const ProjectForm = () => {
 	}, [degrees]);
 
 	useEffect(() => {
-		if (degreeOptions.current.length > 0 && requestedProject) {
-			console.log(requestedProject);
-			setValue("title", requestedProject.title);
-			setValue("description", requestedProject.description);
-			setValue("subject", requestedProject.subject);
-			setValue("academicCourse", requestedProject.academicCourse);
+		if (degreeOptions.current.length > 0 && verifyPropertiesProject(currentProject)) {
+			console.log(currentProject);
+			console.log(degreeOptions);
+			setValue("title", currentProject.title);
+			setValue("description", currentProject.description);
+			setValue("subject", currentProject.subject);
+			setValue("academicCourse", currentProject.academicCourse);
 
-			setValue("course", requestedProject.course);
-			setSelectedCourseOption(courseOptions.filter(({ value }) => value === requestedProject.course));
-			setValue("letter", requestedProject.letter);
-			setSelectedLetterOption(letterOptions.filter(({ value }) => value === requestedProject.letter));
-			setValue("degree", requestedProject.degreeId);
-			setSelectedDegreeOption(degreeOptions.current.filter(({ value }) => value === requestedProject.degreeId));
+			setValue("course", currentProject.course);
+			setSelectedCourseOption(courseOptions.filter(({ value }) => value === currentProject.course));
+			setValue("letter", currentProject.letter);
+			setSelectedLetterOption(letterOptions.filter(({ value }) => value === currentProject.letter));
+			setValue("degree", currentProject.degreeId);
+			setSelectedDegreeOption(degreeOptions.current.filter(({ value }) => value === currentProject.degreeId));
 
-			requestedProject.externalLinks.map((value, index) => {
+			currentProject.externalLinks.map((value, index) => {
 				updateLink(index, value);
 				setValue(`externalLinks.${index}`, value);
 			});
-			requestedProject.impliedStudentsIDs.map((value, index) => {
+
+			currentProject.impliedStudentsIDs.map((value, index) => {
 				updateStudent(index, value);
 				setValue(`impliedStudents.${index}`, value);
 			});
-			requestedProject.impliedProfessorsIDs.map((value, index) => {
+
+			currentProject.impliedProfessorsIDs.map((value, index) => {
 				updateTeacher(index, value);
 				setValue(`impliedTeachers.${index}`, value);
 			});
-			requestedProject.awardsId.map((value, index) => {
+
+			currentProject.awardsId.map((value, index) => {
 				updateAward(index, value);
 				setValue(`awards.${index}`, value);
 			});
 		}
-	}, [degreeOptions, requestedProject]);
+	}, [degreeOptions, currentProject]);
 
 	useEffect(() => {
 		setValue("files", uploadedFiles);
-		console.log(uploadedFiles);
+		// console.log(uploadedFiles);
 	}, [uploadedFiles]);
 
 	const onSubmit = async (data) => {
@@ -186,8 +232,8 @@ const ProjectForm = () => {
 
 		console.log(data);
 
-		if (projectId) {
-			updateProject(projectId, formData);
+		if (params.id) {
+			updateProject(params.id, formData);
 		} else {
 			createProject(formData);
 		}
