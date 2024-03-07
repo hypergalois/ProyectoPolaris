@@ -30,3 +30,12 @@ export function createResetPasswordToken(payload) {
 		});
 	});
 }
+
+export function createVerifyEmailToken(payload) {
+	return new Promise((resolve, reject) => {
+		jwt.sign(payload, secret, { expiresIn: 36000 }, (err, token) => {
+			if (err) reject(err);
+			resolve(token);
+		});
+	});
+}

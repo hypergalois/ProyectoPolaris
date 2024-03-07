@@ -5,7 +5,7 @@ dotenv.config();
 
 const secret = process.env.TOKEN_SECRET;
 
-export const resetTokenValid = async (req, res, next) => {
+export const resetPasswordTokenValid = async (req, res, next) => {
 	console.log(req.body);
 	const { resetToken } = req.body;
 	console.log(resetToken);

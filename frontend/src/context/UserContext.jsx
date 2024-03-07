@@ -17,6 +17,7 @@ export const UserProvider = ({ children }) => {
 	const [userRole, setUserRole] = useState(null);
 	const [profile, setProfile] = useState([]);
 	const [errors, setErrors] = useState([]);
+	const [isEmailVerified, setIsEmailVerified] = useState(false);
 
 	const getExistEmail = async (email) => {
 		try {

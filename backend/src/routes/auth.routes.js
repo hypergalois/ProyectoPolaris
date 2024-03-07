@@ -4,7 +4,9 @@ import { register, login, logout, profile, verifyToken, checkEmailRegister, forg
 import { registerSchema, loginSchema } from "../schemas/auth.schema.js";
 import { authRequired } from "../middlewares/authRequired.middleware.js";
 import { validateSchema } from "../middlewares/validator.middleware.js";
-import { resetTokenValid } from "../middlewares/resetTokenValid.middleware.js";
+import { resetPasswordTokenValid } from "../middlewares/resetPasswordTokenValid.middleware.js";
+import { verifyEmailTokenValid } from "../middlewares/verifyEmailTokenValid.middleware.js";
+import { verifyEmail } from "../controllers/auth.controllers.js";
 
 const router = Router();
 
@@ -382,6 +384,8 @@ router.get("/getUserRole", authRequired, getUserRole);
 
 router.post("/forgotPassword", forgotPassword);
 
-router.post("/resetPassword", resetTokenValid, resetPassword);
+router.post("/resetPassword", resetPasswordTokenValid, resetPassword);
+
+router.post("/verifyEmail", verifyEmailTokenValid, verifyEmail);
 
 export default router;
