@@ -8,11 +8,19 @@
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "serve": "serve dist"
+    "serve": "serve dist",
+    "sourcemaps": "npx @sentry/wizard@latest -i sourcemaps"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.1",
+    "@opentelemetry/api": "^1.8.0",
+    "@opentelemetry/auto-instrumentations-web": "^0.37.0",
+    "@opentelemetry/context-zone": "^1.22.0",
+    "@opentelemetry/resources": "^1.22.0",
+    "@opentelemetry/sdk-trace-web": "^1.22.0",
+    "@opentelemetry/semantic-conventions": "^1.22.0",
+    "@sentry/react": "^7.105.0",
     "@tailwindcss/forms": "^0.5.7",
     "axios": "^1.6.7",
     "dayjs": "^1.11.10",

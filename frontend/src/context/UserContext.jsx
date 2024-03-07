@@ -14,14 +14,15 @@ export const useUser = () => {
 
 export const UserProvider = ({ children }) => {
 	const [existEmail, setExistEmail] = useState(false);
-    const [userRole, setUserRole] = useState(null);
-	const [profil, setProfile] = useState([]);
+	const [userRole, setUserRole] = useState(null);
+	const [profile, setProfile] = useState([]);
 	const [errors, setErrors] = useState([]);
+	const [isEmailVerified, setIsEmailVerified] = useState(false);
 
 	const getExistEmail = async (email) => {
 		try {
 			const response = await checkEmailRequest(email);
-			setExistEmail(!response.data.userExists)
+			setExistEmail(!response.data.userExists);
 		} catch (error) {
 			if (Array.isArray(error.response.data)) {
 				setErrors(error.response.data);
@@ -44,10 +45,10 @@ export const UserProvider = ({ children }) => {
 		}
 	};
 
-    const getUserRole = async () => {
-        try {
-            const response = await getUserRoleRequest();
-            setUserRole(response.data.role);
+	const getUserRole = async () => {
+		try {
+			const response = await getUserRoleRequest();
+			setUserRole(response.data.role);
 		} catch (error) {
 			if (Array.isArray(error.response.data)) {
 				setErrors(error.response.data);
@@ -55,7 +56,7 @@ export const UserProvider = ({ children }) => {
 				setErrors([error.response.data]);
 			}
 		}
-    };
+	};
 
 	useEffect(() => {
 		if (errors.length > 0) {
@@ -66,5 +67,5 @@ export const UserProvider = ({ children }) => {
 		}
 	}, [errors]);
 
-	return <UserContext.Provider value={{ existEmail, getExistEmail, profil, userRole, getUserRole, getProfile, errors }}>{children}</UserContext.Provider>;
+	return <UserContext.Provider value={{ existEmail, getExistEmail, profile, userRole, getUserRole, getProfile, errors }}>{children}</UserContext.Provider>;
 };

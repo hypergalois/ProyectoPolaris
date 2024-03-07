@@ -17,6 +17,8 @@ import ProjectsFormPage from "./pages/ProjectsFormPage";
 import ProjectsHomePage from "./pages/ProjectsHomePage";
 import ProjectsDetailPage from "./pages/ProjectsDetailPage";
 
+import VerifyEmailPage from "./pages/VerifyEmailPage";
+
 import SettingsPage from "./pages/SettingsPage";
 
 import NotFoundPage from "./pages/NotFoundPage";
@@ -53,6 +55,8 @@ function App() {
 										{/* Dejo la pagina de añadir proyectos fuera de la ruta protegida para poder probarla */}
 										{/* <Route path="/projects/new" element={<ProjectsFormPage />} /> */}
 										<Route element={<ProtectedRoute />}>
+											{/* Pagina de verificacion de email */}
+											<Route path="/verify-email" element={<VerifyEmailPage />} />
 											{/* Pagina home pero que salen proyectos y noticias una vez estas logeado */}
 											<Route path="/home" element={<HomePage />} />
 											{/* Pagina dashboard donde se veran las peticiones */}

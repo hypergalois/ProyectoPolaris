@@ -6,15 +6,23 @@ import NavBarAuth from "./components/NavBarAuth";
 import NavBarNoAuth from "./components/NavBarNoAuth";
 
 function ProtectedRoute() {
-	const { loading, isAuthenticated } = useAuth();
+	const { loading, isAuthenticated, isEmailVerified } = useAuth();
 
 	if (loading) {
-		return <p>Loading...</p>;
+		return <h1>Loading...</h1>;
 	}
 
 	if (!loading && !isAuthenticated) {
+		console.log("Redirecting to login");
 		return <Navigate to="/" replace />;
 	}
+
+	// TODO: ESTO NO FUNCIONA Y HACE QUE SE SE VEA EN BLANCO
+	// if (!loading && isAuthenticated && !isEmailVerified) {
+	// 	// console.log(loading, isAuthenticated, isEmailVerified);
+	// 	console.log("Redirecting to verify email");
+	// 	return <Navigate to="/home" replace />;
+	// }
 
 	return (
 		<>

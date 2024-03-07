@@ -5,7 +5,7 @@ function ProjectDetail() {
 	return (
 		<>
 			<h1>ProjectDetail</h1>
-			<ProjectDetails/>
+			<ProjectDetails />
 		</>
 	);
 }

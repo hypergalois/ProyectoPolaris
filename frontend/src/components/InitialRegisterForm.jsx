@@ -17,7 +17,7 @@ const InitialRegisterForm = () => {
 	const navigate = useNavigate();
 
 	const getExistEmailRequest = async (email) => {
-		getExistEmail({'email': email})
+		getExistEmail({ email: email });
 		return await existEmail;
 	};
 
@@ -55,11 +55,11 @@ const InitialRegisterForm = () => {
 						required: true,
 						pattern: {
 							value: /^[a-zA-Z0-9._%+-]+@(u-tad\.com|live\.u-tad\.com)$/i,
-							message: 'El correo tiene que ser de la Utad',
+							message: "El correo tiene que ser de la Utad",
 						},
 						validate: {
-							checkUrl: async () => await getExistEmailRequest(getValues('email')) || 'El correo ya esta en uso', 
-						}
+							checkUrl: async () => (await getExistEmailRequest(getValues("email"))) || "El correo ya esta en uso",
+						},
 					})}
 					placeholder="Correo de la Utad"
 				/>
@@ -69,7 +69,7 @@ const InitialRegisterForm = () => {
 				<p className="text-xs">Creando una cuenta aceptas los Términos de Uso y la Política de Privacidad.</p>
 			</div>
 			<div className="mb-4">
-				<button type="submit" className="w-7/12 h-12  rounded-xl bg-[#333333] text-white font-semibold">
+				<button type="submit" className="w-7/12 h-12 rounded-xl bg-[#2d2d2d] hover:bg-[#3f3f3f] text-white font-semibold">
 					Registrarse
 				</button>
 			</div>

@@ -259,7 +259,7 @@ const SecondaryRegisterForm = () => {
 					{errors.grade && <p className="mb-2">Hace falta un cargo</p>}
 				</div>
 				<div className="mb-4">
-					<button className="w-full p-4 rounded-xl bg-[#333333] text-white" type="submit">
+					<button className="w-full p-4 rounded-xl bg-[#2d2d2d] hover:bg-[#3f3f3f] text-white" type="submit">
 						Registrarse
 					</button>
 				</div>

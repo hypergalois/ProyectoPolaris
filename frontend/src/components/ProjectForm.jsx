@@ -13,11 +13,41 @@ const courseOptions = [
 	{ value: "4", label: "4º" },
 	{ value: "5", label: "5º" },
 ];
+
 const letterOptions = [
 	{ value: "A", label: "A" },
 	{ value: "B", label: "B" },
 	{ value: "C", label: "C" },
 ];
+
+function verifyPropertiesProject(proyecto) {
+	const expectedProperties = [
+		"id",
+		"status",
+		"title",
+		"description",
+		"keywords",
+		"awardsId",
+		"personalProject",
+		"academicCourse",
+		"course",
+		"letter",
+		"thumbnail",
+		"externalLinks",
+		"uploadedContent",
+		"subject",
+		"areaId",
+		"degreeId",
+		"impliedStudentsIDs",
+		"impliedProfessorsIDs",
+		"createdAt",
+		"updatedAt",
+	];
+
+	const allPropertiesPresent = expectedProperties.every((property) => property in proyecto);
+
+	return allPropertiesPresent;
+}
 
 const ProjectForm = () => {
 	const {
@@ -26,14 +56,16 @@ const ProjectForm = () => {
 		handleSubmit,
 		formState: { errors },
 		setValue,
-		getValues
+		getValues,
 	} = useForm();
 
-	const { requestedProject, getProject, createProject, updateProject, errors: projectsContextErrors } = useProjects();
+	const [currentProject, setCurrentProject] = useState({});
+
+	const { getProject, createProject, updateProject, errors: projectsContextErrors } = useProjects();
 
 	const navigate = useNavigate();
 
-	const { id: projectId } = useParams();
+	const params = useParams();
 
 	const { degrees, getDegrees, errors: areasContextErrors } = useAreas();
 
@@ -43,7 +75,7 @@ const ProjectForm = () => {
 		fields: linkFields,
 		append: appendLink,
 		remove: removeLink,
-		update: updateLink
+		update: updateLink,
 	} = useFieldArray({
 		control,
 		name: "links",
@@ -53,7 +85,7 @@ const ProjectForm = () => {
 		fields: studentFields,
 		append: appendStudent,
 		remove: removeStudent,
-		update: updateStudent
+		update: updateStudent,
 	} = useFieldArray({
 		control,
 		name: "students",
@@ -63,7 +95,7 @@ const ProjectForm = () => {
 		fields: teacherFields,
 		append: appendTeacher,
 		remove: removeTeacher,
-		update: updateTeacher
+		update: updateTeacher,
 	} = useFieldArray({
 		control,
 		name: "teachers",
@@ -73,10 +105,10 @@ const ProjectForm = () => {
 		fields: awardFields,
 		append: appendAward,
 		remove: removeAward,
-		update: updateAward
+		update: updateAward,
 	} = useFieldArray({
 		control,
-		name: "obteinedAwards",
+		name: "obtainedAwards",
 	});
 
 	const degreeOptions = useRef([]);
@@ -86,14 +118,24 @@ const ProjectForm = () => {
 
 	// No se como hacer que solo salga un estudiante
 	useEffect(() => {
-		console.log("useEffect");
-		console.log(projectId);
+		// console.log("useEffect");
+		console.log("Params", params);
 		getDegrees();
-		if(projectId) getProject(projectId);
+
+		async function loadProject() {
+			const projectToEdit = await getProject(params.id);
+			setCurrentProject(projectToEdit);
+		}
+
+		if (params.id) {
+			loadProject();
+		}
 
 		if (studentFields.length === 0) {
 			updateStudent(0, "");
 		}
+
+		console.log("CurrentProject", currentProject);
 	}, []);
 
 	useEffect(() => {
@@ -111,42 +153,46 @@ const ProjectForm = () => {
 	}, [degrees]);
 
 	useEffect(() => {
-		if(degreeOptions.current.length > 0 && requestedProject) {
-			console.log(requestedProject);
-			setValue("title", requestedProject.title);
-			setValue("description", requestedProject.description);
-			setValue("subject", requestedProject.subject);
-			setValue("academicCourse", requestedProject.academicCourse);
+		if (degreeOptions.current.length > 0 && verifyPropertiesProject(currentProject)) {
+			console.log(currentProject);
+			console.log(degreeOptions);
+			setValue("title", currentProject.title);
+			setValue("description", currentProject.description);
+			setValue("subject", currentProject.subject);
+			setValue("academicCourse", currentProject.academicCourse);
 
-			setValue("course", requestedProject.course);
-			setSelectedCourseOption(courseOptions.filter(({value}) => value === requestedProject.course));
-			setValue("letter", requestedProject.letter);
-			setSelectedLetterOption(letterOptions.filter(({value}) => value === requestedProject.letter));
-			setValue("degree", requestedProject.degreeId);
-			setSelectedDegreeOption(degreeOptions.current.filter(({value}) => value === requestedProject.degreeId));
+			setValue("course", currentProject.course);
+			setSelectedCourseOption(courseOptions.filter(({ value }) => value === currentProject.course));
+			setValue("letter", currentProject.letter);
+			setSelectedLetterOption(letterOptions.filter(({ value }) => value === currentProject.letter));
+			setValue("degree", currentProject.degreeId);
+			setSelectedDegreeOption(degreeOptions.current.filter(({ value }) => value === currentProject.degreeId));
 
-			requestedProject.externalLinks.map((value, index) => {
+			currentProject.externalLinks.map((value, index) => {
 				updateLink(index, value);
 				setValue(`externalLinks.${index}`, value);
 			});
-			requestedProject.impliedStudentsIDs.map((value, index) => {
+
+			currentProject.impliedStudentsIDs.map((value, index) => {
 				updateStudent(index, value);
 				setValue(`impliedStudents.${index}`, value);
 			});
-			requestedProject.impliedProfessorsIDs.map((value, index) => {
+
+			currentProject.impliedProfessorsIDs.map((value, index) => {
 				updateTeacher(index, value);
 				setValue(`impliedTeachers.${index}`, value);
 			});
-			requestedProject.awardsId.map((value, index) => {
+
+			currentProject.awardsId.map((value, index) => {
 				updateAward(index, value);
 				setValue(`awards.${index}`, value);
 			});
 		}
-	}, [degreeOptions, requestedProject]);
+	}, [degreeOptions, currentProject]);
 
 	useEffect(() => {
 		setValue("files", uploadedFiles);
-		console.log(uploadedFiles);
+		// console.log(uploadedFiles);
 	}, [uploadedFiles]);
 
 	const onSubmit = async (data) => {
@@ -164,29 +210,19 @@ const ProjectForm = () => {
 
 		// Agrega los datos de tipo array del proyecto a FormData
 
-		const externalLinks = data.externalLinks ?
-		data.externalLinks.filter((value) => value.trim().length !== 0) :
-		[];
+		const externalLinks = data.externalLinks ? data.externalLinks.filter((value) => value.trim().length !== 0) : [];
 		formData.append("externalLinks", JSON.stringify(externalLinks));
 
-		const impliedStudents = data.impliedStudents ?
-		data.impliedStudents.filter((value) => value.trim().length !== 0) :
-		[];
+		const impliedStudents = data.impliedStudents ? data.impliedStudents.filter((value) => value.trim().length !== 0) : [];
 		formData.append("impliedStudentsIDs", JSON.stringify(impliedStudents));
 
-		const impliedTeachers = data.impliedTeachers ?
-		data.impliedTeachers.filter((value) => value.trim().length !== 0) :
-		[];
+		const impliedTeachers = data.impliedTeachers ? data.impliedTeachers.filter((value) => value.trim().length !== 0) : [];
 		formData.append("impliedTeachersIDs", JSON.stringify(impliedTeachers));
 
-		const awards = data.awards ?
-		data.awards.filter((value) => value.trim().length !== 0) :
-		[];
+		const awards = data.awards ? data.awards.filter((value) => value.trim().length !== 0) : [];
 		formData.append("awards", JSON.stringify(awards));
 
-		const keywords = data.keywords ?
-		data.keywords.filter((value) => value.trim().length !== 0) :
-		[];
+		const keywords = data.keywords ? data.keywords.filter((value) => value.trim().length !== 0) : [];
 		formData.append("keywords", JSON.stringify(keywords));
 
 		// Agrega los archivos del proyecto a FormData
@@ -196,10 +232,9 @@ const ProjectForm = () => {
 
 		console.log(data);
 
-		if(projectId) {
-			updateProject(projectId, formData);
-		}
-		else{
+		if (params.id) {
+			updateProject(params.id, formData);
+		} else {
 			createProject(formData);
 		}
 
@@ -207,9 +242,9 @@ const ProjectForm = () => {
 	};
 
 	return (
-		<div className="flex items-center justify-center min-h-screen">
-			<form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-lg bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-				<div className="mb-4">
+		<div className="flex items-center justify-center min-h-screen my-8">
+			<form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-fit bg-white  rounded px-8 pt-6 pb-8 mb-4 grid gap-4 md:grid-cols-2">
+				<div className="mb-4 md:col-span-2">
 					<h3 className="block text-gray-700 text-sm font-bold mb-2">Título</h3>
 					<input
 						type="text"
@@ -221,7 +256,18 @@ const ProjectForm = () => {
 					/>
 				</div>
 
-				<div className="mb-4">
+				<div className="mb-4 md:col-span-2">
+					<h3 className="block text-gray-700 text-sm font-bold mb-2">Descripción del proyecto</h3>
+					<textarea
+						{...register("description", {
+							required: true,
+						})}
+						placeholder="Descripción del proyecto"
+						className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+					></textarea>
+				</div>
+
+				<div className="mb-4 md:col-span-1">
 					<h3 className="block text-gray-700 text-sm font-bold mb-2">Grado</h3>
 					<Select
 						options={degreeOptions.current}
@@ -234,33 +280,7 @@ const ProjectForm = () => {
 					/>
 				</div>
 
-				<div className="mb-4">
-					<h3 className="block text-gray-700 text-sm font-bold mb-2">Curso</h3>
-					<Select
-						options={courseOptions}
-						onChange={(selectedCourse) => {
-							setValue("course", selectedCourse.value);
-							setSelectedCourseOption(selectedCourse);
-						}}
-						value={selectedCourseOption}
-						className="w-full  border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-					/>
-				</div>
-
-				<div className="mb-4">
-					<h3 className="block text-gray-700 text-sm font-bold mb-2">Clase</h3>
-					<Select
-						options={letterOptions}
-						onChange={(selectedLetter) => {
-							setValue("letter", selectedLetter.value);
-							setSelectedLetterOption(selectedLetter);
-						}}
-						value={selectedLetterOption}
-						className="w-full  border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-					/>
-				</div>
-
-				<div className="mb-4">
+				<div className="mb-4 md:col-span-1">
 					<h3 className="block text-gray-700 text-sm font-bold mb-2">Curso académico</h3>
 					<input
 						type="text"
@@ -276,69 +296,7 @@ const ProjectForm = () => {
 					/>
 				</div>
 
-				<div className="mb-4">
-					<h3 className="block text-gray-700 text-sm font-bold mb-2">Asignatura</h3>
-					<input
-						type="text"
-						{...register("subject", {
-							required: true,
-						})}
-						placeholder="Asignatura"
-						className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-					/>
-				</div>
-
-				<div className="mb-4">
-					<h3 className="block text-gray-700 text-sm font-bold mb-2">Archivos del proyecto</h3>
-					<DropzoneComponent uploadedFiles={uploadedFiles} setUploadedFiles={setUploadedFiles} />
-				</div>
-
-				{/* <div>
-                <h3>Memoria del proyecto</h3>
-                <input
-                    type="file"
-                    {...register("projectMemory", {
-                        required : false
-                    })}
-                />
-            </div> */}
-
-				<div className="mb-4">
-					<h3 className="block text-gray-700 text-sm font-bold mb-2">Enlace a recursos externos</h3>
-					{linkFields.map((field, index) => (
-						<div key={field.id} className="flex items-center gap-2">
-							<input type="url" {...register(`externalLinks.${index}`)} placeholder="URL" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
-							<button
-								type="button"
-								onClick={() => {
-									removeLink(index);
-									setValue(`externalLinks.${index}`, "");
-								}}
-								className="ml-2 bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
-							>
-								Eliminar
-							</button>
-						</div>
-					))}
-					<div className="flex justify-center mt-4">
-						<button type="button" onClick={() => appendLink({ externalLink: "" })} className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-							Añadir recurso externo
-						</button>
-					</div>
-				</div>
-
-				<div className="mb-4">
-					<h3 className="block text-gray-700 text-sm font-bold mb-2">Descripción del proyecto</h3>
-					<textarea
-						{...register("description", {
-							required: true,
-						})}
-						placeholder="Descripción del proyecto"
-						className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-					></textarea>
-				</div>
-
-				<div className="mb-4">
+				<div className="mb-4 md:col-span-2">
 					<h3 className="block text-gray-700 text-sm font-bold mb-2">Estudiantes implicados</h3>
 					{studentFields.map((field, index) => (
 						<div key={field.id} className="flex items-center gap-2">
@@ -365,13 +323,17 @@ const ProjectForm = () => {
 						</div>
 					))}
 					<div className="flex justify-center mt-4">
-						<button type="button" onClick={() => appendStudent({ impliedStudent: "" })} className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+						<button
+							type="button"
+							onClick={() => appendStudent({ impliedStudent: "" })}
+							className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+						>
 							Añadir estudiante
 						</button>
 					</div>
 				</div>
 
-				<div className="mb-4">
+				<div className="mb-4 md:col-span-2">
 					<h3 className="block text-gray-700 text-sm font-bold mb-2">Profesores implicados</h3>
 					{teacherFields.map((field, index) => (
 						<div key={field.id} className="flex items-center gap-2">
@@ -394,17 +356,112 @@ const ProjectForm = () => {
 						</div>
 					))}
 					<div className="flex justify-center mt-4">
-						<button type="button" onClick={() => appendTeacher({ impliedTeacher: "" })} className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+						<button
+							type="button"
+							onClick={() => appendTeacher({ impliedTeacher: "" })}
+							className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+						>
 							Añadir profesor
 						</button>
 					</div>
 				</div>
 
-				<div className="mb-4">
+				<div className="mb-4 md:col-span-1">
+					<h3 className="block text-gray-700 text-sm font-bold mb-2">Curso</h3>
+					<Select
+						options={courseOptions}
+						onChange={(selectedCourse) => {
+							setValue("course", selectedCourse.value);
+							setSelectedCourseOption(selectedCourse);
+						}}
+						value={selectedCourseOption}
+						className="w-full  border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+					/>
+				</div>
+
+				<div className="mb-4 md:col-span-1">
+					<h3 className="block text-gray-700 text-sm font-bold mb-2">Clase</h3>
+					<Select
+						options={letterOptions}
+						onChange={(selectedLetter) => {
+							setValue("letter", selectedLetter.value);
+							setSelectedLetterOption(selectedLetter);
+						}}
+						value={selectedLetterOption}
+						className="w-full  border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+					/>
+				</div>
+
+				<div className="mb-4 md:col-span-2">
+					<h3 className="block text-gray-700 text-sm font-bold mb-2">Asignatura</h3>
+					<input
+						type="text"
+						{...register("subject", {
+							required: true,
+						})}
+						placeholder="Asignatura"
+						className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+					/>
+				</div>
+
+				<div className="mb-4 md:col-span-2">
+					<h3 className="block text-gray-700 text-sm font-bold mb-2">Archivos del proyecto</h3>
+					<DropzoneComponent uploadedFiles={uploadedFiles} setUploadedFiles={setUploadedFiles} />
+				</div>
+
+				{/* <div>
+                <h3>Memoria del proyecto</h3>
+                <input
+                    type="file"
+                    {...register("projectMemory", {
+                        required : false
+                    })}
+                />
+            </div> */}
+
+				<div className="mb-4 md:col-span-2">
+					<h3 className="block text-gray-700 text-sm font-bold mb-2">Enlace a recursos externos</h3>
+					{linkFields.map((field, index) => (
+						<div key={field.id} className="flex items-center gap-2">
+							<input
+								type="url"
+								{...register(`externalLinks.${index}`)}
+								placeholder="URL"
+								className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+							/>
+							<button
+								type="button"
+								onClick={() => {
+									removeLink(index);
+									setValue(`externalLinks.${index}`, "");
+								}}
+								className="ml-2 bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
+							>
+								Eliminar
+							</button>
+						</div>
+					))}
+					<div className="flex justify-center mt-4">
+						<button
+							type="button"
+							onClick={() => appendLink({ externalLink: "" })}
+							className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+						>
+							Añadir recurso externo
+						</button>
+					</div>
+				</div>
+
+				<div className="mb-4 md:col-span-2">
 					<h3 className="block text-gray-700 text-sm font-bold mb-2">Premios</h3>
 					{awardFields.map((field, index) => (
 						<div key={field.id} className="flex items-center gap-2">
-							<input type="text" {...register(`awards.${index}`)} placeholder="Premio" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+							<input
+								type="text"
+								{...register(`awards.${index}`)}
+								placeholder="Premio"
+								className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+							/>
 							<button
 								type="button"
 								onClick={() => {
@@ -418,14 +475,21 @@ const ProjectForm = () => {
 						</div>
 					))}
 					<div className="flex justify-center mt-4">
-						<button type="button" onClick={() => appendAward({ award: "" })} className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+						<button
+							type="button"
+							onClick={() => appendAward({ award: "" })}
+							className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+						>
 							Añadir premio
 						</button>
 					</div>
 				</div>
 
-				<div className="flex justify-center mt-6">
-					<button type="submit" className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
+				<div className="mt-6 md:col-span-2 w-full">
+					<button
+						type="submit"
+						className="w-full bg-[#2d2d2d] hover:bg-[#3f3f3f] text-white font-bold py-3 px-6 rounded-lg shadow-lg focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+					>
 						Enviar
 					</button>
 				</div>
