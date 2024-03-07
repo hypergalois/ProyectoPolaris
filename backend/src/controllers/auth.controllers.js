@@ -167,6 +167,18 @@ export const register = async (req, res) => {
 		const isHandled = await handleVerifyEmail(req, res);
 		if (!isHandled) return res.status(500).json({ message: "Error handling verify email." });
 
+		// Pense que no hacia falta pero voy a poner cookie ya
+		// Crear el token de acceso
+		const accessToken = await createAccessToken({
+			id: userFound.id,
+			role: userFound.role,
+		});
+
+		res.cookie("token", accessToken, {
+			sameSite: "none",
+			secure: true,
+		});
+
 		return res.status(200).json({ message: "User registered successfully.", userExists: false });
 	} catch (error) {
 		console.log(error);
@@ -182,13 +194,13 @@ export const verifyEmail = async (req, res) => {
 	const { email } = req.body;
 
 	try {
-		const userFound = await prisma.user.findUnique({
-			where: {
-				email,
-			},
-		});
+		// const userFound = await prisma.user.findUnique({
+		// 	where: {
+		// 		email,
+		// 	},
+		// });
 
-		if (!userFound) return res.status(404).json({ message: "User not found.", userExists: false });
+		// if (!userFound) return res.status(404).json({ message: "User not found.", userExists: false });
 
 		const updatedUser = await prisma.user.update({
 			where: {
@@ -202,15 +214,15 @@ export const verifyEmail = async (req, res) => {
 		if (!updatedUser) return res.status(500).json({ message: "Error updating user." });
 
 		// Crear el token de acceso
-		const accessToken = await createAccessToken({
-			id: userFound.id,
-			role: userFound.role,
-		});
+		// const accessToken = await createAccessToken({
+		// 	id: userFound.id,
+		// 	role: userFound.role,
+		// });
 
-		res.cookie("token", accessToken, {
-			sameSite: "none",
-			secure: true,
-		});
+		// res.cookie("token", accessToken, {
+		// 	sameSite: "none",
+		// 	secure: true,
+		// });
 
 		// Aqui podriamos mandar un email informando de que la cuenta ha sido verificada
 
