@@ -13,11 +13,12 @@ const ProfileRequests = ({ project }) => {
 		getProfile();
 	}, []);
 
-	useEffect(() => {
-		if (profil.id) {
-			getProjectsByUser(profil.id).then(() => setLoading(false));
-		}
-	}, [profil.id]);
+	//useEffect(() => {
+	//	if (profil.id) {
+	//		getProjectsByUser(profil.id).then(() => setLoading(false));
+	//	}
+	//}, [profil.id]);
+
 
 	useEffect(() => {
 		if (projects) {

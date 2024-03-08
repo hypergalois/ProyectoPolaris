@@ -6,10 +6,25 @@ import ProfileUserManagement from "../components/ProfileUserManagement";
 function ProjectHomePage() {
 	return (
 		<>
-			<h1>PerfilePage</h1>
-			<ProfileDetails />
-			<ProfileProjects />
-			<ProfileUserManagement />
+			<div className="items-center">
+				<div className="flex justify-center h-screen">
+					<div className="mx-auto text-center">
+						<div className="text-4xl mb-4">
+							<h1>PerfilePage</h1>
+						</div>
+						<div className="mb-4">
+							<ProfileDetails />
+						</div>
+						<div className="mb-4">
+							<ProfileProjects />
+						</div>
+						<div className="mb-4">
+							<ProfileUserManagement />
+						</div>
+					</div>
+				</div>
+			</div>
+			
 		</>
 	);
 }
