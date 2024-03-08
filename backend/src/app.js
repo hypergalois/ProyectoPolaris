@@ -17,6 +17,7 @@ import projectRoutes from "./routes/projects.routes.js";
 import degreeRoutes from "./routes/degrees.routes.js";
 import areaRoutes from "./routes/areas.routes.js";
 import requestRoutes from "./routes/requests.routes.js";
+import awardRoutes from "./routes/awards.routes.js";
 import testRoutes from "./routes/test.routes.js";
 
 const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:5173";
@@ -65,6 +66,7 @@ app.use("/api", projectRoutes);
 app.use("/api", degreeRoutes);
 app.use("/api", areaRoutes);
 app.use("/api", requestRoutes);
+app.use("/api", awardRoutes);
 app.use("/api", testRoutes);
 
 // The error handler must be registered before any other error middleware and after all controllers
