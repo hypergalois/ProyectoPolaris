@@ -2,24 +2,24 @@ import { useState, useEffect } from "react";
 import { useRequests } from "../context/RequestsContext";
 import RequestCard from "../components/RequestCard";
 
-import { statusEnum } from "../../../backend/src/config/tags";
+import { statusEnum } from "../config/util.js";
 
 function DashboardPage() {
-    const { requests, getRequestsByStatusData, requestState, getRequestsData } = useRequests();
-    const [loading, setLoading] = useState(true);
+	const { requests, getRequestsByStatusData, requestState, getRequestsData } = useRequests();
+	const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        getRequestsByStatusData(statusEnum.PENDING).then(() => setLoading(false));
-        //console.log(requests);
-    }, [requestState]);
+	useEffect(() => {
+		getRequestsByStatusData(statusEnum.PENDING).then(() => setLoading(false));
+		//console.log(requests);
+	}, [requestState]);
 
 	if (requests.length === 0) {
 		return <p>No hay peticiones para mostrar</p>;
 	}
 
-    return (
-        <>
-            {/* <div className="container mx-auto px-4">
+	return (
+		<>
+			{/* <div className="container mx-auto px-4">
                 <div className="flex justify-center mt-8">
                     <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-4">
                         Accepted
