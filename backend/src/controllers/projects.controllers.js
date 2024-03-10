@@ -64,33 +64,33 @@ export const createProject = async (req, res) => {
 		// req.body.impliedStudentsIDs = JSON.parse(req.body.impliedStudentsIDs);
 		// req.body.impliedTeachersIDs = JSON.parse(req.body.impliedTeachersIDs);
 
-		if (req.body.impliedStudentsIDs) {
-			req.body.impliedStudentsIDs = await prisma.user.findMany({
-				where: {
-					email: {
-						in: req.body.impliedStudentsIDs,
-					},
-				},
-				select: {
-					id: true,
-				},
-			});
-			req.body.impliedStudentsIDs = req.body.impliedStudentsIDs.map((student) => student.id);
-		}
+		// if (req.body.impliedStudentsIDs) {
+		// 	req.body.impliedStudentsIDs = await prisma.user.findMany({
+		// 		where: {
+		// 			email: {
+		// 				in: req.body.impliedStudentsIDs,
+		// 			},
+		// 		},
+		// 		select: {
+		// 			id: true,
+		// 		},
+		// 	});
+		// 	req.body.impliedStudentsIDs = req.body.impliedStudentsIDs.map((student) => student.id);
+		// }
 
-		if (req.body.impliedTeachersIDs) {
-			req.body.impliedTeachersIDs = await prisma.user.findMany({
-				where: {
-					email: {
-						in: req.body.impliedTeachersIDs,
-					},
-				},
-				select: {
-					id: true,
-				},
-			});
-			req.body.impliedTeachersIDs = req.body.impliedTeachersIDs.map((teacher) => teacher.id);
-		}
+		// if (req.body.impliedTeachersIDs) {
+		// 	req.body.impliedTeachersIDs = await prisma.user.findMany({
+		// 		where: {
+		// 			email: {
+		// 				in: req.body.impliedTeachersIDs,
+		// 			},
+		// 		},
+		// 		select: {
+		// 			id: true,
+		// 		},
+		// 	});
+		// 	req.body.impliedTeachersIDs = req.body.impliedTeachersIDs.map((teacher) => teacher.id);
+		// }
 
 		// req.body.externalLinks = JSON.parse(req.body.externalLinks);
 		// req.body.keywords = JSON.parse(req.body.keywords);
