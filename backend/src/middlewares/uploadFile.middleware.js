@@ -1,10 +1,16 @@
 import multer from "multer";
 import { v4 as uuidv4 } from "uuid";
 import fs from "fs";
+import path from "path";
+
+const getSaveDirectory = () => {
+	const railwayVolumeMountPath = process.env.RAILWAY_VOLUME_MOUNT_PATH || process.env.FILE_UPLOAD_PATH;
+	return railwayVolumeMountPath ? railwayVolumeMountPath : path.join(__dirname, "uploads");
+};
 
 const storage = multer.diskStorage({
 	destination: function (req, file, callback) {
-		const pathStorage = process.env.FILE_UPLOAD_PATH +"uploads/";
+		const pathStorage = process.env.FILE_UPLOAD_PATH + "uploads/";
 		if (req.files.folderId) {
 			const destinationPath = pathStorage + req.files.folderId + "/";
 			callback(null, destinationPath);
