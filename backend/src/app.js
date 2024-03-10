@@ -58,7 +58,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // app.use("/uploads", authRequired, express.static("uploads"));
-app.use("/uploads", express.static("uploads"));
+app.use("/app/uploads", express.static("uploads"));
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecs, { explorer: true }));
 
