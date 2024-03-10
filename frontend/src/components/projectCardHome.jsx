@@ -2,26 +2,26 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useEffect } from "react";
-import { rolesEnum } from "../../../backend/src/config/tags";
+import { rolesEnum } from "../config/util.js";
 import { useProjects } from "../context/ProjectsContext";
 
 const ProjectCard = ({ project }) => {
 	const navigate = useNavigate();
-    const { unpinProjectRequest } = useProjects();
-    const { userRole, getUserRole } = useAuth();
+	const { unpinProjectRequest } = useProjects();
+	const { userRole, getUserRole } = useAuth();
 
-    useEffect(() => {
+	useEffect(() => {
 		getUserRole();
 	}, []);
 
-    if (userRole === null) return null;
+	if (userRole === null) return null;
 
 	const handleClick = (projectId) => {
 		// Navegar a otra página al hacer clic
 		navigate(`/projects/${projectId}`);
 	};
 
-    const handleUnPin = () => {
+	const handleUnPin = () => {
 		unpinProjectRequest(project.id);
 	};
 
@@ -38,19 +38,17 @@ const ProjectCard = ({ project }) => {
 				{/* Si esperas tener 'studentsInvolved' pero no está en tus datos, asegúrate de incluir una lógica condicional o un valor predeterminado */}
 				<span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Estudiantes: {project.studentsInvolved || "No especificado"}</span>
 				{/* Asegúrate de acceder a la propiedad 'name' del objeto 'degree' si existe, de lo contrario muestra un mensaje o valor predeterminado */}
-				<span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-					Titulación: {project.degree ? project.degree.name : "No especificada"}
-				</span>
+				<span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Titulación: {project.degree ? project.degree.name : "No especificada"}</span>
 				{/* Corrige la propiedad que quieres mostrar, 'subject' en lugar de todo el objeto 'project' */}
 				<span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Asignatura: {project.subject || "No especificada"}</span>
 			</div>
-            {userRole === rolesEnum.ADMIN && (
-                <div className="px-6 py-4 flex">
-                    <button onClick={handleUnPin} className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-500">
-                        Unpin
-                    </button>
-                </div>
-            )}
+			{userRole === rolesEnum.ADMIN && (
+				<div className="px-6 py-4 flex">
+					<button onClick={handleUnPin} className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-500">
+						Unpin
+					</button>
+				</div>
+			)}
 		</div>
 	);
 };
