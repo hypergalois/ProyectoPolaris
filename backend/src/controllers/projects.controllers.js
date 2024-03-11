@@ -19,8 +19,7 @@ export const getProjects = async (req, res) => {
 export const getProjectsHome = async (req, res) => {
 	try {
 		const projects = await prisma.project.findMany({
-			where: { status: statusEnum.ACCEPTED, pinned: true },
-			take: 9,
+			where: { status: statusEnum.ACCEPTED },
 			orderBy: { createdAt: "desc" },
 			select: {
 				id: true,
