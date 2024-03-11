@@ -30,9 +30,8 @@ const LandingPageAnimation = () => {
 					}}
 					onTransitionEnd={handleAnimationEnd}
 				>
-					{/* Contenido del elemento */}
 					<div className="flex items-center justify-center w-screen h-screen">
-						<img src="/logo-projects.png" alt="Project Logo" style={{ maxWidth: "100%", height: "auto" }} />
+						<img src="/full-logo-utad.webp" alt="Project Logo" style={{ maxWidth: "100%", height: "auto" }} />
 					</div>
 				</div>
 			)}

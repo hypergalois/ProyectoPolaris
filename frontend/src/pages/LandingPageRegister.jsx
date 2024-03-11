@@ -11,8 +11,8 @@ const HomePageRegister = () => {
 		<>
 			<NavBarNoAuth />
 			<LandingPageBar />
-			<div className="flex px-16">
-				<div className="flex-1">
+			<div className="flex flex-col md:flex-row px-4 md:px-16 w-full">
+				<div className="flex-1 mb-8 md:mb-0">
 					<HomePageLanding />
 				</div>
 				<div className="flex-1 place-self-center text-center p-4 rounded-3xl bg-[#858585] text-white">
