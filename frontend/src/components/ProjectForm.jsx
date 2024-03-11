@@ -61,7 +61,7 @@ const ProjectForm = () => {
 
 	const [currentProject, setCurrentProject] = useState({});
 
-	const { getProject, createProject, updateProject, errors: projectsContextErrors } = useProjects();
+	const { getProject, createProject, updateProject, awards, getAwards, errors: projectsContextErrors } = useProjects();
 
 	const navigate = useNavigate();
 
@@ -70,6 +70,7 @@ const ProjectForm = () => {
 	const { degrees, getDegrees, errors: areasContextErrors } = useAreas();
 
 	const [uploadedFiles, setUploadedFiles] = useState([]);
+	const [thumbnail, setThumbnail] = useState([]);
 
 	const {
 		fields: linkFields,
@@ -101,26 +102,19 @@ const ProjectForm = () => {
 		name: "teachers",
 	});
 
-	const {
-		fields: awardFields,
-		append: appendAward,
-		remove: removeAward,
-		update: updateAward,
-	} = useFieldArray({
-		control,
-		name: "obtainedAwards",
-	});
-
 	const degreeOptions = useRef([]);
+	const awardOptions = useRef([]);
 	const [selectedCourseOption, setSelectedCourseOption] = useState("");
 	const [selectedLetterOption, setSelectedLetterOption] = useState("");
 	const [selectedDegreeOption, setSelectedDegreeOption] = useState("");
+	const [selectedAwardOption, setSelectedAwardOption] = useState("");
 
 	// No se como hacer que solo salga un estudiante
 	useEffect(() => {
 		// console.log("useEffect");
 		console.log("Params", params);
 		getDegrees();
+		getAwards();
 
 		async function loadProject() {
 			const projectToEdit = await getProject(params.id);
@@ -153,7 +147,21 @@ const ProjectForm = () => {
 	}, [degrees]);
 
 	useEffect(() => {
-		if (degreeOptions.current.length > 0 && verifyPropertiesProject(currentProject)) {
+		if (awards) {
+			awards.map((award) => {
+				const newAward = { value: award.id, label: award.name };
+				const isInAwardOptions = awardOptions.current.some((awardOption) => {
+					return JSON.stringify(awardOption) === JSON.stringify(newAward);
+				});
+				if (!isInAwardOptions) {
+					awardOptions.current.push(newAward);
+				}
+			});
+		}
+	}, [awards]);
+
+	useEffect(() => {
+		if (degreeOptions.current.length > 0 && awardOptions.current.length > 0 && verifyPropertiesProject(currentProject)) {
 			console.log(currentProject);
 			console.log(degreeOptions);
 			setValue("title", currentProject.title);
@@ -183,17 +191,21 @@ const ProjectForm = () => {
 				setValue(`impliedTeachers.${index}`, value);
 			});
 
-			currentProject.awardsId.map((value, index) => {
-				updateAward(index, value);
-				setValue(`awards.${index}`, value);
-			});
+			// TODO hacer que envíe varios awards
+			setSelectedAwardOption(awardOptions.current.filter(({ value }) => value === currentProject.awardId));
 		}
-	}, [degreeOptions, currentProject]);
+	}, [degreeOptions, awardOptions, currentProject]);
 
 	useEffect(() => {
-		setValue("files", uploadedFiles);
+		const newThumbnail = {...thumbnail[0]};
+		newThumbnail.name = "thumbnail";
+		
+		const files = [...uploadedFiles];
+		files.push(newThumbnail);
+
+		setValue("files", files);
 		// console.log(uploadedFiles);
-	}, [uploadedFiles]);
+	}, [uploadedFiles, thumbnail]);
 
 	const onSubmit = async (data) => {
 		const formData = new FormData();
@@ -230,7 +242,7 @@ const ProjectForm = () => {
 			formData.append("files", file);
 		});
 
-		console.log(data);
+		console.log(data, Object.fromEntries(formData.entries()));
 
 		if (params.id) {
 			updateProject(params.id, formData);
@@ -401,6 +413,11 @@ const ProjectForm = () => {
 					<DropzoneComponent uploadedFiles={uploadedFiles} setUploadedFiles={setUploadedFiles} />
 				</div>
 
+				<div className="mb-4 md:col-span-2">
+					<h3 className="block text-gray-700 text-sm font-bold mb-2">Thumbnail</h3>
+					<DropzoneComponent uploadedFiles={thumbnail} setUploadedFiles={setThumbnail} maxFiles={1} />
+				</div>
+
 				{/* <div>
                 <h3>Memoria del proyecto</h3>
                 <input
@@ -435,28 +452,17 @@ const ProjectForm = () => {
 					</div>
 				</div>
 
-				<div className="mb-4 md:col-span-2">
-					<h3 className="block text-gray-700 text-sm font-bold mb-2">Premios</h3>
-					{awardFields.map((field, index) => (
-						<div key={field.id} className="flex items-center gap-2">
-							<input type="text" {...register(`awards.${index}`)} placeholder="Premio" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
-							<button
-								type="button"
-								onClick={() => {
-									removeAward(index);
-									setValue(`awards.${index}`, "");
-								}}
-								className="ml-2 bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
-							>
-								Eliminar
-							</button>
-						</div>
-					))}
-					<div className="flex justify-center mt-4">
-						<button type="button" onClick={() => appendAward({ award: "" })} className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-							Añadir premio
-						</button>
-					</div>
+				<div className="mb-4 md:col-span-1">
+					<h3 className="block text-gray-700 text-sm font-bold mb-2">Awards</h3>
+					<Select
+						options={awardOptions.current}
+						onChange={(selectedAward) => {
+							setValue("awards.0", selectedAward.value);
+							setSelectedAwardOption(selectedAward);
+						}}
+						value={selectedAwardOption}
+						className="w-full  border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+					/>
 				</div>
 
 				<div className="mt-6 md:col-span-2 w-full">

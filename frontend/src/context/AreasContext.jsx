@@ -1,5 +1,7 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import { getAreasRequest, getDegreesRequest, getDegreesByAreaRequest } from "../api/areas-degrees.js";
+import { getAreasRequest } from "../api/areas.js";
+import { getDegreesRequest, getDegreesByAreaRequest } from "../api/degrees.js";
+import { getAwardsRequest } from "../api/awards.js";
 
 export const AreasContext = createContext();
 
@@ -15,6 +17,7 @@ export const AreasProvider = ({ children }) => {
 	const [areas, setAreas] = useState(null);
 	const [degrees, setDegrees] = useState(null);
 	const [degreesByArea, setDegreesByArea] = useState(null);
+    const [awards, setAwards] = useState(null);
 	const [errors, setErrors] = useState([]);
 
 	const getAreas = async () => {
@@ -56,6 +59,19 @@ export const AreasProvider = ({ children }) => {
 		}
 	};
 
+    const getAwards = async () => {
+        try {
+            const response = await getAwardsRequest();
+            setAwards(response.data);
+        } catch (error) {
+            if (Array.isArray(error.response.data)) {
+                setErrors(error.response.data);
+            } else {
+                setErrors([error.response.data]);
+            }
+        }
+    }
+
 	useEffect(() => {
 		if (errors.length > 0) {
 			const timer = setTimeout(() => {
@@ -65,5 +81,5 @@ export const AreasProvider = ({ children }) => {
 		}
 	}, [errors]);
 
-	return <AreasContext.Provider value={{ areas, getAreas, degrees, getDegrees, degreesByArea, getDegreesByArea, errors }}>{children}</AreasContext.Provider>;
+	return <AreasContext.Provider value={{ areas, getAreas, degrees, getDegrees, degreesByArea, getDegreesByArea, awards, getAwards, errors }}>{children}</AreasContext.Provider>;
 };

@@ -27,7 +27,7 @@ const rejectStyle = {
 	borderColor: "#ff1744",
 };
 
-const DropzoneComponent = ({ uploadedFiles, setUploadedFiles }) => {
+const DropzoneComponent = ({ uploadedFiles, setUploadedFiles, maxFiles=0 }) => {
 	const onDrop = (acceptedFiles) => {
 		const newUploadedFiles = [...uploadedFiles];
 		newUploadedFiles.push(...acceptedFiles);
@@ -35,7 +35,7 @@ const DropzoneComponent = ({ uploadedFiles, setUploadedFiles }) => {
 		console.log(newUploadedFiles);
 	};
 
-	const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject } = useDropzone({ onDrop });
+	const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject } = useDropzone({ onDrop, maxFiles });
 
 	const style = useMemo(
 		() => ({

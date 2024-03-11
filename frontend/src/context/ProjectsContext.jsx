@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect, useRef } from "react";
 import { getProjectsRequest, getProjectsByUserRequest, getProjectsHomeRequest, getProjectRequest, createProjectRequest, deleteProjectRequest, updateProjectRequest } from "../api/projects";
+import { getAwardsRequest } from "../api/awards";
 
 const ProjectsContext = createContext();
 
@@ -13,6 +14,7 @@ export const useProjects = () => {
 
 export const ProjectsProvider = ({ children }) => {
 	const [projects, setProjects] = useState([]);
+	const [awards, setAwards] = useState([]);
 
 	const createProject = async (project) => {
 		try {
@@ -95,10 +97,24 @@ export const ProjectsProvider = ({ children }) => {
 		}
 	};
 
+	const getAwards = async () => {
+		try {
+			const response = await getAwardsRequest();
+			setAwards(response.data);
+		} catch (error) {
+			if (Array.isArray(error.response.data)) {
+				setErrors(error.response.data);
+			} else {
+				setErrors([error.response.data]);
+			}
+		}
+	};
+
 	return (
 		<ProjectsContext.Provider
 			value={{
 				projects,
+				awards,
 				createProject,
 				getProjects,
 				getProjectsHome,
@@ -108,6 +124,7 @@ export const ProjectsProvider = ({ children }) => {
                 unpinProjectRequest,
 				deleteProject,
 				updateProject,
+				getAwards
 			}}
 		>
 			{children}
