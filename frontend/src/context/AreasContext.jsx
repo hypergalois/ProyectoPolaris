@@ -1,5 +1,7 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import { getAreasRequest, getDegreesRequest, getDegreesByAreaRequest, getAwardsRequest } from "../api/areas-degrees.js";
+import { getAreasRequest } from "../api/areas.js";
+import { getDegreesRequest, getDegreesByAreaRequest } from "../api/degrees.js";
+import { getAwardsRequest } from "../api/awards.js";
 
 export const AreasContext = createContext();
 
