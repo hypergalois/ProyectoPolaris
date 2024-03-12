@@ -66,16 +66,6 @@ function HomePage() {
 
 	// <Select options={subjetcOptions} value={subjetcFilter} onChange={setSubjetcFilter} />
 
-	const [openPopup, setOpenPopup] = useState(false);
-
-	const handleOpenPopup = () => {
-		setOpenPopup(true);
-	};
-
-	const handleClosePopup = () => {
-		setOpenPopup(false);
-	};
-
 	return (
 		<>
 			Homepage
@@ -97,12 +87,6 @@ function HomePage() {
 				</div>
 			)} */}
 			{/* HACK TEMPORAL, ESTE POPUP LO ABRIRA EL BOTON DE LA NAVBAR */}
-			<button type="button" onClick={handleOpenPopup} className="rounded-md bg-black/20 px-4 py-24 text-sm font-medium text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
-				Open dialog
-			</button>
-			<Popup title="SUBE EL PROYECTO" openPopup={openPopup} closePopup={handleClosePopup}>
-				<ProjectForm closePopup={handleClosePopup} />
-			</Popup>
 		</>
 	);
 }
