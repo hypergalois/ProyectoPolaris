@@ -35,11 +35,10 @@ function App() {
 				<ProjectsProvider>
 					<RequestsProvider>
 						<Router>
-							<main>
+							{/* Es para tener en cuenta la navbar y que todo aparezca más abajo ya que al ser absolute no cuenta */}
+							<main className="mt-24">
 								{/* Seria cutre pero se puede mostrar navbarnoauth o navbarauth dependiendo del estado */}
 								<Routes>
-									{/* Pagina 404 */}
-									<Route path="*" element={<NotFoundPage />} />
 									{/* Home page sin logearse, sale el formulario de login */}
 									<Route path="/" element={<LandingPageLogin />} />
 									{/* Pagina de recuperar contraseña */}
@@ -53,6 +52,8 @@ function App() {
 									{/* Dejo la pagina de añadir proyectos fuera de la ruta protegida para poder probarla */}
 									{/* <Route path="/projects/new" element={<ProjectsFormPage />} /> */}
 									<Route element={<ProtectedRoute />}>
+										{/* Pagina 404, va dentro del protected para que se muestre la navbar y porque fuera si no estas logeado te devuelve a home automaticamente */}
+										<Route path="*" element={<NotFoundPage />} />
 										{/* Pagina de verificacion de email */}
 										<Route path="/verify-email" element={<VerifyEmailPage />} />
 										{/* Pagina home pero que salen proyectos y noticias una vez estas logeado */}
