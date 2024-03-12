@@ -17,6 +17,7 @@ import projectRoutes from "./routes/projects.routes.js";
 import degreeRoutes from "./routes/degrees.routes.js";
 import areaRoutes from "./routes/areas.routes.js";
 import requestRoutes from "./routes/requests.routes.js";
+import subjectRoutes from "./routes/subjects.routes.js";
 import awardRoutes from "./routes/awards.routes.js";
 import testRoutes from "./routes/test.routes.js";
 
@@ -67,6 +68,7 @@ app.use("/api", projectRoutes);
 app.use("/api", degreeRoutes);
 app.use("/api", areaRoutes);
 app.use("/api", requestRoutes);
+app.use("/api", subjectRoutes);
 app.use("/api", awardRoutes);
 app.use("/api", testRoutes);
 
