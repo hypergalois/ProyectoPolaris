@@ -14,8 +14,9 @@ export const getSubjects = async (req, res) => {
 export const getSubjectsByDegree = async (req, res) => {
     try {
         const { degreeId } = req.params;
+        console.log(degreeId)
         const subjects = await prisma.subject.findMany({
-            where: { degreeId: parseInt(degreeId) },
+            where: { degreesId: { has: degreeId }},
         });
         if (!subjects) return res.status(404).json({ message: "No subjects found" });
         return res.status(200).json(subjects);

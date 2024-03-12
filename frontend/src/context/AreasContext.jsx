@@ -90,6 +90,7 @@ export const AreasProvider = ({ children }) => {
 
     const getSubjectsByDegree = async (degreeId) => {
         try {
+            console.log("getSubjectsByDegree", degreeId)
             const response = await getSubjectsByDegreeRequest(degreeId);
             setSubjectsByDegree(response.data);
         } catch (error) {
