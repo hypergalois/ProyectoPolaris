@@ -69,15 +69,17 @@ function NavBar() {
 									<div className="hidden sm:block sm:ml-6">
 										<div className="flex space-x-1 justify-center flex-1">
 											<div className="flex space-x-1 justify-center flex-1">
+												{/* TODO ARREGLAR QUE CUANDO DASHBOARD ESTA ACTIVO SE VE TEXTO EN BLANCO SOBRE FONDO BLANCO */}
 												{navigation.map((item) => (
 													<Link
 														to={item.href}
 														key={item.name}
 														className={`
-													${item.current ? "bg-white text-blue-600 font-semibold" : "text-white font-semibold hover:bg-white hover:text-blue-600"}
-													${item.admin ? "bg-red-800 text-white" : ""}
-													px-3 py-2 rounded-md text-sm font-medium
-												`}
+															${item.current ? (item.admin ? "bg-red-800 text-white font-semibold" : "text-blue-600 bg-white font-semibold") : ""}
+															${!item.current && item.admin ? "bg-red-800 text-white font-semibold" : ""}
+															${!item.current && !item.admin ? "text-white font-semibold hover:bg-white hover:text-blue-600" : ""}
+															px-3 py-2 rounded-md text-sm font-medium
+														`}
 													>
 														{item.name}
 													</Link>
