@@ -28,7 +28,6 @@ const InitialRegisterForm = ({ onSuccess }) => {
 
 	const onSubmit = async (data) => {
 		try {
-			console.log(data.email)
 			const emailExists = await getExistEmail(data);
 			// console.log(emailExists);
 			if (emailExists) {
@@ -38,8 +37,8 @@ const InitialRegisterForm = ({ onSuccess }) => {
 			setInitialRegisterData(data)
 			setOpenPopup(true);
 			setemailChecked(true)
-		} catch {
-			console.log("Error al verificar el correo.");
+		} catch (error) {
+			console.log(error);
 		}
 	};
 
@@ -87,8 +86,8 @@ const InitialRegisterForm = ({ onSuccess }) => {
 				</Link>
 			</div>
 			<div className="mb-4">
-				<button type="submit" onClick={onSubmit} className="rounded-md bg-black/20 px-4 py-24 text-sm font-medium text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
-					Open SecondaryRegisterForm
+				<button type="submit" onClick={onSubmit} className="w-full p-4 rounded-xl bg-blue-600 hover:bg-blue-400 text-white font-bold">
+					REGISTER
 				</button>
 				<Popup title="CREAR TU USUARIO" openPopup={openPopup} closePopup={handleClosePopup}>
 					<SecondaryRegisterForm closePopup={handleClosePopup} initialRegistrationData={InitialRegisterData}/>

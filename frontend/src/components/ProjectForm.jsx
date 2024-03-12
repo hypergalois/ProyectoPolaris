@@ -67,7 +67,7 @@ const ProjectForm = ({ closePopup }) => {
 
 	const params = useParams();
 
-	const { degrees, getDegrees, subjects, getSubjects, errors: areasContextErrors } = useAreas();
+	const { degrees, getDegrees, subjectsByDegree, getSubjectsByDegree, errors: areasContextErrors } = useAreas();
 
 	const [uploadedFiles, setUploadedFiles] = useState([]);
 	const [thumbnail, setThumbnail] = useState([]);
@@ -117,7 +117,6 @@ const ProjectForm = ({ closePopup }) => {
 		console.log("Params", params);
 		getDegrees();
 		getAwards();
-        getSubjects();
 
 		async function loadProject() {
 			const projectToEdit = await getProject(params.id);
@@ -133,7 +132,9 @@ const ProjectForm = ({ closePopup }) => {
 		}
 
 		console.log("CurrentProject", currentProject);
-	}, []);
+
+        console.log("SELECTEDDEGREEOPTION", selectedDegreeOption.value)
+	}, [selectedDegreeOption]);
 
 	useEffect(() => {
 		if (degrees) {
@@ -147,12 +148,18 @@ const ProjectForm = ({ closePopup }) => {
 				}
 			});
 		}
+
 	}, [degrees]);
 
     useEffect(() => {
-		if (subjects) {
-            subjects.map((subject) => {
-                const newSubject = { value: subject.id, label: subject.name, degreesId: subject.degreesId};
+
+        getSubjectsByDegree(selectedDegreeOption.value);
+
+        console.log("subjectsByDegree", subjectsByDegree);
+
+		if (subjectsByDegree) {
+            subjectsByDegree.map((subjectsByDegree) => {
+                const newSubject = { value: subjectsByDegree.id, label: subjectsByDegree.name, degreesId: subjectsByDegree.degreesId};
                 const isInSubjectOptions = subjectOptions.current.some((subjectOption) => {
                     return JSON.stringify(subjectOption) === JSON.stringify(newSubject);
                 });
@@ -161,7 +168,10 @@ const ProjectForm = ({ closePopup }) => {
                 }
             });
         }
-    }, [subjects]);
+
+        console.log("subjectOption", subjectOptions.current)
+
+    }, [selectedDegreeOption]);
 
 	useEffect(() => {
 		if (awards) {
@@ -178,8 +188,10 @@ const ProjectForm = ({ closePopup }) => {
 	}, [awards]);
 
 	useEffect(() => {
-		if (degreeOptions.current.length > 0 && awardOptions.current.length > 0 && subjectOptions.current.length > 0 && verifyPropertiesProject(currentProject)) {
-			console.log(currentProject);
+		if (degreeOptions.current.length > 0 && awardOptions.current.length > 0  && verifyPropertiesProject(currentProject)) {
+			
+            console.log("YA ENTRA")
+            console.log(currentProject);
 			console.log(degreeOptions);
             console.log(subjectOptions);
 			setValue("title", currentProject.title);
@@ -214,7 +226,7 @@ const ProjectForm = ({ closePopup }) => {
 			// TODO hacer que envíe varios awards
 			setSelectedAwardOption(awardOptions.current.filter(({ value }) => value === currentProject.awardId));
 		}
-	}, [degreeOptions, awardOptions, subjectOptions, currentProject]);
+	}, [degreeOptions, awardOptions, currentProject]);
 
 	useEffect(() => {
 		const newThumbnail = { ...thumbnail[0] };
@@ -422,7 +434,7 @@ const ProjectForm = ({ closePopup }) => {
 				<div className="mb-4 md:col-span-2">
 					<h3 className="block text-gray-700 text-sm font-bold mb-2">Asignatura</h3>
 					<Select
-                        options={subjectOptions}
+                        options={subjectOptions.current}
                         onChange={(selectedSubject) => {
                             setValue("subject", selectedSubject.value);
                             setSelectedSubjectOption(selectedSubject);

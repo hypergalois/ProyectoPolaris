@@ -71,15 +71,14 @@ export const AuthProvider = ({ children }) => {
 	const getExistEmail = async (email) => {
 		try {
 			const response = await checkEmailRequest(email);
-			console.log(response.data.userExists);
 			setExistEmail(response.data.userExists);
 			return response.data.userExists;
 		} catch (error) {
-			if (Array.isArray(error.response.data)) {
+			/*if (Array.isArray(error.response.data)) {
 				setErrors(error.response.data);
 			} else {
 				setErrors([error.response.data]);
-			}
+			}*/
 			return true;
 		}
 	};
