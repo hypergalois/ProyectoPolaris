@@ -15,6 +15,14 @@ const HomePageRegister = () => {
 	// Vamos a manejar la visibilidad del popup del registro secundario
 	const [openPopup, setOpenPopup] = useState(false);
 
+	const handleOpenPopup = () => {
+		setOpenPopup(true);
+	};
+
+	const handleClosePopup = () => {
+		setOpenPopup(false);
+	};
+
 	return (
 		<>
 			<NavBarNoAuth />
@@ -31,11 +39,11 @@ const HomePageRegister = () => {
 							Iniciar sesión
 						</Link>
 					</h2>
-					<InitialRegisterForm />
+					<InitialRegisterForm onSuccess={handleOpenPopup} />
 				</div>
 			</div>
-			<button onClick={() => setOpenPopup(true)}>Abrir popup</button>
-			<Popup openPopup={openPopup} closePopup={setOpenPopup}>
+			{/* <button onClick={handleOpenPopup}>Abrir popup</button> */}
+			<Popup title="CREA TU CUENTA" openPopup={openPopup} closePopup={handleClosePopup}>
 				<SecondaryRegisterForm />
 			</Popup>
 		</>

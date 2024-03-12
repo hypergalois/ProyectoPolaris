@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-const InitialRegisterForm = () => {
+const InitialRegisterForm = ({ onSuccess }) => {
 	const {
 		register,
 		handleSubmit,
@@ -27,7 +27,9 @@ const InitialRegisterForm = () => {
 				setError("email", { message: "El correo ya está en uso." });
 				return;
 			}
-			navigate("/register/details", { state: { email: data.email, fullName: data.fullName } });
+			// Ahora ya no necesitamos navegar, sino que queremos que se abra el popup
+			onSuccess();
+			// navigate("/register/details", { state: { email: data.email, fullName: data.fullName } });
 		} catch {
 			console.log("Error al verificar el correo.");
 		}
