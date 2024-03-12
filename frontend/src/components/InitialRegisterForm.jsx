@@ -34,22 +34,22 @@ const InitialRegisterForm = () => {
 					</div>
 				))}
 			</div>
-			<div className="mb-4 text-black">
+			<div className="mb-4 mt-8 text-black">
 				<input
-					className="w-full md:w-7/12 p-3 rounded-2xl"
+					className="w-full md:w-7/12 p-3 rounded-2xl h-12"
 					type="text"
 					{...register("username", {
 						required: true,
 						minLength: 3,
 						maxLength: 20,
 					})}
-					placeholder="Nombre"
+					placeholder="*Nombre completo"
 				/>
-				{errors.username && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta un nombre de usuario</p>}
+				{errors.username && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta un nombre</p>}
 			</div>
 			<div className="mb-4 text-black">
 				<input
-					className="w-full md:w-7/12 p-3 rounded-2xl"
+					className="w-full md:w-7/12 p-3 rounded-2xl h-12"
 					type="email"
 					{...register("email", {
 						required: true,
@@ -61,7 +61,7 @@ const InitialRegisterForm = () => {
 							checkUrl: async () => (await getExistEmailRequest(getValues("email"))) || "El correo ya esta en uso",
 						},
 					})}
-					placeholder="Correo de la Utad"
+					placeholder="*Correo de la U-Tad"
 				/>
 				{errors.email && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.email.message}</p>}
 			</div>
@@ -71,8 +71,8 @@ const InitialRegisterForm = () => {
 				</Link>
 			</div>
 			<div className="mb-4">
-				<button type="submit" className="w-full md:w-7/12 h-12 rounded-xl bg-blue-600 hover:bg-blue-400 text-white font-semibold">
-					Registrarse
+				<button type="submit" className="w-full md:w-7/12 h-12 rounded-xl bg-blue-600 hover:bg-blue-400 text-white font-bold">
+					REGISTRARSE
 				</button>
 			</div>
 		</form>

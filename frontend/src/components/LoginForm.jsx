@@ -36,33 +36,33 @@ const LoginForm = () => {
 			<form onSubmit={handleSubmit(onSubmit)} className="p-4">
 				<div className="mb-4">
 					<input
-						className="w-full sm:w-5/12 h-10 px-3 sm:px-6 text-black rounded-2xl"
+						className="w-full sm:w-5/12 h-12 px-3 sm:px-6 text-black rounded-2xl"
 						type="email"
 						{...register("email", {
 							required: true,
 							pattern: /^\S+@\S+$/i,
 						})}
-						placeholder="Correo"
+						placeholder="*Correo de la U-Tad"
 						autoComplete="email"
 					/>
 					{errors.email && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta un email</p>}
 				</div>
 				<div className="mb-4">
 					<input
-						className="w-full sm:w-5/12 h-10 px-3 sm:px-6 text-black rounded-2xl"
+						className="w-full sm:w-5/12 h-12 px-3 sm:px-6 text-black rounded-2xl"
 						type="password"
 						{...register("password", {
 							required: true,
 							minLength: 3,
 						})}
-						placeholder="Contraseña"
+						placeholder="*Contraseña"
 						autoComplete="current-password"
 					/>
 					{errors.password && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta una contraseña</p>}
 				</div>
 				<div className="mb-4">
-					<button className="w-full sm:w-5/12 h-12 px-3 sm:px-6 rounded-xl bg-blue-600 hover:bg-blue-400 text-white font-semibold" type="submit">
-						Iniciar sesión
+					<button className="w-full sm:w-5/12 h-12 px-3 sm:px-6 rounded-xl bg-blue-600 hover:bg-blue-400 text-white font-bold" type="submit">
+						INICIAR SESIÓN
 					</button>
 				</div>
 			</form>
