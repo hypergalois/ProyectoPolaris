@@ -38,8 +38,11 @@ const SecondaryRegisterForm = () => {
 	const { email, fullName } = location.state || {};
 	// console.log(location.state);
 
-	const isUdEmailUtad = email.endsWith("@u-tad.com");
-	const isUdEmailLive = email.endsWith("@live.u-tad.com");
+	// TODO LO QUITO POR AHORA
+	// const isUdEmailUtad = email.endsWith("@u-tad.com");
+	// const isUdEmailLive = email.endsWith("@live.u-tad.com");
+	const isUdEmailUtad = false;
+	const isUdEmailLive = true;
 
 	// No entiendo que signfica 1, puede que se corresponda en el enum pero no es nada legible, TODO CAMBIARLO
 	const [academicRole, setAcademicRole] = useState("1"); // Define academicRole state

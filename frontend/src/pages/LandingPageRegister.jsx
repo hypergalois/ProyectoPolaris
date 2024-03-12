@@ -1,4 +1,7 @@
+import { useState } from "react";
+
 import InitialRegisterForm from "../components/InitialRegisterForm";
+import SecondaryRegisterForm from "../components/SecondaryRegisterForm";
 import HomePageLanding from "../components/HomePageLanding";
 
 import NavBarNoAuth from "../components/NavBarNoAuth";
@@ -6,7 +9,12 @@ import NavBarNoAuth from "../components/NavBarNoAuth";
 import { Link } from "react-router-dom";
 import LandingPageBar from "../components/LandingPageBar";
 
+import Popup from "../components/Popup";
+
 const HomePageRegister = () => {
+	// Vamos a manejar la visibilidad del popup del registro secundario
+	const [openPopup, setOpenPopup] = useState(false);
+
 	return (
 		<>
 			<NavBarNoAuth />
@@ -26,6 +34,10 @@ const HomePageRegister = () => {
 					<InitialRegisterForm />
 				</div>
 			</div>
+			<button onClick={() => setOpenPopup(true)}>Abrir popup</button>
+			<Popup openPopup={openPopup} closePopup={setOpenPopup}>
+				<SecondaryRegisterForm />
+			</Popup>
 		</>
 	);
 };
