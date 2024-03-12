@@ -109,6 +109,7 @@ const ProjectForm = ({ closePopup }) => {
 	const [selectedLetterOption, setSelectedLetterOption] = useState("");
 	const [selectedDegreeOption, setSelectedDegreeOption] = useState("");
 	const [selectedAwardOption, setSelectedAwardOption] = useState("");
+    const [selectedSubjectOption, setSelectedSubjectOption] = useState("");
 
 	// No se como hacer que solo salga un estudiante
 	useEffect(() => {
@@ -116,6 +117,7 @@ const ProjectForm = ({ closePopup }) => {
 		console.log("Params", params);
 		getDegrees();
 		getAwards();
+        getSubjects();
 
 		async function loadProject() {
 			const projectToEdit = await getProject(params.id);
@@ -150,7 +152,7 @@ const ProjectForm = ({ closePopup }) => {
     useEffect(() => {
 		if (subjects) {
             subjects.map((subject) => {
-                const newSubject = { value: subject.id, label: subject.name };
+                const newSubject = { value: subject.id, label: subject.name, degreesId: subject.degreesId};
                 const isInSubjectOptions = subjectOptions.current.some((subjectOption) => {
                     return JSON.stringify(subjectOption) === JSON.stringify(newSubject);
                 });
@@ -176,9 +178,10 @@ const ProjectForm = ({ closePopup }) => {
 	}, [awards]);
 
 	useEffect(() => {
-		if (degreeOptions.current.length > 0 && awardOptions.current.length > 0 && verifyPropertiesProject(currentProject)) {
+		if (degreeOptions.current.length > 0 && awardOptions.current.length > 0 && subjectOptions.current.length > 0 && verifyPropertiesProject(currentProject)) {
 			console.log(currentProject);
 			console.log(degreeOptions);
+            console.log(subjectOptions);
 			setValue("title", currentProject.title);
 			setValue("description", currentProject.description);
 			setValue("subject", currentProject.subject);
@@ -190,6 +193,8 @@ const ProjectForm = ({ closePopup }) => {
 			setSelectedLetterOption(letterOptions.filter(({ value }) => value === currentProject.letter));
 			setValue("degree", currentProject.degreeId);
 			setSelectedDegreeOption(degreeOptions.current.filter(({ value }) => value === currentProject.degreeId));
+            setValue("subject", currentProject.subject);
+            setSelectedSubjectOption(subjectOptions.current.filter(({ value }) => value === currentProject.subject));
 
 			currentProject.externalLinks.map((value, index) => {
 				updateLink(index, value);
@@ -209,7 +214,7 @@ const ProjectForm = ({ closePopup }) => {
 			// TODO hacer que envíe varios awards
 			setSelectedAwardOption(awardOptions.current.filter(({ value }) => value === currentProject.awardId));
 		}
-	}, [degreeOptions, awardOptions, currentProject]);
+	}, [degreeOptions, awardOptions, subjectOptions, currentProject]);
 
 	useEffect(() => {
 		const newThumbnail = { ...thumbnail[0] };
@@ -416,14 +421,14 @@ const ProjectForm = ({ closePopup }) => {
 
 				<div className="mb-4 md:col-span-2">
 					<h3 className="block text-gray-700 text-sm font-bold mb-2">Asignatura</h3>
-					<input
-						type="text"
-						{...register("subject", {
-							required: true,
-						})}
-						placeholder="Asignatura"
-						className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-					/>
+					<Select
+                        options={subjectOptions}
+                        onChange={(selectedSubject) => {
+                            setValue("subject", selectedSubject.value);
+                            setSelectedSubjectOption(selectedSubject);
+                        }}
+                        className="w-full border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    />
 				</div>
 
 				<div className="mb-4 md:col-span-2">
@@ -457,6 +462,7 @@ const ProjectForm = ({ closePopup }) => {
 									removeLink(index);
 									setValue(`externalLinks.${index}`, "");
 								}}
+                                value={selectedSubjectOption}
 								className="ml-2 bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
 							>
 								Eliminar
