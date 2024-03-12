@@ -3,6 +3,9 @@ import { useForm } from "react-hook-form";
 // eslint-disable-next-line no-unused-vars
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import Popup from "../components/Popup";
+import SecondaryRegisterForm from "../components/SecondaryRegisterForm";
+
 
 const InitialRegisterForm = ({ onSuccess }) => {
 	const {
@@ -15,21 +18,26 @@ const InitialRegisterForm = ({ onSuccess }) => {
 	} = useForm();
 
 	const { existEmail, getExistEmail, errors: userErrors } = useAuth();
-
-	const navigate = useNavigate();
+	const [emailChecked, setemailChecked] = useState(false);
+	const [openPopup, setOpenPopup] = useState(false);
+	const [InitialRegisterData, setInitialRegisterData] = useState(false);
+	
+	const handleClosePopup = () => {
+		setOpenPopup(false);
+	};
 
 	const onSubmit = async (data) => {
-		// console.log(data);
 		try {
-			const emailExists = await getExistEmail({ email: data.email });
+			console.log(data.email)
+			const emailExists = await getExistEmail(data);
 			// console.log(emailExists);
 			if (emailExists) {
 				setError("email", { message: "El correo ya está en uso." });
 				return;
 			}
-			// Ahora ya no necesitamos navegar, sino que queremos que se abra el popup
-			onSuccess(data);
-			// navigate("/register/details", { state: { email: data.email, fullName: data.fullName } });
+			setInitialRegisterData(data)
+			setOpenPopup(true);
+			setemailChecked(true)
 		} catch {
 			console.log("Error al verificar el correo.");
 		}
@@ -79,9 +87,12 @@ const InitialRegisterForm = ({ onSuccess }) => {
 				</Link>
 			</div>
 			<div className="mb-4">
-				<button type="submit" className="w-full md:w-9/12 h-12 rounded-xl bg-blue-600 hover:bg-blue-400 text-white font-bold">
-					REGISTRARSE
+				<button type="submit" onClick={onSubmit} className="rounded-md bg-black/20 px-4 py-24 text-sm font-medium text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+					Open SecondaryRegisterForm
 				</button>
+				<Popup title="CREAR TU USUARIO" openPopup={openPopup} closePopup={handleClosePopup}>
+					<SecondaryRegisterForm closePopup={handleClosePopup} initialRegistrationData={InitialRegisterData}/>
+				</Popup>
 			</div>
 		</form>
 	);
