@@ -15,7 +15,7 @@ const HomePageRegister = () => {
 				<div className="flex-1 mb-8 md:mb-0">
 					<HomePageLanding />
 				</div>
-				<div className="flex-1 place-self-center text-center p-4 rounded-3xl bg-[#2d2d2d] text-white">
+				<div className="flex-1 place-self-center text-center p-6 rounded-3xl bg-[#2d2d2d] text-white">
 					<h1 className="mb-4 text-2xl font-bold">CREA TU CUENTA</h1>
 					<h2 className="mb-4">
 						¿Ya tienes una cuenta?{" "}

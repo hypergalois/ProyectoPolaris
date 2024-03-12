@@ -66,7 +66,9 @@ const InitialRegisterForm = () => {
 				{errors.email && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.email.message}</p>}
 			</div>
 			<div className="mb-8">
-				<p className="text-xs">Creando una cuenta aceptas los Términos de Uso y la Política de Privacidad.</p>
+				<Link to="https://www.youtube.com/watch?v=xvFZjo5PgG0&ab_channel=Duran" className="underline">
+					<p className="text-xs">Creando una cuenta aceptas los Términos de Uso y la Política de Privacidad.</p>
+				</Link>
 			</div>
 			<div className="mb-4">
 				<button type="submit" className="w-full md:w-7/12 h-12 rounded-xl bg-blue-600 hover:bg-blue-400 text-white font-semibold">
