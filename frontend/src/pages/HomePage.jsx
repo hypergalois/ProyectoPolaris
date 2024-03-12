@@ -4,7 +4,7 @@ import { useAreas } from "../context/AreasContext";
 import Select from "react-select";
 import ProjectForm from "../components/ProjectForm";
 import Popup from "../components/Popup";
-import ProjectCard from "../components/ProjectCardHome";
+import ProjectCard from "../components/ProjectCardTest";
 
 function HomePage() {
 	const { projects, getProjectsHome } = useProjects();
