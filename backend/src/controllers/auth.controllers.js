@@ -256,6 +256,7 @@ export const login = async (req, res) => {
 		const accessToken = await createAccessToken({
 			id: foundUser.id,
 			role: foundUser.role,
+			emailVerified: foundUser.emailVerified,
 		});
 
 		console.log(accessToken);
