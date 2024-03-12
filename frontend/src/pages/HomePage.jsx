@@ -3,6 +3,8 @@ import { useProjects } from "../context/ProjectsContext";
 import { useAreas } from "../context/AreasContext";
 import ProjectCardHome from "../components/projectCardHome";
 import Select from "react-select";
+import ProjectForm from "../components/ProjectForm";
+import Popup from "../components/Popup";
 
 function HomePage() {
 	const { projects, getProjectsHome } = useProjects();
@@ -64,8 +66,19 @@ function HomePage() {
 
 	// <Select options={subjetcOptions} value={subjetcFilter} onChange={setSubjetcFilter} />
 
+	const [openPopup, setOpenPopup] = useState(false);
+
+	const handleOpenPopup = () => {
+		setOpenPopup(true);
+	};
+
+	const handleClosePopup = () => {
+		setOpenPopup(false);
+	};
+
 	return (
 		<>
+			Homepage
 			{/* <div className="filter-container">
 				<Select options={degreeOptions} value={degreeFilter} onChange={setDegreeFilter} />
 
@@ -83,6 +96,13 @@ function HomePage() {
 					</div>
 				</div>
 			)} */}
+			{/* HACK TEMPORAL, ESTE POPUP LO ABRIRA EL BOTON DE LA NAVBAR */}
+			<button type="button" onClick={handleOpenPopup} className="rounded-md bg-black/20 px-4 py-24 text-sm font-medium text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+				Open dialog
+			</button>
+			<Popup title="SUBE EL PROYECTO" openPopup={openPopup} closePopup={handleClosePopup}>
+				<ProjectForm closePopup={handleClosePopup} />
+			</Popup>
 		</>
 	);
 }

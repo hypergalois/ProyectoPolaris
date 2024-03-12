@@ -49,7 +49,7 @@ function verifyPropertiesProject(proyecto) {
 	return allPropertiesPresent;
 }
 
-const ProjectForm = () => {
+const ProjectForm = ({ closePopup }) => {
 	const {
 		register,
 		control,
@@ -244,13 +244,16 @@ const ProjectForm = () => {
 
 		console.log(data, Object.fromEntries(formData.entries()));
 
+		// TODO NO VALE ESTA LOGICA YA AL HACER UN POPUP
 		if (params.id) {
 			updateProject(params.id, formData);
 		} else {
 			createProject(formData);
 		}
 
-		navigate("/home");
+		closePopup();
+		// Ya no tenemos que navegar
+		// navigate("/home");
 	};
 
 	return (
