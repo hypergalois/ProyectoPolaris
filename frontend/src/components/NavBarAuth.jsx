@@ -17,17 +17,23 @@ function NavBar() {
 
 	//console.log("NAVBARAUTH -> ", userRole)
 
-	let navigation = [{ name: "Proyectos", href: "/home", current: false }];
+	// TODO TAMBIEN HAY QUE HACERLO PARA NO ADMIN, POSIBLEMENTE HACIENDO APPEND A LA RUTA DEL DASHBOARD
+	let navigation = [
+		{ name: "TODOS", href: "/home", current: false },
+		{ name: "ANIMACIÓN", href: "/animation", current: false },
+		{ name: "DISEÑO DIGITAL", href: "/digital-design", current: false },
+		{ name: "INGENIERÍA Y CIENCIAS", href: "/engineering", current: false },
+		{ name: "VIDEOJUEGOS", href: "/videogames", current: false },
+	];
 
+	// TODO: CAMBIAR LAS RUTAS SEGUN SE HAGAN
 	if (userRole === "ADMIN") {
-		navigation = [
-			{ name: "TODOS", href: "/home", current: false },
-			{ name: "ANIMACIÓN", href: "/dashboard", current: false },
-			{ name: "DISEÑO DIGITAL", href: "/dashboard", current: false },
-			{ name: "INGENIERÍA Y CIENCIAS", href: "/dashboard", current: false },
-			{ name: "VIDEOJUEGOS", href: "/dashboard", current: false },
-		];
+		navigation.push({ name: "DASHBOARD", href: "/dashboard", current: false });
 	}
+
+	navigation.forEach((item) => {
+		item.current = location.pathname === item.href;
+	});
 
 	return (
 		<Disclosure as="nav" className="bg-blue-600 fixed z-50 w-full top-0">
@@ -45,7 +51,7 @@ function NavBar() {
 									<h1 className="text-2xl font-[950] text-white">U-PROJECTS</h1>
 								</div>
 								<div className="hidden sm:block sm:ml-6">
-									<div className="flex space-x-3 justify-center flex-1">
+									<div className="flex space-x-1 justify-center flex-1">
 										{navigation.map((item) => (
 											<Link to={item.href} key={item.name} className={`${item.current ? "bg-white text-white" : "text-white font-semibold hover:bg-white hover:text-blue-600"} px-3 py-2 rounded-md text-sm font-medium`}>
 												{item.name}
