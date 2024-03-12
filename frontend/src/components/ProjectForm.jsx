@@ -67,7 +67,7 @@ const ProjectForm = ({ closePopup }) => {
 
 	const params = useParams();
 
-	const { degrees, getDegrees, errors: areasContextErrors } = useAreas();
+	const { degrees, getDegrees, subjects, getSubjects, errors: areasContextErrors } = useAreas();
 
 	const [uploadedFiles, setUploadedFiles] = useState([]);
 	const [thumbnail, setThumbnail] = useState([]);
@@ -104,6 +104,7 @@ const ProjectForm = ({ closePopup }) => {
 
 	const degreeOptions = useRef([]);
 	const awardOptions = useRef([]);
+    const subjectOptions = useRef([]);
 	const [selectedCourseOption, setSelectedCourseOption] = useState("");
 	const [selectedLetterOption, setSelectedLetterOption] = useState("");
 	const [selectedDegreeOption, setSelectedDegreeOption] = useState("");
@@ -145,6 +146,20 @@ const ProjectForm = ({ closePopup }) => {
 			});
 		}
 	}, [degrees]);
+
+    useEffect(() => {
+		if (subjects) {
+            subjects.map((subject) => {
+                const newSubject = { value: subject.id, label: subject.name };
+                const isInSubjectOptions = subjectOptions.current.some((subjectOption) => {
+                    return JSON.stringify(subjectOption) === JSON.stringify(newSubject);
+                });
+                if (!isInSubjectOptions) {
+                    subjectOptions.current.push(newSubject);
+                }
+            });
+        }
+    }, [subjects]);
 
 	useEffect(() => {
 		if (awards) {
