@@ -1,5 +1,5 @@
 import { useAuth } from "./context/AuthContext";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 import { Navigate, Outlet } from "react-router-dom";
 
 // Voy a meter la navbar aqui, solo se renderiza cuando esta logeado
@@ -19,7 +19,6 @@ function ProtectedRoute() {
 		return <Navigate to="/" replace />;
 	}
 
-	// TODO: ESTO NO FUNCIONA Y HACE QUE SE SE VEA EN BLANCO
 	if (!loading && isAuthenticated && !isEmailVerified && location.pathname !== "/verify-email") {
 		console.log("Redirecting to verify email");
 		return <Navigate to="/verify-email" replace />;

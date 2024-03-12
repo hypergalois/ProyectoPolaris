@@ -1,6 +1,6 @@
 const LandingPageBar = () => {
 	return (
-		<nav className="flex flex-col md:flex-row justify-between items-center p-8">
+		<nav className="flex flex-col md:flex-row justify-between items-center p-8 mt-12">
 			<div className="flex flex-col md:flex-row items-center mb-4 md:mb-0">
 				<h1 className="text-3xl font-[950] text-blue-600">U-PROJECTS</h1>
 			</div>
