@@ -5,6 +5,7 @@ import ProjectCardHome from "../components/projectCardHome";
 import Select from "react-select";
 import ProjectForm from "../components/ProjectForm";
 import Popup from "../components/Popup";
+import ProjectCard from "../components/ProjectCardTest";
 
 function HomePage() {
 	const { projects, getProjectsHome } = useProjects();
@@ -69,6 +70,8 @@ function HomePage() {
 	return (
 		<>
 			Homepage
+			{/* Prueba de project card */}
+			<ProjectCard />
 			{/* <div className="filter-container">
 				<Select options={degreeOptions} value={degreeFilter} onChange={setDegreeFilter} />
 
