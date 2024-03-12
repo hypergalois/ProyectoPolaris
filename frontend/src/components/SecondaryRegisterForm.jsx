@@ -3,6 +3,31 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useAreas } from "../context/AreasContext";
 import { useState, useEffect } from "react";
+import Select from "react-select";
+
+const selectStyles = {
+	control: (provided) => ({
+		...provided,
+		minHeight: "48px",
+		height: "48px",
+		boxShadow: "none",
+		borderRadius: "1rem",
+		borderColor: "#000000",
+	}),
+	valueContainer: (provided) => ({
+		...provided,
+		height: "48px",
+		padding: "0 6px",
+	}),
+	input: (provided) => ({
+		...provided,
+		margin: "0px",
+	}),
+	indicatorsContainer: (provided) => ({
+		...provided,
+		height: "48px",
+	}),
+};
 
 const SecondaryRegisterForm = ({ initialRegistrationData }) => {
 	const {
@@ -11,13 +36,13 @@ const SecondaryRegisterForm = ({ initialRegistrationData }) => {
 		watch,
 		clearErrors,
 		setError,
+		setValue,
 		formState: { errors },
 	} = useForm();
 	// Pongo registerUser para evitar colisiones con el hook register
 	const { register: registerUser, isAuthenticated, errors: registerErrors } = useAuth();
 	const { degrees, getDegrees, errors: areasErrors } = useAreas();
 	const navigate = useNavigate();
-	const location = useLocation();
 
 	const [passwordsMatch, setPasswordsMatch] = useState(true);
 	const [showValidation, setShowValidation] = useState(false);
@@ -41,10 +66,10 @@ const SecondaryRegisterForm = ({ initialRegistrationData }) => {
 	// console.log(location.state);
 
 	// TODO LO QUITO POR AHORA
-	// const isUdEmailUtad = email.endsWith("@u-tad.com");
-	// const isUdEmailLive = email.endsWith("@live.u-tad.com");
-	const isUdEmailUtad = false;
-	const isUdEmailLive = true;
+	const isEmailUtad = email.endsWith("@u-tad.com");
+	const isEmailLive = email.endsWith("@live.u-tad.com");
+	// const isUdEmailUtad = false;
+	// const isUdEmailLive = true;
 
 	// No entiendo que signfica 1, puede que se corresponda en el enum pero no es nada legible, TODO CAMBIARLO
 	const [academicRole, setAcademicRole] = useState("1"); // Define academicRole state
@@ -55,7 +80,7 @@ const SecondaryRegisterForm = ({ initialRegistrationData }) => {
 
 	const years = [];
 
-	for (let year = 2012; year <= 2022; year++) {
+	for (let year = 2012; year <= 2025; year++) {
 		years.push(year + "/" + (year + 1));
 	}
 
@@ -83,20 +108,15 @@ const SecondaryRegisterForm = ({ initialRegistrationData }) => {
 		}
 	}, [degrees]);
 
-	const onSubmit = (data) => {
+	const onSubmit = async (data) => {
+		data.username = !data.username ? data.email.split("@")[0] : data.username;
 		console.log(data);
+		// data.user = !data.user ? data.email.split("@")[0] : data.user;
+		// await registerUser(data);
 	};
-	// const onSubmit = handleSubmit(async (data) => {
-	// 	data.fullName = data.username + " " + data.usersecondname + " " + data.userthirdname;
-	// 	delete data.username;
-	// 	delete data.usersecondname;
-	// 	delete data.userthirdname;
-	// 	data.user = !data.user ? data.email.split("@")[0] : data.user;
-	// 	await registerUser(data);
-	// });
 
 	return (
-		<div className="text-black">
+		<div className="text-black max-w-md">
 			<div>
 				{registerErrors.map((error, index) => (
 					<div key={index}>{error.message}</div>
@@ -104,7 +124,7 @@ const SecondaryRegisterForm = ({ initialRegistrationData }) => {
 			</div>
 			<div>
 				{areasErrors.map((error, index) => (
-					<div className="mt-4 text-red-500 font-semibold" key={index}>
+					<div className="mb-2 mt-4 text-red-500 font-semibold" key={index}>
 						{error.message}
 					</div>
 				))}
@@ -125,6 +145,7 @@ const SecondaryRegisterForm = ({ initialRegistrationData }) => {
 						disabled
 					/>
 				</div>
+
 				<div className="mb-4">
 					<input
 						className="w-full p-4 rounded-2xl h-12"
@@ -137,8 +158,9 @@ const SecondaryRegisterForm = ({ initialRegistrationData }) => {
 						})}
 						placeholder="*Nombre completo"
 					/>
-					{errors.fullName && <p className="mb-2">Hace falta un nombre</p>}
+					{errors.fullName && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta un nombre</p>}
 				</div>
+
 				<div className="mb-4">
 					<input
 						className="w-full p-4 rounded-2xl h-12"
@@ -150,8 +172,9 @@ const SecondaryRegisterForm = ({ initialRegistrationData }) => {
 						})}
 						placeholder="Nombre de usuario (opcional)"
 					/>
-					{errors.user && <p className="mb-2">Tiene que tener entre 3 y 20 caracteres</p>}
+					{errors.user && <p className="mb-2 mt-4 text-red-500 font-semibold">Tiene que tener entre 3 y 20 caracteres</p>}
 				</div>
+
 				<div className="mb-4">
 					<input
 						className="w-full p-4 rounded-2xl h-12"
@@ -163,8 +186,9 @@ const SecondaryRegisterForm = ({ initialRegistrationData }) => {
 						})}
 						placeholder="*Contraseña"
 					/>
-					{errors.password && <p className="mb-2">{errors.password.message}</p>}
+					{errors.password && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.password.message}</p>}
 				</div>
+
 				<div className="mb-4">
 					<input
 						className="w-full p-4 rounded-2xl h-12"
@@ -176,10 +200,12 @@ const SecondaryRegisterForm = ({ initialRegistrationData }) => {
 						})}
 						placeholder="*Contraseña (repetir)"
 					/>
-					{errors.password2 && <p className="mb-2">{errors.password2.message}</p>}
+					{errors.password2 && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.password2.message}</p>}
 				</div>
+
 				{showValidation && (passwordsMatch ? <span className="mb-4 block">Las contraseñas coinciden ✅</span> : <span className="mb-4 block">Las contraseñas no coinciden ❌</span>)}
-				{isUdEmailLive && (
+
+				{isEmailLive && (
 					<div className="mb-4 flex">
 						<div className="w-full">
 							<select
@@ -198,7 +224,7 @@ const SecondaryRegisterForm = ({ initialRegistrationData }) => {
 								<option value="ALUMN">Alumno</option>
 								<option value="ALUMNI">Exalumno</option>
 							</select>
-							{errors.academicRole && <p className="mb-2">Hace falta un cargo</p>}
+							{errors.academicRole && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta un cargo</p>}
 						</div>
 						{academicRole == "ALUMNI" && (
 							<div className="flex-none w-1/2">
@@ -220,12 +246,13 @@ const SecondaryRegisterForm = ({ initialRegistrationData }) => {
 										</option>
 									))}
 								</select>
-								{errors.promocion && <p className="mb-2">Hace falta un cargo</p>}
+								{errors.promocion && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta un cargo</p>}
 							</div>
 						)}
 					</div>
 				)}
-				{isUdEmailUtad && (
+
+				{isEmailUtad && (
 					<div className="mb-4 flex">
 						<div className="w-full">
 							<select
@@ -245,7 +272,7 @@ const SecondaryRegisterForm = ({ initialRegistrationData }) => {
 								<option value="COORDINATOR">Coordinador</option>
 								<option value="EMPLOYEE">Departamento</option>
 							</select>
-							{errors.academicRole && <p className="mb-2">Hace falta un cargo</p>}
+							{errors.academicRole && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta un cargo</p>}
 						</div>
 						{academicRole == "EMPLOYEE" && (
 							<div className="flex-none w-1/2">
@@ -267,34 +294,27 @@ const SecondaryRegisterForm = ({ initialRegistrationData }) => {
 										</option>
 									))}
 								</select>
-								{errors.departamento && <p className="mb-2">Hace falta un cargo</p>}
+								{errors.departamento && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta un cargo</p>}
 							</div>
 						)}
 					</div>
 				)}
+
 				<div className="mb-4">
-					<select
-						className="w3-select text-black w-full p-4 rounded-2xl overflow-hidden"
-						{...register("grade", {
-							required: true,
-							minLength: 3,
-						})}
-						name="grade"
-						defaultValue=""
-					>
-						<option value="" disabled hidden>
-							Grados
-						</option>
-						{degreeOptions.map(({ value, label }) => (
-							<option key={value} value={value}>
-								{label}
-							</option>
-						))}
-					</select>
-					{errors.grade && <p className="mb-2">Hace falta un cargo</p>}
+					<Select
+						options={degreeOptions}
+						onChange={(selectedOption) => {
+							setValue("grade", selectedOption.value);
+						}}
+						className="w-full border rounded-2xl leading-tight"
+						styles={selectStyles}
+						placeholder="Grados"
+					/>
+					{errors.grade && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta un cargo</p>}
 				</div>
+
 				<div className="mb-4">
-					<button className="w-full p-4 rounded-xl bg-blue-600 hover:bg-[#3f3f3f] text-white font-bold" type="submit">
+					<button className="w-full p-4 rounded-xl bg-blue-600 hover:bg-blue-400 text-white font-bold" type="submit">
 						REGISTRARSE
 					</button>
 				</div>

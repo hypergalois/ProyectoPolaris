@@ -197,9 +197,9 @@ const ProjectForm = () => {
 	}, [degreeOptions, awardOptions, currentProject]);
 
 	useEffect(() => {
-		const newThumbnail = {...thumbnail[0]};
+		const newThumbnail = { ...thumbnail[0] };
 		newThumbnail.name = "thumbnail";
-		
+
 		const files = [...uploadedFiles];
 		files.push(newThumbnail);
 
@@ -379,7 +379,7 @@ const ProjectForm = () => {
 							setSelectedCourseOption(selectedCourse);
 						}}
 						value={selectedCourseOption}
-						className="w-full  border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+						className="w-full border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 					/>
 				</div>
 
@@ -392,7 +392,7 @@ const ProjectForm = () => {
 							setSelectedLetterOption(selectedLetter);
 						}}
 						value={selectedLetterOption}
-						className="w-full  border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+						className="w-full border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 					/>
 				</div>
 

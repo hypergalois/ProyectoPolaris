@@ -46,7 +46,7 @@ const InitialRegisterForm = ({ onSuccess }) => {
 			</div>
 			<div className="mb-4 mt-8 text-black">
 				<input
-					className="w-full md:w-7/12 p-3 rounded-2xl h-12"
+					className="w-full md:w-9/12 p-3 rounded-2xl h-12"
 					type="text"
 					{...register("fullName", {
 						required: true,
@@ -59,7 +59,7 @@ const InitialRegisterForm = ({ onSuccess }) => {
 			</div>
 			<div className="mb-4 text-black">
 				<input
-					className="w-full md:w-7/12 p-3 rounded-2xl h-12"
+					className="w-full md:w-9/12 p-3 rounded-2xl h-12"
 					type="email"
 					{...register("email", {
 						required: true,
@@ -79,7 +79,7 @@ const InitialRegisterForm = ({ onSuccess }) => {
 				</Link>
 			</div>
 			<div className="mb-4">
-				<button type="submit" className="w-full md:w-7/12 h-12 rounded-xl bg-blue-600 hover:bg-blue-400 text-white font-bold">
+				<button type="submit" className="w-full md:w-9/12 h-12 rounded-xl bg-blue-600 hover:bg-blue-400 text-white font-bold">
 					REGISTRARSE
 				</button>
 			</div>
