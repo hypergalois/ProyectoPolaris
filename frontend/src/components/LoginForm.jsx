@@ -61,7 +61,7 @@ const LoginForm = () => {
 					{errors.password && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta una contraseña</p>}
 				</div>
 				<div className="mb-4">
-					<button className="w-full sm:w-5/12 h-12 px-3 sm:px-6 rounded-xl bg-[#2d2d2d] hover:bg-[#3f3f3f] text-white font-semibold" type="submit">
+					<button className="w-full sm:w-5/12 h-12 px-3 sm:px-6 rounded-xl bg-blue-600 hover:bg-blue-400 text-white font-semibold" type="submit">
 						Iniciar sesión
 					</button>
 				</div>
