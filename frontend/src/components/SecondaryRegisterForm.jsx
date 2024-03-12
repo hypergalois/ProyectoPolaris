@@ -1,9 +1,10 @@
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useAreas } from "../context/AreasContext";
 import { useState, useEffect } from "react";
 import Select from "react-select";
+import { DevTool } from "@hookform/devtools";
 
 const selectStyles = {
 	control: (provided) => ({
@@ -29,9 +30,10 @@ const selectStyles = {
 	}),
 };
 
-const SecondaryRegisterForm = ({ initialRegistrationData }) => {
+const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 	const {
 		register,
+		control,
 		handleSubmit,
 		watch,
 		clearErrors,
@@ -63,6 +65,8 @@ const SecondaryRegisterForm = ({ initialRegistrationData }) => {
 	// Esto ya no lo consiguemos del location sino que lo pasamos por props
 	// const { email, fullName } = location.state || {};
 	const { email, fullName } = initialRegistrationData || { email: "", fullName: "" };
+	console.log("Initial registration data", initialRegistrationData);
+	console.log(email, fullName);
 	// console.log(location.state);
 
 	// TODO LO QUITO POR AHORA
@@ -109,10 +113,19 @@ const SecondaryRegisterForm = ({ initialRegistrationData }) => {
 	}, [degrees]);
 
 	const onSubmit = async (data) => {
+		// Me da un error de required el email
+		console.log("Registrando usuario");
+		// console.log(data);
 		data.username = !data.username ? data.email.split("@")[0] : data.username;
+		// Supuestamente esta undefined asi que dirty hack
+		// Dirty hack, en backend deberiamos solo coger campos que nos interesen
+		delete data.password2;
+		data.email = email;
 		console.log(data);
+
 		// data.user = !data.user ? data.email.split("@")[0] : data.user;
-		// await registerUser(data);
+		await registerUser(data);
+		closePopup();
 	};
 
 	return (
@@ -136,7 +149,7 @@ const SecondaryRegisterForm = ({ initialRegistrationData }) => {
 						type="email"
 						value={email}
 						{...register("email", {
-							required: true,
+							required: false,
 							pattern: {
 								value: /\S+@\S+\.\S+/,
 								message: "El correo no es válido",
@@ -319,6 +332,7 @@ const SecondaryRegisterForm = ({ initialRegistrationData }) => {
 					</button>
 				</div>
 			</form>
+			<DevTool control={control} />
 		</div>
 	);
 };

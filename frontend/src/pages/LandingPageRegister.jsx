@@ -9,7 +9,7 @@ import NavBarNoAuth from "../components/NavBarNoAuth";
 import { Link } from "react-router-dom";
 import LandingPageBar from "../components/LandingPageBar";
 
-import Popup from "../components/Popup";
+import Popup from "../components/Popup.jsx";
 
 const HomePageRegister = () => {
 	// Vamos a manejar la visibilidad del popup del registro secundario
@@ -46,9 +46,18 @@ const HomePageRegister = () => {
 					<InitialRegisterForm onSuccess={handleOpenPopup} />
 				</div>
 			</div>
-			{/* <button onClick={handleOpenPopup}>Abrir popup</button> */}
+
+			{/* <div className=" flex items-center justify-center">
+				<button type="button" onClick={handleOpenPopup} className="rounded-md bg-black/20 px-4 py-2 text-sm font-medium text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+					Open dialog
+				</button>
+			</div> */}
+			{/* <PopupSecondaryRegisterForm openPopup={openPopup} closePopup={handleClosePopup} initialRegistrationData={initialRegistrationData}></PopupSecondaryRegisterForm> */}
+			{/* <Popup title="CREA TU CUENTA" openPopup={openPopup} closePopup={handleClosePopup}>
+				<SecondaryRegisterForm initialRegistrationData={initialRegistrationData} closePopup={handleClosePopup} />
+			</Popup> */}
 			<Popup title="CREA TU CUENTA" openPopup={openPopup} closePopup={handleClosePopup}>
-				<SecondaryRegisterForm initialRegistrationData={initialRegistrationData} />
+				<SecondaryRegisterForm initialRegistrationData={initialRegistrationData} closePopup={handleClosePopup} />
 			</Popup>
 		</>
 	);
