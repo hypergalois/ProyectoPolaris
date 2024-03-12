@@ -42,9 +42,11 @@ export const AuthProvider = ({ children }) => {
 	const login = async (user) => {
 		try {
 			const response = await loginRequest(user);
+			console.log(response.data.emailVerified);
 			setUser(response.data);
 			setIsAuthenticated(true);
-			setIsEmailVerified(true);
+			setIsEmailVerified(response.data.emailVerified);
+			// setIsEmailVerified(true);
 		} catch (error) {
 			if (Array.isArray(error.response.data)) {
 				setErrors(error.response.data);

@@ -269,6 +269,7 @@ export const login = async (req, res) => {
 		return res.status(200).json({
 			username: foundUser.username,
 			email: foundUser.email,
+			emailVerified: foundUser.emailVerified,
 		});
 	} catch (error) {
 		console.log(error);

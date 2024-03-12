@@ -19,10 +19,11 @@ function ProtectedRoute() {
 		return <Navigate to="/" replace />;
 	}
 
-	if (!loading && isAuthenticated && !isEmailVerified && location.pathname !== "/verify-email") {
-		console.log("Redirecting to verify email");
-		return <Navigate to="/verify-email" replace />;
-	}
+	// if (!loading && isAuthenticated && !isEmailVerified) {
+	// 	console.log("Redirecting to verify email");
+	// 	console.log(isEmailVerified, isAuthenticated, loading, location.pathname);
+	// 	return <Navigate to="/verify-email" replace />;
+	// }
 
 	return (
 		<>
