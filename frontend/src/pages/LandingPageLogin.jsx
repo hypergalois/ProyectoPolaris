@@ -22,7 +22,7 @@ const HomePage = () => {
 						<h2>Descubre y conecta con los proyectos que están dando forma al futuro digital en U-Tad</h2>
 					</div>
 					<LoginForm />
-					<footer className="text-sm mt-8 md:mt-16">
+					<footer className="text-sm mt-8 md:mt-12">
 						<p>
 							¿Olvidaste tu contraseña?{" "}
 							<Link className="underline decoration-solid decoration-1" to="/forgot-password">
