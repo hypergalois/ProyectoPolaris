@@ -28,7 +28,7 @@ const InitialRegisterForm = ({ onSuccess }) => {
 				return;
 			}
 			// Ahora ya no necesitamos navegar, sino que queremos que se abra el popup
-			onSuccess();
+			onSuccess(data);
 			// navigate("/register/details", { state: { email: data.email, fullName: data.fullName } });
 		} catch {
 			console.log("Error al verificar el correo.");

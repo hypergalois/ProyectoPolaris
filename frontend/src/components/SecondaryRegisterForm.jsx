@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { useAreas } from "../context/AreasContext";
 import { useState, useEffect } from "react";
 
-const SecondaryRegisterForm = () => {
+const SecondaryRegisterForm = ({ initialRegistrationData }) => {
 	const {
 		register,
 		handleSubmit,
@@ -35,7 +35,9 @@ const SecondaryRegisterForm = () => {
 		setPasswordsMatch(match);
 	}, [password, password2, clearErrors, setError, showValidation]);
 
-	const { email, fullName } = location.state || {};
+	// Esto ya no lo consiguemos del location sino que lo pasamos por props
+	// const { email, fullName } = location.state || {};
+	const { email, fullName } = initialRegistrationData || { email: "", fullName: "" };
 	// console.log(location.state);
 
 	// TODO LO QUITO POR AHORA

@@ -14,8 +14,12 @@ import Popup from "../components/Popup";
 const HomePageRegister = () => {
 	// Vamos a manejar la visibilidad del popup del registro secundario
 	const [openPopup, setOpenPopup] = useState(false);
+	const [initialRegistrationData, setInitialRegistrationData] = useState({ email: "", fullName: "" });
 
-	const handleOpenPopup = () => {
+	console.log(initialRegistrationData);
+
+	const handleOpenPopup = (data) => {
+		setInitialRegistrationData(data);
 		setOpenPopup(true);
 	};
 
@@ -44,7 +48,7 @@ const HomePageRegister = () => {
 			</div>
 			{/* <button onClick={handleOpenPopup}>Abrir popup</button> */}
 			<Popup title="CREA TU CUENTA" openPopup={openPopup} closePopup={handleClosePopup}>
-				<SecondaryRegisterForm />
+				<SecondaryRegisterForm initialRegistrationData={initialRegistrationData} />
 			</Popup>
 		</>
 	);
