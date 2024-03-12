@@ -8,6 +8,9 @@ const SecondaryRegisterForm = () => {
 	const {
 		register,
 		handleSubmit,
+		watch,
+		clearErrors,
+		setError,
 		formState: { errors },
 	} = useForm();
 	// Pongo registerUser para evitar colisiones con el hook register
@@ -16,22 +19,43 @@ const SecondaryRegisterForm = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 
-	const { email } = location.state || {};
+	const [passwordsMatch, setPasswordsMatch] = useState(true);
+	const [showValidation, setShowValidation] = useState(false);
+
+	const password = watch("password");
+	const password2 = watch("password2");
+
+	// Queremos que se muestre el mensaje de error si el usuario ha escrito algo en los campos de contraseña en ambos campos
+	useEffect(() => {
+		if (password && password2) {
+			setShowValidation(true);
+		}
+
+		const match = password === password2 && password?.length > 0;
+		setPasswordsMatch(match);
+	}, [password, password2, clearErrors, setError, showValidation]);
+
+	const { email, fullName } = location.state || {};
+	// console.log(location.state);
+
 	const isUdEmailUtad = email.endsWith("@u-tad.com");
 	const isUdEmailLive = email.endsWith("@live.u-tad.com");
 
+	// No entiendo que signfica 1, puede que se corresponda en el enum pero no es nada legible, TODO CAMBIARLO
 	const [academicRole, setAcademicRole] = useState("1"); // Define academicRole state
 
 	const departments = [];
+
 	const [degreeOptions, setDegreeOptions] = useState([]);
+
 	const years = [];
+
 	for (let year = 2012; year <= 2022; year++) {
 		years.push(year + "/" + (year + 1));
 	}
 
-	// Handler for select change event
 	const handleAcademicRoleChange = (event) => {
-		setAcademicRole(event.target.value); // Update academicRole state
+		setAcademicRole(event.target.value);
 	};
 
 	useEffect(() => {
@@ -54,14 +78,17 @@ const SecondaryRegisterForm = () => {
 		}
 	}, [degrees]);
 
-	const onSubmit = handleSubmit(async (data) => {
-		data.fullName = data.username + " " + data.usersecondname + " " + data.userthirdname;
-		delete data.username;
-		delete data.usersecondname;
-		delete data.userthirdname;
-		data.user = !data.user ? data.email.split("@")[0] : data.user;
-		await registerUser(data);
-	});
+	const onSubmit = (data) => {
+		console.log(data);
+	};
+	// const onSubmit = handleSubmit(async (data) => {
+	// 	data.fullName = data.username + " " + data.usersecondname + " " + data.userthirdname;
+	// 	delete data.username;
+	// 	delete data.usersecondname;
+	// 	delete data.userthirdname;
+	// 	data.user = !data.user ? data.email.split("@")[0] : data.user;
+	// 	await registerUser(data);
+	// });
 
 	return (
 		<div className="text-black">
@@ -77,73 +104,76 @@ const SecondaryRegisterForm = () => {
 					</div>
 				))}
 			</div>
-			<form onSubmit={onSubmit}>
-				<input type="hidden" value={email} {...register("email")} />
+			<form onSubmit={handleSubmit(onSubmit)}>
 				<div className="mb-4">
 					<input
-						className="w-full p-4 rounded-2xl"
+						className="w-full p-4 rounded-2xl h-12"
+						type="email"
+						value={email}
+						{...register("email", {
+							required: true,
+							pattern: {
+								value: /\S+@\S+\.\S+/,
+								message: "El correo no es válido",
+							},
+						})}
+						disabled
+					/>
+				</div>
+				<div className="mb-4">
+					<input
+						className="w-full p-4 rounded-2xl h-12"
+						type="text"
+						value={fullName}
+						{...register("fulName", {
+							required: true,
+							minLength: 3,
+							maxLength: 20,
+						})}
+						placeholder="*Nombre completo"
+					/>
+					{errors.fullName && <p className="mb-2">Hace falta un nombre</p>}
+				</div>
+				<div className="mb-4">
+					<input
+						className="w-full p-4 rounded-2xl h-12"
 						type="text"
 						{...register("username", {
-							required: true,
-							minLength: 3,
-							maxLength: 20,
-						})}
-						placeholder="Nombre"
-					/>
-					{errors.username && <p className="mb-2">Hace falta un nombre de usuario</p>}
-				</div>
-				<div className="mb-4">
-					<input
-						className="w-full p-4 rounded-2xl"
-						type="text"
-						{...register("usersecondname", {
-							required: true,
-							minLength: 3,
-							maxLength: 20,
-						})}
-						placeholder="Primer Apellido"
-					/>
-					{errors.usersecondname && <p className="mb-2">Hace falta los apellidos</p>}
-				</div>
-				<div className="mb-4">
-					<input
-						className="w-full p-4 rounded-2xl"
-						type="text"
-						{...register("userthirdname", {
-							required: true,
-							minLength: 3,
-							maxLength: 20,
-						})}
-						placeholder="Segundo Apellido"
-					/>
-					{errors.userthirdname && <p className="mb-2">Hace falta los apellidos</p>}
-				</div>
-				<div className="mb-4">
-					<input
-						className="w-full p-4 rounded-2xl"
-						type="text"
-						{...register("user", {
 							required: false,
 							minLength: 3,
 							maxLength: 20,
 						})}
-						placeholder="Usuario (opcional)"
+						placeholder="Nombre de usuario (opcional)"
 					/>
 					{errors.user && <p className="mb-2">Tiene que tener entre 3 y 20 caracteres</p>}
 				</div>
 				<div className="mb-4">
 					<input
-						className="w-full p-4 rounded-2xl"
+						className="w-full p-4 rounded-2xl h-12"
 						type="password"
 						{...register("password", {
-							required: true,
+							required: "La contraseña es obligatoria",
 							minLength: 3,
 							maxLength: 20,
 						})}
-						placeholder="Contraseña"
+						placeholder="*Contraseña"
 					/>
-					{errors.user && <p className="mb-2">Tiene que tener entre 3 y 20 caracteres</p>}
+					{errors.password && <p className="mb-2">{errors.password.message}</p>}
 				</div>
+				<div className="mb-4">
+					<input
+						className="w-full p-4 rounded-2xl h-12"
+						type="password"
+						{...register("password2", {
+							required: "Tienes que repetir la contraseña",
+							minLength: 3,
+							maxLength: 20,
+						})}
+						placeholder="*Contraseña (repetir)"
+					/>
+					{errors.password2 && <p className="mb-2">{errors.password2.message}</p>}
+				</div>
+				{showValidation && (passwordsMatch ? <span className="mb-4 block">Las contraseñas coinciden ✅</span> : <span className="mb-4 block">Las contraseñas no coinciden ❌</span>)}
 				{isUdEmailLive && (
 					<div className="mb-4 flex">
 						<div className="w-full">
@@ -259,8 +289,8 @@ const SecondaryRegisterForm = () => {
 					{errors.grade && <p className="mb-2">Hace falta un cargo</p>}
 				</div>
 				<div className="mb-4">
-					<button className="w-full p-4 rounded-xl bg-[#2d2d2d] hover:bg-[#3f3f3f] text-white" type="submit">
-						Registrarse
+					<button className="w-full p-4 rounded-xl bg-blue-600 hover:bg-[#3f3f3f] text-white font-bold" type="submit">
+						REGISTRARSE
 					</button>
 				</div>
 			</form>

@@ -10,19 +10,27 @@ const InitialRegisterForm = () => {
 		handleSubmit,
 		formState: { errors },
 		getValues,
+		setError,
+		clearErrors,
 	} = useForm();
-	// eslint-disable-next-line no-unused-vars
-	const [email, setEmail] = useState("");
+
 	const { existEmail, getExistEmail, errors: userErrors } = useAuth();
+
 	const navigate = useNavigate();
 
-	const getExistEmailRequest = async (email) => {
-		getExistEmail({ email: email });
-		return await existEmail;
-	};
-
-	const onSubmit = (data) => {
-		navigate(`/register/details`, { state: { email: data.email } });
+	const onSubmit = async (data) => {
+		// console.log(data);
+		try {
+			const emailExists = await getExistEmail({ email: data.email });
+			// console.log(emailExists);
+			if (emailExists) {
+				setError("email", { message: "El correo ya está en uso." });
+				return;
+			}
+			navigate("/register/details", { state: { email: data.email, fullName: data.fullName } });
+		} catch {
+			console.log("Error al verificar el correo.");
+		}
 	};
 
 	return (
@@ -38,10 +46,10 @@ const InitialRegisterForm = () => {
 				<input
 					className="w-full md:w-7/12 p-3 rounded-2xl h-12"
 					type="text"
-					{...register("username", {
+					{...register("fullName", {
 						required: true,
-						minLength: 3,
-						maxLength: 20,
+						minLength: 10,
+						maxLength: 50,
 					})}
 					placeholder="*Nombre completo"
 				/>
@@ -55,11 +63,9 @@ const InitialRegisterForm = () => {
 						required: true,
 						pattern: {
 							value: /^[a-zA-Z0-9._%+-]+@(u-tad\.com|live\.u-tad\.com)$/i,
-							message: "El correo tiene que ser de la Utad",
+							message: "El correo tiene que ser de la U-Tad",
 						},
-						validate: {
-							checkUrl: async () => (await getExistEmailRequest(getValues("email"))) || "El correo ya esta en uso",
-						},
+						validated: () => !emailChecked,
 					})}
 					placeholder="*Correo de la U-Tad"
 				/>

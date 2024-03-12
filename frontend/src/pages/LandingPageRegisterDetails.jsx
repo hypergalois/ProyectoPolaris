@@ -8,9 +8,9 @@ const HomePageRegister = () => {
 			<NavBarNoAuth />
 			<div className="items-center">
 				<LandingPageBar />
-				<div className="flex justify-center h-screen">
+				<div className="flex justify-center">
 					<div className="mx-auto text-center">
-						<div className="text-4xl mb-4">
+						<div className="mb-4 text-5xl font-bold">
 							<h1>CREA TU CUENTA</h1>
 						</div>
 						<SecondaryRegisterForm />

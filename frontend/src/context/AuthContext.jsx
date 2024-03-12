@@ -13,9 +13,9 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-    const [existEmail, setExistEmail] = useState(false);
+	const [existEmail, setExistEmail] = useState(false);
 	const [userRole, setUserRole] = useState(null);
-    const [profile, setProfile] = useState([]);
+	const [profile, setProfile] = useState([]);
 	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [errors, setErrors] = useState([]);
@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
 			const response = await loginRequest(user);
 			setUser(response.data);
 			setIsAuthenticated(true);
-			setIsEmailVerified(true)
+			setIsEmailVerified(true);
 		} catch (error) {
 			if (Array.isArray(error.response.data)) {
 				setErrors(error.response.data);
@@ -66,16 +66,19 @@ export const AuthProvider = ({ children }) => {
 		}
 	};
 
-    const getExistEmail = async (email) => {
+	const getExistEmail = async (email) => {
 		try {
 			const response = await checkEmailRequest(email);
-			setExistEmail(!response.data.userExists);
+			console.log(response.data.userExists);
+			setExistEmail(response.data.userExists);
+			return response.data.userExists;
 		} catch (error) {
 			if (Array.isArray(error.response.data)) {
 				setErrors(error.response.data);
 			} else {
 				setErrors([error.response.data]);
 			}
+			return true;
 		}
 	};
 
@@ -202,18 +205,18 @@ export const AuthProvider = ({ children }) => {
 		<AuthContext.Provider
 			value={{
 				user,
-                userRole,
+				userRole,
 				register,
 				login,
 				logout,
 				forgotPassword,
 				resetPassword,
 				verifyEmail,
-                existEmail,
-                getExistEmail,
-                profile,
-                getProfile,
-                getUserRole,
+				existEmail,
+				getExistEmail,
+				profile,
+				getProfile,
+				getUserRole,
 				loading,
 				errors,
 				isAuthenticated,
