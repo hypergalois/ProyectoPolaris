@@ -55,7 +55,7 @@ function NavBar() {
 			<Disclosure as="nav" className="bg-blue-600 fixed z-50 w-full top-0">
 				{({ open }) => (
 					<>
-						<div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+						<div className="mx-auto px-2 sm:px-6 lg:px-8">
 							<div className="relative flex items-center justify-between h-16">
 								<div className="inset-y-0 left-0 flex items-center sm:hidden mr-2">
 									<Disclosure.Button className="inline-flex items-center justify-center p-2 text-white hover:bg-blue-400">{open ? <XMarkIcon className="block h-6 w-6" /> : <Bars3Icon className="block h-6 w-6" />}</Disclosure.Button>

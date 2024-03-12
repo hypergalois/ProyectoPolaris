@@ -108,7 +108,8 @@ model Project {
 
   pinned Boolean? @default(false)
 
-  subject String?
+  subjectId String?  @db.ObjectId
+  subject   Subject? @relation(fields: [subjectId], references: [id])
 
   areaId String? @db.ObjectId
   area   Area?   @relation(fields: [areaId], references: [id])
@@ -135,6 +136,8 @@ model Subject {
 
   degreesId String[] @db.ObjectId
   degrees   Degree[] @relation(fields: [degreesId], references: [id])
+
+  projects Project[]
 
   @@map("subjects")
 }

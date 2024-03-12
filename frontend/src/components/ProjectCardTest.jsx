@@ -5,9 +5,9 @@ import CardContent from "@mui/joy/CardContent";
 import Typography from "@mui/joy/Typography";
 import GroupIcon from "@mui/icons-material/Group";
 
-function ProjectCard() {
+const ProjectCard = ({ project }) => {
 	return (
-		<Card sx={{ minHeight: "280px", width: 320 }}>
+		<Card sx={{ minHeight: "650px"}}>
 			<CardCover>
 				<img src="https://images.unsplash.com/photo-1542773998-9325f0a098d7?auto=format&fit=crop&w=320" srcSet="https://images.unsplash.com/photo-1542773998-9325f0a098d7?auto=format&fit=crop&w=320&dpr=2 2x" loading="lazy" alt="" />
 			</CardCover>
@@ -31,7 +31,7 @@ function ProjectCard() {
 			/>
 			<CardContent sx={{ justifyContent: "flex-end" }}>
 				<Typography level="title-lg" textColor="#fff">
-					Titulo del proyecto
+                    {project.title}
 				</Typography>
 				<Typography startDecorator={<GroupIcon />} textColor="neutral.300">
 					Nombre de los alumnos
