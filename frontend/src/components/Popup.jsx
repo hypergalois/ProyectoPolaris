@@ -14,6 +14,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const Popup = ({ title, children, openPopup, closePopup }) => {
 	return (
+		// OJO, con la anchura maximo, el div de dentro la puede hacer mas grande aunque tenga el maxWidht
+		// Aparte que los popups de ordendador van a ser mas grandes asi que TODO
 		<Dialog open={openPopup} onClose={closePopup} maxWidth="md" TransitionComponent={Transition}>
 			<DialogTitle>
 				<div className="flex justify-between items-center w-full">

@@ -7,7 +7,7 @@ import GroupIcon from "@mui/icons-material/Group";
 
 const ProjectCard = ({ project }) => {
 	return (
-		<Card sx={{ minHeight: "650px"}}>
+		<Card sx={{ minHeight: "300px" }}>
 			<CardCover>
 				<img src="http://localhost:5173/thumbnail_default.jpeg" srcSet="http://localhost:5173/thumbnail_default.jpeg" loading="lazy" alt="" />
 			</CardCover>
@@ -31,7 +31,7 @@ const ProjectCard = ({ project }) => {
 			/>
 			<CardContent sx={{ justifyContent: "flex-end" }}>
 				<Typography level="title-lg" textColor="#fff">
-                    {project.title}
+					{project.title}
 				</Typography>
 				<Typography startDecorator={<GroupIcon />} textColor="neutral.300">
 					Nombre de los alumnos
@@ -39,6 +39,6 @@ const ProjectCard = ({ project }) => {
 			</CardContent>
 		</Card>
 	);
-}
+};
 
 export default ProjectCard;

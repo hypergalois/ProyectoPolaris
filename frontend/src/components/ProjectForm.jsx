@@ -104,12 +104,12 @@ const ProjectForm = ({ closePopup }) => {
 
 	const degreeOptions = useRef([]);
 	const awardOptions = useRef([]);
-    const subjectOptions = useRef([]);
+	const subjectOptions = useRef([]);
 	const [selectedCourseOption, setSelectedCourseOption] = useState("");
 	const [selectedLetterOption, setSelectedLetterOption] = useState("");
 	const [selectedDegreeOption, setSelectedDegreeOption] = useState("");
 	const [selectedAwardOption, setSelectedAwardOption] = useState("");
-    const [selectedSubjectOption, setSelectedSubjectOption] = useState("");
+	const [selectedSubjectOption, setSelectedSubjectOption] = useState("");
 
 	useEffect(() => {
 		// console.log("useEffect");
@@ -132,7 +132,7 @@ const ProjectForm = ({ closePopup }) => {
 
 		console.log("CurrentProject", currentProject);
 
-        console.log("SELECTEDDEGREEOPTION", selectedDegreeOption.value)
+		console.log("SELECTEDDEGREEOPTION", selectedDegreeOption.value);
 	}, [selectedDegreeOption]);
 
 	useEffect(() => {
@@ -147,30 +147,27 @@ const ProjectForm = ({ closePopup }) => {
 				}
 			});
 		}
-
 	}, [degrees]);
 
-    useEffect(() => {
+	useEffect(() => {
+		getSubjectsByDegree(selectedDegreeOption.value);
 
-        getSubjectsByDegree(selectedDegreeOption.value);
-
-        console.log("subjectsByDegree", subjectsByDegree);
+		console.log("subjectsByDegree", subjectsByDegree);
 
 		if (subjectsByDegree) {
-            subjectsByDegree.map((subjectsByDegree) => {
-                const newSubject = { value: subjectsByDegree.id, label: subjectsByDegree.name, degreesId: subjectsByDegree.degreesId};
-                const isInSubjectOptions = subjectOptions.current.some((subjectOption) => {
-                    return JSON.stringify(subjectOption) === JSON.stringify(newSubject);
-                });
-                if (!isInSubjectOptions) {
-                    subjectOptions.current.push(newSubject);
-                }
-            });
-        }
+			subjectsByDegree.map((subjectsByDegree) => {
+				const newSubject = { value: subjectsByDegree.id, label: subjectsByDegree.name, degreesId: subjectsByDegree.degreesId };
+				const isInSubjectOptions = subjectOptions.current.some((subjectOption) => {
+					return JSON.stringify(subjectOption) === JSON.stringify(newSubject);
+				});
+				if (!isInSubjectOptions) {
+					subjectOptions.current.push(newSubject);
+				}
+			});
+		}
 
-        console.log("subjectOption", subjectOptions.current)
-
-    }, [selectedDegreeOption]);
+		console.log("subjectOption", subjectOptions.current);
+	}, [selectedDegreeOption]);
 
 	useEffect(() => {
 		if (awards) {
@@ -187,12 +184,11 @@ const ProjectForm = ({ closePopup }) => {
 	}, [awards]);
 
 	useEffect(() => {
-		if (degreeOptions.current.length > 0 && awardOptions.current.length > 0  && verifyPropertiesProject(currentProject)) {
-			
-            console.log("YA ENTRA")
-            console.log(currentProject);
+		if (degreeOptions.current.length > 0 && awardOptions.current.length > 0 && verifyPropertiesProject(currentProject)) {
+			console.log("YA ENTRA");
+			console.log(currentProject);
 			console.log(degreeOptions);
-            console.log(subjectOptions);
+			console.log(subjectOptions);
 			setValue("title", currentProject.title);
 			setValue("description", currentProject.description);
 			setValue("subject", currentProject.subject);
@@ -204,8 +200,8 @@ const ProjectForm = ({ closePopup }) => {
 			setSelectedLetterOption(letterOptions.filter(({ value }) => value === currentProject.letter));
 			setValue("degree", currentProject.degreeId);
 			setSelectedDegreeOption(degreeOptions.current.filter(({ value }) => value === currentProject.degreeId));
-            setValue("subject", currentProject.subject);
-            setSelectedSubjectOption(subjectOptions.current.filter(({ value }) => value === currentProject.subject));
+			setValue("subject", currentProject.subject);
+			setSelectedSubjectOption(subjectOptions.current.filter(({ value }) => value === currentProject.subject));
 
 			currentProject.externalLinks.map((value, index) => {
 				updateLink(index, value);
@@ -287,8 +283,11 @@ const ProjectForm = ({ closePopup }) => {
 		// navigate("/home");
 	};
 
+	// Hacer que se guarde el estado del formulario aunque te salgas del popup o no  nose
+
 	return (
-		<div className="flex items-center justify-center min-h-screen my-8">
+		// Max width por ahora
+		<div className="flex items-center justify-center min-h-screen my-8 max-w-md">
 			<form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-fit bg-white  rounded px-8 pt-6 pb-8 mb-4 grid gap-4 md:grid-cols-2">
 				<div className="mb-4 md:col-span-2">
 					<h3 className="block text-gray-700 text-sm font-bold mb-2">Título</h3>
@@ -433,13 +432,13 @@ const ProjectForm = ({ closePopup }) => {
 				<div className="mb-4 md:col-span-2">
 					<h3 className="block text-gray-700 text-sm font-bold mb-2">Asignatura</h3>
 					<Select
-                        options={subjectOptions.current}
-                        onChange={(selectedSubject) => {
-                            setValue("subject", selectedSubject.value);
-                            setSelectedSubjectOption(selectedSubject);
-                        }}
-                        className="w-full border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    />
+						options={subjectOptions.current}
+						onChange={(selectedSubject) => {
+							setValue("subject", selectedSubject.value);
+							setSelectedSubjectOption(selectedSubject);
+						}}
+						className="w-full border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+					/>
 				</div>
 
 				<div className="mb-4 md:col-span-2">
@@ -473,7 +472,7 @@ const ProjectForm = ({ closePopup }) => {
 									removeLink(index);
 									setValue(`externalLinks.${index}`, "");
 								}}
-                                value={selectedSubjectOption}
+								value={selectedSubjectOption}
 								className="ml-2 bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
 							>
 								Eliminar
