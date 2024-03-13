@@ -10,6 +10,7 @@ import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 import HomePage from "./pages/HomePage";
+import HomePageNew from "./pages/HomePageNew";
 
 import DashboardPage from "./pages/DashboardPage";
 import ProjectsFormPage from "./pages/ProjectsFormPage";
@@ -59,6 +60,7 @@ function App() {
 										<Route path="/verify-email" element={<VerifyEmailPage />} />
 										{/* Pagina home pero que salen proyectos y noticias una vez estas logeado */}
 										<Route path="/home" element={<HomePage />} />
+                                        <Route path="/home-new" element={<HomePageNew />} />
 										{/* Pagina dashboard donde se veran las peticiones */}
 										<Route path="/dashboard" element={<DashboardPage />} />
 										{/* Pagina de proyectos para buscarlos */}
