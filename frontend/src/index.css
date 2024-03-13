@@ -20,7 +20,8 @@ body {
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 
-	@apply bg-[url('hola.png')] bg-cover bg-center min-h-screen;
+	@apply bg-[url('hola.png')] bg-cover bg-fixed bg-center;
+	min-height: 100%;
 
 	/* -moz-osx-font-smoothing: grayscale; */
 }
