@@ -36,7 +36,7 @@ function App() {
 					<RequestsProvider>
 						<Router>
 							{/* Es para tener en cuenta la navbar y que todo aparezca más abajo ya que al ser absolute no cuenta */}
-							<main className="bg-[url('hola.png')] bg-cover bg-center h-screen backdrop-opacity-5 pt-24">
+							<main className="pt-24 h-full">
 								{/* Seria cutre pero se puede mostrar navbarnoauth o navbarauth dependiendo del estado */}
 								<Routes>
 									{/* Home page sin logearse, sale el formulario de login */}
@@ -52,6 +52,7 @@ function App() {
 									{/* Dejo la pagina de añadir proyectos fuera de la ruta protegida para poder probarla */}
 									{/* <Route path="/projects/new" element={<ProjectsFormPage />} /> */}
 									<Route element={<ProtectedRoute />}>
+										{/* Meto un div aqui para meter el padding que no puede ir en el main porque las paginas de pc no tienen navbar */}
 										{/* Pagina 404, va dentro del protected para que se muestre la navbar y porque fuera si no estas logeado te devuelve a home automaticamente */}
 										<Route path="*" element={<NotFoundPage />} />
 										{/* Pagina de verificacion de email */}

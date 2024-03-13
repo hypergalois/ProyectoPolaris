@@ -46,16 +46,6 @@ const HomePageRegister = () => {
 					<InitialRegisterForm onSuccess={handleOpenPopup} />
 				</div>
 			</div>
-
-			{/* <div className=" flex items-center justify-center">
-				<button type="button" onClick={handleOpenPopup} className="rounded-md bg-black/20 px-4 py-2 text-sm font-medium text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
-					Open dialog
-				</button>
-			</div> */}
-			{/* <PopupSecondaryRegisterForm openPopup={openPopup} closePopup={handleClosePopup} initialRegistrationData={initialRegistrationData}></PopupSecondaryRegisterForm> */}
-			{/* <Popup title="CREA TU CUENTA" openPopup={openPopup} closePopup={handleClosePopup}>
-				<SecondaryRegisterForm initialRegistrationData={initialRegistrationData} closePopup={handleClosePopup} />
-			</Popup> */}
 			<Popup title="CREA TU CUENTA" openPopup={openPopup} closePopup={handleClosePopup}>
 				<SecondaryRegisterForm initialRegistrationData={initialRegistrationData} closePopup={handleClosePopup} />
 			</Popup>

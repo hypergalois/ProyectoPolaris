@@ -13,7 +13,7 @@ const HomePage = () => {
 			<LandingPageAnimation />
 			<LandingPageBar />
 
-			<div className="flex flex-col justify-center items-center w-full px-4 pb-6">
+			<div className="flex flex-col justify-center items-center w-full px-4 ">
 				<div className="mx-auto text-center">
 					<div className="text-5xl md:text-8xl font-bold mb-4 md:mb-8">
 						<h1>¡Bienvenido!</h1>
