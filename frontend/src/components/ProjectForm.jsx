@@ -111,7 +111,6 @@ const ProjectForm = ({ closePopup }) => {
 	const [selectedAwardOption, setSelectedAwardOption] = useState("");
     const [selectedSubjectOption, setSelectedSubjectOption] = useState("");
 
-	// No se como hacer que solo salga un estudiante
 	useEffect(() => {
 		// console.log("useEffect");
 		console.log("Params", params);

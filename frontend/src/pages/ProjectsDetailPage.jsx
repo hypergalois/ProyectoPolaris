@@ -3,10 +3,14 @@ import ProjectDetails from "../components/ProjectDetails";
 
 function ProjectDetail() {
 	return (
-		<>
-			<h1>ProjectDetail</h1>
-			<ProjectDetails />
-		</>
+		<div className="items-center">
+			<div className="flex justify-center h-screen">
+				<div className="mx-auto text-center">
+					<h1>ProjectDetail</h1>
+					<ProjectDetails />
+				</div>
+			</div>
+		</div>
 	);
 }
 
