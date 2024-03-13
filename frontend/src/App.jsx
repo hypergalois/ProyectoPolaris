@@ -36,7 +36,7 @@ function App() {
 					<RequestsProvider>
 						<Router>
 							{/* Es para tener en cuenta la navbar y que todo aparezca más abajo ya que al ser absolute no cuenta */}
-							<main className="mt-24">
+							<main className="bg-[url('hola.png')] bg-cover bg-center h-screen backdrop-opacity-5 pt-24">
 								{/* Seria cutre pero se puede mostrar navbarnoauth o navbarauth dependiendo del estado */}
 								<Routes>
 									{/* Home page sin logearse, sale el formulario de login */}
