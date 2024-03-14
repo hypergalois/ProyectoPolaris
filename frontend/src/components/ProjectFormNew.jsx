@@ -538,7 +538,7 @@ const ProjectForm = ({ closePopup }) => {
 
                 <div className="mb-4 md:col-span-2">
 					<label className="block text-gray-700 text-sm font-bold mb-2">Archivos del proyecto</label>
-					<DropzoneInput multiple name="uploadedContent" />
+					<DropzoneInput multiple name="uploadedContent" accept="image/png, image/jpg, image/jpeg, image/gif" />
 				</div>
 
 				<div className="mb-4 md:col-span-2">
