@@ -345,8 +345,8 @@ const ProjectForm = ({ closePopup }) => {
         const files = data.uploadedContent ? [...data.uploadedContent] : [];
         // Cambio de nombre del archivo del thumbnail
         if (data.thumbnail[0]) {
-            const newFileName = `thumbnail.${data.thumbnail[0].name.split(".").pop()}`;
-            const thumbnail = new File([data.thumbnail[0]], newFileName, { type });
+            const type = data.thumbnail[0].name.split(".").pop();
+            const thumbnail = new File([data.thumbnail[0]], `thumbnail.${type}`, { type });
             files.push(thumbnail);
         }
         // Se juntan todos los archivos en un array
@@ -538,12 +538,18 @@ const ProjectForm = ({ closePopup }) => {
 
                 <div className="mb-4 md:col-span-2">
 					<label className="block text-gray-700 text-sm font-bold mb-2">Archivos del proyecto</label>
-					<DropzoneInput multiple name="uploadedContent" accept="image/png, image/jpg, image/jpeg, image/gif" />
+					<DropzoneInput name="uploadedContent" />
+                    {errors.uploadedContent && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.uploadedContent.message}{console.log(errors.uploadedContent)}</p>}
 				</div>
 
 				<div className="mb-4 md:col-span-2">
 					<label className="block text-gray-700 text-sm font-bold mb-2">Thumbnail</label>
-					<DropzoneInput name="thumbnail" maxfiles="1" />
+					<DropzoneInput
+                        name="thumbnail"
+                        maxFiles="1"
+                        accept={{'image/jpeg': [], 'image/png': []}}
+                    />
+                    {errors.thumbnail && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.thumbnail.message}{console.log(errors.thumbnail)}</p>}
 				</div>
 
                 <div className="mb-4 md:col-span-2">

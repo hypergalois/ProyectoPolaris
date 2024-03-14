@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useDropzone } from "react-dropzone";
 import { useFormContext } from 'react-hook-form'
 
@@ -28,31 +28,27 @@ const rejectStyle = {
 	borderColor: "#ff1744",
 };
 
-const DropzoneInput = (props) => {
-    const { name, label = name } = props;
-
+const DropzoneInput = ({ name, ...rules }) => {
     const {
         register,
         unregister,
         setValue,
-        watch,
+        setError,
+        watch
     } = useFormContext();
-
-    const files = watch(name);
-
-    useEffect(() => {
-        console.log(files);
-        console.log(watch(name));
-    }, [files, name]);
 
     const onDrop = useCallback(
         (droppedFiles) => {
-          setValue(name, droppedFiles, { shouldValidate: true })
+            if (droppedFiles?.[0]?.path){
+                setValue(name, droppedFiles);
+            }
         },
         [setValue, name]
     );
 
     const {
+        acceptedFiles,
+        fileRejections,
         getRootProps,
         getInputProps,
         isDragActive,
@@ -60,8 +56,7 @@ const DropzoneInput = (props) => {
         isDragReject
     } = useDropzone({
         onDrop,
-        accept: props.accept,
-        maxFiles: props.maxfiles
+        ...rules
     });
 
 	const style = useMemo(
@@ -79,18 +74,48 @@ const DropzoneInput = (props) => {
         return () => {
             unregister(name)
         }
-      }, [register, unregister, name]);
+    }, [register, unregister, name]);
+
+    const files = watch(name);
+
+    useEffect(() => {
+        if (fileRejections) {
+            fileRejections.map(({ file, errors }) => {
+                errors.map(err => {
+                    const error = { type: err.code, message: err.message };
+                    if (err.code === "too-many-files") {
+                        const maxNumFiles = rules.maxFiles;
+                        error.message = (maxNumFiles == 1 ? 
+                            "Se han proporcionado demasiados archivos, solo se subirá el primero de ellos" :
+                            `Se han proporcionado demasiados archivos, solo se subirán los ${maxNumFiles} primeros`
+                        );
+                    }
+                    setError(name, error);
+                });
+            });
+        }
+    }, [fileRejections]);
+
+    const [acceptedFilesList, setAcceptedFilesList] = useState(null);
+    useEffect(() => {
+        if (files?.length > 0) {
+            console.log(files);
+            const filesList = (
+                <ul>
+                    { files.map(file => <li key={`${file?.path}`}>{file?.name ? file.name : "Archivo"}</li>) }
+                </ul>
+            );
+            setAcceptedFilesList(filesList);
+        }
+    }, [files]);
 
 	return (
 		<div {...getRootProps({ style })}>
 			<input
-                {...props}
                 {...getInputProps()}
             />
-			{files?.length > 0 ?
-                <ul>
-                    { files.map(({ file, index }) => <li key={`${index}_${file.path}`}>{file?.name ? file.name : file.path}</li>) }
-                </ul> :
+			{acceptedFilesList ?
+                acceptedFilesList :
                 <p>Drag and drop your documents here.</p>}
 		</div>
 	);
