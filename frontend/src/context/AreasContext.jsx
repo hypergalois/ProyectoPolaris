@@ -40,6 +40,7 @@ export const AreasProvider = ({ children }) => {
 		try {
 			const response = await getDegreesRequest();
 			setDegrees(response.data);
+			return response.data;
 		} catch (error) {
 			if (Array.isArray(error.response.data)) {
 				setErrors(error.response.data);
@@ -53,6 +54,7 @@ export const AreasProvider = ({ children }) => {
 		try {
 			const response = await getDegreesByAreaRequest(areaId);
 			setDegreesByArea(response.data);
+			return response.data;
 		} catch (error) {
 			if (Array.isArray(error.response.data)) {
 				setErrors(error.response.data);
@@ -66,6 +68,7 @@ export const AreasProvider = ({ children }) => {
         try {
             const response = await getAwardsRequest();
             setAwards(response.data);
+			return response.data;
         } catch (error) {
             if (Array.isArray(error.response.data)) {
                 setErrors(error.response.data);
@@ -79,6 +82,7 @@ export const AreasProvider = ({ children }) => {
         try {
             const response = await getSubjectsRequest();
             setSubjects(response.data);
+			return response.data;
         } catch (error) {
             if (Array.isArray(error.response.data)) {
                 setErrors(error.response.data);
@@ -93,6 +97,7 @@ export const AreasProvider = ({ children }) => {
             console.log("getSubjectsByDegree", degreeId)
             const response = await getSubjectsByDegreeRequest(degreeId);
             setSubjectsByDegree(response.data);
+			return response.data;
         } catch (error) {
             if (Array.isArray(error.response.data)) {
                 setErrors(error.response.data);
