@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import Popup from "./Popup";
-import ProjectForm from "./ProjectForm";
+import ProjectForm from "./ProjectFormNew";
 
 function NavBar() {
 	// SECCION DE CHECK DE ROLE

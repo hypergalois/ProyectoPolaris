@@ -101,6 +101,7 @@ export const ProjectsProvider = ({ children }) => {
 		try {
 			const response = await getAwardsRequest();
 			setAwards(response.data);
+			return response.data;
 		} catch (error) {
 			if (Array.isArray(error.response.data)) {
 				setErrors(error.response.data);
