@@ -4,8 +4,8 @@ import { useProjects } from "../context/ProjectsContext";
 import { useState, useEffect } from "react";
 import ProjectCard from "../components/ProjectCard";
 
-const ProfileRequests = ({ project }) => {
-	const { profil, getProfile, errors: profileErrors } = useAuth();
+const ProfileRequests = ({ props }) => {
+	const { profile, getProfile, errors: profileErrors } = useAuth();
 	const { projects, getProjectsByUser, errors: proyectsErrors } = useProjects();
 	const [loading, setLoading] = useState(true);
 
@@ -13,12 +13,12 @@ const ProfileRequests = ({ project }) => {
 		getProfile();
 	}, []);
 
-	//useEffect(() => {
-	//	if (profil.id) {
-	//		getProjectsByUser(profil.id).then(() => setLoading(false));
-	//	}
-	//}, [profil.id]);
-
+	useEffect(() => {
+		if (profile.id) {
+			console.log(profile.id)
+			getProjectsByUser(profile.id).then(() => setLoading(false));
+		}
+	}, [profile]);
 
 	useEffect(() => {
 		if (projects) {

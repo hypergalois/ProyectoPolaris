@@ -2,8 +2,17 @@ import React from "react";
 import ProfileDetails from "../components/ProfileDetails";
 import ProfileProjects from "../components/ProfileProjects";
 import ProfileUserManagement from "../components/ProfileUserManagement";
+import { useAuth } from "../context/AuthContext";
+import { useEffect, useState } from "react";
 
 function ProjectHomePage() {
+
+	const { userRole, getUserRole } = useAuth();
+
+	useEffect(() => {
+		getUserRole();
+	}, []);
+
 	return (
 		<>
 			<div className="items-center">
@@ -18,9 +27,9 @@ function ProjectHomePage() {
 						<div className="mb-4">
 							<ProfileProjects />
 						</div>
-						<div className="mb-4">
+						{userRole=="ADMIN" && <div className="mb-4">
 							<ProfileUserManagement />
-						</div>
+						</div>}
 					</div>
 				</div>
 			</div>
