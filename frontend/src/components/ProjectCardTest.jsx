@@ -9,13 +9,13 @@ const ProjectCard = ({ project }) => {
 	return (
 		<Card sx={{ minHeight: "300px" }}>
 			<CardCover>
-				<img src="http://localhost:5173/thumbnail_default.jpeg" srcSet="http://localhost:5173/thumbnail_default.jpeg" loading="lazy" alt="" />
+				<img src="https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800" srcSet="https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800" loading="lazy" alt="" />
 			</CardCover>
 			<div
 				style={{
 					position: "absolute",
-					top: 6,
-					left: 6,
+					top: 8,
+					left: 8,
 					backgroundColor: "red",
 					color: "white",
 					padding: "4px 8px",

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createDegree, deleteDegree, getDegree, getDegrees, updateDegree, getDegreesNames, getDegreesByArea } from "../controllers/degrees.controllers.js";
+import { createDegree, deleteDegree, getDegree, getDegrees, updateDegree, getDegreesNames, getDegreesByArea, getDegreesBySubject } from "../controllers/degrees.controllers.js";
 import { validateSchema } from "../middlewares/validator.middleware.js";
 import { degreeSchema } from "../schemas/degree.schema.js";
 
@@ -261,5 +261,7 @@ router.get("/degrees/names/form", getDegreesNames);
  *               message: Internal server error
  */
 router.get("/degrees/area/:id", getDegreesByArea);
+
+router.get("/degrees/subject/:id", getDegreesBySubject);
 
 export default router;

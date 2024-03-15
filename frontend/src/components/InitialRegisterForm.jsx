@@ -6,7 +6,6 @@ import { useAuth } from "../context/AuthContext";
 import Popup from "../components/Popup";
 import SecondaryRegisterForm from "../components/SecondaryRegisterForm";
 
-
 const InitialRegisterForm = ({ onSuccess }) => {
 	const {
 		register,
@@ -21,7 +20,7 @@ const InitialRegisterForm = ({ onSuccess }) => {
 	const [emailChecked, setemailChecked] = useState(false);
 	const [openPopup, setOpenPopup] = useState(false);
 	const [InitialRegisterData, setInitialRegisterData] = useState(false);
-	
+
 	const handleClosePopup = () => {
 		setOpenPopup(false);
 	};
@@ -34,9 +33,9 @@ const InitialRegisterForm = ({ onSuccess }) => {
 				setError("email", { message: "El correo ya está en uso." });
 				return;
 			}
-			setInitialRegisterData(data)
+			setInitialRegisterData(data);
 			setOpenPopup(true);
-			setemailChecked(true)
+			setemailChecked(true);
 		} catch (error) {
 			console.log(error);
 		}
@@ -89,7 +88,7 @@ const InitialRegisterForm = ({ onSuccess }) => {
 					REGISTER
 				</button>
 				<Popup title="CREAR TU USUARIO" openPopup={openPopup} closePopup={handleClosePopup}>
-					<SecondaryRegisterForm closePopup={handleClosePopup} initialRegistrationData={InitialRegisterData}/>
+					<SecondaryRegisterForm closePopup={handleClosePopup} initialRegistrationData={InitialRegisterData} />
 				</Popup>
 			</div>
 		</form>

@@ -97,3 +97,20 @@ export const getDegreesByArea = async (req, res) => {
 		return res.status(500).json({ message: error.message });
 	}
 };
+
+export const getDegreesBySubject = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const degrees = await prisma.subject.findUnique({
+            where: { id: id },
+            select: { degrees: 
+                { select: { id: true, name: true } }
+            }
+        });
+        if (!degrees) return res.status(404).json({ message: "No degrees found" });
+        return res.status(200).json(degrees);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: error.message });
+    }
+}

@@ -3,7 +3,7 @@ import { useProjects } from "../context/ProjectsContext";
 import ProjectCard from "../components/ProjectCard";
 
 function ProjectHomePage() {
-    const { projects, getProjects } = useProjects();
+	const { projects, getProjects } = useProjects();
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {

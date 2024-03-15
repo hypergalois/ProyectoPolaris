@@ -18,9 +18,9 @@ export const AreasProvider = ({ children }) => {
 	const [areas, setAreas] = useState(null);
 	const [degrees, setDegrees] = useState(null);
 	const [degreesByArea, setDegreesByArea] = useState(null);
-    const [awards, setAwards] = useState(null);
-    const [subjects, setSubjects] = useState(null);
-    const [subjectsByDegree, setSubjectsByDegree] = useState(null);
+	const [awards, setAwards] = useState(null);
+	const [subjects, setSubjects] = useState(null);
+	const [subjectsByDegree, setSubjectsByDegree] = useState(null);
 	const [errors, setErrors] = useState([]);
 
 	const getAreas = async () => {
@@ -64,48 +64,48 @@ export const AreasProvider = ({ children }) => {
 		}
 	};
 
-    const getAwards = async () => {
-        try {
-            const response = await getAwardsRequest();
-            setAwards(response.data);
+	const getAwards = async () => {
+		try {
+			const response = await getAwardsRequest();
+			setAwards(response.data);
 			return response.data;
-        } catch (error) {
-            if (Array.isArray(error.response.data)) {
-                setErrors(error.response.data);
-            } else {
-                setErrors([error.response.data]);
-            }
-        }
-    }
+		} catch (error) {
+			if (Array.isArray(error.response.data)) {
+				setErrors(error.response.data);
+			} else {
+				setErrors([error.response.data]);
+			}
+		}
+	};
 
-    const getSubjects = async () => {
-        try {
-            const response = await getSubjectsRequest();
-            setSubjects(response.data);
+	const getSubjects = async () => {
+		try {
+			const response = await getSubjectsRequest();
+			setSubjects(response.data);
 			return response.data;
-        } catch (error) {
-            if (Array.isArray(error.response.data)) {
-                setErrors(error.response.data);
-            } else {
-                setErrors([error.response.data]);
-            }
-        }
-    }
+		} catch (error) {
+			if (Array.isArray(error.response.data)) {
+				setErrors(error.response.data);
+			} else {
+				setErrors([error.response.data]);
+			}
+		}
+	};
 
-    const getSubjectsByDegree = async (degreeId) => {
-        try {
-            console.log("getSubjectsByDegree", degreeId)
-            const response = await getSubjectsByDegreeRequest(degreeId);
-            setSubjectsByDegree(response.data);
+	const getSubjectsByDegree = async (degreeId) => {
+		try {
+			console.log("getSubjectsByDegree", degreeId);
+			const response = await getSubjectsByDegreeRequest(degreeId);
+			setSubjectsByDegree(response.data);
 			return response.data;
-        } catch (error) {
-            if (Array.isArray(error.response.data)) {
-                setErrors(error.response.data);
-            } else {
-                setErrors([error.response.data]);
-            }
-        }
-    }
+		} catch (error) {
+			if (Array.isArray(error.response.data)) {
+				setErrors(error.response.data);
+			} else {
+				setErrors([error.response.data]);
+			}
+		}
+	};
 
 	useEffect(() => {
 		if (errors.length > 0) {

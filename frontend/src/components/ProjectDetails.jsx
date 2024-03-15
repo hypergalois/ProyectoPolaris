@@ -3,11 +3,11 @@ import { useParams } from "react-router-dom";
 import { useProjects } from "../context/ProjectsContext";
 
 const ProjectDetails = () => {
-	const { id : projectId } = useParams();
+	const { id: projectId } = useParams();
 
 	const [project, setProject] = useState(null);
 
-	const { getProject } = useProjects()
+	const { getProject } = useProjects();
 
 	useEffect(() => {
 		const setNewProject = async () => {
@@ -34,7 +34,9 @@ const ProjectDetails = () => {
 					<h2 className="text-xl font-bold mt-4 mb-2">External Links</h2>
 					<ul className="list-disc list-inside">
 						{project.externalLinks.map((link, index) => (
-							<li key={link}><a href={link}>{link}</a></li>
+							<li key={link}>
+								<a href={link}>{link}</a>
+							</li>
 						))}
 					</ul>
 					<h2 className="text-xl font-bold mt-4 mb-2">Uploaded Content</h2>
@@ -46,19 +48,39 @@ const ProjectDetails = () => {
 				</div>
 				<div>
 					<h2 className="text-xl font-bold mb-2">Project Details</h2>
-					<p><strong>Personal Project:</strong> {project.personalProject ? 'Yes' : 'No'}</p>
-					<p><strong>Academic Course:</strong> {project.academicCourse}</p>
-					<p><strong>Course:</strong> {project.course}</p>
-					<p><strong>Letter:</strong> {project.letter}</p>
-					<p><strong>Subject ID:</strong> {project.subjectId}</p>
-					<p><strong>Degree ID:</strong> {project.degreeId}</p>
-					<p><strong>Implied Students:</strong> {project.impliedStudentsIDs.join(', ')}</p>
-					<p><strong>Implied Professors:</strong> {project.impliedProfessorsIDs.join(', ')}</p>
-					<p><strong>Created At:</strong> {project.createdAt}</p>
-					<p><strong>Updated At:</strong> {project.updatedAt}</p>
+					<p>
+						<strong>Personal Project:</strong> {project.personalProject ? "Yes" : "No"}
+					</p>
+					<p>
+						<strong>Academic Course:</strong> {project.academicCourse}
+					</p>
+					<p>
+						<strong>Course:</strong> {project.course}
+					</p>
+					<p>
+						<strong>Letter:</strong> {project.letter}
+					</p>
+					<p>
+						<strong>Subject ID:</strong> {project.subjectId}
+					</p>
+					<p>
+						<strong>Degree ID:</strong> {project.degreeId}
+					</p>
+					<p>
+						<strong>Implied Students:</strong> {project.impliedStudentsIDs.join(", ")}
+					</p>
+					<p>
+						<strong>Implied Professors:</strong> {project.impliedProfessorsIDs.join(", ")}
+					</p>
+					<p>
+						<strong>Created At:</strong> {project.createdAt}
+					</p>
+					<p>
+						<strong>Updated At:</strong> {project.updatedAt}
+					</p>
 				</div>
-      		</div>
-    	</div>
+			</div>
+		</div>
 	);
 };
 
