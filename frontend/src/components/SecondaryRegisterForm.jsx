@@ -320,7 +320,7 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 				</div>
 
 				<div className="mb-4">
-					<button className="w-full p-4 rounded-xl bg-blue-600 hover:bg-blue-400 text-white font-bold" type="submit">
+					<button type="submit" onClick={onSubmit} className="w-full p-4 rounded-xl bg-blue-600 hover:bg-blue-400 text-white font-bold">
 						REGISTRARSE
 					</button>
 				</div>

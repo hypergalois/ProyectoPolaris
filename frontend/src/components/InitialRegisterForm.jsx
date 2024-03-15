@@ -57,12 +57,11 @@ const InitialRegisterForm = ({ onSuccess }) => {
 					type="text"
 					{...register("fullName", {
 						required: true,
-						minLength: 10,
-						maxLength: 50,
+						pattern: /^(\S+\s){2}\S+$/, // Expresión regular para validar tres palabras
 					})}
 					placeholder="*Nombre completo"
 				/>
-				{errors.username && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta un nombre</p>}
+				{errors.fullName && <p className="mb-2 mt-4 text-red-500 font-semibold">Se requieren un nombre y dos apellidos</p>}
 			</div>
 			<div className="mb-4 text-black">
 				<input
