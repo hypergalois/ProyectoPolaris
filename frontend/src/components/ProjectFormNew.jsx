@@ -494,6 +494,7 @@ const ProjectForm = ({ closePopup }) => {
 						{errors.subject && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.subject.message}</p>}
 					</div>
 
+					{/* Esto no tiene sentido, tiene que estar bien implementado  */}
 					<div className="mb-4 md:col-span-2">
 						<label className="block text-gray-700 text-sm font-bold mb-2">Proyecto personal</label>
 						<input type="checkbox" {...register("personalProject")} />
@@ -544,7 +545,7 @@ const ProjectForm = ({ closePopup }) => {
 						</div>
 					</div>
 
-					<div className="mb-4 md:col-span-1">
+					<div className="mb-4 md:col-span-2">
 						<label className="block text-gray-700 text-sm font-bold mb-2">Premios</label>
 						<Select
 							options={awardOptions}
