@@ -27,7 +27,7 @@ const rejectStyle = {
 	borderColor: "#ff1744",
 };
 
-const DropzoneComponent = ({ uploadedFiles, setUploadedFiles, maxFiles=0 }) => {
+const DropzoneComponent = ({ uploadedFiles, setUploadedFiles, maxFiles = 0 }) => {
 	const onDrop = (acceptedFiles) => {
 		const newUploadedFiles = [...uploadedFiles];
 		newUploadedFiles.push(...acceptedFiles);

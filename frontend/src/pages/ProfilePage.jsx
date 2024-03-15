@@ -6,7 +6,6 @@ import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
 
 function ProjectHomePage() {
-
 	const { userRole, getUserRole } = useAuth();
 
 	useEffect(() => {
@@ -27,13 +26,14 @@ function ProjectHomePage() {
 						<div className="mb-4">
 							<ProfileProjects />
 						</div>
-						{userRole=="ADMIN" && <div className="mb-4">
-							<ProfileUserManagement />
-						</div>}
+						{userRole == "ADMIN" && (
+							<div className="mb-4">
+								<ProfileUserManagement />
+							</div>
+						)}
 					</div>
 				</div>
 			</div>
-			
 		</>
 	);
 }

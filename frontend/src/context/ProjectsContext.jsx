@@ -70,23 +70,23 @@ export const ProjectsProvider = ({ children }) => {
 		}
 	};
 
-    const pinProjectRequest = async (id) => {
-        try {
+	const pinProjectRequest = async (id) => {
+		try {
 			const res = await updateProjectRequest(id, { pinned: true });
 			setProjects(projects.map((p) => (p.id === id ? res.data : p)));
 		} catch (error) {
 			console.log(error);
 		}
-    };
+	};
 
-    const unpinProjectRequest = async (id) => {
-        try {
+	const unpinProjectRequest = async (id) => {
+		try {
 			const res = await updateProjectRequest(id, { pinned: false });
 			setProjects(projects.map((p) => (p.id === id ? res.data : p)));
 		} catch (error) {
 			console.log(error);
 		}
-    };
+	};
 
 	const updateProject = async (id, project) => {
 		try {
@@ -121,11 +121,11 @@ export const ProjectsProvider = ({ children }) => {
 				getProjectsHome,
 				getProject,
 				getProjectsByUser,
-                pinProjectRequest,
-                unpinProjectRequest,
+				pinProjectRequest,
+				unpinProjectRequest,
 				deleteProject,
 				updateProject,
-				getAwards
+				getAwards,
 			}}
 		>
 			{children}

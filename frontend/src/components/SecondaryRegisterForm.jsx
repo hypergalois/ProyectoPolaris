@@ -62,7 +62,6 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 		setPasswordsMatch(match);
 	}, [password, password2, clearErrors, setError, showValidation]);
 
-
 	const { email, fullName } = initialRegistrationData || { email: "", fullName: "" };
 
 	const isEmailUtad = email.endsWith("@u-tad.com");
