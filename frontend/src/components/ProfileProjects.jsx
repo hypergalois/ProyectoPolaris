@@ -15,7 +15,6 @@ const ProfileRequests = ({ props }) => {
 
 	useEffect(() => {
 		if (profile.id) {
-			console.log(profile.id)
 			getProjectsByUser(profile.id).then(() => setLoading(false));
 		}
 	}, [profile]);
