@@ -282,22 +282,22 @@ const ProjectForm = ({ closePopup }) => {
 		formData.append("title", data.title);
 		formData.append("description", data.description);
 		// formData.append("personalProject", data.personalProject);
-		formData.append("subject", data.subject);
+		formData.append("subject", data.subject); // Aquí adjunta el ID del sujeto
 		formData.append("academicCourse", data.academicCourse);
 		formData.append("course", data.course);
 		formData.append("letter", data.letter);
-		formData.append("degreeId", data.degree);
+		formData.append("degree", data.degree);
 
 		// Agrega los datos de tipo array del proyecto a FormData
 
-		const externalLinks = data.externalLinks ? data.externalLinks.map(({ link }) => link).filter((value) => value.trim().length !== 0) : [];
-		formData.append("externalLinks", JSON.stringify(externalLinks));
-
-		const impliedStudents = data.impliedStudents ? data.impliedStudents.map(({ student }) => student).filter((value) => value.trim().length !== 0) : [];
-		formData.append("impliedStudentsIDs", JSON.stringify(impliedStudents));
+		//const externalLinks = data.externalLinks ? data.externalLinks.map(({ link }) => link).filter((value) => value.trim().length !== 0) : [];
+		//formData.append("externalLinks", JSON.stringify(externalLinks));
+        
+        const impliedStudents = data.impliedStudents ? data.impliedStudents.map(({ student }) => student).filter((value) => value.trim().length !== 0) : [];
+        formData.append("impliedStudents", JSON.stringify(impliedStudents));
 
 		const impliedProfessors = data.impliedTeachers ? data.impliedProfessors.map(({ professor }) => professor).filter((value) => value.trim().length !== 0) : [];
-		formData.append("impliedTeachersIDs", JSON.stringify(impliedProfessors));
+        formData.append("impliedTeachers", JSON.stringify(impliedProfessors));
 
 		formData.append("awards", JSON.stringify(data.awards));
 
