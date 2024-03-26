@@ -25,3 +25,57 @@ body {
 
 	/* -moz-osx-font-smoothing: grayscale; */
 }
+
+.stepper-container {
+	display: flex;
+	position: relative; /* Asegura que podamos posicionar la línea de progreso relativa a este contenedor */
+	align-items: center;
+	justify-content: space-between;
+}
+
+.step-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: relative; /* Importante para posicionar correctamente las líneas */
+}
+
+.step-number {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	border: 2px solid #ddd;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 8px;
+	transition: all 0.3s ease;
+	font-weight: bold;
+	color: #555;
+}
+
+.step-number.selected,
+.step-number.completed {
+	border-color: blue;
+	background-color: blue;
+	color: white;
+}
+
+.step-description {
+	text-align: center;
+	font-size: 14px;
+	color: #666;
+	max-width: 100px;
+}
+
+.step-line {
+	height: 2px;
+	background-color: #954f4f; /* Color base de la línea */
+	position: absolute;
+	width: 100%; /* Ajusta este valor si es necesario */
+	top: 20px; /* Ajusta según la altura de tus círculos */
+}
+
+.step-line.active {
+	background-color: #df1010; /* Color de la línea activa */
+}

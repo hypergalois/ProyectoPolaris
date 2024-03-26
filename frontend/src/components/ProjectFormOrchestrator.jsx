@@ -6,6 +6,7 @@ import ProjectFormStep2 from "./ProjectFormStep2.jsx";
 import ProjectFormStep3 from "./ProjectFormStep3.jsx";
 import ProjectFormStep4 from "./ProjectFormStep4.jsx";
 import PopupUploadProject from "./PopupUploadProject.jsx";
+import Stepper from "./Stepper"; // Asegúrate de que la ruta de importación es correcta
 
 // El problema esta, guardo los estados de los componentes hijos en estados individuales o en un estado global?
 // Voy a optar por la segunda opcion, ya que me parece mas limpio y ordenado
