@@ -54,6 +54,7 @@ const TagsInputComponent = ({ control, name, placeholder = "Agregar tags...", di
 			classNames={classNames}
 			editable={true}
 			maxTags={15}
+			allowUnique={true}
 		/>
 	);
 };
