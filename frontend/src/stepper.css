@@ -1,5 +1,5 @@
 .step-item {
-	@apply relative flex flex-col justify-center items-center w-36;
+	@apply relative flex flex-col justify-center items-center w-52;
 }
 
 .step-item:not(:first-child):before {
@@ -8,4 +8,21 @@
 
 .step {
 	@apply w-10 h-10 flex items-center justify-center z-10 relative bg-slate-700 rounded-full font-semibold text-white;
+}
+
+.active .step {
+	@apply bg-sky-500;
+}
+
+.complete .step {
+	@apply bg-green-600;
+}
+
+.complete p {
+	@apply text-green-700;
+}
+
+.complete:not(:first-child):before,
+.active:not(:first-child):before {
+	@apply bg-green-600;
 }
