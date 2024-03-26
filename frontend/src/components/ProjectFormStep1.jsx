@@ -36,8 +36,7 @@ const ProjectFormStep1 = ({ advanceStep, currentStep }) => {
 		<>
 			<Stepper currentStep={currentStep} />
 			<div>
-				Titulo, Descripcion, Factor Diferencial, Keywords
-				<form onSubmit={handleSubmit(onSubmit)} className="w-full bg-white  rounded px-8 pt-6 pb-8 mb-4 grid gap-4 md:grid-cols-2">
+				<form onSubmit={handleSubmit(onSubmit)} className="w-full bg-white  rounded px-8 pt-6 mb-2 grid gap-4 md:grid-cols-2">
 					<div className="mb-4 md:col-span-2">
 						<label className="block text-gray-700 text-sm font-bold mb-2">Título</label>
 						<input
@@ -108,6 +107,8 @@ const ProjectFormStep1 = ({ advanceStep, currentStep }) => {
 			<button
 				className="h-12 px-3 bg-blue-600 hover:bg-blue-400 text-white font-bold"
 				onClick={() => {
+					// Ahora cuando hagamos click no hay que avanzar hasta que hayamos comprobado que los datos son correctos TODO
+					// y por supuesto hay que guardarlo en el estado
 					advanceStep();
 				}}
 			>
