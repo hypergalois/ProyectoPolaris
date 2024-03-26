@@ -1,9 +1,9 @@
 import React from "react";
 
 import Stepper from "./Stepper";
+import TagsInputComponent from "./TagsInputComponent.jsx";
 
 import { useForm, useController, useFieldArray, FormProvider } from "react-hook-form";
-import Select from "react-select";
 
 // TODO Funcionalidad de guardar borrador
 const ProjectFormStep1 = ({ advanceStep, currentStep }) => {
@@ -74,6 +74,12 @@ const ProjectFormStep1 = ({ advanceStep, currentStep }) => {
 							className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 						/>
 						{errors.title && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.title.message}</p>}
+					</div>
+
+					<div className="mb-4 md:col-span-2">
+						<label className="block text-gray-700 text-sm font-bold mb-2">Keywords</label>
+						{/* Integra el componente TagsInputComponent */}
+						<TagsInputComponent name="keywords" control={control} />
 					</div>
 				</form>
 			</div>
