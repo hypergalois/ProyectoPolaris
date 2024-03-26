@@ -18,7 +18,7 @@ const PopupUploadProject = ({ title, children, openPopup, renderStep, onClose })
 		// OJO, con la anchura maximo, el div de dentro la puede hacer mas grande aunque tenga el maxWidht
 		// Aparte que los popups de ordendador van a ser mas grandes asi que TODO
 		<Dialog open={openPopup} onClose={onClose} maxWidth="md" fullWidth={true} TransitionComponent={Transition}>
-			<DialogTitle sx={{ backgroundColor: "#3B82F6", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+			<DialogTitle sx={{ backgroundColor: "#2563eb", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
 				<h1 className="text-4xl font-bold text-center text-white">{title}</h1>
 				<div>
 					<IconButton
