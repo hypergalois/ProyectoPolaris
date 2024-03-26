@@ -292,12 +292,12 @@ const ProjectForm = ({ closePopup }) => {
 
 		//const externalLinks = data.externalLinks ? data.externalLinks.map(({ link }) => link).filter((value) => value.trim().length !== 0) : [];
 		//formData.append("externalLinks", JSON.stringify(externalLinks));
-        
-        const impliedStudents = data.impliedStudents ? data.impliedStudents.map(({ student }) => student).filter((value) => value.trim().length !== 0) : [];
-        formData.append("impliedStudents", JSON.stringify(impliedStudents));
+
+		const impliedStudents = data.impliedStudents ? data.impliedStudents.map(({ student }) => student).filter((value) => value.trim().length !== 0) : [];
+		formData.append("impliedStudents", JSON.stringify(impliedStudents));
 
 		const impliedProfessors = data.impliedTeachers ? data.impliedProfessors.map(({ professor }) => professor).filter((value) => value.trim().length !== 0) : [];
-        formData.append("impliedTeachers", JSON.stringify(impliedProfessors));
+		formData.append("impliedTeachers", JSON.stringify(impliedProfessors));
 
 		formData.append("awards", JSON.stringify(data.awards));
 
@@ -331,9 +331,9 @@ const ProjectForm = ({ closePopup }) => {
 	};
 
 	return (
-		<div className="flex items-center justify-center min-h-screen my-8 max-w-md">
+		<div className="flex items-center justify-center min-h-screen my-8 max-w-4xl">
 			<FormProvider {...methods}>
-				<form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-fit bg-white  rounded px-8 pt-6 pb-8 mb-4 grid gap-4 md:grid-cols-2">
+				<form onSubmit={handleSubmit(onSubmit)} className="w-full bg-white  rounded px-8 pt-6 pb-8 mb-4 grid gap-4 md:grid-cols-2">
 					<div className="mb-4 md:col-span-2">
 						<label className="block text-gray-700 text-sm font-bold mb-2">Título</label>
 						<input
@@ -416,7 +416,11 @@ const ProjectForm = ({ closePopup }) => {
 							</div>
 						))}
 						<div className="flex justify-center mt-4">
-							<button type="button" onClick={() => appendStudent({ student: "" })} className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+							<button
+								type="button"
+								onClick={() => appendStudent({ student: "" })}
+								className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+							>
 								Añadir estudiante
 							</button>
 						</div>
@@ -452,7 +456,11 @@ const ProjectForm = ({ closePopup }) => {
 							</div>
 						))}
 						<div className="flex justify-center mt-4">
-							<button type="button" onClick={() => appendProfessor({ professor: "" })} className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+							<button
+								type="button"
+								onClick={() => appendProfessor({ professor: "" })}
+								className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+							>
 								Añadir profesor
 							</button>
 						</div>
@@ -526,7 +534,12 @@ const ProjectForm = ({ closePopup }) => {
 						<label className="block text-gray-700 text-sm font-bold mb-2">Enlaces a recursos externos</label>
 						{linkFields.map((field, index) => (
 							<div key={field.id} className="flex items-center gap-2">
-								<input type="url" {...register(`externalLinks.${index}.link`)} placeholder="URL" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+								<input
+									type="url"
+									{...register(`externalLinks.${index}.link`)}
+									placeholder="URL"
+									className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+								/>
 								<button
 									type="button"
 									onClick={() => {
@@ -539,7 +552,11 @@ const ProjectForm = ({ closePopup }) => {
 							</div>
 						))}
 						<div className="flex justify-center mt-4">
-							<button type="button" onClick={() => appendLink({ link: "" })} className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+							<button
+								type="button"
+								onClick={() => appendLink({ link: "" })}
+								className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+							>
 								Añadir recurso externo
 							</button>
 						</div>
@@ -558,7 +575,10 @@ const ProjectForm = ({ closePopup }) => {
 					</div>
 
 					<div className="mt-6 md:col-span-2 w-full">
-						<button type="submit" className="w-full bg-[#2d2d2d] hover:bg-[#3f3f3f] text-white font-bold py-3 px-6 rounded-lg shadow-lg focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
+						<button
+							type="submit"
+							className="w-full bg-[#2d2d2d] hover:bg-[#3f3f3f] text-white font-bold py-3 px-6 rounded-lg shadow-lg focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+						>
 							Enviar
 						</button>
 					</div>
