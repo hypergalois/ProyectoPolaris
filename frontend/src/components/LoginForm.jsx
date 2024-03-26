@@ -35,32 +35,46 @@ const LoginForm = () => {
 				))}
 			</div>
 			<form onSubmit={handleSubmit(onSubmit)} className="p-4">
-				<div className="mb-4">
-					<input
-						className="w-full sm:w-5/12 h-12 px-3 sm:px-6 text-black rounded-2xl"
-						type="email"
-						{...register("email", {
-							required: true,
-							pattern: /^\S+@\S+$/i,
-						})}
-						placeholder="*Correo de la U-Tad"
-						autoComplete="email"
-					/>
+				<div className="mb-4 w-full md:w-11/12">
+					<div className="pt-2 border flex flex-col bg-white">
+						<label htmlFor="email" className="text-blue-400 text-xs text-left ml-3 font-semibold">
+							Correo de la U-Tad
+						</label>
+						<input
+							id="email"
+							className="outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold"
+							type="email"
+							{...register("email", {
+								required: true,
+								pattern: /^\S+@\S+$/i,
+							})}
+							placeholder="nombre.apellido@live.u-tad.com"
+							autoComplete="email"
+						/>
+					</div>
 					{errors.email && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta un email</p>}
 				</div>
-				<div className="mb-4">
-					<input
-						className="w-full sm:w-5/12 h-12 px-3 sm:px-6 text-black rounded-2xl"
-						type="password"
-						{...register("password", {
-							required: true,
-							minLength: 3,
-						})}
-						placeholder="*Contraseña"
-						autoComplete="current-password"
-					/>
+
+				<div className="mb-4 w-full md:w-11/12">
+					<div className="pt-2 border flex flex-col bg-white">
+						<label htmlFor="password" className="text-blue-400 text-xs text-left ml-3 font-semibold">
+							Contraseña
+						</label>
+						<input
+							id="password"
+							className="outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold"
+							type="password"
+							{...register("password", {
+								required: true,
+								minLength: 3,
+							})}
+							placeholder="*Contraseña"
+							autoComplete="current-password"
+						/>
+					</div>
 					{errors.password && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta una contraseña</p>}
 				</div>
+
 				<div className="mb-4">
 					<button className="w-full sm:w-5/12 h-12 px-3 sm:px-6 rounded-xl bg-blue-600 hover:bg-blue-400 text-white font-bold" type="submit">
 						INICIAR SESIÓN

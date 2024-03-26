@@ -58,7 +58,7 @@ const InitialRegisterForm = ({ onSuccess }) => {
 					</label>
 					<input
 						id="email"
-						className="outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold"
+						className="outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
 						type="email"
 						{...register("email", {
 							required: true,
