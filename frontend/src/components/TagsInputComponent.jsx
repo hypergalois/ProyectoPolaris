@@ -4,14 +4,6 @@ import { useController } from "react-hook-form";
 
 import "../styles/react-tags.css";
 
-const COUNTRIES = ["CHILE", "ARGENTINA", "BOLIVIA", "BRASIL", "COLOMBIA", "ECUADOR", "PARAGUAY", "PERÚ", "URUGUAY", "VENEZUELA"];
-
-// Suponiendo que COUNTRIES es un array de países o cualquier otra fuente de sugerencias que prefieras
-const suggestions = COUNTRIES.map((country) => ({
-	id: country,
-	text: country,
-}));
-
 const KeyCodes = {
 	comma: 188,
 	enter: 13,
@@ -54,8 +46,6 @@ const TagsInputComponent = ({ control, name, placeholder = "Agregar tags...", di
 		<ReactTags
 			tags={value || []}
 			placeholder={placeholder}
-			suggestions={suggestions}
-			autocomplete={true}
 			handleDelete={handleDelete}
 			handleAddition={handleAddition}
 			inputFieldPosition="inline"
