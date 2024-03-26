@@ -9,6 +9,8 @@ import PopupUploadProject from "./PopupUploadProject.jsx";
 
 // El problema esta, guardo los estados de los componentes hijos en estados individuales o en un estado global?
 // Voy a optar por la segunda opcion, ya que me parece mas limpio y ordenado
+
+// OJO, una vez sales del popup el step deberia resetearse ya que se supone que el usuario desecha el proyecto
 const ProjectFormOrchestrator = ({ openPopup, closePopup }) => {
 	const [step, setStep] = useState(1);
 	const [projectData, setProjectData] = useState({
@@ -19,6 +21,20 @@ const ProjectFormOrchestrator = ({ openPopup, closePopup }) => {
 
 	const updateProjectData = (step, data) => {
 		setProjectData((prev) => ({ ...prev, [step]: data }));
+	};
+
+	const resetForm = () => {
+		setStep(1);
+		setProjectData({
+			step1: {},
+			step2: {},
+			step3: {},
+		});
+	};
+
+	const resetFormAndClose = () => {
+		resetForm();
+		closePopup();
 	};
 
 	const goToNext = () => setStep((prevStep) => prevStep + 1);
@@ -39,7 +55,7 @@ const ProjectFormOrchestrator = ({ openPopup, closePopup }) => {
 		}
 	};
 
-	return <PopupUploadProject title="Subir Proyecto" openPopup={openPopup} closePopup={closePopup} renderStep={renderStep} />;
+	return <PopupUploadProject title="Subir Proyecto" openPopup={openPopup} onClose={resetFormAndClose} renderStep={renderStep} />;
 };
 
 export default ProjectFormOrchestrator;

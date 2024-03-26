@@ -13,11 +13,11 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const Popup = ({ title, children, openPopup, closePopup, renderStep }) => {
+const PopupUploadProject = ({ title, children, openPopup, renderStep, onClose }) => {
 	return (
 		// OJO, con la anchura maximo, el div de dentro la puede hacer mas grande aunque tenga el maxWidht
 		// Aparte que los popups de ordendador van a ser mas grandes asi que TODO
-		<Dialog open={openPopup} onClose={closePopup} maxWidth="md" fullWidth={true} TransitionComponent={Transition}>
+		<Dialog open={openPopup} onClose={onClose} maxWidth="md" fullWidth={true} TransitionComponent={Transition}>
 			<DialogTitle sx={{ backgroundColor: "#3B82F6", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
 				<h1 className="text-4xl font-bold text-center text-white">{title}</h1>
 				<div>
@@ -28,7 +28,7 @@ const Popup = ({ title, children, openPopup, closePopup, renderStep }) => {
 					>
 						<HelpOutlineIcon sx={{ color: "white" }} />
 					</IconButton>
-					<IconButton onClick={closePopup}>
+					<IconButton onClick={onClose}>
 						<CloseIcon sx={{ color: "white" }} />
 					</IconButton>
 				</div>
@@ -41,4 +41,4 @@ const Popup = ({ title, children, openPopup, closePopup, renderStep }) => {
 	);
 };
 
-export default Popup;
+export default PopupUploadProject;
