@@ -35,14 +35,14 @@ const LoginForm = () => {
 				))}
 			</div>
 			<form onSubmit={handleSubmit(onSubmit)} className="p-4">
-				<div className="mb-4 w-full md:w-11/12">
-					<div className="pt-2 border flex flex-col bg-white">
+				<div className="mb-4 w-full md:w-7/12 mx-auto">
+					<div className="pt-2 border flex flex-col outline outline-blue-400">
 						<label htmlFor="email" className="text-blue-400 text-xs text-left ml-3 font-semibold">
-							Correo de la U-Tad
+							Username o Correo de la U-Tad
 						</label>
 						<input
 							id="email"
-							className="outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold"
+							className="outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
 							type="email"
 							{...register("email", {
 								required: true,
@@ -55,20 +55,20 @@ const LoginForm = () => {
 					{errors.email && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta un email</p>}
 				</div>
 
-				<div className="mb-4 w-full md:w-11/12">
-					<div className="pt-2 border flex flex-col bg-white">
+				<div className="mb-4 w-full md:w-7/12 mx-auto">
+					<div className="pt-2 border flex flex-col outline outline-blue-400">
 						<label htmlFor="password" className="text-blue-400 text-xs text-left ml-3 font-semibold">
 							Contraseña
 						</label>
 						<input
 							id="password"
-							className="outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold"
+							className="outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
 							type="password"
 							{...register("password", {
 								required: true,
 								minLength: 3,
 							})}
-							placeholder="*Contraseña"
+							placeholder="************"
 							autoComplete="current-password"
 						/>
 					</div>
@@ -76,8 +76,8 @@ const LoginForm = () => {
 				</div>
 
 				<div className="mb-4">
-					<button className="w-full sm:w-5/12 h-12 px-3 sm:px-6 rounded-xl bg-blue-600 hover:bg-blue-400 text-white font-bold" type="submit">
-						INICIAR SESIÓN
+					<button className="w-full sm:w-7/12 h-14 px-3 sm:px-6 bg-blue-600 hover:bg-blue-400 text-white font-bold" type="submit">
+						Iniciar Sesión
 					</button>
 				</div>
 			</form>
