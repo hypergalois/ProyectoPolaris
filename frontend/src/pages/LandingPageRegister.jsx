@@ -35,9 +35,9 @@ const HomePageRegister = () => {
 				<div className="flex-1 mb-8 md:mb-0">
 					<HomePageLanding />
 				</div>
-				<div className="flex-1 place-self-center text-center p-6 rounded-3xl bg-[#2d2d2d] text-white">
-					<h1 className="mb-4 text-2xl font-bold">CREA TU CUENTA</h1>
-					<h2 className="mb-4">
+				<div className="flex-1 place-self-center text-center p-6 rounded-3xl bg-blue-600 text-white">
+					<h1 className="mt-6 mb-4 text-3xl font-bold">CREA TU CUENTA</h1>
+					<h2 className="mb-6 text-xl">
 						¿Ya tienes una cuenta?{" "}
 						<Link className="underline decoration-solid decoration-1" to="/">
 							Iniciar sesión

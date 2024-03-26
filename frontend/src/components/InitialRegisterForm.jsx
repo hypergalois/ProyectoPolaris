@@ -42,7 +42,7 @@ const InitialRegisterForm = ({ onSuccess }) => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
+		<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center">
 			<div>
 				{userErrors.map((error, index) => (
 					<div className="mt-4 text-red-500 font-semibold" key={index}>
@@ -50,42 +50,39 @@ const InitialRegisterForm = ({ onSuccess }) => {
 					</div>
 				))}
 			</div>
-			<div className="mb-4 mt-8 text-black">
-				<input
-					className="w-full md:w-9/12 p-3 rounded-2xl h-12"
-					type="text"
-					{...register("fullName", {
-						required: true,
-						pattern: /^(\S+\s){2}\S+$/, // Expresión regular para validar tres palabras
-					})}
-					placeholder="*Nombre completo"
-				/>
-				{errors.fullName && <p className="mb-2 mt-4 text-red-500 font-semibold">Se requieren un nombre y dos apellidos</p>}
-			</div>
-			<div className="mb-4 text-black">
-				<input
-					className="w-full md:w-9/12 p-3 rounded-2xl h-12"
-					type="email"
-					{...register("email", {
-						required: true,
-						pattern: {
-							value: /^[a-zA-Z0-9._%+-]+@(u-tad\.com|live\.u-tad\.com)$/i,
-							message: "El correo tiene que ser de la U-Tad",
-						},
-						validated: () => !emailChecked,
-					})}
-					placeholder="*Correo de la U-Tad"
-				/>
+
+			<div className="mb-4 w-full md:w-11/12">
+				<div className="pt-2 border flex flex-col bg-white">
+					<label htmlFor="email" className="text-blue-400 text-xs text-left ml-3 font-semibold">
+						Correo de la U-Tad
+					</label>
+					<input
+						id="email"
+						className="outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold"
+						type="email"
+						{...register("email", {
+							required: true,
+							pattern: {
+								value: /^[a-zA-Z0-9._%+-]+@(u-tad\.com|live\.u-tad\.com)$/i,
+								message: "El correo tiene que ser de la U-Tad",
+							},
+							validated: () => !emailChecked,
+						})}
+						placeholder="nombre.apellido@live.u-tad.com"
+					/>
+				</div>
 				{errors.email && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.email.message}</p>}
 			</div>
-			<div className="mb-8">
+
+			<div className="mb-8 w-full md:w-11/12">
 				<Link to="https://www.youtube.com/watch?v=xvFZjo5PgG0&ab_channel=Duran" className="underline">
 					<p className="text-xs">Creando una cuenta aceptas los Términos de Uso y la Política de Privacidad.</p>
 				</Link>
 			</div>
-			<div className="mb-4">
-				<button type="submit" onClick={onSubmit} className="w-full p-4 rounded-xl bg-blue-600 hover:bg-blue-400 text-white font-bold">
-					REGISTER
+
+			<div className="mb-8 w-full md:w-11/12">
+				<button type="submit" onClick={onSubmit} className="w-full p-4 bg-[#001C44] hover:bg-[#0f2645] text-white font-bold">
+					Registrarse
 				</button>
 				<Popup title="CREAR TU USUARIO" openPopup={openPopup} closePopup={handleClosePopup}>
 					<SecondaryRegisterForm closePopup={handleClosePopup} initialRegistrationData={InitialRegisterData} />
