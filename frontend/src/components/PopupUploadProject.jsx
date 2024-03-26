@@ -13,7 +13,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const Popup = ({ title, children, openPopup, closePopup }) => {
+const Popup = ({ title, children, openPopup, closePopup, renderStep }) => {
 	return (
 		// OJO, con la anchura maximo, el div de dentro la puede hacer mas grande aunque tenga el maxWidht
 		// Aparte que los popups de ordendador van a ser mas grandes asi que TODO
@@ -34,7 +34,7 @@ const Popup = ({ title, children, openPopup, closePopup }) => {
 				</div>
 			</DialogTitle>
 			<DialogContent dividers>
-				{children}
+				{renderStep()}
 				<DialogActions></DialogActions>
 			</DialogContent>
 		</Dialog>

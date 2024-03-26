@@ -1,6 +1,6 @@
 import React from "react";
 
-const ProjectFormStep3 = ({ returnStep, advanceStep }) => {
+const ProjectFormStep3 = ({ returnStep }) => {
 	return (
 		<>
 			<div>
@@ -12,13 +12,6 @@ const ProjectFormStep3 = ({ returnStep, advanceStep }) => {
 				}}
 			>
 				ANTERIOR
-			</button>
-			<button
-				onClick={() => {
-					advanceStep();
-				}}
-			>
-				SIGUIENTE
 			</button>
 		</>
 	);

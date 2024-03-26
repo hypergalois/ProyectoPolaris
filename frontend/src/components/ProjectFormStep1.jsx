@@ -1,10 +1,20 @@
 import React from "react";
 
-const ProjectFormStep1 = () => {
+// TODO Funcionalidad de guardar borrador
+const ProjectFormStep1 = ({ advanceStep }) => {
 	return (
-		<div>
-			<h1>Step 1</h1>
-		</div>
+		<>
+			<div>
+				<h1>Step 1</h1>
+			</div>
+			<button
+				onClick={() => {
+					advanceStep();
+				}}
+			>
+				SIGUIENTE
+			</button>
+		</>
 	);
 };
 

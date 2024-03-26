@@ -4,6 +4,7 @@ import { useState } from "react";
 import ProjectFormStep1 from "./ProjectFormStep1.jsx";
 import ProjectFormStep2 from "./ProjectFormStep2.jsx";
 import ProjectFormStep3 from "./ProjectFormStep3.jsx";
+import ProjectFormStep4 from "./ProjectFormStep4.jsx";
 import PopupUploadProject from "./PopupUploadProject.jsx";
 
 const ProjectFormOrchestrator = ({ openPopup, closePopup }) => {
@@ -15,11 +16,13 @@ const ProjectFormOrchestrator = ({ openPopup, closePopup }) => {
 	const renderStep = () => {
 		switch (step) {
 			case 1:
-				return <ProjectFormStep1 goToNext={goToNext} />;
+				return <ProjectFormStep1 advanceStep={goToNext} />;
 			case 2:
-				return <ProjectFormStep2 goToNext={goToNext} goToPrevious={goToPrevious} />;
+				return <ProjectFormStep2 advanceStep={goToNext} returnStep={goToPrevious} />;
 			case 3:
-				return <ProjectFormStep3 goToPrevious={goToPrevious} />;
+				return <ProjectFormStep3 advanceStep={goToNext} returnStep={goToPrevious} />;
+			case 4:
+				return <ProjectFormStep4 returnStep={goToPrevious} />;
 			default:
 				return null;
 		}
