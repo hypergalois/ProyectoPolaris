@@ -1,5 +1,5 @@
 import React from "react";
-import "../stepper.css";
+import "../styles/stepper.css";
 import { TiTick } from "react-icons/ti";
 
 const Stepper = ({ currentStep, isComplete }) => {

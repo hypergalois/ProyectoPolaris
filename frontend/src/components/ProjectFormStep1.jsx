@@ -79,7 +79,21 @@ const ProjectFormStep1 = ({ advanceStep, currentStep }) => {
 					<div className="mb-4 md:col-span-2">
 						<label className="block text-gray-700 text-sm font-bold mb-2">Keywords</label>
 						{/* Integra el componente TagsInputComponent */}
-						<TagsInputComponent name="keywords" control={control} />
+						<TagsInputComponent
+							control={control}
+							name="keywords"
+							placeholder="Agregar keywords..."
+							classNames={{
+								tags: "react-tags",
+								tagInput: "react-tags-input",
+								tagInputField: "react-tags-input-field",
+								selected: "react-tags-selected",
+								tag: "react-tags-tag",
+								remove: "react-tags-remove",
+								suggestions: "react-tags-suggestions",
+								activeSuggestion: "react-tags-active-suggestion",
+							}}
+						/>
 					</div>
 				</form>
 			</div>
