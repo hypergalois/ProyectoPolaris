@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect, useRef } from "react";
-import { registerRequest, loginRequest, verifyTokenRequest, logoutRequest, forgotPasswordRequest, resetPasswordRequest, verifyEmailRequest, checkEmailRequest, getProfileRequest, getUserRoleRequest } from "../api/auth";
+import { registerRequest, loginRequest, verifyTokenRequest, logoutRequest, forgotPasswordRequest, resetPasswordRequest, verifyEmailRequest, checkEmailRequest, getProfileRequest, getUserRequest, getUserRoleRequest } from "../api/auth";
 import Cookies from "js-cookie";
 
 export const AuthContext = createContext();
@@ -87,6 +87,19 @@ export const AuthProvider = ({ children }) => {
 		try {
 			const response = await getProfileRequest();
 			setProfile(response.data);
+		} catch (error) {
+			if (Array.isArray(error.response.data)) {
+				setErrors(error.response.data);
+			} else {
+				setErrors([error.response.data]);
+			}
+		}
+	};
+
+	const getUser = async (email) => {
+		try {
+			const response = await getUserRequest(email);
+			setUser(response.data);
 		} catch (error) {
 			if (Array.isArray(error.response.data)) {
 				setErrors(error.response.data);
@@ -217,6 +230,7 @@ export const AuthProvider = ({ children }) => {
 				getExistEmail,
 				profile,
 				getProfile,
+				getUser,
 				getUserRole,
 				loading,
 				errors,

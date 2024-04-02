@@ -308,6 +308,28 @@ export const profile = async (req, res) => {
 	}
 };
 
+export const getUser = async (req, res) => {
+	const { email } = req.body;
+	try {
+		const userFound = await prisma.user.findUnique({
+			where: {
+				email,
+			},
+		});
+
+		if (!userFound) return res.status(404).json({ message: "User not found.", userExists: false });
+
+		return res.status(200).json({
+			id: userFound.id,
+			username: userFound.username,
+			email: userFound.email,
+		});
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ message: error.message });
+	}
+};
+
 export const verifyToken = async (req, res) => {
 	const { token } = req.cookies;
 	// console.log(req.cookies);
