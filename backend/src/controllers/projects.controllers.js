@@ -25,12 +25,25 @@ export const getProjectsHome = async (req, res) => {
 				id: true,
 				title: true,
 				description: true,
-				subject: true,
+                thumbnail: true,
+				subject: {
+                    select: {
+                        id: true,
+                        name: true,
+                    }
+                },
 				degree: {
 					select: {
+                        id: true,
 						name: true,
 					},
 				},
+                awards: {
+                    select: {
+                        id: true,
+                        name: true,
+                    }
+                }
 			},
 		});
 
