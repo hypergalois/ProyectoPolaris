@@ -27,7 +27,7 @@ const ProfileRequests = ({ props }) => {
 	}, [projects]);
 
 	return (
-		<div className="max-w-sm rounded overflow-hidden shadow-lg">
+		<div className="max-w rounded overflow-hidden shadow-lg">
 			<h1>Projects</h1>
 			{loading ? (
 				<p>Cargando proyectos...</p>

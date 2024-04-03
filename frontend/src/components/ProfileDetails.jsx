@@ -10,7 +10,7 @@ const ProfileDetails = ({ project }) => {
 	}, []);
 
 	return (
-		<div className="max-w-sm rounded overflow-hidden shadow-lg">
+		<div className="max-w rounded overflow-hidden shadow-lg">
 			<h1>Details</h1>
 			{Object.entries(profile).map(([key, value]) => (
 				<div key={key}>
