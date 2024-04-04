@@ -9,11 +9,25 @@ import { DevTool } from "@hookform/devtools";
 const selectStyles = {
 	control: (provided) => ({
 		...provided,
-		minHeight: "48px",
+		width: "100%", // w-full
+		minHeight: "48px", // h-12
 		height: "48px",
+		outline: "none",
+		border: "none",
+		backgroundColor: "transparent", // bg-transparent
+		paddingTop: "8px", // pt-2 (considerando que 1 rem = 16px, ajusta según tu configuración)
+		color: "#3498db", // text-blue-500
 		boxShadow: "none",
 		borderRadius: "1rem",
-		borderColor: "#000000",
+		borderColor: "transparent",
+		"&:hover": {
+			borderColor: "transparent",
+		},
+		"&:focus": {
+			outline: "none",
+			borderColor: "transparent",
+			boxShadow: "none", // focus:ring-0 focus:border-transparent
+		},
 	}),
 	valueContainer: (provided) => ({
 		...provided,
@@ -23,10 +37,25 @@ const selectStyles = {
 	input: (provided) => ({
 		...provided,
 		margin: "0px",
+		color: "#3498db", // text-blue-500
+		fontSize: "0.75rem", // text-xs
+		fontWeight: "bold", // font-bold
+	}),
+	placeholder: (provided) => ({
+		...provided,
+		color: "#3498db", // placeholder-blue-500
+		fontSize: "0.75rem", // text-xs
+		fontWeight: "bold", // font-bold
 	}),
 	indicatorsContainer: (provided) => ({
 		...provided,
 		height: "48px",
+	}),
+	singleValue: (provided) => ({
+		...provided,
+		color: "#3498db", // text-blue-500
+		fontSize: "0.75rem", // text-xs
+		fontWeight: "bold", // font-bold
 	}),
 };
 
@@ -70,7 +99,8 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 	// No entiendo que signfica 1, puede que se corresponda en el enum pero no es nada legible, TODO CAMBIARLO
 	const [academicRole, setAcademicRole] = useState("1"); // Define academicRole state
 
-	const departments = [];
+	// TODO: Poner aqui los departamentos
+	const departments = ["Marketing", "Sistemas", "Administracion", "Finanzas", "Recursos Humanos", "Comunicacion", "Legal", "Tecnico", "Comercial", "Otros"];
 
 	const [degreeOptions, setDegreeOptions] = useState([]);
 
@@ -131,7 +161,7 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 	});
 
 	return (
-		<div className="text-black max-w-md">
+		<div className="text-black justify-center items-center">
 			<div>
 				{registerErrors.map((error, index) => (
 					<div key={index}>{error.message}</div>
@@ -145,9 +175,12 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 				))}
 			</div>
 			<form onSubmit={onSubmit}>
-				<div className="mb-4">
+				<div className="mb-4 pt-2 border flex flex-col bg-white">
+					<label htmlFor="email" className="text-blue-400 text-xs text-left ml-3 font-semibold">
+						Correo de la U-Tad
+					</label>
 					<input
-						className="w-full p-4 rounded-2xl h-12"
+						className="w-full p-4 h-12 outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
 						type="email"
 						value={email}
 						{...register("email", {
@@ -161,9 +194,12 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 					/>
 				</div>
 
-				<div className="mb-4">
+				<div className="mb-4 pt-2 border flex flex-col bg-white">
+					<label htmlFor="email" className="text-blue-400 text-xs text-left ml-3 font-semibold">
+						Nombre Completo
+					</label>
 					<input
-						className="w-full p-4 rounded-2xl h-12"
+						className="w-full p-4 h-12 outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
 						type="text"
 						value={fullName}
 						{...register("fullName", {
@@ -177,9 +213,12 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 					{errors.fullName && <p className="mb-2 mt-4 text-red-500 font-semibold">El nombre completo debe incluir al menos un nombre y dos apellidos</p>}
 				</div>
 
-				<div className="mb-4">
+				<div className="mb-4 pt-2 border flex flex-col bg-white">
+					<label htmlFor="email" className="text-blue-400 text-xs text-left ml-3 font-semibold">
+						Nombre de usuario (opcional)
+					</label>
 					<input
-						className="w-full p-4 rounded-2xl h-12"
+						className="w-full p-4 h-12 outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
 						type="text"
 						{...register("username", {
 							required: false,
@@ -191,9 +230,12 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 					{errors.user && <p className="mb-2 mt-4 text-red-500 font-semibold">Tiene que tener entre 3 y 20 caracteres</p>}
 				</div>
 
-				<div className="mb-4">
+				<div className="mb-4 pt-2 border flex flex-col bg-white">
+					<label htmlFor="email" className="text-blue-400 text-xs text-left ml-3 font-semibold">
+						*Contraseña
+					</label>
 					<input
-						className="w-full p-4 rounded-2xl h-12"
+						className="w-full p-4 h-12 outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
 						type="password"
 						{...register("password", {
 							required: "La contraseña es obligatoria",
@@ -205,9 +247,12 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 					{errors.password && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.password.message}</p>}
 				</div>
 
-				<div className="mb-4">
+				<div className="mb-4 pt-2 border flex flex-col bg-white">
+					<label htmlFor="email" className="text-blue-400 text-xs text-left ml-3 font-semibold">
+						*Contraseña (repetir)
+					</label>
 					<input
-						className="w-full p-4 rounded-2xl h-12"
+						className="w-full p-4 h-12 outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
 						type="password"
 						{...register("password2", {
 							required: "Tienes que repetir la contraseña",
@@ -223,9 +268,12 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 
 				{isEmailLive && (
 					<div className="mb-4 flex">
-						<div className="w-full">
+						<div className="w-full mb-4 pt-2 border flex flex-col bg-white">
+							<label htmlFor="email" className="text-blue-400 text-xs text-left ml-3 font-semibold">
+								Cargo
+							</label>
 							<select
-								className="w3-select w-full p-4 rounded-2xl"
+								className="w-full p-4 h-12 outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
 								{...register("academicRole", {
 									required: true,
 									minLength: 3,
@@ -243,9 +291,15 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 							{errors.academicRole && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta un cargo</p>}
 						</div>
 						{academicRole == "ALUMNI" && (
-							<div className="flex-none w-1/2">
+							<div className="flex-none w-1/2 mb-4 pt-2 border flex flex-col bg-white">
+								<label
+									htmlFor="email"
+									className="w-full p-4 h-12 outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
+								>
+									Promocion
+								</label>
 								<select
-									className="w-full p-4 rounded-2xl"
+									className="w-full p-4 h-12 outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
 									{...register("promocion", {
 										required: true,
 										minLength: 3,
@@ -271,9 +325,12 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 
 				{isEmailUtad && (
 					<div className="mb-4 flex">
-						<div className="w-full">
+						<div className="w-full mb-4 pt-2 border flex flex-col bg-white">
+							<label htmlFor="email" className="text-blue-400 text-xs text-left ml-3 font-semibold">
+								Cargo
+							</label>
 							<select
-								className="w3-select w-full p-4 rounded-2xl"
+								className="w-full p-4 h-12 outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
 								{...register("academicRole", {
 									required: true,
 									minLength: 3,
@@ -292,9 +349,12 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 							{errors.academicRole && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta un cargo</p>}
 						</div>
 						{academicRole == "EMPLOYEE" && (
-							<div className="flex-none w-1/2">
+							<div className="flex-none w-1/2 mb-4 pt-2 border flex flex-col bg-white">
+								<label htmlFor="email" className="text-blue-400 text-xs text-left ml-3 font-semibold">
+									Departamento
+								</label>
 								<select
-									className="w-full p-4 rounded-2xl"
+									className="w-full p-4 h-12 outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
 									{...register("departamento", {
 										required: true,
 										minLength: 3,
@@ -317,7 +377,10 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 					</div>
 				)}
 
-				<div className="mb-4">
+				<div className="mb-4 pt-2 border flex flex-col bg-white">
+					<label htmlFor="email" className="text-blue-400 text-xs text-left ml-3 font-semibold">
+						Grado
+					</label>
 					<Controller
 						name="grade"
 						control={control}
@@ -339,7 +402,7 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 				</div>
 
 				<div className="mb-4">
-					<button type="submit" onClick={onSubmit} className="w-full p-4 rounded-xl bg-blue-600 hover:bg-blue-400 text-white font-bold">
+					<button type="submit" onClick={onSubmit} className="w-full sm:w-7/12 h-14 px-3 sm:px-6 bg-blue-600 hover:bg-blue-400 text-white font-bold">
 						REGISTRARSE
 					</button>
 				</div>
