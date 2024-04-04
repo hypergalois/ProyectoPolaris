@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { checkRole } from "../middlewares/checkRole.middleware.js";
 import { rolesEnum } from "../config/tags.js";
-import { getRequest, getRequests, updateRequest, acceptRequest, rejectRequest, getRequestsByStatus } from "../controllers/requests.controllers.js";
+import { getRequest, getRequests, createRequest, updateRequest, acceptRequest, rejectRequest, getRequestsByStatus } from "../controllers/requests.controllers.js";
 import { authRequired } from "../middlewares/authRequired.middleware.js";
 
 /**
@@ -127,6 +127,8 @@ router.get("/requests/:id", authRequired, getRequest);
  *               message: Request not updated
  */
 router.put("/requests/:id", authRequired, checkRole([rolesEnum.ADMIN]), updateRequest);
+
+router.post("/requests", authRequired, createRequest)
 
 // Utility routes
 

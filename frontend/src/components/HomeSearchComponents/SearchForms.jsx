@@ -21,7 +21,7 @@ function SearchForms(props) {
     } = props;
 
     return (
-        <div className="filter-container flex space-x-4 mx-12 m-8 text-blue-500">
+        <div className="filter-container flex space-x-4 mx-20 m-8 text-blue-500">
             <Select className="w-3/5 placeholder-blue-500 border-blue-500" options={degreeOptions} value={degreeFilter} onChange={setDegreeFilter} placeholder="Titulación"/>
             <Select className="w-3/5 placeholder-blue-500 border-blue-500" options={subjectOptions} value={subjectFilter} onChange={setSubjectFilter} placeholder="Asignatura" />
             <Select className="w-1/5 placeholder-blue-500 border-blue-500" options={courseOptions} value={courseFilter} onChange={setCourseFilter} placeholder="Curso" />
