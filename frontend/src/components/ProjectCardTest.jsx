@@ -1,20 +1,43 @@
-import React from "react";
-import GroupIcon from "@mui/icons-material/Group"; // Asegúrate de instalar @mui/icons-material si aún no lo has hecho.
+import * as React from "react";
+import Card from "@mui/joy/Card";
+import CardCover from "@mui/joy/CardCover";
+import CardContent from "@mui/joy/CardContent";
+import Typography from "@mui/joy/Typography";
+import GroupIcon from "@mui/icons-material/Group";
 
 const ProjectCard = ({ project }) => {
 	return (
-		<div className="max-w-md md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto my-4 flex flex-col bg-white rounded-lg overflow-hidden shadow-lg">
-			<div className="relative">
-				<img className="w-full h-60 object-cover" src="https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800" alt="" />
-				<span className="absolute top-2 left-2 bg-red-500 text-white text-sm px-2 py-1 rounded-md">Animación</span>
+		<Card sx={{ minHeight: "300px" }}>
+			<CardCover>
+				<img src="https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800" srcSet="https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800" loading="lazy" alt="" />
+			</CardCover>
+			<div
+				style={{
+					position: "absolute",
+					top: 8,
+					left: 8,
+					backgroundColor: "red",
+					color: "white",
+					padding: "4px 8px",
+					borderRadius: "8px",
+				}}
+			>
+				Animación
 			</div>
-			<div className="p-4 flex flex-col justify-end flex-grow">
-				<h5 className="text-lg text-gray-900">{project.title}</h5>
-				<p className="text-gray-700 flex items-center mt-2">
-					<GroupIcon /> Nombre de los alumnos
-				</p>
-			</div>
-		</div>
+			<CardCover
+				sx={{
+					background: "linear-gradient(to top, rgba(0,0,0,0.4), rgba(0,0,0,0) 200px), linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0) 300px)",
+				}}
+			/>
+			<CardContent sx={{ justifyContent: "flex-end" }}>
+				<Typography level="title-lg" textColor="#fff">
+					{project.title}
+				</Typography>
+				<Typography startDecorator={<GroupIcon />} textColor="neutral.300">
+					Nombre de los alumnos
+				</Typography>
+			</CardContent>
+		</Card>
 	);
 };
 
