@@ -163,9 +163,10 @@ export const register = async (req, res) => {
 
 		if (!newUser) return res.status(500).json({ message: "Error creating user." });
 
+		// OJO: VOY A METER EL EMAIL VERIFICADO A TRUE PARA NO TENER QUE HACERLO POR AHORA
 		// Una vez creado el usuario, se le manda un email para verificar su cuenta
-		const isHandled = await handleVerifyEmail(req, res);
-		if (!isHandled) return res.status(500).json({ message: "Error handling verify email." });
+		// const isHandled = await handleVerifyEmail(req, res);
+		// if (!isHandled) return res.status(500).json({ message: "Error handling verify email." });
 
 		// Pense que no hacia falta pero voy a poner cookie ya
 		// Crear el token de acceso

@@ -104,13 +104,23 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 		}
 	}, [degrees]);
 
-	const onSubmit = async (data) => {
+	useEffect(() => {
+		register("grade", { required: "Este campo es obligatorio" });
+	}, []);
+
+	const onSubmit = handleSubmit(async (data) => {
 		// Me da un error de required el email
 		console.log("Registrando usuario");
 		// console.log(data);
-		data.username = !data.username ? data.email.split("@")[0] : data.username;
+		data.username = !data.username ? email.split("@")[0] : data.username;
 		// Supuestamente esta undefined asi que dirty hack
 		// Dirty hack, en backend deberiamos solo coger campos que nos interesen
+		// Si las contraseñas no coinciden no deberiamos enviarlas
+		if (!passwordsMatch) {
+			console.log("Las contraseñas no coinciden");
+			return;
+		}
+
 		delete data.password2;
 		data.email = email;
 		console.log(data);
@@ -118,7 +128,7 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 		// data.user = !data.user ? data.email.split("@")[0] : data.user;
 		await registerUser(data);
 		closePopup();
-	};
+	});
 
 	return (
 		<div className="text-black max-w-md">
@@ -134,7 +144,7 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 					</div>
 				))}
 			</div>
-			<form onSubmit={handleSubmit(onSubmit)}>
+			<form onSubmit={onSubmit}>
 				<div className="mb-4">
 					<input
 						className="w-full p-4 rounded-2xl h-12"
@@ -156,14 +166,15 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 						className="w-full p-4 rounded-2xl h-12"
 						type="text"
 						value={fullName}
-						{...register("fulName", {
+						{...register("fullName", {
 							required: true,
 							minLength: 3,
-							maxLength: 20,
+							maxLength: 70,
+							validate: (value) => value.split(" ").filter(Boolean).length >= 3 || "El nombre completo debe incluir al menos un nombre y dos apellidos",
 						})}
 						placeholder="*Nombre completo"
 					/>
-					{errors.fullName && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta un nombre</p>}
+					{errors.fullName && <p className="mb-2 mt-4 text-red-500 font-semibold">El nombre completo debe incluir al menos un nombre y dos apellidos</p>}
 				</div>
 
 				<div className="mb-4">
@@ -238,6 +249,7 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 									{...register("promocion", {
 										required: true,
 										minLength: 3,
+										required: true,
 									})}
 									name="promocion"
 									defaultValue=""
@@ -306,16 +318,24 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 				)}
 
 				<div className="mb-4">
-					<Select
-						options={degreeOptions}
-						onChange={(selectedOption) => {
-							setValue("grade", selectedOption.value);
-						}}
-						className="w-full border rounded-2xl leading-tight"
-						styles={selectStyles}
-						placeholder="Grados"
+					<Controller
+						name="grade"
+						control={control}
+						rules={{ required: "Este campo es obligatorio" }}
+						render={({ field }) => (
+							<Select
+								{...field}
+								options={degreeOptions}
+								onChange={(selectedOption) => {
+									setValue("grade", selectedOption ? selectedOption.value : "");
+								}}
+								className="w-full border rounded-2xl leading-tight"
+								styles={selectStyles}
+								placeholder="Grados"
+							/>
+						)}
 					/>
-					{errors.grade && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta un cargo</p>}
+					{errors.grade && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.grade.message}</p>}
 				</div>
 
 				<div className="mb-4">

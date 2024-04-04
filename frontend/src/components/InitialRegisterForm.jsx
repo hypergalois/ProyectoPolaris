@@ -44,11 +44,14 @@ const InitialRegisterForm = ({ onSuccess }) => {
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center">
 			<div>
-				{userErrors.map((error, index) => (
-					<div className="mt-4 text-red-500 font-semibold" key={index}>
-						{error.message}
-					</div>
-				))}
+				{userErrors.map((error, index) => {
+					console.log(error);
+					return (
+						<div className="mt-4 text-red-500 font-semibold" key={index}>
+							{error.message}
+						</div>
+					);
+				})}
 			</div>
 
 			<div className="mb-4 w-full md:w-11/12">
