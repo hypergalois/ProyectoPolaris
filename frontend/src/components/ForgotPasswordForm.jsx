@@ -33,9 +33,12 @@ const ForgotPasswordForm = () => {
 				))}
 			</div>
 			<form onSubmit={handleSubmit(onSubmit)} className="p-4">
-				<div className="mb-8">
+				<div className="pt-2 mb-8 border flex flex-col bg-white">
+					<label htmlFor="email" className="text-blue-400 text-xs text-left ml-3 font-semibold">
+						Correo de la U-Tad
+					</label>
 					<input
-						className="w-8/12 h-10 px-6 text-black p-6 rounded-2xl"
+						className="outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
 						type="email"
 						{...register("email", {
 							required: true,
@@ -47,7 +50,7 @@ const ForgotPasswordForm = () => {
 					{errors.email && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta un email</p>}
 				</div>
 				<div className="mb-4">
-					<button className="w-8/12 h-14 px-6 rounded-xl bg-[#2d2d2d] hover:bg-[#3f3f3f] text-white font-semibold" type="submit">
+					<button className="w-full p-4 bg-[#001C44] hover:bg-[#0f2645] text-white font-bold" type="submit">
 						Enviar enlace de recuperación
 					</button>
 				</div>

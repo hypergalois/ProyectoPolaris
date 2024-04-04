@@ -12,11 +12,11 @@ function ForgotPassword() {
 		<>
 			<NavBarNoAuth />
 			<LandingPageBar />
-			<div className="mx-auto max-w-lg p-4 rounded-3xl bg-[#858585] text-white text-center mt-12">
-				<h1 className="mb-4 text-2xl font-bold">REESTABLECER CONTRASEÑA</h1>
+			<div className="mx-auto max-w-xl place-self-center text-center p-6 rounded-3xl bg-blue-600 text-white mt-12">
+				<h1 className="mb-4 text-3xl font-bold">REESTABLECER CONTRASEÑA</h1>
 				{!isResetTokenSent ? (
 					<>
-						<h2 className="mb-4">
+						<h2 className="mb-6 text-xl">
 							¿Te acordaste de la contraseña?{" "}
 							<Link className="underline decoration-solid decoration-1" to="/">
 								Iniciar sesión
