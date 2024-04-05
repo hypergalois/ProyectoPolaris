@@ -4,60 +4,9 @@ import { useAuth } from "../context/AuthContext";
 import { useAreas } from "../context/AreasContext";
 import { useState, useEffect } from "react";
 import Select from "react-select";
-import { DevTool } from "@hookform/devtools";
+// import { DevTool } from "@hookform/devtools";
 
-const selectStyles = {
-	control: (provided) => ({
-		...provided,
-		width: "100%", // w-full
-		minHeight: "48px", // h-12
-		height: "48px",
-		outline: "none",
-		border: "none",
-		backgroundColor: "transparent", // bg-transparent
-		paddingTop: "8px", // pt-2 (considerando que 1 rem = 16px, ajusta según tu configuración)
-		color: "#3498db", // text-blue-500
-		boxShadow: "none",
-		borderRadius: "1rem",
-		borderColor: "transparent",
-		"&:hover": {
-			borderColor: "transparent",
-		},
-		"&:focus": {
-			outline: "none",
-			borderColor: "transparent",
-			boxShadow: "none", // focus:ring-0 focus:border-transparent
-		},
-	}),
-	valueContainer: (provided) => ({
-		...provided,
-		height: "48px",
-		padding: "0 6px",
-	}),
-	input: (provided) => ({
-		...provided,
-		margin: "0px",
-		color: "#3498db", // text-blue-500
-		fontSize: "0.75rem", // text-xs
-		fontWeight: "bold", // font-bold
-	}),
-	placeholder: (provided) => ({
-		...provided,
-		color: "#3498db", // placeholder-blue-500
-		fontSize: "0.75rem", // text-xs
-		fontWeight: "bold", // font-bold
-	}),
-	indicatorsContainer: (provided) => ({
-		...provided,
-		height: "48px",
-	}),
-	singleValue: (provided) => ({
-		...provided,
-		color: "#3498db", // text-blue-500
-		fontSize: "0.75rem", // text-xs
-		fontWeight: "bold", // font-bold
-	}),
-};
+import { selectStyles } from "../config/util";
 
 const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 	const {
@@ -230,38 +179,40 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 					{errors.user && <p className="mb-2 mt-4 text-red-500 font-semibold">Tiene que tener entre 3 y 20 caracteres</p>}
 				</div>
 
-				<div className="mb-4 pt-2 border flex flex-col bg-white">
-					<label htmlFor="email" className="text-blue-400 text-xs text-left ml-3 font-semibold">
-						*Contraseña
-					</label>
-					<input
-						className="w-full p-4 h-12 outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
-						type="password"
-						{...register("password", {
-							required: "La contraseña es obligatoria",
-							minLength: 3,
-							maxLength: 20,
-						})}
-						placeholder="*Contraseña"
-					/>
-					{errors.password && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.password.message}</p>}
-				</div>
+				<div className="flex">
+					<div className="w-full mb-4 pt-2 border bg-white flex flex-col mr-6">
+						<label htmlFor="password" className="text-blue-400 text-xs text-left ml-3 font-semibold">
+							*Contraseña
+						</label>
+						<input
+							className="w-full p-4 h-12 outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
+							type="password"
+							{...register("password", {
+								required: "La contraseña es obligatoria",
+								minLength: 3,
+								maxLength: 20,
+							})}
+							placeholder="*Contraseña"
+						/>
+						{errors.password && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.password.message}</p>}
+					</div>
 
-				<div className="mb-4 pt-2 border flex flex-col bg-white">
-					<label htmlFor="email" className="text-blue-400 text-xs text-left ml-3 font-semibold">
-						*Contraseña (repetir)
-					</label>
-					<input
-						className="w-full p-4 h-12 outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
-						type="password"
-						{...register("password2", {
-							required: "Tienes que repetir la contraseña",
-							minLength: 3,
-							maxLength: 20,
-						})}
-						placeholder="*Contraseña (repetir)"
-					/>
-					{errors.password2 && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.password2.message}</p>}
+					<div className="w-full mb-4 pt-2 border bg-white flex flex-col">
+						<label htmlFor="password2" className="text-blue-400 text-xs text-left ml-3 font-semibold">
+							*Contraseña (repetir)
+						</label>
+						<input
+							className="w-full p-4 h-12 outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
+							type="password"
+							{...register("password2", {
+								required: "Tienes que repetir la contraseña",
+								minLength: 3,
+								maxLength: 20,
+							})}
+							placeholder="*Contraseña (repetir)"
+						/>
+						{errors.password2 && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.password2.message}</p>}
+					</div>
 				</div>
 
 				{showValidation && (passwordsMatch ? <span className="mb-4 block">Las contraseñas coinciden ✅</span> : <span className="mb-4 block">Las contraseñas no coinciden ❌</span>)}
@@ -291,7 +242,7 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 							{errors.academicRole && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta un cargo</p>}
 						</div>
 						{academicRole == "ALUMNI" && (
-							<div className="flex-none w-1/2 mb-4 pt-2 border flex flex-col bg-white">
+							<div className="flex-none w-1/2 mb-4 ml-6 pt-2 border flex flex-col bg-white">
 								<label
 									htmlFor="email"
 									className="w-full p-4 h-12 outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
@@ -349,7 +300,7 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 							{errors.academicRole && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta un cargo</p>}
 						</div>
 						{academicRole == "EMPLOYEE" && (
-							<div className="flex-none w-1/2 mb-4 pt-2 border flex flex-col bg-white">
+							<div className="flex-none w-1/2 ml-6 mb-4 pt-2 border flex flex-col bg-white">
 								<label htmlFor="email" className="text-blue-400 text-xs text-left ml-3 font-semibold">
 									Departamento
 								</label>
@@ -401,13 +352,13 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 					{errors.grade && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.grade.message}</p>}
 				</div>
 
-				<div className="mb-4">
-					<button type="submit" onClick={onSubmit} className="w-full sm:w-7/12 h-14 px-3 sm:px-6 bg-blue-600 hover:bg-blue-400 text-white font-bold">
-						REGISTRARSE
+				<div>
+					<button type="submit" onClick={onSubmit} className="w-full h-14 px-3 sm:px-6 bg-blue-600 hover:bg-blue-400 text-white font-bold">
+						Registrarse
 					</button>
 				</div>
 			</form>
-			<DevTool control={control} />
+			{/* <DevTool control={control} /> */}
 		</div>
 	);
 };
