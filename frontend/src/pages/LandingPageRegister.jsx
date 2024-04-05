@@ -4,7 +4,7 @@ import InitialRegisterForm from "../components/InitialRegisterForm";
 import SecondaryRegisterForm from "../components/SecondaryRegisterForm";
 import HomePageLanding from "../components/HomePageLanding";
 
-import NavBarNoAuth from "../components/NavBarNoAuth";
+import NavBarNoAuth from "../components/Navbars/NavBarNoAuth";
 
 import { Link } from "react-router-dom";
 import LandingPageBar from "../components/LandingPageBar";

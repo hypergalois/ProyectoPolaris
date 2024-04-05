@@ -1,5 +1,5 @@
 import React from "react";
-import NavBarNoAuth from "../components/NavBarNoAuth";
+import NavBarNoAuth from "../components/Navbars/NavBarNoAuth";
 import { Link } from "react-router-dom";
 import LandingPageBar from "../components/LandingPageBar";
 import ForgotPasswordForm from "../components/ForgotPasswordForm";

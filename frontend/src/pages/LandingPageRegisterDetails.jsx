@@ -1,5 +1,5 @@
 import LandingPageBar from "../components/LandingPageBar";
-import NavBarNoAuth from "../components/NavBarNoAuth";
+import NavBarNoAuth from "../components/Navbars/NavBarNoAuth";
 import SecondaryRegisterForm from "../components/SecondaryRegisterForm";
 
 const HomePageRegister = () => {

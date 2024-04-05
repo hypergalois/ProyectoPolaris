@@ -1,7 +1,7 @@
 import LoginForm from "../components/LoginForm";
 import LandingPageBar from "../components/LandingPageBar.jsx";
 
-import NavBarNoAuth from "../components/NavBarNoAuth.jsx";
+import NavBarNoAuth from "../components/Navbars/NavBarNoAuth.jsx";
 
 import { Link } from "react-router-dom";
 import LandingPageAnimation from "../components/LandingPageAnimation.jsx";

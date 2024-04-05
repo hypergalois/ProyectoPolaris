@@ -4,11 +4,11 @@ import { Fragment } from "react";
 
 import { motion } from "framer-motion";
 
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import ProjectFormOrchestrator from "./ProjectFormOrchestrator";
+import ProjectFormOrchestrator from "../ProjectFormOrchestrator";
 
 function NavBar() {
 	// SECCION DE CHECK DE ROLE

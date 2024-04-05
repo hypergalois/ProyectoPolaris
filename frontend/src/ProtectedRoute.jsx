@@ -3,8 +3,8 @@ import { useLocation } from "react-router-dom";
 import { Navigate, Outlet } from "react-router-dom";
 
 // Voy a meter la navbar aqui, solo se renderiza cuando esta logeado
-import NavBarAuth from "./components/NavBarAuth";
-import NavBarNoAuth from "./components/NavBarNoAuth";
+import NavBarAuth from "./components/Navbars/NavBarAuth";
+import NavBarNoAuth from "./components/Navbars/NavBarNoAuth";
 
 function ProtectedRoute() {
 	const { loading, isAuthenticated, isEmailVerified } = useAuth();

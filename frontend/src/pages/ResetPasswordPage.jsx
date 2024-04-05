@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import ResetPasswordForm from "../components/ResetPasswordForm";
-import NavBarNoAuth from "../components/NavBarNoAuth";
+import NavBarNoAuth from "../components/Navbars/NavBarNoAuth";
 import LandingPageBar from "../components/LandingPageBar";
 import { Link, useSearchParams } from "react-router-dom";
 
