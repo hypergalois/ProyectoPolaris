@@ -2,6 +2,8 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon, ArrowRightEndOnRectangleIcon, PlusIcon, MagnifyingGlassIcon, UserCircleIcon, DocumentPlusIcon, BellIcon } from "@heroicons/react/24/outline";
 import { Fragment } from "react";
 
+import { motion } from "framer-motion";
+
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -57,7 +59,18 @@ function NavBar() {
 
 								<div className="flex-1 flex items-center justify-between">
 									<div className="flex-shrink-0 flex items-center">
-										<h1 className="text-xl sm:text-2xl font-[950] text-white">U-PROJECTS</h1>
+										<motion.h1
+											className="text-xl sm:text-2xl font-bold text-white cursor-pointer"
+											whileHover={{
+												scale: 1.1,
+												rotate: 5,
+												textShadow: "0px 0px 8px rgba(255,255,255,1)",
+												transition: { duration: 0.3 },
+											}}
+											whileTap={{ scale: 0.9 }}
+										>
+											U-PROJECTS
+										</motion.h1>
 									</div>
 									<div className="hidden sm:block sm:ml-6">
 										<div className="flex space-x-1 justify-center flex-1">
