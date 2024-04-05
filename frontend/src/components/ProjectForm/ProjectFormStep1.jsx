@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 
 import Stepper from "../Stepper.jsx";
 import TagsInputComponent from "../TagsInputComponent.jsx";
@@ -7,6 +8,20 @@ import { useForm, useController, useFieldArray, FormProvider } from "react-hook-
 
 // TODO Funcionalidad de guardar borrador
 const ProjectFormStep1 = ({ advanceStep, currentStep }) => {
+	useEffect(() => {
+		const handleKeyDown = (event) => {
+			if (event.key === "ArrowRight") {
+				advanceStep();
+			}
+		};
+
+		window.addEventListener("keydown", handleKeyDown);
+
+		return () => {
+			window.removeEventListener("keydown", handleKeyDown);
+		};
+	}, [advanceStep]);
+
 	const methods = useForm({
 		defaultValues: {
 			title: "",
