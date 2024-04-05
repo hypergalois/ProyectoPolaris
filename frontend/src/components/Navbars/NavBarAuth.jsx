@@ -60,7 +60,7 @@ function NavBar() {
 								<div className="flex-1 flex items-center justify-between">
 									<div className="flex-shrink-0 flex items-center">
 										<motion.h1
-											className="text-xl sm:text-2xl font-bold text-white cursor-pointer"
+											className="text-xl sm:text-2xl font-[950] text-white cursor-pointer"
 											whileHover={{
 												scale: 1.1,
 												rotate: 5,
