@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import ResetPasswordForm from "../components/ResetPasswordForm";
 import NavBarNoAuth from "../components/Navbars/NavBarNoAuth";
-import LandingPageBar from "../components/LandingPageBar";
+import LandingPageBar from "../components/Navbars/LandingPageBar";
 import { Link, useSearchParams } from "react-router-dom";
 
 const ResetPasswordPage = () => {
