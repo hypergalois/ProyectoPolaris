@@ -58,6 +58,18 @@ export const getRequest = async (req, res) => {
     }
 };
 
+export const createRequest = async (req, res) => {
+    try {
+        const newRequest = await prisma.request.create({
+            data: req.body,
+        });
+        return res.status(201).json(newRequest);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: error.message });
+    }
+};
+
 export const updateRequest = async (req, res) => {
     try {
         const { id } = req.params;

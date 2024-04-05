@@ -58,6 +58,54 @@ export const getProjectsHome = async (req, res) => {
 	}
 };
 
+export const getProjectsHomeByArea = async (req, res) => {
+    try {
+        const { area } = req.params;
+
+        // Encuentra los proyectos que pertenecen al área especificada
+        const projects = await prisma.project.findMany({
+            where: { 
+                status: statusEnum.ACCEPTED, 
+                areaId: area
+            },
+			orderBy: { createdAt: "desc" },
+			select: {
+				id: true,
+				title: true,
+				description: true,
+                thumbnail: true,
+				subject: {
+                    select: {
+                        id: true,
+                        name: true,
+                    }
+                },
+				degree: {
+					select: {
+                        id: true,
+						name: true,
+					},
+				},
+                awards: {
+                    select: {
+                        id: true,
+                        name: true,
+                    }
+                }
+			},
+		});
+
+        if (!projects || projects.length === 0) {
+            return res.status(404).json({ message: "No projects found in the specified area" });
+        }
+
+        return res.status(200).json(projects);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: error.message });
+    }
+};
+
 export const createProject = async (req, res) => {
 	try {
 		console.log(req);
