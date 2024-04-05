@@ -1,8 +1,25 @@
 import React from "react";
+import { useEffect } from "react";
 
 import Stepper from "../Stepper.jsx";
 
 const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep }) => {
+	useEffect(() => {
+		const handleKeyDown = (event) => {
+			if (event.key === "ArrowLeft") {
+				returnStep();
+			} else if (event.key === "ArrowRight") {
+				advanceStep();
+			}
+		};
+
+		window.addEventListener("keydown", handleKeyDown);
+
+		return () => {
+			window.removeEventListener("keydown", handleKeyDown);
+		};
+	}, [returnStep, advanceStep]);
+
 	return (
 		<>
 			<Stepper currentStep={currentStep} />

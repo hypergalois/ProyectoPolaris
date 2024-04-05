@@ -12,7 +12,7 @@ const Stepper = ({ currentStep, isComplete }) => {
 			{steps.map((step, index) => (
 				<div key={index} className={`step-item ${currentStep === index + 1 && "active"} ${(index + 1 < currentStep || isComplete) && "complete"}`}>
 					<div className="step">{index + 1 < currentStep || isComplete ? <TiTick size={24} /> : index + 1}</div>
-					<p className="text-blue-500">{step}</p>
+					<p className="text-blue-500 font-semibold">{step}</p>
 				</div>
 			))}
 		</div>
