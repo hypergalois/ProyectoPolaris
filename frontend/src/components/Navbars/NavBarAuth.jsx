@@ -59,18 +59,20 @@ function NavBar() {
 
 								<div className="flex-1 flex items-center justify-between">
 									<div className="flex-shrink-0 flex items-center">
-										<motion.h1
-											className="text-xl sm:text-2xl font-[950] text-white cursor-pointer"
-											whileHover={{
-												scale: 1.1,
-												rotate: 5,
-												textShadow: "0px 0px 8px rgba(255,255,255,1)",
-												transition: { duration: 0.3 },
-											}}
-											whileTap={{ scale: 0.9 }}
-										>
-											U-PROJECTS
-										</motion.h1>
+										<Link to="/home" style={{ textDecoration: "none" }}>
+											<motion.h1
+												className="text-xl sm:text-2xl font-[950] text-white cursor-pointer"
+												whileHover={{
+													scale: 1.1,
+													rotate: 5,
+													textShadow: "0px 0px 8px rgba(255,255,255,1)",
+													transition: { duration: 0.3 },
+												}}
+												whileTap={{ scale: 0.9 }}
+											>
+												U-PROJECTS
+											</motion.h1>
+										</Link>
 									</div>
 									<div className="hidden sm:block sm:ml-6">
 										<div className="flex space-x-1 justify-center flex-1">
