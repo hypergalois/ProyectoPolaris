@@ -18,7 +18,19 @@ const LandingPageBar = () => {
 				</motion.h1>
 			</div>
 			<div className="flex items-center">
-				<img src="/full-logo-utad-by.png" alt="Logo Derecha" className="h-16 w-auto" />
+				<motion.img
+					src="/full-logo-utad-by.png"
+					alt="Logo Derecha"
+					className="h-16 w-auto cursor-pointer"
+					whileHover={{
+						scale: 1.1,
+						rotate: 5,
+						transition: { duration: 0.3 },
+					}}
+					whileTap={{
+						scale: 0.9,
+					}}
+				/>
 			</div>
 		</nav>
 	);
