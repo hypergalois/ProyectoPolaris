@@ -1,10 +1,10 @@
-import LoginForm from "../components/LoginRegisterForms/LoginForm";
-import LandingPageBar from "../components/Navbars/LandingPageBar.jsx";
+import LoginForm from "../../components/LoginRegisterForms/LoginForm.jsx";
+import LandingPageBar from "../../components/Navbars/LandingPageBar.jsx";
 
-import NavBarNoAuth from "../components/Navbars/NavBarNoAuth.jsx";
+import NavBarNoAuth from "../../components/Navbars/NavBarNoAuth.jsx";
 
 import { Link } from "react-router-dom";
-import LandingPageAnimation from "../components/LandingPageAnimation.jsx";
+import LandingPageAnimation from "../../components/LandingPageAnimation.jsx";
 
 const HomePage = () => {
 	return (

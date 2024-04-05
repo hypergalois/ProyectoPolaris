@@ -3,11 +3,11 @@ import { AuthProvider } from "./context/AuthContext";
 import { AreasProvider } from "./context/AreasContext";
 import { RequestsProvider } from "./context/RequestsContext";
 
-import LandingPageLogin from "./pages/LandingPageLogin";
-import LandingPageRegister from "./pages/LandingPageRegister";
-import HomePageRegisterDetails from "./pages/LandingPageRegisterDetails";
-import ForgotPasswordPage from "./pages/ForgotPasswordPage";
-import ResetPasswordPage from "./pages/ResetPasswordPage";
+import LandingPageLogin from "./pages/LandingPages/LandingPageLogin";
+import LandingPageRegister from "./pages/LandingPages/LandingPageRegister";
+// import LandingPageRegisterHomePageRegisterDetails from "./pages/LandingPages/LandingPageRegisterDetails";
+import ForgotPasswordPage from "./pages/LandingPages/ForgotPasswordPage";
+import ResetPasswordPage from "./pages/LandingPages/ResetPasswordPage";
 
 import HomePage from "./pages/HomePage";
 
@@ -48,7 +48,7 @@ function App() {
 									{/* Pagina de registro, solo pide dos datos inciales */}
 									<Route path="/register" element={<LandingPageRegister />} />
 									{/* Pagina de registro secundaria, termina el registro */}
-									<Route path="/register/details" element={<HomePageRegisterDetails />} />
+									{/* <Route path="/register/details" element={<HomePageRegisterDetails />} /> */}
 									{/* Dejo la pagina de añadir proyectos fuera de la ruta protegida para poder probarla */}
 									{/* <Route path="/projects/new" element={<ProjectsFormPage />} /> */}
 									<Route element={<ProtectedRoute />}>

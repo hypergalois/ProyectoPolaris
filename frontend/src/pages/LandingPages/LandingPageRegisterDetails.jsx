@@ -1,8 +1,9 @@
-import LandingPageBar from "../components/Navbars/LandingPageBar";
-import NavBarNoAuth from "../components/Navbars/NavBarNoAuth";
-import SecondaryRegisterForm from "../components/LoginRegisterForms/SecondaryRegisterForm";
+// NO SE USA BORRAR
+import LandingPageBar from "../../components/Navbars/LandingPageBar";
+import NavBarNoAuth from "../../components/Navbars/NavBarNoAuth";
+import SecondaryRegisterForm from "../../components/LoginRegisterForms/SecondaryRegisterForm";
 
-const HomePageRegister = () => {
+const HomePageRegisterDetails = () => {
 	return (
 		<>
 			<NavBarNoAuth />
@@ -21,4 +22,4 @@ const HomePageRegister = () => {
 	);
 };
 
-export default HomePageRegister;
+export default HomePageRegisterDetails;

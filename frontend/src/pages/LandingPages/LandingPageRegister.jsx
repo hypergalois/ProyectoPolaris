@@ -1,15 +1,15 @@
 import { useState } from "react";
 
-import InitialRegisterForm from "../components/LoginRegisterForms/InitialRegisterForm";
-import SecondaryRegisterForm from "../components/LoginRegisterForms/SecondaryRegisterForm";
-import HomePageLanding from "../components/HomePageLanding";
+import InitialRegisterForm from "../../components/LoginRegisterForms/InitialRegisterForm.jsx";
+import SecondaryRegisterForm from "../../components/LoginRegisterForms/SecondaryRegisterForm.jsx";
+import HomePageLanding from "../../components/HomePageLanding.jsx";
 
-import NavBarNoAuth from "../components/Navbars/NavBarNoAuth";
+import NavBarNoAuth from "../../components/Navbars/NavBarNoAuth.jsx";
 
 import { Link } from "react-router-dom";
-import LandingPageBar from "../components/Navbars/LandingPageBar";
+import LandingPageBar from "../../components/Navbars/LandingPageBar.jsx";
 
-import Popup from "../components/Popup.jsx";
+import Popup from "../../components/Popup.jsx";
 
 const HomePageRegister = () => {
 	// Vamos a manejar la visibilidad del popup del registro secundario

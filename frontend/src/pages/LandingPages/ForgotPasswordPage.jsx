@@ -1,9 +1,9 @@
 import React from "react";
-import NavBarNoAuth from "../components/Navbars/NavBarNoAuth";
+import NavBarNoAuth from "../../components/Navbars/NavBarNoAuth";
 import { Link } from "react-router-dom";
-import LandingPageBar from "../components/Navbars/LandingPageBar";
-import ForgotPasswordForm from "../components/LoginRegisterForms/ForgotPasswordForm";
-import { useAuth } from "../context/AuthContext";
+import LandingPageBar from "../../components/Navbars/LandingPageBar";
+import ForgotPasswordForm from "../../components/LoginRegisterForms/ForgotPasswordForm";
+import { useAuth } from "../../context/AuthContext";
 
 function ForgotPassword() {
 	const { isResetTokenSent } = useAuth();
