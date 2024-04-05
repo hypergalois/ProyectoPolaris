@@ -9,32 +9,35 @@ const ProjectFormStep4 = ({ returnStep, currentStep }) => {
 		<>
 			<Stepper currentStep={currentStep} isComplete={isComplete} />
 			<div>Previsualización</div>
-			<button
-				className="h-12 px-3 bg-blue-600 hover:bg-blue-400 text-white font-bold"
-				onClick={() => {
-					console.log("Guardar borrador");
-				}}
-			>
-				GUARDAR BORRADOR
-			</button>
-			<button
-				className="h-12 px-3 bg-blue-600 hover:bg-blue-400 text-white font-bold"
-				onClick={() => {
-					returnStep();
-				}}
-			>
-				ANTERIOR
-			</button>
-			<button
-				className="h-12 px-3 bg-blue-600 hover:bg-blue-400 text-white font-bold"
-				onClick={() => {
-					console.log("Subir proyecto");
-					// Una vez que se suba, hay que poner el estilo del ultimo boton en complete y mostrar la animacion de tick
-					setIsComplete(true);
-				}}
-			>
-				SUBIR PROYECTO
-			</button>
+
+			<div className="flex justify-end gap-4">
+				<button
+					className="h-8 px-3 bg-blue-600 hover:bg-blue-400 text-white font-bold text-sm"
+					onClick={() => {
+						console.log("Guardar borrador");
+					}}
+				>
+					GUARDAR BORRADOR
+				</button>
+				<button
+					className="h-8 px-3 bg-blue-600 hover:bg-blue-400 text-white font-bold text-sm"
+					onClick={() => {
+						returnStep();
+					}}
+				>
+					ANTERIOR
+				</button>
+				<button
+					className="h-8 px-3 bg-blue-600 hover:bg-blue-400 text-white font-bold text-sm"
+					onClick={() => {
+						console.log("Subir proyecto");
+						// Una vez que se suba, hay que poner el estilo del ultimo boton en complete y mostrar la animacion de tick
+						setIsComplete(true);
+					}}
+				>
+					SUBIR PROYECTO
+				</button>
+			</div>
 		</>
 	);
 };
