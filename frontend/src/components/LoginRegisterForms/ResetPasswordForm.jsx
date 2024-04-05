@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 // Aqui muestro el fomrulario sea cual sea el estado de la verificacion del token, ya que se hace despues, se podria mejorar para que no se muestre el formulario si el token no es valido
 const ResetPasswordForm = (resetToken) => {

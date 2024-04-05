@@ -1,12 +1,12 @@
 import { useForm, Controller } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import { useAreas } from "../context/AreasContext";
+import { useAuth } from "../../context/AuthContext";
+import { useAreas } from "../../context/AreasContext";
 import { useState, useEffect } from "react";
 import Select from "react-select";
 // import { DevTool } from "@hookform/devtools";
 
-import { selectStyles } from "../config/util";
+import { selectStyles } from "../../config/util";
 
 const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 	const {

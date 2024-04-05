@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import InitialRegisterForm from "../components/InitialRegisterForm";
-import SecondaryRegisterForm from "../components/SecondaryRegisterForm";
+import InitialRegisterForm from "../components/LoginRegisterForms/InitialRegisterForm";
+import SecondaryRegisterForm from "../components/LoginRegisterForms/SecondaryRegisterForm";
 import HomePageLanding from "../components/HomePageLanding";
 
 import NavBarNoAuth from "../components/Navbars/NavBarNoAuth";

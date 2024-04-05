@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 // eslint-disable-next-line no-unused-vars
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import Popup from "../components/Popup";
-import SecondaryRegisterForm from "../components/SecondaryRegisterForm";
+import { useAuth } from "../../context/AuthContext";
+import Popup from "../Popup";
+import SecondaryRegisterForm from "./SecondaryRegisterForm";
 
 const InitialRegisterForm = ({ onSuccess }) => {
 	const {
@@ -54,7 +54,7 @@ const InitialRegisterForm = ({ onSuccess }) => {
 				})}
 			</div>
 
-			<div className="mb-4 w-full md:w-11/12">
+			<div className="m-4 w-full md:w-11/12">
 				<div className="pt-2 border flex flex-col bg-white">
 					<label htmlFor="email" className="text-blue-400 text-xs text-left ml-3 font-semibold">
 						Correo de la U-Tad

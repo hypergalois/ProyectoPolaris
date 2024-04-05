@@ -1,4 +1,4 @@
-import LoginForm from "../components/LoginForm";
+import LoginForm from "../components/LoginRegisterForms/LoginForm";
 import LandingPageBar from "../components/Navbars/LandingPageBar.jsx";
 
 import NavBarNoAuth from "../components/Navbars/NavBarNoAuth.jsx";
