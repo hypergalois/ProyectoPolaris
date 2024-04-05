@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect, useRef } from "react";
-import { registerRequest, loginRequest, verifyTokenRequest, logoutRequest, forgotPasswordRequest, resetPasswordRequest, verifyEmailRequest, checkEmailRequest, getProfileRequest, getUserRequest, getUserRoleRequest } from "../api/auth";
+import { registerRequest, loginRequest, verifyTokenRequest, logoutRequest, forgotPasswordRequest, resetPasswordRequest, verifyEmailRequest, checkEmailRequest, getProfileRequest, getUserRequest, getUsersRequest, getUserRoleRequest } from "../api/auth";
 import Cookies from "js-cookie";
 
 export const AuthContext = createContext();
@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }) => {
 	const [userRole, setUserRole] = useState(null);
 	const [profile, setProfile] = useState([]);
 	const [user, setUser] = useState(null);
+	const [users, setUsers] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [errors, setErrors] = useState([]);
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -102,6 +103,19 @@ export const AuthProvider = ({ children }) => {
 		try {
 			const response = await getUserRequest(email);
 			setUser(response.data);
+		} catch (error) {
+			if (Array.isArray(error.response.data)) {
+				setErrors(error.response.data);
+			} else {
+				setErrors([error.response.data]);
+			}
+		}
+	};
+
+	const getUsers = async (userName) => {
+		try {
+			const response = await getUsersRequest(userName);
+			setUsers(response.data);
 		} catch (error) {
 			if (Array.isArray(error.response.data)) {
 				setErrors(error.response.data);
@@ -221,6 +235,7 @@ export const AuthProvider = ({ children }) => {
 		<AuthContext.Provider
 			value={{
 				user,
+				users,
 				userRole,
 				register,
 				login,
@@ -233,6 +248,7 @@ export const AuthProvider = ({ children }) => {
 				profile,
 				getProfile,
 				getUser,
+				getUsers,
 				getUserRole,
 				loading,
 				errors,

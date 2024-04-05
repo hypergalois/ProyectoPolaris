@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { register, login, logout, profile, getUser, verifyToken, checkEmailRegister, forgotPassword, resetPassword, getUserRole } from "../controllers/auth.controllers.js";
+import { register, login, logout, profile, getUser, getUsers, verifyToken, checkEmailRegister, forgotPassword, resetPassword, getUserRole } from "../controllers/auth.controllers.js";
 
 import { registerSchema, loginSchema } from "../schemas/auth.schema.js";
 import { authRequired } from "../middlewares/authRequired.middleware.js";
@@ -268,6 +268,49 @@ router.post("/profile", authRequired, profile);
  */
 
 router.post("/getUser", authRequired, getUser);
+
+/**
+ * @swagger
+ * /getUsers:
+ *   get:
+ *     summary: Obtiene todos los usuarios segun el nombre
+ *     description: Obtiene todos los usuarios segun el nombre.
+ *     tags:
+ *       - Usuario
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       '200':
+ *         description: Petición exitosa
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: ID del usuario
+ *                 username:
+ *                   type: string
+ *                   description: Nombre de usuario del usuario
+ *                 email:
+ *                   type: string
+ *                   description: Correo electrónico del usuario
+ *       '404':
+ *         description: Usuario no encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Mensaje de error indicando que el usuario no fue encontrado.
+ *       '500':
+ *         description: Error interno del servidor
+ */
+
+router.post("/getUsers", authRequired, getUsers);
 
 /**
  * @swagger

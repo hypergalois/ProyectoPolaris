@@ -331,6 +331,44 @@ export const getUser = async (req, res) => {
 	}
 };
 
+export const getUsers = async (req, res) => {
+	const { userName } = req.body;
+	try {
+		const usersFound = await prisma.user.findMany({
+			take: 5,
+			where: {
+				OR: [
+					{
+						username: {
+							contains: userName,
+							mode: 'insensitive'
+						}
+					},
+					{
+						email: {
+							contains: userName,
+							mode: 'insensitive'
+						}
+					}
+				]
+			}
+		});
+
+		if (!usersFound) return res.status(200).json({ message: "Users not found.", usersExists: false });
+
+		const usersInfo = usersFound.map(user => ({
+			id: user.id,
+			username: user.username,
+			email: user.email,
+		}));
+
+		return res.status(200).json(usersInfo);
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ message: error.message });
+	}
+};
+
 export const verifyToken = async (req, res) => {
 	const { token } = req.cookies;
 	// console.log(req.cookies);

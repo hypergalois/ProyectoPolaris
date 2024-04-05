@@ -20,4 +20,6 @@ export const getProfileRequest = () => axiosInstance.post("/profile");
 
 export const getUserRequest = (email) => axiosInstance.post("/getUser", email);
 
+export const getUsersRequest = (userName) => axiosInstance.post("/getUsers", userName);
+
 export const getUserRoleRequest = () => axiosInstance.get("/getUserRole");
