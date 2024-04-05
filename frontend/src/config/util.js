@@ -18,4 +18,16 @@ const academicRoleEnum = {
 	EMPLOYEE: "EMPLOYEE",
 };
 
-export { rolesEnum, statusEnum, academicRoleEnum };
+const colorsDegreesEnum = {
+	DIGITAL_DESIGN: "#e83a57",
+	ANIMATION: "#ffe802",
+	ALTERNATIVE: "#f3ce00",
+	INTERACTIVE_PRODUCTS: "#6a3ec5",
+	INSO: "#46b6b6",
+	MAIS: "#81c298",
+	// OJO CICLOS
+	MULTIPLATFORM_APPLICATIONS: "#4fbbea",
+	INTERACTIVE_ENVIRONMENTS: "#c2d14b",
+};
+
+export { rolesEnum, statusEnum, academicRoleEnum, colorsDegreesEnum };
