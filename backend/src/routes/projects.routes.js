@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { createProject, deleteProject, getProject, getProjectByCategory, getProjectByDate, getProjectByStatus, getProjectByTitle, getProjectByUser, getProjects, getProjectsHome, updateProject } from "../controllers/projects.controllers.js";
+import { createProject, deleteProject, getProject, getProjectByCategory, getProjectByDate,
+    getProjectByStatus, getProjectByTitle, getProjectByUser, getProjects, getProjectsHome, updateProject, getProjectsHomeByArea } from "../controllers/projects.controllers.js";
 import { uploadFile } from "../middlewares/uploadFile.middleware.js";
 import { authRequired } from "../middlewares/authRequired.middleware.js";
 import { validateSchema } from "../middlewares/validator.middleware.js";
@@ -64,6 +65,8 @@ router.get("/projects", authRequired, getProjects);
  */
 
 router.get("/projects/home", authRequired, getProjectsHome);
+
+router.get("/projects/home/:area", authRequired, getProjectsHomeByArea);
 
 /**
  * @swagger
