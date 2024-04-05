@@ -1,4 +1,4 @@
-import LandingPageBar from "../components/Navbars/ñLandingPageBar";
+import LandingPageBar from "../components/Navbars/LandingPageBar";
 import NavBarNoAuth from "../components/Navbars/NavBarNoAuth";
 import SecondaryRegisterForm from "../components/SecondaryRegisterForm";
 
