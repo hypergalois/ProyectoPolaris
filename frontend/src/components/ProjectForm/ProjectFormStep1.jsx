@@ -94,7 +94,7 @@ const ProjectFormStep1 = ({ advanceStep, currentStep }) => {
 					</div>
 
 					<div className="mb-4 w-full mx-auto">
-						<div className="pt-2 border-[2.5	px] border-blue-400 ">
+						<div className="pt-2 border-[2.5px] border-blue-400 ">
 							<label htmlFor="keywords" className="text-blue-400 text-xs text-left ml-3 font-semibold block mt-2">
 								Keywords
 							</label>
