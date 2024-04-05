@@ -58,7 +58,8 @@ function App() {
 										{/* Pagina de verificacion de email */}
 										<Route path="/verify-email" element={<VerifyEmailPage />} />
 										{/* Pagina home pero que salen proyectos y noticias una vez estas logeado */}
-										<Route path="/home" element={<HomePage />} />
+										{/* <Route path="/home" element={<HomePage />} /> */}
+										<Route path="/home/:area?" Component={HomePage} />
 										{/* Pagina dashboard donde se veran las peticiones */}
 										<Route path="/dashboard" element={<DashboardPage />} />
 										{/* Pagina de proyectos para buscarlos */}

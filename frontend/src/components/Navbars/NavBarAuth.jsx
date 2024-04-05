@@ -36,10 +36,10 @@ function NavBar() {
 	// TODO TAMBIEN HAY QUE HACERLO PARA NO ADMIN, POSIBLEMENTE HACIENDO APPEND A LA RUTA DEL DASHBOARD
 	let navigation = [
 		{ name: "TODOS", href: "/home", current: false },
-		{ name: "ANIMACIÓN", href: "/animation", current: false },
-		{ name: "DISEÑO DIGITAL", href: "/digital-design", current: false },
-		{ name: "INGENIERÍA Y CIENCIAS", href: "/engineering", current: false },
-		{ name: "VIDEOJUEGOS", href: "/videogames", current: false },
+		{ name: "ANIMACIÓN", href: "/home/animation", current: false },
+		{ name: "DISEÑO DIGITAL", href: "/home/digital-design", current: false },
+		{ name: "INGENIERÍA Y CIENCIAS", href: "/home/engineering", current: false },
+		{ name: "VIDEOJUEGOS", href: "/home/videogames", current: false },
 	];
 
 	navigation.forEach((item) => {

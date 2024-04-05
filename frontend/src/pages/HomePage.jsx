@@ -4,16 +4,33 @@ import { useProjects } from "../context/ProjectsContext";
 import { useAreas } from "../context/AreasContext";
 import SearchForms from "../components/HomeSearchComponents/SearchForms";
 import SearchResults from "../components/HomeSearchComponents/SearchResults";
+import { useParams } from "react-router-dom";
 
 function HomePage() {
+	var { area } = useParams();
+	area = area || "all";
+	console.log("Has seleccionado el area: ", area);
+
 	const { projects, getProjectsHome } = useProjects();
 	const { degrees, getDegrees, awards, getAwards, subjects, getSubjects } = useAreas();
 	const [loading, setLoading] = useState(true);
 	const [degreeFilter, setDegreeFilter] = useState({ label: "Todos los Grados", value: "All" });
 	const [subjectFilter, setSubjectFilter] = useState({ label: "Todas las Asignaturas", value: "All" });
-	const [courseFilter, setCourseFilter] = useState({ label: "Todos los Cursos", value: "All" });
+	const [courseFilter, setCourseFilter] = useState({ label: "Cursos (Todos)", value: "All" });
 	const [awardFilter, setAwardFilter] = useState({ label: "Todos los Premios", value: "All" });
 	const [searchQuery, setSearchQuery] = useState("");
+
+	// @gonibix23 Aquí estableces el filtro basado en el parámetro area
+	// useEffect(() => {
+	// 	if (area) {
+	// 		const foundArea = areas.find((a) => a.name.toLowerCase() === area.replace("-", " "));
+	// 		if (foundArea) {
+	// 			setAreaFilter({ label: foundArea.name, value: foundArea.id });
+	// 		}
+	// 	}
+
+	// 	Promise.all([getProjectsHome(), getDegrees(), getAwards(), getSubjects()]).then(() => setLoading(false));
+	// }, [area]);
 
 	useEffect(() => {
 		Promise.all([getProjectsHome(), getDegrees(), getAwards(), getSubjects()]).then(() => setLoading(false));
@@ -27,7 +44,7 @@ function HomePage() {
 		const degreeMatch = degreeFilter.value == "All" || (project.degree && project.degree.id === degreeFilter.value);
 		const subjetcMatch = subjectFilter.value == "All" || (project.subject && project.subject.id === subjectFilter.value);
 		const courseMatch = courseFilter.value == "All" || project.course === courseFilter.value;
-		const awardMatch = awardFilter.value ==="All" || project.awardsId === awardFilter.value;
+		const awardMatch = awardFilter.value === "All" || project.awardsId === awardFilter.value;
 		const searchMatch = project.title.toLowerCase().includes(searchQuery.toLowerCase());
 
 		return degreeMatch && subjetcMatch && courseMatch && awardMatch && searchMatch;
@@ -40,7 +57,7 @@ function HomePage() {
 					label: degree.name,
 					value: degree.id,
 				})),
-		]
+		  ]
 		: [];
 
 	const subjectOptions = subjects
@@ -50,7 +67,7 @@ function HomePage() {
 					label: subject.name,
 					value: subject.id,
 				})),
-		]
+		  ]
 		: [];
 
 	const courseOptions = [
@@ -69,10 +86,10 @@ function HomePage() {
 					label: award.name,
 					value: award.id,
 				})),
-		]
+		  ]
 		: [];
 
-    console.log(degreeFilter.value, subjectFilter.value, courseFilter.value, awardFilter.value, searchQuery);
+	console.log(degreeFilter.value, subjectFilter.value, courseFilter.value, awardFilter.value, searchQuery);
 
 	return (
 		<>
