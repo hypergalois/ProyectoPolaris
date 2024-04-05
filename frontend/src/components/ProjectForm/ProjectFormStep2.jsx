@@ -1,7 +1,7 @@
 import React from "react";
 
-import Stepper from "./Stepper.jsx";
-import TagsInputComponent from "./TagsInputComponent.jsx";
+import Stepper from "../Stepper.jsx";
+import TagsInputComponent from "../TagsInputComponent.jsx";
 
 import { useForm, useController, useFieldArray, FormProvider } from "react-hook-form";
 
@@ -88,11 +88,7 @@ const ProjectFormStep2 = ({ returnStep, advanceStep, currentStep }) => {
 							</div>
 						))}
 						<div className="flex justify-center mt-4">
-							<button
-								type="button"
-								onClick={() => appendStudent({ student: "" })}
-								className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-							>
+							<button type="button" onClick={() => appendStudent({ student: "" })} className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
 								Añadir estudiante
 							</button>
 						</div>
@@ -128,11 +124,7 @@ const ProjectFormStep2 = ({ returnStep, advanceStep, currentStep }) => {
 							</div>
 						))}
 						<div className="flex justify-center mt-4">
-							<button
-								type="button"
-								onClick={() => appendProfessor({ professor: "" })}
-								className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-							>
+							<button type="button" onClick={() => appendProfessor({ professor: "" })} className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
 								Añadir profesor
 							</button>
 						</div>

@@ -1,4 +1,4 @@
-import ProjectForm from "../components/ProjectFormNew";
+import ProjectForm from "../components/ProjectForm/ProjectFormNew";
 
 const ProjectFormPage = () => {
 	return (

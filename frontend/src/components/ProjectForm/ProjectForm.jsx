@@ -2,9 +2,9 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm, useFieldArray, get, set } from "react-hook-form";
 import Select from "react-select";
-import { useAreas } from "../context/AreasContext";
-import { useProjects } from "../context/ProjectsContext";
-import DropzoneComponent from "./DropzoneComponent";
+import { useAreas } from "../../context/AreasContext";
+import { useProjects } from "../../context/ProjectsContext";
+import DropzoneComponent from "../DropzoneComponent";
 
 const courseOptions = [
 	{ value: "1", label: "1º" },

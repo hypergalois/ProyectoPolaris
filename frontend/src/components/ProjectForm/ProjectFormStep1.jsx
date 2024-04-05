@@ -1,7 +1,7 @@
 import React from "react";
 
-import Stepper from "./Stepper";
-import TagsInputComponent from "./TagsInputComponent.jsx";
+import Stepper from "../Stepper.jsx";
+import TagsInputComponent from "../TagsInputComponent.jsx";
 
 import { useForm, useController, useFieldArray, FormProvider } from "react-hook-form";
 

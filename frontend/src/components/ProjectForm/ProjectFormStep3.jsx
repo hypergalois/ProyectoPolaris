@@ -1,14 +1,12 @@
 import React from "react";
-import Stepper from "./Stepper.jsx";
 
-const ProjectFormStep4 = ({ returnStep, currentStep }) => {
-	// No se si pasandole asi el estado si cambia se renderiza de nuevo
-	const [isComplete, setIsComplete] = React.useState(false);
+import Stepper from "../Stepper.jsx";
 
+const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep }) => {
 	return (
 		<>
-			<Stepper currentStep={currentStep} isComplete={isComplete} />
-			<div>Previsualización</div>
+			<Stepper currentStep={currentStep} />
+			<div>Titulacion, Asignatura, Proyecto Personal, Curso Academico, Premios, Miniatura, Archivos del Proyecto, Enlaces, Palabras Clave, Memoria del Proyecto</div>
 			<button
 				className="h-12 px-3 bg-blue-600 hover:bg-blue-400 text-white font-bold"
 				onClick={() => {
@@ -28,15 +26,13 @@ const ProjectFormStep4 = ({ returnStep, currentStep }) => {
 			<button
 				className="h-12 px-3 bg-blue-600 hover:bg-blue-400 text-white font-bold"
 				onClick={() => {
-					console.log("Subir proyecto");
-					// Una vez que se suba, hay que poner el estilo del ultimo boton en complete y mostrar la animacion de tick
-					setIsComplete(true);
+					advanceStep();
 				}}
 			>
-				SUBIR PROYECTO
+				SIGUIENTE
 			</button>
 		</>
 	);
 };
 
-export default ProjectFormStep4;
+export default ProjectFormStep3;

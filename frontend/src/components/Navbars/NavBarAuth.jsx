@@ -8,7 +8,7 @@ import { useAuth } from "../../context/AuthContext";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import ProjectFormOrchestrator from "../ProjectFormOrchestrator";
+import ProjectFormOrchestrator from "../ProjectForm/ProjectFormOrchestrator";
 
 function NavBar() {
 	// SECCION DE CHECK DE ROLE
