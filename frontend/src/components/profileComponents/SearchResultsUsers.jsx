@@ -12,7 +12,7 @@ function SearchResultsUsers(props) {
 	const onChange = handleSubmit(async () => {});
 
 	return (
-		<div className="container mx-auto mx-12 m-8 ">
+		<div className="container mx-auto m-8 ">
 			{filteredUsers ? (
 				filteredUsers.map((user) => (
 					<div key={user.id} className="flex justify-between space-x-4 mb-4">
