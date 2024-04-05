@@ -36,84 +36,106 @@ const ProjectFormStep1 = ({ advanceStep, currentStep }) => {
 		<>
 			<Stepper currentStep={currentStep} />
 			<div>
-				<form onSubmit={handleSubmit(onSubmit)} className="w-full bg-white  rounded px-8 pt-6 mb-2 grid gap-4 md:grid-cols-2">
-					<div className="mb-4 md:col-span-2">
-						<label className="block text-gray-700 text-sm font-bold mb-2">Título</label>
-						<input
-							type="text"
-							{...register("title", {
-								required: "Se requiere un título",
-							})}
-							placeholder="Título del proyecto"
-							className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-						/>
+				<form onSubmit={handleSubmit(onSubmit)} className="w-full bg-white rounded px-8 pt-6 mb-2 grid gap-4 md:grid-cols-1">
+					<div className="mb-2 w-full mx-auto">
+						<div className="pt-2 border flex flex-col outline outline-blue-400">
+							<label htmlFor="title" className="text-blue-400 text-xs text-left ml-3 font-semibold">
+								Título
+							</label>
+							<input
+								id="title"
+								type="text"
+								{...register("title", {
+									required: "Se requiere un título",
+								})}
+								placeholder="Título del proyecto"
+								className="outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
+								autoComplete="off"
+							/>
+						</div>
 						{errors.title && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.title.message}</p>}
 					</div>
 
-					<div className="mb-4 md:col-span-2">
-						<label className="block text-gray-700 text-sm font-bold mb-2">Descripción del proyrcto</label>
-						<textarea
-							{...register("description", {
-								required: "Se requiere una descripción del proyecto",
-							})}
-							placeholder="Descripción del proyecto"
-							className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-						></textarea>
+					<div className="mb-2 w-full mx-auto">
+						<div className="pt-2 border flex flex-col outline outline-blue-400">
+							<label htmlFor="description" className="text-blue-400 text-xs text-left ml-3 font-semibold">
+								Descripción del proyecto
+							</label>
+							<textarea
+								id="description"
+								{...register("description", {
+									required: "Se requiere una descripción del proyecto",
+								})}
+								placeholder="Descripción del proyecto"
+								className="outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent h-32 resize-none"
+								autoComplete="off"
+							></textarea>
+						</div>
 						{errors.description && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.description.message}</p>}
 					</div>
 
-					<div className="mb-4 md:col-span-2">
-						<label className="block text-gray-700 text-sm font-bold mb-2">Factor diferenciador de la propuesta</label>
-						<input
-							type="text"
-							{...register("differential_factor", {
-								required: "Se requiere un factor diferencial",
-							})}
-							placeholder="Factor diferencial del proyecto"
-							className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-						/>
-						{errors.title && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.title.message}</p>}
+					<div className="mb-2 w-full mx-auto">
+						<div className="pt-2 border flex flex-col outline outline-blue-400">
+							<label htmlFor="differential_factor" className="text-blue-400 text-xs text-left ml-3 font-semibold">
+								Factor diferenciador de la propuesta
+							</label>
+							<input
+								id="differential_factor"
+								type="text"
+								{...register("differential_factor", {
+									required: "Se requiere un factor diferencial",
+								})}
+								placeholder="Factor diferencial del proyecto"
+								className="outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
+								autoComplete="off"
+							/>
+						</div>
+						{errors.differential_factor && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.differential_factor.message}</p>}
 					</div>
 
-					<div className="mb-4 md:col-span-2">
-						<label className="block text-gray-700 text-sm font-bold mb-2">Keywords</label>
-						{/* Integra el componente TagsInputComponent */}
-						<TagsInputComponent
-							control={control}
-							name="keywords"
-							placeholder="Agregar keywords..."
-							classNames={{
-								tags: "react-tags",
-								tagInput: "react-tags-input",
-								tagInputField: "react-tags-input-field",
-								selected: "react-tags-selected",
-								tag: "react-tags-tag",
-								remove: "react-tags-remove",
-								suggestions: "react-tags-suggestions",
-								activeSuggestion: "react-tags-active-suggestion",
-							}}
-						/>
+					<div className="mb-4 w-full mx-auto">
+						<div className="pt-2 border-[2.5	px] border-blue-400 ">
+							<label htmlFor="keywords" className="text-blue-400 text-xs text-left ml-3 font-semibold block mt-2">
+								Keywords
+							</label>
+							<TagsInputComponent
+								control={control}
+								name="keywords"
+								placeholder="Agregar keywords..."
+								classNames={{
+									tags: "flex flex-wrap gap-2 p-2",
+									tagInput: "flex-1 min-w-0",
+									tagInputField: "outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold w-full",
+									selected: "flex flex-wrap gap-2",
+									tag: "bg-blue-100 text-blue-700 rounded px-2 py-1 text-xs font-semibold",
+									remove: "ml-2 cursor-pointer text-blue-500",
+									suggestions: "absolute z-10 bg-white shadow-lg mt-1",
+									activeSuggestion: "bg-blue-100",
+								}}
+							/>
+						</div>
 					</div>
 				</form>
 			</div>
-			<button
-				className="h-12 px-3 bg-blue-600 hover:bg-blue-400 text-white font-bold"
-				onClick={() => {
-					console.log("Guardar borrador");
-				}}
-			>
-				GUARDAR BORRADOR
-			</button>
-			<button
-				className="h-12 px-3 bg-blue-600 hover:bg-blue-400 text-white font-bold"
-				onClick={() => {
-					// Ahora cuando hagamos click no hay que avanzar hasta que hayamos comprobado que los datos son correctos TODO
-					// y por supuesto hay que guardarlo en el estado
-					advanceStep();
-				}}
-			>
-				SIGUIENTE
-			</button>
+
+			<div className="flex justify-end gap-4">
+				<button
+					className="h-8 px-3 bg-blue-600 hover:bg-blue-400 text-white font-bold text-sm"
+					onClick={() => {
+						console.log("Guardar borrador");
+					}}
+				>
+					GUARDAR BORRADOR
+				</button>
+				<button
+					className="h-8 px-3 bg-blue-600 hover:bg-blue-400 text-white font-bold text-sm"
+					onClick={() => {
+						advanceStep();
+					}}
+				>
+					SIGUIENTE
+				</button>
+			</div>
 		</>
 	);
 };
