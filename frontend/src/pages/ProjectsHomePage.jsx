@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useProjects } from "../context/ProjectsContext";
-import ProjectCard from "../components/ProjectCard";
+import ProjectCard from "../components/Cards/ProjectCard";
 
 function ProjectHomePage() {
 	const { projects, getProjects } = useProjects();

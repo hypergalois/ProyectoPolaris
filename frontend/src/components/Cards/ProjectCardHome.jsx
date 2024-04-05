@@ -1,9 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext.jsx";
+import { useAuth } from "../../context/AuthContext.jsx";
 import { useEffect } from "react";
-import { rolesEnum } from "../config/util.js";
-import { useProjects } from "../context/ProjectsContext.jsx";
+import { rolesEnum } from "../../config/util.js";
+import { useProjects } from "../../context/ProjectsContext.jsx";
 
 const ProjectCard = ({ project }) => {
 	const navigate = useNavigate();

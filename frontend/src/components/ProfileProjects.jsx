@@ -2,7 +2,7 @@ import React from "react";
 import { useAuth } from "../context/AuthContext";
 import { useProjects } from "../context/ProjectsContext";
 import { useState, useEffect } from "react";
-import ProjectCard from "../components/ProjectCard";
+import ProjectCard from "../components/Cards/ProjectCard";
 
 const ProfileRequests = ({ props }) => {
 	const { profile, getProfile, errors: profileErrors } = useAuth();

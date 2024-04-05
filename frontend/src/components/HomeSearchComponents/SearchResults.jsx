@@ -1,5 +1,5 @@
 import React from "react";
-import ProjectCard from "../ProjectCardTest";
+import ProjectCard from "../Cards/ProjectCard";
 
 function SearchResults(props) {
 	const { filteredProjects } = props;

@@ -1,9 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useProjects } from "../context/ProjectsContext";
-import { useAuth } from "../context/AuthContext";
+import { useProjects } from "../../context/ProjectsContext.jsx";
+import { useAuth } from "../../context/AuthContext.jsx";
 import { useEffect } from "react";
-import { rolesEnum } from "../config/util.js";
+import { rolesEnum } from "../../config/util.js";
 
 const ProjectCard = ({ project }) => {
 	const { pinProjectRequest } = useProjects();

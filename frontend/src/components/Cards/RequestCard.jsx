@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useRequests } from "../context/RequestsContext";
+import { useRequests } from "../../context/RequestsContext";
 
 function RequestCard({ request }) {
 	const { acceptRequestData, rejectRequestData } = useRequests();
