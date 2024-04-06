@@ -111,7 +111,13 @@ function HomePage() {
 				searchQuery={searchQuery}
 				setSearchQuery={setSearchQuery}
 			/>
-			{loading ? <CircularProgress color="primary" variant="soft" /> : <SearchResults filteredProjects={filteredProjects} />}
+			{loading ? (
+				<div className="flex justify-center items-center h-screen">
+					<CircularProgress color="primary" variant="soft" />
+				</div>
+			) : (
+				<SearchResults filteredProjects={filteredProjects} />
+			)}
 		</>
 	);
 }
