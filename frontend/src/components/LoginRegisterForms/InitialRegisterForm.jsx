@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext.jsx";
 import Popup from "../Dialogs/Popup.jsx";
-import SecondaryRegisterForm from "./SecondaryRegisterFormv";
+import SecondaryRegisterForm from "./SecondaryRegisterForm.jsx";
 
 const InitialRegisterForm = ({ onSuccess }) => {
 	const {
