@@ -1,7 +1,7 @@
 // BORRARLA
 import React, { useState, useEffect } from "react";
-import { useProjects } from "../context/ProjectsContext";
-import ProjectCard from "../components/Cards/ProjectCard";
+import { useProjects } from "../context/ProjectsContext.jsx";
+import ProjectCard from "../components/Cards/ProjectCard.jsx";
 
 function ProjectHomePage() {
 	const { projects, getProjects } = useProjects();

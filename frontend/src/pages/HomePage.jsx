@@ -1,9 +1,9 @@
 // HomePage.js
 import { useState, useEffect } from "react";
-import { useProjects } from "../context/ProjectsContext";
-import { useAreas } from "../context/AreasContext";
-import SearchForms from "../components/HomeSearchComponents/SearchForms";
-import SearchResults from "../components/HomeSearchComponents/SearchResults";
+import { useProjects } from "../context/ProjectsContext.jsx";
+import { useAreas } from "../context/AreasContext.jsx";
+import SearchForms from "../components/HomeSearchComponents/SearchForms.jsx";
+import SearchResults from "../components/HomeSearchComponents/SearchResults.jsx";
 import { useParams } from "react-router-dom";
 
 import CircularProgress from "@mui/joy/CircularProgress";

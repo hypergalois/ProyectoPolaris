@@ -1,7 +1,7 @@
 import { useForm, Controller } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
-import { useAreas } from "../../context/AreasContext";
+import { useAuth } from "../../context/AuthContext.jsx";
+import { useAreas } from "../../context/AreasContext.jsx";
 import { useState, useEffect } from "react";
 import Select from "react-select";
 // import { DevTool } from "@hookform/devtools";

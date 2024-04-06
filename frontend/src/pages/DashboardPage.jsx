@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { useRequests } from "../context/RequestsContext";
-import RequestCard from "../components/Cards/RequestCard";
+import { useRequests } from "../context/RequestsContext.jsx";
+import RequestCard from "../components/Cards/RequestCard.jsx";
 
 import { statusEnum } from "../config/util.js";
 

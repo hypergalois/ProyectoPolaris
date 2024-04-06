@@ -1,5 +1,5 @@
 import React from "react";
-import ProjectCard from "../Cards/ProjectCard";
+import ProjectCard from "../Cards/ProjectCard.jsx";
 
 function SearchResults({ filteredProjects }) {
 	return (

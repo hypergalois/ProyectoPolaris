@@ -1,6 +1,6 @@
 // BORRARLA
 
-import ProjectForm from "../components/ProjectForm/ProjectFormNew";
+import ProjectForm from "../components/ProjectForm/ProjectFormNew.jsx";
 
 const ProjectFormPage = () => {
 	return (

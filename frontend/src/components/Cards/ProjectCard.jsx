@@ -6,7 +6,7 @@ import { useAuth } from "../../context/AuthContext.jsx";
 import { useEffect, useState } from "react";
 import { rolesEnum } from "../../config/util.js";
 
-import ProjectDetail from "../ProjectDetails";
+import ProjectDetail from "../ProjectDetails.jsx";
 import Popup from "../Dialogs/Popup.jsx";
 
 import Card from "@mui/joy/Card";
