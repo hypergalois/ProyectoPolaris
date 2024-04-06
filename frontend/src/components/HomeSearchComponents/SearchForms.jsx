@@ -2,6 +2,7 @@
 import zIndex from "@mui/material/styles/zIndex";
 import React from "react";
 import Select from "react-select";
+import { ArrowPathIcon } from "@heroicons/react/24/outline";
 
 // import { selectStyles } from "../../config/util";
 
@@ -46,6 +47,15 @@ const customStyles = {
 };
 
 function SearchForms({ degreeOptions, subjectOptions, courseOptions, awardOptions, degreeFilter, subjectFilter, courseFilter, awardFilter, setDegreeFilter, setSubjectFilter, setCourseFilter, setAwardFilter, searchQuery, setSearchQuery }) {
+	// @gonibix23 aqui poner los defaults de los forms que no me los se
+	const resetFilters = () => {
+		setDegreeFilter("");
+		setSubjectFilter("");
+		setCourseFilter("");
+		setAwardFilter("");
+		setSearchQuery("");
+	};
+
 	return (
 		<div className="filter-container flex space-x-4 mx-20 m-8 text-blue-500">
 			<Select className="w-3/5" options={degreeOptions} value={degreeFilter} onChange={setDegreeFilter} placeholder="Titulación" menuPortalTarget={document.body} styles={customStyles} />
@@ -61,6 +71,10 @@ function SearchForms({ degreeOptions, subjectOptions, courseOptions, awardOption
 					</svg>
 				</div>
 			</div>
+
+			<button onClick={resetFilters} className="ml-auto bg-blue-500 text-white px-4 py-2 rounded-md">
+				<ArrowPathIcon className="block h-6 w-6 text-white" />
+			</button>
 		</div>
 	);
 }
