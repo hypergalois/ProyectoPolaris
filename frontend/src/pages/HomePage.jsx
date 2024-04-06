@@ -6,6 +6,8 @@ import SearchForms from "../components/HomeSearchComponents/SearchForms";
 import SearchResults from "../components/HomeSearchComponents/SearchResults";
 import { useParams } from "react-router-dom";
 
+import CircularProgress from "@mui/joy/CircularProgress";
+
 function HomePage() {
 	var { area } = useParams();
 	area = area || "all";
@@ -109,7 +111,7 @@ function HomePage() {
 				searchQuery={searchQuery}
 				setSearchQuery={setSearchQuery}
 			/>
-			{loading ? <p>Cargando proyectos...</p> : <SearchResults filteredProjects={filteredProjects} />}
+			{loading ? <CircularProgress color="primary" variant="soft" /> : <SearchResults filteredProjects={filteredProjects} />}
 		</>
 	);
 }
