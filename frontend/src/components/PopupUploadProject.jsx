@@ -1,18 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import IconButton from "@mui/material/IconButton";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
-import CloseIcon from "@mui/icons-material/Close";
+import { Dialog, Transition } from "@headlessui/react";
+import { XMarkIcon, QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 
 import CloseProjectFormDialog from "./Dialogs/CloseProjectFormDialog";
 
 const PopupUploadProject = ({ title, children, openPopup, renderStep, onClose }) => {
 	const [showHelp, setShowHelp] = useState(false);
-	const helpRef = useRef(null); // Referencia para el menú de ayuda
+	const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+	const helpRef = useRef(null);
 
-	// Cerrar el menú de ayuda si se hace clic fuera de él
+	const handleCloseClick = (event) => {
+		// En Headless UI, puedes manejar el cierre debido a clics fuera o presionar Esc directamente en el componente Dialog
+		setShowConfirmDialog(true); // Mostrar diálogo de confirmación
+	};
+
 	useEffect(() => {
 		const handleClickOutside = (event) => {
 			if (helpRef.current && !helpRef.current.contains(event.target)) {
@@ -20,40 +21,64 @@ const PopupUploadProject = ({ title, children, openPopup, renderStep, onClose })
 			}
 		};
 
-		// Agregar el listener cuando el menú esté abierto
 		if (showHelp) {
 			document.addEventListener("mousedown", handleClickOutside);
 		}
 
-		// Limpiar el listener
 		return () => {
 			document.removeEventListener("mousedown", handleClickOutside);
 		};
 	}, [showHelp]);
 
 	return (
-		<Dialog open={openPopup} onClose={onClose} maxWidth="md" fullWidth={true}>
-			<DialogTitle sx={{ backgroundColor: "#2563eb", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-				<h1 className="text-4xl font-bold text-center text-white">{title}</h1>
-				<div>
-					<IconButton onClick={() => setShowHelp(!showHelp)}>
-						<HelpOutlineIcon sx={{ color: "white" }} />
-					</IconButton>
-					<IconButton onClick={onClose}>
-						<CloseIcon sx={{ color: "white" }} />
-					</IconButton>
-				</div>
-			</DialogTitle>
-			<DialogContent dividers>
-				{renderStep()}
-				{showHelp && (
-					<div ref={helpRef} className="absolute top-16 right-10 bg-white shadow-lg rounded-md p-4 z-10">
-						<p className="text-sm text-gray-700">Simplemente rellena los campos!</p>
-						Puedes usar las flechas para avanzar por los campos y guardar un borrador para no perder tu progreso!
+		<>
+			<Transition appear show={openPopup} as={React.Fragment}>
+				<Dialog as="div" className="relative z-10" onClose={handleCloseClick}>
+					<Transition.Child as={React.Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
+						<div className="fixed inset-0 bg-gray-500 bg-opacity-55 transition-opacity" />
+					</Transition.Child>
+
+					<div className="fixed inset-0 overflow-y-auto">
+						<div className="flex min-h-full items-center justify-center p-4 text-center">
+							<Transition.Child
+								as={React.Fragment}
+								enter="ease-out duration-300"
+								enterFrom="opacity-0 scale-95"
+								enterTo="opacity-100 scale-100"
+								leave="ease-in duration-200"
+								leaveFrom="opacity-100 scale-100"
+								leaveTo="opacity-0 scale-95"
+							>
+								<Dialog.Panel className="w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all mt-16">
+									<Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900 flex justify-between items-center">
+										<span className="text-4xl font-bold text-center text-blue-600">{title}</span>
+										<div>
+											<button onClick={() => setShowHelp(!showHelp)}>
+												<QuestionMarkCircleIcon className="h-6 w-6 text-blue-600" />
+											</button>
+											<button onClick={onClose}>
+												<XMarkIcon className="h-6 w-6 text-blue-600" />
+											</button>
+										</div>
+									</Dialog.Title>
+									<div className="mt-2">
+										{renderStep()}
+										{showHelp && (
+											<div ref={helpRef} className="absolute top-16 right-10 bg-white shadow-lg rounded-md p-4 z-10">
+												<p className="text-sm text-gray-700">¡Simplemente rellena los campos! Puedes usar las flechas para avanzar por los campos y guardar un borrador para no perder tu progreso.</p>
+											</div>
+										)}
+									</div>
+								</Dialog.Panel>
+							</Transition.Child>
+						</div>
 					</div>
-				)}
-			</DialogContent>
-		</Dialog>
+				</Dialog>
+			</Transition>
+
+			{/* Diálogo de confirmación */}
+			<CloseProjectFormDialog open={showConfirmDialog} setOpen={setShowConfirmDialog} />
+		</>
 	);
 };
 
