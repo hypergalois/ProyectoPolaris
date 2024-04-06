@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useProjects } from "../context/ProjectsContext";
 
-const ProjectDetails = () => {
+const ProjectDetails = ({ project }) => {
 	const { id: projectId } = useParams();
 
-	const [project, setProject] = useState(null);
+	// const [project, setProject] = useState(null);
 
 	const { getProject } = useProjects();
 

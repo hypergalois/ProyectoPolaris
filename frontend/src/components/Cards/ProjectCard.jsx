@@ -1,4 +1,14 @@
 import * as React from "react";
+
+import { useNavigate } from "react-router-dom";
+import { useProjects } from "../../context/ProjectsContext.jsx";
+import { useAuth } from "../../context/AuthContext.jsx";
+import { useEffect, useState } from "react";
+import { rolesEnum } from "../../config/util.js";
+
+import ProjectDetail from "../ProjectDetails";
+import Popup from "../Dialogs/Popup.jsx";
+
 import Card from "@mui/joy/Card";
 import CardCover from "@mui/joy/CardCover";
 import CardContent from "@mui/joy/CardContent";
@@ -6,8 +16,45 @@ import Typography from "@mui/joy/Typography";
 import GroupIcon from "@mui/icons-material/Group";
 
 const ProjectCard = ({ project }) => {
+	const [openPopup, setOpenPopup] = useState(false);
+
+	const handleClosePopup = () => {
+		setOpenPopup(false);
+	};
+
+	const { pinProjectRequest } = useProjects();
+	const { userRole, getUserRole } = useAuth();
+
+	useEffect(() => {
+		getUserRole();
+	}, []);
+
+	// if (userRole === null) return null;
+
+	const navigate = useNavigate();
+
+	const handleClick = (projectId) => {
+		// Navegar a otra página al hacer clic
+		// navigate(`/projects/${projectId}`);
+		// Ya no es una pagina nueva sino un modal
+	};
+
+	const handlePin = () => {
+		pinProjectRequest(project.id);
+	};
+
 	return (
-		<Card sx={{ maxWidth: 545, minHeight: "300px" }}>
+		<Card
+			sx={{ maxWidth: 545, minHeight: "300px", cursor: "pointer" }}
+			onClick={() => {
+				console.log("Click en el card");
+				console.log("project", project);
+				<Popup title="CREAR TU USUARIO" openPopup={openPopup} closePopup={handleClosePopup}>
+					{/* // Aqui va el ProjectDetail */}
+					<ProjectDetail project={project} />
+				</Popup>;
+			}}
+		>
 			<CardCover>
 				<img src="https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800" srcSet="https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800" loading="lazy" alt="" />
 			</CardCover>
