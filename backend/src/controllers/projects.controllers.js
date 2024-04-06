@@ -229,9 +229,13 @@ export const createProject = async (req, res) => {
 export const getProject = async (req, res) => {
 	const { id } = req.params;
 
+    console.log("getProject req.params.id",id);
+
 	try {
 		const project = await prisma.project.findUnique({ where: { id: id } });
 		if (!project) return res.status(404).json({ message: "Project not found" });
+
+        console.log(project);
 
 		return res.status(200).json(project);
 	} catch (error) {

@@ -14,6 +14,7 @@ export const useProjects = () => {
 
 export const ProjectsProvider = ({ children }) => {
 	const [projects, setProjects] = useState([]);
+    const [project, setProject] = useState({});
 	const [awards, setAwards] = useState([]);
 
 	const createProject = async (project) => {
@@ -46,6 +47,7 @@ export const ProjectsProvider = ({ children }) => {
 	const getProject = async (id) => {
 		try {
 			const res = await getProjectRequest(id);
+            setProject(res.data);
 			return res.data;
 		} catch (error) {
 			console.log(error);
@@ -115,11 +117,13 @@ export const ProjectsProvider = ({ children }) => {
 		<ProjectsContext.Provider
 			value={{
 				projects,
+                project,
 				awards,
 				createProject,
 				getProjects,
 				getProjectsHome,
 				getProject,
+                setProject,
 				getProjectsByUser,
 				pinProjectRequest,
 				unpinProjectRequest,
