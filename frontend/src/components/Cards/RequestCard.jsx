@@ -9,6 +9,10 @@ import GroupIcon from "@mui/icons-material/Group";
 import Button from "@mui/joy/Button";
 
 function RequestCard({ request }) {
+	// AQUI HAY QUE HACER LO DEL SI HACES CLICK TE ABRE EL MODEL PERO DEL PROYECTO
+	// Y NO TENEMOS PROYECTO, HAY QUE CONSEGUIRLO DEL BACKEND
+	// Y LUEGO YA MOSTRARLO DE LA MISMA FORMA @Blakky @gonibix23
+
 	const { acceptRequestData, rejectRequestData } = useRequests();
 
 	const handleAccept = () => {
