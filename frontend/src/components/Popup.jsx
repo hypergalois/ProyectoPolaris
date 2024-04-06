@@ -1,35 +1,45 @@
 import React from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
-import Slide from "@mui/material/Slide";
-
-const Transition = React.forwardRef(function Transition(props, ref) {
-	return <Slide direction="up" ref={ref} {...props} />;
-});
-
-const Popup = ({ title, children, openPopup, closePopup }) => {
+const Popup = ({ title, openPopup, closePopup, children }) => {
 	return (
-		// OJO, con la anchura maximo, el div de dentro la puede hacer mas grande aunque tenga el maxWidht
-		// Aparte que los popups de ordendador van a ser mas grandes asi que TODO
-		<Dialog open={openPopup} onClose={closePopup} maxWidth="md" fullWidth={true} TransitionComponent={Transition}>
-			<DialogTitle>
-				<div className="flex justify-between items-center w-full">
-					<h1 className="flex-1 text-4xl font-bold text-center">{title}</h1>
-					<IconButton onClick={closePopup} className="flex-1 justify-end">
-						<CloseIcon />
-					</IconButton>
+		<Transition appear show={openPopup} as={React.Fragment}>
+			<Dialog as="div" className="relative z-10" onClose={closePopup}>
+				<Transition.Child
+					as={React.Fragment}
+					enter="ease-out duration-300"
+					enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+					enterTo="opacity-100 translate-y-0 sm:scale-100"
+					leave="ease-in duration-200"
+					leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+					leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+				>
+					<div className="fixed inset-0 bg-black bg-opacity-25" />
+				</Transition.Child>
+
+				<div className="fixed inset-0 overflow-y-auto">
+					<div className="flex min-h-full items-center justify-center p-4 text-center">
+						<Transition.Child as={React.Fragment} enter="ease-out duration-300" enterFrom="opacity-0 scale-95" enterTo="opacity-100 scale-100" leave="ease-in duration-200" leaveFrom="opacity-100 scale-100" leaveTo="opacity-0 scale-95">
+							<Dialog.Panel className="w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all mt-16">
+								<Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
+									<div className="flex justify-between items-center">
+										<h1 className="text-4xl font-bold flex-grow">{title}</h1>
+										<button onClick={closePopup} className="ml-auto">
+											<XMarkIcon className="h-6 w-6" />
+										</button>
+									</div>
+								</Dialog.Title>
+								<div className="mt-2">
+									{children}
+									{/* Aquí puedes poner tus acciones del dialog o cualquier otro contenido */}
+								</div>
+							</Dialog.Panel>
+						</Transition.Child>
+					</div>
 				</div>
-			</DialogTitle>
-			<DialogContent dividers>
-				{children}
-				<DialogActions></DialogActions>
-			</DialogContent>
-		</Dialog>
+			</Dialog>
+		</Transition>
 	);
 };
 
