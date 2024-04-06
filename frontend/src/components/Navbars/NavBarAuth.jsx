@@ -124,29 +124,9 @@ function NavBar() {
 												<Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
 													<Menu.Item>
 														{({ active }) => (
+															// @Blakky ESTO HAY QUE CAMBIARLO POR EL COMPONENTE DE NOTIFICACIONES
 															<Link to="/profile" className={`${active ? "bg-gray-100" : ""} block px-4 py-2 text-sm text-gray-700`}>
-																Profile
-															</Link>
-														)}
-													</Menu.Item>
-													<Menu.Item>
-														{({ active }) => (
-															<Link to="/settings" className={`${active ? "bg-gray-100" : ""} block px-4 py-2 text-sm text-gray-700`}>
-																Settings
-															</Link>
-														)}
-													</Menu.Item>
-													<Menu.Item>
-														{({ active }) => (
-															<Link
-																to="/"
-																className={`${active ? "bg-gray-100" : ""} block px-4 py-2 text-sm text-gray-700`}
-																onClick={() => {
-																	console.log("Logout.");
-																	logout();
-																}}
-															>
-																Sign out
+																AQUI VAN LAS NOTIFICACIONE
 															</Link>
 														)}
 													</Menu.Item>
@@ -154,6 +134,7 @@ function NavBar() {
 											</Transition>
 										</Menu>
 
+										{/* @gonibix23 aqui es lo que tienes que cambiar para hacer el menú */}
 										<Menu as="div" className="relative">
 											<Menu.Button className="inline-flex items-center bg-white px-3 py-2 sm:px-4 sm:py-2 mr-2 rounded-full text-white hover:bg-blue-400 focus:outline-none">
 												<UserCircleIcon className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600" aria-hidden="true" />
