@@ -60,8 +60,8 @@ const ProjectCard = ({ project }) => {
 				<div
 					style={{
 						position: "absolute",
-						top: 8,
-						left: 8,
+						top: 10,
+						left: 10,
 						backgroundColor: "red",
 						color: "white",
 						padding: "4px 8px",
