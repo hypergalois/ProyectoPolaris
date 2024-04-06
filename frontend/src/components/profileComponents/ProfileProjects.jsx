@@ -4,7 +4,7 @@ import { useProjects } from "../../context/ProjectsContext";
 import { useState, useEffect } from "react";
 import ProjectCard from "../Cards/ProjectCard";
 
-const ProfileRequests = ({ props }) => {
+const ProfileProjects = ({ props }) => {
 	const { profile, getProfile, errors: profileErrors } = useAuth();
 	const { projects, getProjectsByUser, errors: proyectsErrors } = useProjects();
 	const [loading, setLoading] = useState(true);
@@ -46,4 +46,4 @@ const ProfileRequests = ({ props }) => {
 	);
 };
 
-export default ProfileRequests;
+export default ProfileProjects;
