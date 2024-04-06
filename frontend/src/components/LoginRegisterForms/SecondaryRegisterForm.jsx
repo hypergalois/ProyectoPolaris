@@ -159,7 +159,7 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 						})}
 						placeholder="*Nombre completo"
 					/>
-					{errors.fullName && <p className="mb-2 mt-4 text-red-500 font-semibold">El nombre completo debe incluir al menos un nombre y dos apellidos</p>}
+					{errors.fullName && <p className="mb-2 mt-4 ml-4 text-red-500 font-semibold">El nombre completo debe incluir al menos un nombre y dos apellidos</p>}
 				</div>
 
 				<div className="mb-4 pt-2 border flex flex-col bg-white">
@@ -176,7 +176,7 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 						})}
 						placeholder="Nombre de usuario (opcional)"
 					/>
-					{errors.user && <p className="mb-2 mt-4 text-red-500 font-semibold">Tiene que tener entre 3 y 20 caracteres</p>}
+					{errors.user && <p className="mb-2 mt-4 ml-4 text-red-500 font-semibold">Tiene que tener entre 3 y 20 caracteres</p>}
 				</div>
 
 				<div className="flex">
@@ -194,7 +194,7 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 							})}
 							placeholder="*Contraseña"
 						/>
-						{errors.password && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.password.message}</p>}
+						{errors.password && <p className="mb-2 mt-4 ml-4 text-red-500 font-semibold">{errors.password.message}</p>}
 					</div>
 
 					<div className="w-full mb-4 pt-2 border bg-white flex flex-col">
@@ -211,7 +211,7 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 							})}
 							placeholder="*Contraseña (repetir)"
 						/>
-						{errors.password2 && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.password2.message}</p>}
+						{errors.password2 && <p className="mb-2 mt-4 ml-4 text-red-500 font-semibold">{errors.password2.message}</p>}
 					</div>
 				</div>
 
@@ -239,7 +239,7 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 								<option value="ALUMN">Alumno</option>
 								<option value="ALUMNI">Exalumno</option>
 							</select>
-							{errors.academicRole && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta un cargo</p>}
+							{errors.academicRole && <p className="mb-2 mt-4 ml-4 text-red-500 font-semibold">Hace falta un cargo</p>}
 						</div>
 						{academicRole == "ALUMNI" && (
 							<div className="flex-none w-1/2 mb-4 ml-6 pt-2 border flex flex-col bg-white">
@@ -268,7 +268,7 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 										</option>
 									))}
 								</select>
-								{errors.promocion && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta un cargo</p>}
+								{errors.promocion && <p className="mb-2 mt-4 ml-4 text-red-500 font-semibold">Hace falta un cargo</p>}
 							</div>
 						)}
 					</div>
@@ -297,7 +297,7 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 								<option value="COORDINATOR">Coordinador</option>
 								<option value="EMPLOYEE">Departamento</option>
 							</select>
-							{errors.academicRole && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta un cargo</p>}
+							{errors.academicRole && <p className="mb-2 mt-4 ml-4 text-red-500 font-semibold">Hace falta un cargo</p>}
 						</div>
 						{academicRole == "EMPLOYEE" && (
 							<div className="flex-none w-1/2 ml-6 mb-4 pt-2 border flex flex-col bg-white">
@@ -322,7 +322,7 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 										</option>
 									))}
 								</select>
-								{errors.departamento && <p className="mb-2 mt-4 text-red-500 font-semibold">Hace falta un cargo</p>}
+								{errors.departamento && <p className="mb-2 mt-4 ml-4 text-red-500 font-semibold">Hace falta un cargo</p>}
 							</div>
 						)}
 					</div>
@@ -349,7 +349,7 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 							/>
 						)}
 					/>
-					{errors.grade && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.grade.message}</p>}
+					{errors.grade && <p className="mb-2 mt-4 ml-4 text-red-500 font-semibold">{errors.grade.message}</p>}
 				</div>
 
 				<div>
