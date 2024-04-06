@@ -2,7 +2,7 @@ import React from "react";
 import { WithContext as ReactTags } from "react-tag-input";
 import { useController } from "react-hook-form";
 
-import "../styles/react-tags.css";
+import "../../styles/react-tags.css";
 
 const KeyCodes = {
 	comma: 188,

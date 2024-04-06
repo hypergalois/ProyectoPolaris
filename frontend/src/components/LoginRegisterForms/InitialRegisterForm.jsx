@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 // eslint-disable-next-line no-unused-vars
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import Popup from "../Popup";
+import Popup from "../Dialogs/Popup";
 import SecondaryRegisterForm from "./SecondaryRegisterForm";
 
 const InitialRegisterForm = ({ onSuccess }) => {

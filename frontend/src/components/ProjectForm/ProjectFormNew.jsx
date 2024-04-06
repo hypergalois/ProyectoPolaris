@@ -4,7 +4,7 @@ import { useForm, useController, useFieldArray, FormProvider } from "react-hook-
 import Select from "react-select";
 import { useAreas } from "../../context/AreasContext";
 import { useProjects } from "../../context/ProjectsContext";
-import DropzoneInput from "../DropzoneInput";
+import DropzoneInput from "../Helpers/DropzoneInput";
 import { getFile } from "../../api/files";
 
 const defaultProjectFormValues = {

@@ -8,7 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import CloseIcon from "@mui/icons-material/Close";
 
-import CloseProjectFormDialog from "./Dialogs/CloseProjectFormDialog";
+import CloseProjectFormDialog from "./CloseProjectFormDialog";
 
 const PopupUploadProject = ({ title, children, openPopup, renderStep, onClose }) => {
 	const [showHelp, setShowHelp] = useState(false);

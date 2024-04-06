@@ -4,7 +4,7 @@ import LandingPageBar from "../../components/Navbars/LandingPageBar.jsx";
 import NavBarNoAuth from "../../components/Navbars/NavBarNoAuth.jsx";
 
 import { Link } from "react-router-dom";
-import LandingPageAnimation from "../../components/LandingPageAnimation.jsx";
+import LandingPageAnimation from "../../components/Helpers/LandingPageAnimation.jsx";
 
 const HomePage = () => {
 	return (

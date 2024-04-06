@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon, QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 
-import CloseProjectFormDialog from "./Dialogs/CloseProjectFormDialog";
+import CloseProjectFormDialog from "./CloseProjectFormDialog";
 
 const PopupUploadProject = ({ title, openPopup, renderStep, onClose }) => {
 	const [showHelp, setShowHelp] = useState(false);

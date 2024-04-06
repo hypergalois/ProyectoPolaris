@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useAuth } from "../context/AuthContext";
-import SearchUsers from "./ProfileComponents/SearchUsers";
-import SearchResultsUsers from "./ProfileComponents/SearchResultsUsers";
+import { useAuth } from "../../context/AuthContext";
+import SearchUsers from "./SearchUsers";
+import SearchResultsUsers from "./SearchResultsUsers";
 
 const ProfileUserManagement = ({ project }) => {
 	const { users, getUsers } = useAuth();

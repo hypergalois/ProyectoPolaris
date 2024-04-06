@@ -1,7 +1,7 @@
 import React from "react";
-import ProfileDetails from "../components/ProfileDetails";
-import ProfileProjects from "../components/ProfileProjects";
-import ProfileUserManagement from "../components/ProfileUserManagement";
+import ProfileDetails from "../components/ProfileComponents/ProfileDetails";
+import ProfileProjects from "../components/ProfileComponents/ProfileProjects";
+import ProfileUserManagement from "../components/ProfileComponents/ProfileUserManagement";
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
 
@@ -18,7 +18,7 @@ function ProjectHomePage() {
 				<div className="flex justify-center h-screen">
 					<div className="mx-auto text-center">
 						<div className="text-4xl mb-4">
-							<h1>PerfilePage</h1>
+							<h1>ProfilePage</h1>
 						</div>
 						<div className="mb-4">
 							<ProfileDetails />

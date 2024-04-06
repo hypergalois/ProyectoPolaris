@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 
-import Stepper from "../Stepper.jsx";
+import Stepper from "../Helpers/Stepper.jsx";
 
 const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep }) => {
 	useEffect(() => {
