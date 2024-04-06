@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { rolesEnum } from "../../config/util.js";
 
 import ProjectDetails from "../ProjectDetails.jsx";
-import Popup from "../Dialogs/Popup.jsx";
+import Popup from "../Dialogs/PopupDetalleProyecto.jsx";
 
 import Card from "@mui/joy/Card";
 import CardCover from "@mui/joy/CardCover";
@@ -85,7 +85,7 @@ const ProjectCard = ({ project }) => {
 				</CardContent>
 			</Card>
 			{/* El title a lo mejor hasta lo quito */}
-			<Popup title={project.title} openPopup={openPopup} closePopup={handleClosePopup}>
+			<Popup project={project} openPopup={openPopup} closePopup={handleClosePopup}>
 				{/* // Aqui va el ProjectDetail */}
 				<ProjectDetails project={project} />
 			</Popup>
