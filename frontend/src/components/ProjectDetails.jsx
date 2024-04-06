@@ -25,7 +25,7 @@ const ProjectDetails = ({ project }) => {
 				<div>
 					<h2 className="text-xl font-bold mb-2">Description</h2>
 					<p className="text-gray-700">{project.description}</p>
-					<h2 className="text-xl font-bold mt-4 mb-2">Awards</h2>
+					{/* <h2 className="text-xl font-bold mt-4 mb-2">Awards</h2>
 					<ul className="list-disc list-inside">
 						{project.awardsId.map((awardId, index) => (
 							<li key={awardId}>{awardId}</li>
@@ -44,9 +44,9 @@ const ProjectDetails = ({ project }) => {
 						{project.uploadedContent.map((content, index) => (
 							<li key={content}>{content}</li>
 						))}
-					</ul>
+					</ul> */}
 				</div>
-				<div>
+				{/* <div>
 					<h2 className="text-xl font-bold mb-2">Project Details</h2>
 					<p>
 						<strong>Personal Project:</strong> {project.personalProject ? "Yes" : "No"}
@@ -78,7 +78,7 @@ const ProjectDetails = ({ project }) => {
 					<p>
 						<strong>Updated At:</strong> {project.updatedAt}
 					</p>
-				</div>
+				</div> */}
 			</div>
 		</div>
 	);

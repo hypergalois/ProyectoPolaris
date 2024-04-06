@@ -6,7 +6,7 @@ import { useAuth } from "../../context/AuthContext.jsx";
 import { useEffect, useState } from "react";
 import { rolesEnum } from "../../config/util.js";
 
-import ProjectDetail from "../ProjectDetails.jsx";
+import ProjectDetails from "../ProjectDetails.jsx";
 import Popup from "../Dialogs/Popup.jsx";
 
 import Card from "@mui/joy/Card";
@@ -33,7 +33,7 @@ const ProjectCard = ({ project }) => {
 
 	const navigate = useNavigate();
 
-	const handleClick = (projectId) => {
+	const handleClick = (project) => {
 		// Navegar a otra página al hacer clic
 		// navigate(`/projects/${projectId}`);
 		// Ya no es una pagina nueva sino un modal
@@ -44,47 +44,52 @@ const ProjectCard = ({ project }) => {
 	};
 
 	return (
-		<Card
-			sx={{ maxWidth: 545, minHeight: "300px", cursor: "pointer" }}
-			onClick={() => {
-				console.log("Click en el card");
-				console.log("project", project);
-				<Popup title="CREAR TU USUARIO" openPopup={openPopup} closePopup={handleClosePopup}>
-					{/* // Aqui va el ProjectDetail */}
-					<ProjectDetail project={project} />
-				</Popup>;
-			}}
-		>
-			<CardCover>
-				<img src="https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800" srcSet="https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800" loading="lazy" alt="" />
-			</CardCover>
-			<div
-				style={{
-					position: "absolute",
-					top: 8,
-					left: 8,
-					backgroundColor: "red",
-					color: "white",
-					padding: "4px 8px",
-					borderRadius: "8px",
+		<>
+			<Card
+				sx={{ maxWidth: 545, minHeight: "300px", cursor: "pointer" }}
+				onClick={() => {
+					console.log("Click en el card");
+					console.log("project", project);
+					setOpenPopup(true);
+					// console.log(event.target);
 				}}
 			>
-				Animación
-			</div>
-			<CardCover
-				sx={{
-					background: "linear-gradient(to top, rgba(0,0,0,0.4), rgba(0,0,0,0) 200px), linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0) 300px)",
-				}}
-			/>
-			<CardContent sx={{ justifyContent: "flex-end" }}>
-				<Typography level="h3" textColor="#fff">
-					{project.title}
-				</Typography>
-				<Typography startDecorator={<GroupIcon />} textColor="neutral.300">
-					Nombre de los alumnos
-				</Typography>
-			</CardContent>
-		</Card>
+				<CardCover>
+					<img src="https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800" srcSet="https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800" loading="lazy" alt="" />
+				</CardCover>
+				<div
+					style={{
+						position: "absolute",
+						top: 8,
+						left: 8,
+						backgroundColor: "red",
+						color: "white",
+						padding: "4px 8px",
+						borderRadius: "8px",
+					}}
+				>
+					Animación
+				</div>
+				<CardCover
+					sx={{
+						background: "linear-gradient(to top, rgba(0,0,0,0.4), rgba(0,0,0,0) 200px), linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0) 300px)",
+					}}
+				/>
+				<CardContent sx={{ justifyContent: "flex-end" }}>
+					<Typography level="h3" textColor="#fff">
+						{project.title}
+					</Typography>
+					<Typography startDecorator={<GroupIcon />} textColor="neutral.300">
+						Nombre de los alumnos
+					</Typography>
+				</CardContent>
+			</Card>
+			{/* El title a lo mejor hasta lo quito */}
+			<Popup title={project.title} openPopup={openPopup} closePopup={handleClosePopup}>
+				{/* // Aqui va el ProjectDetail */}
+				<ProjectDetails project={project} />
+			</Popup>
+		</>
 	);
 };
 
