@@ -1,6 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useRequests } from "../../context/RequestsContext";
+import Card from "@mui/joy/Card";
+import CardCover from "@mui/joy/CardCover";
+import CardContent from "@mui/joy/CardContent";
+import Typography from "@mui/joy/Typography";
+import GroupIcon from "@mui/icons-material/Group";
+import Button from "@mui/joy/Button";
 
 function RequestCard({ request }) {
 	const { acceptRequestData, rejectRequestData } = useRequests();
@@ -14,28 +20,38 @@ function RequestCard({ request }) {
 	};
 
 	return (
-		<div className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
-			<img className="w-full" src={"http://localhost:5173/full-logo-utad.webp"} alt={request.projectTitle} />
-			<div className="px-6 py-4">
-				<div className="font-bold text-xl mb-2">{request.projectTitle}</div>
-				<p className="text-gray-700 text-base">{request.description}</p>
-			</div>
-			<div className="px-6 pt-4 pb-2">
-				{/* Si esperas tener 'studentsInvolved' pero no está en tus datos, asegúrate de incluir una lógica condicional o un valor predeterminado */}
-				<span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Estado: {request.status || "No especificado"}</span>
-				{/* Asegúrate de acceder a la propiedad 'name' del objeto 'degree' si existe, de lo contrario muestra un mensaje o valor predeterminado */}
-				<span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Año Academico: {request.academicCourse || "No especificado"}</span>
-				<span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Subido por: {"No especificado"}</span>
-			</div>
-			<div className="px-6 py-4">
-				<button onClick={handleAccept} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2">
-					Aceptar
-				</button>
-				<button onClick={handleReject} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-					Rechazar
-				</button>
-			</div>
-		</div>
+		<Card sx={{ maxWidth: 545, minHeight: "300px", position: "relative" }}>
+			<CardCover>
+				<img
+					src="https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800"
+					srcSet="https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800"
+					alt={request.projectTitle}
+					loading="lazy"
+				/>
+			</CardCover>
+			<CardCover
+				sx={{
+					background: "linear-gradient(to top, rgba(0,0,0,0.4), rgba(0,0,0,0) 200px), linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0) 300px)",
+				}}
+			/>
+			<CardContent sx={{ justifyContent: "flex-end" }}>
+				<Typography level="h6" textColor="#fff" sx={{ mb: 1 }}>
+					{request.projectTitle}
+				</Typography>
+				<Typography startDecorator={<GroupIcon />} textColor="neutral.300" sx={{ mb: 2 }}>
+					Subido por: {"No especificado"}
+				</Typography>
+
+				<div className="flex justify-between">
+					<Button onClick={handleAccept} variant="solid" color="success" sx={{ borderRadius: "8px" }}>
+						Aceptar
+					</Button>
+					<Button onClick={handleReject} variant="solid" color="danger" sx={{ borderRadius: "8px" }}>
+						Rechazar
+					</Button>
+				</div>
+			</CardContent>
+		</Card>
 	);
 }
 
