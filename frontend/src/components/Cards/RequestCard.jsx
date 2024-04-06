@@ -8,10 +8,17 @@ import Typography from "@mui/joy/Typography";
 import GroupIcon from "@mui/icons-material/Group";
 import Button from "@mui/joy/Button";
 
+import Popup from "../Dialogs/PopupDetalleProyecto.jsx";
+import ProjectDetails from "../ProjectDetails.jsx";
+import { useProjects } from "../../context/ProjectsContext.jsx";
+
 function RequestCard({ request }) {
-	// AQUI HAY QUE HACER LO DEL SI HACES CLICK TE ABRE EL MODEL PERO DEL PROYECTO
-	// Y NO TENEMOS PROYECTO, HAY QUE CONSEGUIRLO DEL BACKEND
-	// Y LUEGO YA MOSTRARLO DE LA MISMA FORMA @Blakky @gonibix23
+    const [openPopup, setOpenPopup] = useState(false);
+    const { project, getProject } = useProjects();
+
+	const handleClosePopup = () => {
+		setOpenPopup(false);
+	};
 
 	const { acceptRequestData, rejectRequestData } = useRequests();
 
@@ -24,7 +31,16 @@ function RequestCard({ request }) {
 	};
 
 	return (
-		<Card sx={{ maxWidth: 545, minHeight: "300px", position: "relative" }}>
+        <>
+		<Card 
+            sx={{ maxWidth: 545, minHeight: "300px", position: "relative" }}
+            onClick={() => {
+                getProject(request.projectId);
+                console.log("request.project.id", request.projectId)
+                console.log("projecto card", project);
+                setOpenPopup(true);
+            }}
+        >
 			<CardCover>
 				<img
 					src="https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800"
@@ -58,6 +74,10 @@ function RequestCard({ request }) {
 				</div>
 			</CardContent>
 		</Card>
+        <Popup project={project} openPopup={openPopup} closePopup={handleClosePopup}>
+				<ProjectDetails project={project} />
+        </Popup>
+        </>
 	);
 }
 

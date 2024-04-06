@@ -36,7 +36,6 @@ const Popup = ({ project, openPopup, closePopup, children }) => {
                                     
 									{children}
 									{/* Aquí puedes poner tus acciones del dialog o cualquier otro contenido */}
-                                    {console.log(project)}
 								</div>
 							</Dialog.Panel>
 						</Transition.Child>

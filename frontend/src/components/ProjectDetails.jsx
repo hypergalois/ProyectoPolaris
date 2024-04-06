@@ -10,7 +10,6 @@ const ProjectDetails = ({ project: projectPopUp }) => {
 	useEffect(() => {
         console.log("ProjectId", projectId)
         getProject(projectId);
-        console.log("Projecto::::", project);
 	}, [projectId]);
 
 	return (
