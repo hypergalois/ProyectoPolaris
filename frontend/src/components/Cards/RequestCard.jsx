@@ -35,18 +35,20 @@ function RequestCard({ request }) {
 				}}
 			/>
 			<CardContent sx={{ justifyContent: "flex-end" }}>
-				<Typography level="h6" textColor="#fff" sx={{ mb: 1 }}>
+				<Typography level="h3" textColor="#fff" sx={{ mb: 1, fontWeight: "bold" }}>
 					{request.projectTitle}
 				</Typography>
+				{/* Subido por:::: */}
 				<Typography startDecorator={<GroupIcon />} textColor="neutral.300" sx={{ mb: 2 }}>
-					Subido por: {"No especificado"}
+					{"No especificado"}
 				</Typography>
 
-				<div className="flex justify-between">
-					<Button onClick={handleAccept} variant="solid" color="success" sx={{ borderRadius: "8px" }}>
+				{/* Ajuste para que los botones ocupen toda una línea, pero llenándola completamente. */}
+				<div className="flex w-full">
+					<Button onClick={handleAccept} variant="solid" color="success" sx={{ flex: 1, borderRadius: "8px", mr: 0.5, fontWeight: "bold" }}>
 						Aceptar
 					</Button>
-					<Button onClick={handleReject} variant="solid" color="danger" sx={{ borderRadius: "8px" }}>
+					<Button onClick={handleReject} variant="solid" color="danger" sx={{ flex: 1, borderRadius: "8px", ml: 0.5, fontWeight: "bold" }}>
 						Rechazar
 					</Button>
 				</div>

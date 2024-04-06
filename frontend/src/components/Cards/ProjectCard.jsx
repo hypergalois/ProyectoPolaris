@@ -7,7 +7,7 @@ import GroupIcon from "@mui/icons-material/Group";
 
 const ProjectCard = ({ project }) => {
 	return (
-		<Card sx={{ minHeight: "300px" }}>
+		<Card sx={{ maxWidth: 545, minHeight: "300px" }}>
 			<CardCover>
 				<img src="https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800" srcSet="https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800" loading="lazy" alt="" />
 			</CardCover>
@@ -30,7 +30,7 @@ const ProjectCard = ({ project }) => {
 				}}
 			/>
 			<CardContent sx={{ justifyContent: "flex-end" }}>
-				<Typography level="title-lg" textColor="#fff">
+				<Typography level="h3" textColor="#fff">
 					{project.title}
 				</Typography>
 				<Typography startDecorator={<GroupIcon />} textColor="neutral.300">
