@@ -10,8 +10,10 @@ const ProjectFormStep2 = ({ returnStep, advanceStep, currentStep, updateProjectD
 	useEffect(() => {
 		const handleKeyDown = (event) => {
 			if (event.key === "ArrowLeft") {
+				handleSubmit(onSubmit)();
 				returnStep();
 			} else if (event.key === "ArrowRight") {
+				handleSubmit(onSubmit)();
 				advanceStep();
 			}
 		};
@@ -165,6 +167,7 @@ const ProjectFormStep2 = ({ returnStep, advanceStep, currentStep, updateProjectD
 				<button
 					className="h-8 px-3 bg-blue-600 hover:bg-blue-400 text-white font-bold text-sm"
 					onClick={() => {
+						handleSubmit(onSubmit)();
 						returnStep();
 					}}
 				>
@@ -173,6 +176,7 @@ const ProjectFormStep2 = ({ returnStep, advanceStep, currentStep, updateProjectD
 				<button
 					className="h-8 px-3 bg-blue-600 hover:bg-blue-400 text-white font-bold text-sm"
 					onClick={() => {
+						handleSubmit(onSubmit)();
 						advanceStep();
 					}}
 				>

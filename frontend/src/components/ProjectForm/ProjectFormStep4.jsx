@@ -7,8 +7,10 @@ const ProjectFormStep4 = ({ returnStep, currentStep, editing, projectData }) => 
 	useEffect(() => {
 		const handleKeyDown = (event) => {
 			if (event.key === "ArrowLeft") {
+				handleSubmit(onSubmit)();
 				returnStep();
 			}
+			// Si es derecha, ya lo mandamos supongo
 		};
 
 		window.addEventListener("keydown", handleKeyDown);
@@ -38,6 +40,7 @@ const ProjectFormStep4 = ({ returnStep, currentStep, editing, projectData }) => 
 				<button
 					className="h-8 px-3 bg-blue-600 hover:bg-blue-400 text-white font-bold text-sm"
 					onClick={() => {
+						handleSubmit(onSubmit)();
 						returnStep();
 					}}
 				>
@@ -47,6 +50,7 @@ const ProjectFormStep4 = ({ returnStep, currentStep, editing, projectData }) => 
 					className="h-8 px-3 bg-blue-600 hover:bg-blue-400 text-white font-bold text-sm"
 					onClick={() => {
 						console.log("Subir proyecto");
+						handleSubmit(onSubmit)();
 						// Una vez que se suba, hay que poner el estilo del ultimo boton en complete y mostrar la animacion de tick
 						setIsComplete(true);
 					}}

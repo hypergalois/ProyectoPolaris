@@ -25,12 +25,7 @@ const ProjectFormStep1 = ({ advanceStep, currentStep, updateProjectData, project
 
 	// Los default values se tienen que sacar del estado global, con lo cual lo necesitamos pasar como props
 	const methods = useForm({
-		defaultValues: {
-			title: "",
-			description: "",
-			differentialFactor: "",
-			keywords: [],
-		},
+		defaultValues: projectData.step1,
 	});
 
 	const {
@@ -51,8 +46,11 @@ const ProjectFormStep1 = ({ advanceStep, currentStep, updateProjectData, project
 		// Pero el formato que devulve y espera el componente es:
 		// { id: "1", text: "keyword1" }
 		// formData.append("keywords", data.keywords);
-		const keywordsAsStrings = data.keywords.map((keyword) => keyword.text);
-		stepOneData.keywords = keywordsAsStrings;
+
+		// Si hago esto no puedo volver a leerlo, voy a guardar la forma esta rara y ya
+		// const keywordsAsStrings = data.keywords.map((keyword) => keyword.text);
+		// stepOneData.keywords = keywordsAsStrings;
+		stepOneData.keywords = data.keywords;
 
 		console.log(stepOneData);
 

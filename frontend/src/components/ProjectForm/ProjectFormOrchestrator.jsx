@@ -21,6 +21,8 @@ const ProjectFormOrchestrator = ({ openPopup, closePopup }) => {
 	// Ya que lo unico que va a cambiar es el texto del boton y la request
 	// Para que puedas ir atras y adelante en el formulario y se mantengan los datos, vamos a estar checkeando si ya existen
 	// en el estado global y eso es lo mismo que se haria en el update.
+
+	// Si estamos editando hay que cambiar este estado por el proyecto a editar y ya estaría
 	const [editing, setEditing] = useState(false);
 
 	// Estado para guardar los datos del proyecto
@@ -37,7 +39,12 @@ const ProjectFormOrchestrator = ({ openPopup, closePopup }) => {
 	const resetForm = () => {
 		setStep(1);
 		setProjectData({
-			step1: {},
+			step1: {
+				title: "",
+				description: "",
+				differentialFactor: "",
+				keywords: [],
+			},
 			step2: {},
 			step3: {},
 		});
