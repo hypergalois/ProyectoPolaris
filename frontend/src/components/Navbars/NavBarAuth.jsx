@@ -5,6 +5,8 @@ import { Fragment } from "react";
 import { motion } from "framer-motion";
 
 import { useAuth } from "../../context/AuthContext";
+import { useNotifications } from "../../context/NotificationContext";
+import NotificationCard from "../Cards/NotificationCard";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -13,6 +15,11 @@ import ProjectFormOrchestrator from "../ProjectForm/ProjectFormOrchestrator";
 function NavBar() {
 	// SECCION DE CHECK DE ROLE
 	const { logout, userRole, getUserRole } = useAuth();
+    const { notifications, getNotificationsData } = useNotifications();
+
+    useEffect(() => {
+        getNotificationsData();
+    }, []);
 
 	useEffect(() => {
 		getUserRole();
@@ -122,15 +129,18 @@ function NavBar() {
 												leaveTo="transform opacity-0 scale-95"
 											>
 												<Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-													<Menu.Item>
-														{({ active }) => (
-															// @Blakky ESTO HAY QUE CAMBIARLO POR EL COMPONENTE DE NOTIFICACIONES
-															<Link to="/profile" className={`${active ? "bg-gray-100" : ""} block px-4 py-2 text-sm text-gray-700`}>
-																AQUI VAN LAS NOTIFICACIONE
-															</Link>
-														)}
-													</Menu.Item>
-												</Menu.Items>
+                                                    {notifications.length > 0 ? (
+                                                        notifications.map((notification, index) => (
+                                                            <Menu.Item key={index}>
+                                                                <NotificationCard notification={notification} />
+                                                            </Menu.Item>
+                                                        ))
+                                                    ) : (
+                                                        <Menu.Item>
+                                                            <span>No hay notificaciones</span>
+                                                        </Menu.Item>
+                                                    )}
+                                                </Menu.Items>
 											</Transition>
 										</Menu>
 
