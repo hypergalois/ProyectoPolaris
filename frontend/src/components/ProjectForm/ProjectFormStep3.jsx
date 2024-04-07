@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import Select from "react-select";
 import { Controller, useForm, useController, useFieldArray, FormProvider } from "react-hook-form";
+import DropzoneInput from "../Helpers/DropzoneInput.jsx";
 
 import { useProjects } from "../../context/ProjectsContext.jsx";
 import { useAreas } from "../../context/AreasContext.jsx";
@@ -187,6 +188,20 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 		stepThreeData.externalLinks = data.externalLinks;
 		stepThreeData.awards = data.awards;
 
+		// // Agrega los archivos del proyecto a FormData
+		// const files = data.uploadedContent ? [...data.uploadedContent] : [];
+		// // Cambio de nombre del archivo del thumbnail
+		// if (data.thumbnail[0]) {
+		// 	const type = data.thumbnail[0].name.split(".").pop();
+		// 	const thumbnail = new File([data.thumbnail[0]], `thumbnail.${type}`, { type });
+		// 	files.push(thumbnail);
+		// }
+		// // Se juntan todos los archivos en un array
+
+		// files.forEach((file) => formData.append("files", file));
+
+		// console.log(data, Object.fromEntries(formData.entries()));
+
 		console.log(stepThreeData);
 		updateProjectData("step3", stepThreeData);
 	};
@@ -195,128 +210,165 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 		<>
 			<Stepper currentStep={currentStep} />
 
-			<form onSubmit={handleSubmit(onSubmit)} className="w-full bg-white rounded px-8 pt-6 mb-2 grid gap-4 md:grid-cols-2">
-				{/* GRADO (CARRERA) */}
-				<div className="mb-2 w-full mx-auto col-span-2">
-					<div className="pt-2 flex flex-col">
-						<Controller
-							name="degree"
-							control={control}
-							defaultValue=""
-							rules={{ required: "Se requiere un grado" }}
-							render={({ field }) => (
-								<Select
-									{...field}
-									options={degreeOptions}
-									placeholder="Selecciona un grado"
-									className="outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
-									menuPortalTarget={document.body}
-									styles={selectStylesCustom}
-								/>
-							)}
-						/>
-					</div>
-					{errors.degree && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.degree.message}</p>}
-				</div>
-				{/* PROYECTO PERSONAL */}
-				<div className="mb-2 w-full mx-auto">
-					<div className="flex pt-2 gap-4 items-center">
-						<label htmlFor="personalProject" className="text-blue-400 text-xs font-semibold">
-							Proyecto personal
-						</label>
-						<Controller name="personalProject" control={control} defaultValue={false} render={({ field }) => <input {...field} type="checkbox" className="form-checkbox" />} />
-					</div>
-				</div>
-				{/* ASIGNATURA */}
-				<div className="mb-2 w-full mx-auto">
-					<div className="flex flex-col">
-						<Controller
-							name="subject"
-							control={control}
-							defaultValue=""
-							rules={{ required: "Se requiere una asignatura" }}
-							render={({ field }) => (
-								<Select
-									{...field}
-									options={subjectOptions}
-									placeholder="Selecciona una asignatura"
-									className="outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
-									menuPortalTarget={document.body}
-									styles={selectStylesCustom}
-								/>
-							)}
-						/>
-					</div>
-					{errors.subject && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.subject.message}</p>}
-				</div>
-				{/* PREMIOS */}
-				<div className="mb-2 w-full mx-auto">
-					<div className="flex flex-col">
-						<Controller
-							name="awards"
-							control={control}
-							defaultValue={[]}
-							render={({ field }) => (
-								<Select
-									{...field}
-									options={awardOptions}
-									isMulti
-									placeholder="Selecciona los premios"
-									className="w-full rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-									// Ajuste para la selección múltiple
-									value={awardOptions.filter((option) => field.value.includes(option.value))}
-									onChange={(vals) => field.onChange(vals.map((val) => val.value))}
-								/>
-							)}
-						/>
-					</div>
-					{errors.awards && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.awards.message}</p>}
-				</div>
-				{/* CURSO ACADÉMICO */}
-				<div className="mb-4 md:col-span-1">
-					<Select
-						options={academicCourseOptions}
-						value={academicCourseValue ? academicCourseOptions.find(({ value }) => value === academicCourseValue) : academicCourseValue}
-						onChange={(option) => academicCourseOnChange(option ? option.value : option)}
-						className="w-full  border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-					/>
-					{errors.academicCourse && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.academicCourse.message}</p>}
-				</div>
-				{/* ENLACES EXTERNOS */}
-				<div className="mb-4 md:col-span-2 outline outline-blue-400">
-					<div className="m-3">
-						<label className="block text-blue-400 text-sm font-bold mb-2">Enlaces a recursos externos</label>
-						{linkFields.map((field, index) => (
-							<div key={field.id}>
-								<div className="flex items-center gap-2">
-									<input
-										type="url"
-										{...register(`externalLinks.${index}.link`)}
-										placeholder="URL"
-										className="shadow appearance-none  w-full py-2 px-3 mb-2 text-blue-500 placeholder-blue-500 leading-tight focus:outline-none focus:shadow-outline outline outline-blue-400 text-xs font-bold"
+			<FormProvider {...methods}>
+				<form onSubmit={handleSubmit(onSubmit)} className="w-full bg-white rounded px-8 pt-6 mb-2 grid gap-4 md:grid-cols-2">
+					{/* GRADO (CARRERA) */}
+					<div className="mb-2 w-full mx-auto col-span-2">
+						<div className="pt-2 flex flex-col">
+							<Controller
+								name="degree"
+								control={control}
+								defaultValue=""
+								rules={{ required: "Se requiere un grado" }}
+								render={({ field }) => (
+									<Select
+										{...field}
+										options={degreeOptions}
+										placeholder="Selecciona un grado"
+										className="outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
+										menuPortalTarget={document.body}
+										styles={selectStylesCustom}
 									/>
-									<button
-										type="button"
-										onClick={() => {
-											removeLink(index);
-										}}
-										className="ml-2 bg-red-700 hover:bg-red-600 text-white text-sm font-bold py-1 px-2 rounded"
-									>
-										Eliminar
-									</button>
-								</div>
-								{errors.externalLinks?.[index]?.link && <p className="mb-2 mt-4 text-red-600 font-semibold">{errors.externalLinks[index].link.message}</p>}
-							</div>
-						))}
-						<div className="flex justify-center mt-4">
-							<button type="button" onClick={() => appendLink({ link: "" })} className="mt-2 h-8 px-3 bg-blue-600 hover:bg-blue-400 text-white font-bold text-sm">
-								Añadir recurso externo
-							</button>
+								)}
+							/>
+						</div>
+						{errors.degree && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.degree.message}</p>}
+					</div>
+					{/* PROYECTO PERSONAL */}
+					<div className="mb-2 w-full mx-auto">
+						<div className="flex pt-2 gap-4 items-center">
+							<label htmlFor="personalProject" className="text-blue-400 text-xs font-semibold">
+								Proyecto personal
+							</label>
+							<Controller name="personalProject" control={control} defaultValue={false} render={({ field }) => <input {...field} type="checkbox" className="form-checkbox" />} />
 						</div>
 					</div>
-				</div>
-				Miniatura resumen archivos del proyecto
-			</form>
+					{/* ASIGNATURA */}
+					<div className="mb-2 w-full mx-auto">
+						<div className="flex flex-col">
+							<Controller
+								name="subject"
+								control={control}
+								defaultValue=""
+								rules={{ required: "Se requiere una asignatura" }}
+								render={({ field }) => (
+									<Select
+										{...field}
+										options={subjectOptions}
+										placeholder="Selecciona una asignatura"
+										className="outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
+										menuPortalTarget={document.body}
+										styles={selectStylesCustom}
+									/>
+								)}
+							/>
+						</div>
+						{errors.subject && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.subject.message}</p>}
+					</div>
+					{/* PREMIOS */}
+					<div className="mb-2 w-full mx-auto">
+						<div className="flex flex-col">
+							<Controller
+								name="awards"
+								control={control}
+								defaultValue={[]}
+								render={({ field }) => (
+									<Select
+										{...field}
+										options={awardOptions}
+										isMulti
+										placeholder="Selecciona los premios"
+										className="w-full rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+										// Ajuste para la selección múltiple
+										value={awardOptions.filter((option) => field.value.includes(option.value))}
+										onChange={(vals) => field.onChange(vals.map((val) => val.value))}
+									/>
+								)}
+							/>
+						</div>
+						{errors.awards && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.awards.message}</p>}
+					</div>
+					{/* CURSO ACADÉMICO */}
+					<div className="mb-4 md:col-span-1">
+						<Select
+							options={academicCourseOptions}
+							value={academicCourseValue ? academicCourseOptions.find(({ value }) => value === academicCourseValue) : academicCourseValue}
+							onChange={(option) => academicCourseOnChange(option ? option.value : option)}
+							className="w-full  border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+						/>
+						{errors.academicCourse && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.academicCourse.message}</p>}
+					</div>
+					{/* ENLACES EXTERNOS */}
+					<div className="mb-4 md:col-span-2 outline outline-blue-400">
+						<div className="m-3">
+							<label className="block text-blue-400 text-sm font-bold mb-2">Enlaces a recursos externos</label>
+							{linkFields.map((field, index) => (
+								<div key={field.id}>
+									<div className="flex items-center gap-2">
+										<input
+											type="url"
+											{...register(`externalLinks.${index}.link`)}
+											placeholder="URL"
+											className="shadow appearance-none  w-full py-2 px-3 mb-2 text-blue-500 placeholder-blue-500 leading-tight focus:outline-none focus:shadow-outline outline outline-blue-400 text-xs font-bold"
+										/>
+										<button
+											type="button"
+											onClick={() => {
+												removeLink(index);
+											}}
+											className="ml-2 bg-red-700 hover:bg-red-600 text-white text-sm font-bold py-1 px-2 rounded"
+										>
+											Eliminar
+										</button>
+									</div>
+									{errors.externalLinks?.[index]?.link && <p className="mb-2 mt-4 text-red-600 font-semibold">{errors.externalLinks[index].link.message}</p>}
+								</div>
+							))}
+							<div className="flex justify-center mt-4">
+								<button type="button" onClick={() => appendLink({ link: "" })} className="mt-2 h-8 px-3 bg-blue-600 hover:bg-blue-400 text-white font-bold text-sm">
+									Añadir recurso externo
+								</button>
+							</div>
+						</div>
+					</div>
+
+					{/* THUMBNAIL */}
+					<div className="mb-4 md:col-span-1">
+						<label className="block text-gray-700 text-sm font-bold mb-2">Thumbnail</label>
+						<DropzoneInput name="thumbnail" placeholder={"Arrastra y suelta tu thumbnail aquí."} maxFiles="1" accept={{ "image/jpeg": [], "image/png": [] }} />
+						{errors.thumbnail && (
+							<p className="mb-2 mt-4 text-red-500 font-semibold">
+								{errors.thumbnail.message}
+								{console.log(errors.thumbnail)}
+							</p>
+						)}
+					</div>
+
+					{/* RESUMEN */}
+					<div className="mb-4 md:col-span-1">
+						<label className="block text-gray-700 text-sm font-bold mb-2">Resumen del proyecto</label>
+						<DropzoneInput name="summary" placeholder={"Arrastra y suelta tu resumen (pdf/doc) aquí."} maxFiles="1" />
+						{errors.summary && (
+							<p className="mb-2 mt-4 text-red-500 font-semibold">
+								{errors.summary.message}
+								{console.log(errors.summary)}
+							</p>
+						)}
+					</div>
+
+					{/* ARCHIVOS DEL PROYECTO */}
+					<div className="mb-4 md:col-span-2">
+						<label className="block text-gray-700 text-sm font-bold mb-2">Archivos del proyecto</label>
+						<DropzoneInput name="projectFiles" placeholder={"Arrastra y suelta tus archivos del proyecto aquí."} />
+						{errors.projectFiles && (
+							<p className="mb-2 mt-4 text-red-500 font-semibold">
+								{errors.projectFiles.message}
+								{console.log(errors.projectFiles)}
+							</p>
+						)}
+					</div>
+				</form>
+			</FormProvider>
 
 			<div className="flex justify-end gap-4">
 				<button

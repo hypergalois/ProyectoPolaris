@@ -67,17 +67,20 @@ const ProjectFormOrchestrator = ({ openPopup, closePopup }) => {
 			},
 			step3: {
 				degree: {
-					value: "",
+					value: "Elige el grado",
 					label: "Elige el grado",
 				},
 				personalProject: false,
 				subject: {
-					value: "",
+					value: "Elige la asignatura",
 					label: "Elige la asignatura",
 				},
 				academicCourse: "2023/2024",
 				externalLinks: [],
 				awards: [""],
+				thumbnail: [],
+				summary: [],
+				projectFiles: [],
 			},
 		});
 	};
