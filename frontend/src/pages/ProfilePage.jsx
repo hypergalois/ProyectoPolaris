@@ -16,7 +16,7 @@ function ProjectHomePage() {
 		<>
 			<div className="items-center">
 				<div className="flex justify-center h-screen">
-					<div className="mx-auto text-center">
+					<div className="mx-auto text-center w-2/3">
 						<div className="text-4xl mb-4">
 							<h1>ProfilePage</h1>
 						</div>
