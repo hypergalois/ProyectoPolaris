@@ -83,4 +83,43 @@ const selectStyles = {
 	}),
 };
 
-export { rolesEnum, statusEnum, academicRoleEnum, colorsDegreesEnum, selectStyles };
+const selectStylesCustom = {
+	control: (styles) => ({
+		...styles,
+		backgroundColor: "white",
+		fontFamily: "Montserrat, sans-serif",
+		fontWeight: "600",
+		color: "#3b82f6",
+		borderColor: "#3b82f6",
+		borderWidth: "2px",
+		"&:hover": { borderColor: "darkblue" },
+	}),
+	placeholder: (styles) => ({
+		...styles,
+		fontFamily: "Montserrat, sans-serif",
+		fontWeight: "600",
+		color: "#3b82f6",
+	}),
+	singleValue: (styles) => ({
+		...styles,
+		fontFamily: "Montserrat, sans-serif",
+		fontWeight: "600",
+		color: "#3b82f6",
+	}),
+	option: (styles) => ({
+		...styles,
+		fontFamily: "Montserrat, sans-serif",
+		fontWeight: "600",
+		color: "#3b82f6",
+	}),
+	menu: (styles) => ({
+		...styles,
+		borderRadius: "0.375rem",
+	}),
+	menuPortal: (base) => ({
+		...base,
+		zIndex: 9999,
+	}),
+};
+
+export { rolesEnum, statusEnum, academicRoleEnum, colorsDegreesEnum, selectStyles, selectStylesCustom };
