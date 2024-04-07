@@ -79,7 +79,7 @@ const ProjectFormStep2 = ({ returnStep, advanceStep, currentStep, updateProjectD
 		<>
 			<Stepper currentStep={currentStep} />
 			<div>
-				<form onSubmit={handleSubmit(onSubmit)} className="w-full bg-white rounded px-8 pt-6 mb-2 grid gap-4 md:grid-cols-2 ">
+				<form onSubmit={handleSubmit(onSubmit)} className="w-full bg-white rounded px-8 pt-6 mb-2 grid gap-4 md:grid-cols-2">
 					{/* ESTUDIANTES */}
 					<div className="mb-4 md:col-span-2 outline outline-blue-400 ">
 						<div className="m-3">
@@ -145,7 +145,7 @@ const ProjectFormStep2 = ({ returnStep, advanceStep, currentStep, updateProjectD
 											onClick={() => {
 												removeProfessor(index);
 											}}
-											className="ml-2  bg-red-700 hover:bg-red-600 text-white text-sm font-bold py-1 px-2 rounded"
+											className="ml-2 bg-red-700 hover:bg-red-600 text-white text-sm font-bold py-1 px-2 rounded"
 										>
 											Eliminar
 										</button>

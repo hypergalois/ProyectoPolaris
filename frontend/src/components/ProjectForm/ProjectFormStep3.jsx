@@ -198,7 +198,7 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 		<>
 			<Stepper currentStep={currentStep} />
 
-			<form onSubmit={handleSubmit(onSubmit)} className="w-full bg-white rounded px-8 pt-6 mb-2">
+			<form onSubmit={handleSubmit(onSubmit)} className="w-full bg-white rounded px-8 pt-6 mb-2 grid gap-4 md:grid-cols-2">
 				<div className="mb-2 w-full mx-auto">
 					<div className="pt-2 flex flex-col">
 						<Controller
@@ -271,7 +271,6 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 				/>
 
 				<div className="mb-4 md:col-span-1">
-					<label className="block text-gray-700 text-sm font-bold mb-2">Curso académico</label>
 					<Select
 						options={academicCourseOptions}
 						value={academicCourseValue ? academicCourseOptions.find(({ value }) => value === academicCourseValue) : academicCourseValue}
@@ -282,26 +281,36 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 					{errors.academicCourse && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.academicCourse.message}</p>}
 				</div>
 
-				<div className="mb-4 md:col-span-2">
-					<label className="block text-gray-700 text-sm font-bold mb-2">Enlaces a recursos externos</label>
-					{linkFields.map((field, index) => (
-						<div key={field.id} className="flex items-center gap-2">
-							<input type="url" {...register(`externalLinks.${index}.link`)} placeholder="URL" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
-							<button
-								type="button"
-								onClick={() => {
-									removeLink(index);
-								}}
-								className="ml-2 bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
-							>
-								Eliminar
+				<div className="mb-4 md:col-span-2 outline outline-blue-400">
+					<div className="m-3">
+						<label className="block text-blue-400 text-sm font-bold mb-2">Enlaces a recursos externos</label>
+						{linkFields.map((field, index) => (
+							<div key={field.id}>
+								<div className="flex items-center gap-2">
+									<input
+										type="url"
+										{...register(`externalLinks.${index}.link`)}
+										placeholder="URL"
+										className="shadow appearance-none  w-full py-2 px-3 mb-2 text-blue-500 placeholder-blue-500 leading-tight focus:outline-none focus:shadow-outline outline outline-blue-400 text-xs font-bold"
+									/>
+									<button
+										type="button"
+										onClick={() => {
+											removeLink(index);
+										}}
+										className="ml-2 bg-red-700 hover:bg-red-600 text-white text-sm font-bold py-1 px-2 rounded"
+									>
+										Eliminar
+									</button>
+								</div>
+								{errors.externalLinks?.[index]?.link && <p className="mb-2 mt-4 text-red-600 font-semibold">{errors.externalLinks[index].link.message}</p>}
+							</div>
+						))}
+						<div className="flex justify-center mt-4">
+							<button type="button" onClick={() => appendLink({ link: "" })} className="mt-2 h-8 px-3 bg-blue-600 hover:bg-blue-400 text-white font-bold text-sm">
+								Añadir recurso externo
 							</button>
 						</div>
-					))}
-					<div className="flex justify-center mt-4">
-						<button type="button" onClick={() => appendLink({ link: "" })} className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-							Añadir recurso externo
-						</button>
 					</div>
 				</div>
 			</form>
