@@ -6,7 +6,7 @@ import TagsInputComponent from "../Helpers/TagsInputComponent.jsx";
 
 import { useForm, useController, useFieldArray, FormProvider } from "react-hook-form";
 
-const ProjectFormStep2 = ({ returnStep, advanceStep, currentStep }) => {
+const ProjectFormStep2 = ({ returnStep, advanceStep, currentStep, updateProjectData, editing }) => {
 	useEffect(() => {
 		const handleKeyDown = (event) => {
 			if (event.key === "ArrowLeft") {

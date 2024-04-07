@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 import Stepper from "../Helpers/Stepper.jsx";
 
-const ProjectFormStep4 = ({ returnStep, currentStep }) => {
+const ProjectFormStep4 = ({ returnStep, currentStep, editing }) => {
 	useEffect(() => {
 		const handleKeyDown = (event) => {
 			if (event.key === "ArrowLeft") {

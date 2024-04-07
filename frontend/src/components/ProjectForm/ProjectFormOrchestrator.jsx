@@ -13,7 +13,13 @@ import Stepper from "../Helpers/Stepper.jsx";
 
 // OJO, una vez sales del popup el step deberia resetearse ya que se supone que el usuario desecha el proyecto
 const ProjectFormOrchestrator = ({ openPopup, closePopup }) => {
+	// Estado para saber en que paso del formulario se encuentra el usuario
 	const [step, setStep] = useState(1);
+
+	// Estado para saber si se esta editando un proyecto
+	const [editing, setEditing] = useState(false);
+
+	// Estado para guardar los datos del proyecto
 	const [projectData, setProjectData] = useState({
 		step1: {},
 		step2: {},
@@ -44,13 +50,13 @@ const ProjectFormOrchestrator = ({ openPopup, closePopup }) => {
 	const renderStep = () => {
 		switch (step) {
 			case 1:
-				return <ProjectFormStep1 advanceStep={goToNext} currentStep={step} updateProjectData={updateProjectData} />;
+				return <ProjectFormStep1 advanceStep={goToNext} currentStep={step} updateProjectData={updateProjectData} editing={editing} />;
 			case 2:
-				return <ProjectFormStep2 advanceStep={goToNext} returnStep={goToPrevious} currentStep={step} updateProjectData={updateProjectData} />;
+				return <ProjectFormStep2 advanceStep={goToNext} returnStep={goToPrevious} currentStep={step} updateProjectData={updateProjectData} editing={editing} />;
 			case 3:
-				return <ProjectFormStep3 advanceStep={goToNext} returnStep={goToPrevious} currentStep={step} updateProjectData={updateProjectData} />;
+				return <ProjectFormStep3 advanceStep={goToNext} returnStep={goToPrevious} currentStep={step} updateProjectData={updateProjectData} editing={editing} />;
 			case 4:
-				return <ProjectFormStep4 returnStep={goToPrevious} currentStep={step} />;
+				return <ProjectFormStep4 returnStep={goToPrevious} currentStep={step} editing={editing} />;
 			default:
 				return null;
 		}
