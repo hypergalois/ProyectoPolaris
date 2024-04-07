@@ -89,8 +89,8 @@ const selectStylesCustom = {
 		backgroundColor: "white",
 		fontFamily: "Montserrat, sans-serif",
 		fontWeight: "600",
-		color: "#3b82f6",
-		borderColor: "#3b82f6",
+		color: "#60a5fa",
+		borderColor: "#60a5fa",
 		borderWidth: "2px",
 		"&:hover": { borderColor: "darkblue" },
 	}),
@@ -98,7 +98,8 @@ const selectStylesCustom = {
 		...styles,
 		fontFamily: "Montserrat, sans-serif",
 		fontWeight: "600",
-		color: "#3b82f6",
+		fontSize: "0.8rem",
+		color: "#60a5fa",
 	}),
 	singleValue: (styles) => ({
 		...styles,
@@ -114,7 +115,7 @@ const selectStylesCustom = {
 	}),
 	menu: (styles) => ({
 		...styles,
-		borderRadius: "0.375rem",
+		backgroundColor: "white",
 	}),
 	menuPortal: (base) => ({
 		...base,

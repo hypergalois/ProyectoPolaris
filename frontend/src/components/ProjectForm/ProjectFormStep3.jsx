@@ -372,7 +372,7 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 					{/* THUMBNAIL */}
 					<div className="mb-2 md:col-span-1 outline outline-blue-400">
 						<div className="m-3">
-							<label className="block text-gray-700 text-sm font-bold mb-2">Thumbnail</label>
+							<label className="block text-blue-400 text-sm font-bold mb-2">Thumbnail</label>
 							<DropzoneInput name="thumbnail" placeholder={"Arrastra y suelta tu thumbnail aquí."} maxFiles="1" accept={{ "image/jpeg": [], "image/png": [] }} />
 							{errors.thumbnail && (
 								<p className="mb-2 mt-4 text-red-500 font-semibold">
@@ -386,7 +386,7 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 					{/* RESUMEN */}
 					<div className="mb-2 md:col-span-1 outline outline-blue-400">
 						<div className="m-3">
-							<label className="block text-gray-700 text-sm font-bold mb-2">Resumen del proyecto</label>
+							<label className="block text-blue-400 text-sm font-bold mb-2">Resumen del proyecto</label>
 							<DropzoneInput name="summary" placeholder={"Arrastra y suelta tu resumen (pdf/doc) aquí."} maxFiles="1" />
 							{errors.summary && (
 								<p className="mb-2 mt-4 text-red-500 font-semibold">
@@ -400,7 +400,7 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 					{/* ARCHIVOS DEL PROYECTO */}
 					<div className="mb-4 md:col-span-2 outline outline-blue-400">
 						<div className="m-3">
-							<label className="block text-gray-700 text-sm font-bold mb-2">Archivos del proyecto</label>
+							<label className="block text-blue-400 text-sm font-bold mb-2">Archivos del proyecto</label>
 							<DropzoneInput name="projectFiles" placeholder={"Arrastra y suelta tus archivos del proyecto aquí."} />
 							{errors.projectFiles && (
 								<p className="mb-2 mt-4 text-red-500 font-semibold">
