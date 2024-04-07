@@ -37,7 +37,8 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 			personalProject: false,
 			subject: "",
 			academicCourse: "",
-			course: "",
+			// Parece que course ya no lo necesitamos
+			// course: "",
 			//thumbnailFile: projectData.thumbnail ? [projectData.thumbnail] : [],
 			//projectFiles: projectData.uploadedContent ? projectData.uploadedContent.map(filePath => getFile(filePath)) : [],
 			// summaryFile: projectData.
@@ -62,7 +63,10 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 	const [awardOptions, setAwardOptions] = useState([]);
 
 	// Obtenemos el grado actual para obtener las asignaturas de ese grado especifico
-	const currentDegree = watch("degree");
+	// Lo comento hasta que este el backend para las asignaturas por grado
+	// const currentDegree = watch("degree");
+	const currentDegree = undefined;
+	// console.log(currentDegree);
 
 	// Carga de opciones de DEGREE
 	useEffect(() => {
@@ -74,7 +78,8 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 					label: name,
 				}));
 				setDegreeOptions(options);
-			} catch {
+			} catch (error) {
+				console.log(error);
 				console.log("Error fetching options for degrees.");
 			}
 		};
@@ -122,9 +127,12 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 	}, []);
 
 	// Carga de opciones de SUBJECT
+	// Esta es la version más avanzada para que se carguen las asignaturas de un grado en concreto
 	useEffect(() => {
 		const getSubjectOptions = async () => {
+			// console.log(currentDegree);
 			if (currentDegree) {
+				console.log("Current degree, fetching subjects by degree");
 				try {
 					const subjectsList = await getSubjectsByDegree(currentDegree);
 					const options = subjectsList.map(({ id, name }) => ({
@@ -136,6 +144,7 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 					console.log("Error fetching options");
 				}
 			} else {
+				console.log("No current degree, fetching all subjects");
 				try {
 					const subjectsList = await getSubjects();
 					const options = subjectsList.map(({ id, name }) => ({
@@ -163,7 +172,7 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 	});
 
 	const {
-		field: { value: academicCourseValue, onChange: academicCourseOnChange, ...restAcademicCourseField },
+		field: { value: academicCourseValue, onChange: academicCourseOnChange },
 	} = useController({
 		name: "academicCourse",
 		control,
@@ -172,26 +181,25 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 		},
 	});
 
-	// const awardOptions = createAwardOptions(awards);
-	// const subjectOptions = createSubjectOptions(subjects);
-	// const degreeOptions = createDegreeOptions(degrees);
-	// console.log(degrees);
-
 	const {
-		field: { value: awardsValue, onChange: awardsOnChange, ...restAwardsField },
+		field: { value: awardsValue, onChange: awardsOnChange },
 	} = useController({
 		name: "awards",
 		control,
 	});
 
 	const onSubmit = (data) => {
-		// Convert the degree and subject from an object to a string
-		data.degree = data.degree.value;
-		data.subject = data.subject.value;
+		const stepThreeData = {};
 
-		console.log(data);
-		// Here you can handle the form submission.
-		// For example, you can send the data to a server or update the state of your component.
+		stepThreeData.degree = data.degree;
+		stepThreeData.personalProject = data.personalProject;
+		stepThreeData.subject = data.subject;
+		stepThreeData.academicCourse = data.academicCourse;
+		stepThreeData.externalLinks = data.externalLinks;
+		stepThreeData.awards = data.awards;
+
+		console.log(stepThreeData);
+		updateProjectData("step3", stepThreeData);
 	};
 
 	return (
@@ -199,7 +207,8 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 			<Stepper currentStep={currentStep} />
 
 			<form onSubmit={handleSubmit(onSubmit)} className="w-full bg-white rounded px-8 pt-6 mb-2 grid gap-4 md:grid-cols-2">
-				<div className="mb-2 w-full mx-auto">
+				{/* GRADO (CARRERA) */}
+				<div className="mb-2 w-full mx-auto col-span-2">
 					<div className="pt-2 flex flex-col">
 						<Controller
 							name="degree"
@@ -220,7 +229,7 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 					</div>
 					{errors.degree && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.degree.message}</p>}
 				</div>
-
+				{/* PROYECTO PERSONAL */}
 				<div className="mb-2 w-full mx-auto">
 					<div className="flex pt-2 gap-4 items-center">
 						<label htmlFor="personalProject" className="text-blue-400 text-xs font-semibold">
@@ -229,7 +238,7 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 						<Controller name="personalProject" control={control} defaultValue={false} render={({ field }) => <input {...field} type="checkbox" className="form-checkbox" />} />
 					</div>
 				</div>
-
+				{/* ASIGNATURA */}
 				<div className="mb-2 w-full mx-auto">
 					<div className="flex flex-col">
 						<Controller
@@ -251,36 +260,40 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 					</div>
 					{errors.subject && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.subject.message}</p>}
 				</div>
-
-				<Controller
-					name="awards"
-					control={control}
-					defaultValue={[]}
-					render={({ field }) => (
-						<Select
-							{...field}
-							options={awardOptions}
-							isMulti
-							placeholder="Selecciona los premios"
-							className="w-full border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-							// Ajuste para la selección múltiple
-							value={awardOptions.filter((option) => field.value.includes(option.value))}
-							onChange={(vals) => field.onChange(vals.map((val) => val.value))}
+				{/* PREMIOS */}
+				<div className="mb-2 w-full mx-auto">
+					<div className="flex flex-col">
+						<Controller
+							name="awards"
+							control={control}
+							defaultValue={[]}
+							render={({ field }) => (
+								<Select
+									{...field}
+									options={awardOptions}
+									isMulti
+									placeholder="Selecciona los premios"
+									className="w-full rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+									// Ajuste para la selección múltiple
+									value={awardOptions.filter((option) => field.value.includes(option.value))}
+									onChange={(vals) => field.onChange(vals.map((val) => val.value))}
+								/>
+							)}
 						/>
-					)}
-				/>
-
+					</div>
+					{errors.awards && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.awards.message}</p>}
+				</div>
+				{/* CURSO ACADÉMICO */}
 				<div className="mb-4 md:col-span-1">
 					<Select
 						options={academicCourseOptions}
 						value={academicCourseValue ? academicCourseOptions.find(({ value }) => value === academicCourseValue) : academicCourseValue}
 						onChange={(option) => academicCourseOnChange(option ? option.value : option)}
-						{...restAcademicCourseField}
 						className="w-full  border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 					/>
 					{errors.academicCourse && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.academicCourse.message}</p>}
 				</div>
-
+				{/* ENLACES EXTERNOS */}
 				<div className="mb-4 md:col-span-2 outline outline-blue-400">
 					<div className="m-3">
 						<label className="block text-blue-400 text-sm font-bold mb-2">Enlaces a recursos externos</label>
@@ -313,6 +326,7 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 						</div>
 					</div>
 				</div>
+				Miniatura resumen archivos del proyecto
 			</form>
 
 			<div className="flex justify-end gap-4">
