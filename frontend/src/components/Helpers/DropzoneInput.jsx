@@ -28,7 +28,7 @@ const rejectStyle = {
 	borderColor: "#ff1744",
 };
 
-const DropzoneInput = ({ name, ...rules }) => {
+const DropzoneInput = ({ name, placeholder, ...rules }) => {
 	const { register, unregister, setValue, setError, watch } = useFormContext();
 
 	const onDrop = useCallback(
@@ -97,7 +97,7 @@ const DropzoneInput = ({ name, ...rules }) => {
 	return (
 		<div {...getRootProps({ style })}>
 			<input {...getInputProps()} />
-			{acceptedFilesList ? acceptedFilesList : <p>Arrastra y suelta tus documentos aquí.</p>}
+			{acceptedFilesList ? acceptedFilesList : <p>{placeholder}</p>}
 		</div>
 	);
 };
