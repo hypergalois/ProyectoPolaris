@@ -50,14 +50,14 @@ const PopupUploadProject = ({ title, openPopup, renderStep, onClose }) => {
 								leaveTo="opacity-0 scale-95"
 							>
 								<Dialog.Panel className="w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all mt-16">
-									<Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900 flex justify-between items-center">
+									<Dialog.Title as="h3" className="text-lg font-medium leading-6 flex justify-between items-center mb-5">
 										<span className="text-4xl font-bold text-center text-blue-600">{title}</span>
 										<div>
 											<button onClick={() => setShowHelp(!showHelp)}>
-												<QuestionMarkCircleIcon className="h-6 w-6 text-blue-600" />
+												<QuestionMarkCircleIcon className="h-8 w-8 text-blue-600" />
 											</button>
 											<button onClick={onClose}>
-												<XMarkIcon className="h-6 w-6 text-blue-600" />
+												<XMarkIcon className="h-8 w-8 text-blue-600" />
 											</button>
 										</div>
 									</Dialog.Title>
@@ -65,7 +65,8 @@ const PopupUploadProject = ({ title, openPopup, renderStep, onClose }) => {
 										{renderStep()}
 										{showHelp && (
 											<div ref={helpRef} className="absolute top-16 right-10 bg-white shadow-lg rounded-md p-4 z-10">
-												<p className="text-sm text-gray-700">¡Simplemente rellena los campos! Puedes usar las flechas para avanzar por los campos y guardar un borrador para no perder tu progreso.</p>
+												<p className="text-sm text-gray-700">¡Simplemente rellena los campos!</p>
+												<p className="text-sm">Puedes usar las flechas y guardar un borrador para no perder tu progreso.</p>
 											</div>
 										)}
 									</div>
