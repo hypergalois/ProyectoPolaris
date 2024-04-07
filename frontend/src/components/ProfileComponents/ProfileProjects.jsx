@@ -1,4 +1,7 @@
 import React from "react";
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import { useAuth } from "../../context/AuthContext.jsx";
 import { useProjects } from "../../context/ProjectsContext.jsx";
 import { useState, useEffect } from "react";
@@ -8,6 +11,14 @@ const ProfileProjects = ({ props }) => {
 	const { profile, getProfile, errors: profileErrors } = useAuth();
 	const { projects, getProjectsByUser, errors: proyectsErrors } = useProjects();
 	const [loading, setLoading] = useState(true);
+
+	const settings = {
+		dots: true,
+		infinite: true,
+		speed: 500,
+		slidesToShow: 3,
+		slidesToScroll: 1
+	  };
 
 	useEffect(() => {
 		getProfile();
@@ -35,11 +46,11 @@ const ProfileProjects = ({ props }) => {
 				<p>No hay proyectos para mostrar</p>
 			) : (
 				<div className="container mx-auto px-4">
-					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-						{projects.map((project) => (
-							<ProjectCard key={project.id} project={project} />
-						))}
-					</div>
+					<Slider {...settings}>
+							{projects.map((project) => (
+								<ProjectCard key={project.id} project={project} />
+							))}
+					</Slider>
 				</div>
 			)}
 		</div>
