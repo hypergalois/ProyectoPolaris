@@ -64,9 +64,9 @@ const ProjectFormStep1 = ({ advanceStep, currentStep, updateProjectData, project
 			<div>
 				<form onSubmit={handleSubmit(onSubmit)} className="w-full bg-white rounded px-8 pt-6 mb-2 grid gap-4 md:grid-cols-1">
 					{/* TITULO */}
-					<div className="mb-2 w-full mx-auto">
+					<div className="mb-1 w-full mx-auto">
 						<div className="pt-2 border flex flex-col outline outline-blue-400">
-							<label htmlFor="title" className="text-blue-400 text-xs text-left ml-3 font-semibold">
+							<label htmlFor="title" className="text-blue-400 text-left ml-3 block text-sm font-bold">
 								Título
 							</label>
 							<input
@@ -84,9 +84,9 @@ const ProjectFormStep1 = ({ advanceStep, currentStep, updateProjectData, project
 					</div>
 
 					{/* DESCRIPCION */}
-					<div className="mb-2 w-full mx-auto">
+					<div className="mb-1 w-full mx-auto">
 						<div className="pt-2 border flex flex-col outline outline-blue-400">
-							<label htmlFor="description" className="text-blue-400 text-xs text-left ml-3 font-semibold">
+							<label htmlFor="description" className="text-blue-400 text-left ml-3 block text-sm font-bold">
 								Descripción del proyecto
 							</label>
 							<textarea
@@ -103,9 +103,9 @@ const ProjectFormStep1 = ({ advanceStep, currentStep, updateProjectData, project
 					</div>
 
 					{/* FACTOR DIFERENCIAL */}
-					<div className="mb-2 w-full mx-auto">
+					<div className="mb-1 w-full mx-auto">
 						<div className="pt-2 border flex flex-col outline outline-blue-400">
-							<label htmlFor="differentialFactor" className="text-blue-400 text-xs text-left ml-3 font-semibold">
+							<label htmlFor="differentialFactor" className="text-blue-400 text-left ml-3 block text-sm font-bold">
 								Factor diferenciador de la propuesta
 							</label>
 							<input
@@ -123,9 +123,9 @@ const ProjectFormStep1 = ({ advanceStep, currentStep, updateProjectData, project
 					</div>
 
 					{/* KEYWORDS */}
-					<div className="mb-4 w-full mx-auto">
+					<div className="mb-2 w-full mx-auto">
 						<div className="pt-2 border-[2.5px] border-blue-400 ">
-							<label htmlFor="keywords" className="text-blue-400 text-xs text-left ml-3 font-semibold block">
+							<label htmlFor="keywords" className="text-blue-400 text-left ml-3 block text-sm font-bold">
 								Keywords
 							</label>
 							<TagsInputComponent
