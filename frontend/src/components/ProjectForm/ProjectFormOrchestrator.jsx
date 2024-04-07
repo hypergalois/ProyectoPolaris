@@ -37,7 +37,15 @@ const ProjectFormOrchestrator = ({ openPopup, closePopup }) => {
 			impliedStudents: [{ student: "" }],
 			impliedProfessors: [],
 		},
-		step3: {},
+		step3: {
+			degree: {},
+			personalProject: false,
+			subject: {},
+			// Aqui hay que conseguir el ultimo año para que no este hardcodeado
+			academicCourse: "2023/2024",
+			externalLinks: [],
+			awards: [],
+		},
 	});
 
 	const updateProjectData = (step, data) => {
@@ -57,7 +65,20 @@ const ProjectFormOrchestrator = ({ openPopup, closePopup }) => {
 				impliedStudents: [{ student: "" }],
 				impliedProfessors: [],
 			},
-			step3: {},
+			step3: {
+				degree: {
+					value: "",
+					label: "Elige el grado",
+				},
+				personalProject: false,
+				subject: {
+					value: "",
+					label: "Elige la asignatura",
+				},
+				academicCourse: "2023/2024",
+				externalLinks: [],
+				awards: [""],
+			},
 		});
 	};
 

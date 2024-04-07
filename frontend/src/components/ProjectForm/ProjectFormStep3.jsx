@@ -32,18 +32,7 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 	}, [returnStep, advanceStep]);
 
 	const methods = useForm({
-		defaultValues: {
-			degree: "",
-			personalProject: false,
-			subject: "",
-			academicCourse: "",
-			// Parece que course ya no lo necesitamos
-			// course: "",
-			//thumbnailFile: projectData.thumbnail ? [projectData.thumbnail] : [],
-			//projectFiles: projectData.uploadedContent ? projectData.uploadedContent.map(filePath => getFile(filePath)) : [],
-			// summaryFile: projectData.
-			externalLinks: [],
-		},
+		defaultValues: projectData.step3,
 	});
 
 	const {
