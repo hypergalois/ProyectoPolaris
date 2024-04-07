@@ -22,14 +22,6 @@ function RequestCard({ request }) {
 
 	const { acceptRequestData, rejectRequestData } = useRequests();
 
-	const handleAccept = () => {
-		acceptRequestData(request.id);
-	};
-
-	const handleReject = () => {
-		rejectRequestData(request.id);
-	};
-
 	return (
         <>
 		<Card 
@@ -65,10 +57,10 @@ function RequestCard({ request }) {
 
 				{/* Ajuste para que los botones ocupen toda una línea, pero llenándola completamente. */}
 				<div className="flex w-full">
-					<Button onClick={handleAccept} variant="solid" color="success" sx={{ flex: 1, borderRadius: "8px", mr: 0.5, fontWeight: "bold" }}>
+					<Button onClick={(event) => {event.stopPropagation(); acceptRequestData(request.id);}} variant="solid" color="success" sx={{ flex: 1, borderRadius: "8px", mr: 0.5, fontWeight: "bold" }}>
 						Aceptar
 					</Button>
-					<Button onClick={handleReject} variant="solid" color="danger" sx={{ flex: 1, borderRadius: "8px", ml: 0.5, fontWeight: "bold" }}>
+					<Button onClick={(event) => {event.stopPropagation(); rejectRequestData(request.id);}} variant="solid" color="danger" sx={{ flex: 1, borderRadius: "8px", ml: 0.5, fontWeight: "bold" }}>
 						Rechazar
 					</Button>
 				</div>
