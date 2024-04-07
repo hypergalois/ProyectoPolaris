@@ -7,10 +7,11 @@ import TagsInputComponent from "../Helpers/TagsInputComponent.jsx";
 import { useForm, useController, useFieldArray, FormProvider } from "react-hook-form";
 
 // TODO Funcionalidad de guardar borrador
-const ProjectFormStep1 = ({ advanceStep, currentStep }) => {
+const ProjectFormStep1 = ({ advanceStep, currentStep, updateProjectData, projectData }) => {
 	useEffect(() => {
 		const handleKeyDown = (event) => {
 			if (event.key === "ArrowRight") {
+				handleSubmit(onSubmit)();
 				advanceStep();
 			}
 		};
@@ -22,13 +23,9 @@ const ProjectFormStep1 = ({ advanceStep, currentStep }) => {
 		};
 	}, [advanceStep]);
 
+	// Los default values se tienen que sacar del estado global, con lo cual lo necesitamos pasar como props
 	const methods = useForm({
-		defaultValues: {
-			title: "",
-			description: "",
-			differentialFactor: "",
-			keywords: [],
-		},
+		defaultValues: projectData.step1,
 	});
 
 	const {
@@ -39,12 +36,26 @@ const ProjectFormStep1 = ({ advanceStep, currentStep }) => {
 	} = methods;
 
 	const onSubmit = (data) => {
-		const formData = new FormData();
+		// Creamos un objeto normal para guardar los datos y al final crearemos el formData
+		const stepOneData = {};
+		stepOneData.title = data.title;
+		stepOneData.description = data.description;
+		stepOneData.differentialFactor = data.differentialFactor;
 
-		// Agrega los datos simples del proyecto a FormData
-		formData.append("title", data.title);
-		formData.append("description", data.description);
-		// formData.append("personalProject", data.personalProject);
+		// Vamos a guardar las keywords como un array de strings
+		// Pero el formato que devulve y espera el componente es:
+		// { id: "1", text: "keyword1" }
+		// formData.append("keywords", data.keywords);
+
+		// Si hago esto no puedo volver a leerlo, voy a guardar la forma esta rara y ya
+		// const keywordsAsStrings = data.keywords.map((keyword) => keyword.text);
+		// stepOneData.keywords = keywordsAsStrings;
+		stepOneData.keywords = data.keywords;
+
+		console.log(stepOneData);
+
+		// Actualizamos el estado del proyecto
+		updateProjectData("step1", stepOneData);
 	};
 
 	return (
@@ -52,9 +63,10 @@ const ProjectFormStep1 = ({ advanceStep, currentStep }) => {
 			<Stepper currentStep={currentStep} />
 			<div>
 				<form onSubmit={handleSubmit(onSubmit)} className="w-full bg-white rounded px-8 pt-6 mb-2 grid gap-4 md:grid-cols-1">
-					<div className="mb-2 w-full mx-auto">
+					{/* TITULO */}
+					<div className="mb-1 w-full mx-auto">
 						<div className="pt-2 border flex flex-col outline outline-blue-400">
-							<label htmlFor="title" className="text-blue-400 text-xs text-left ml-3 font-semibold">
+							<label htmlFor="title" className="text-blue-400 text-left ml-3 block text-sm font-bold">
 								Título
 							</label>
 							<input
@@ -71,9 +83,10 @@ const ProjectFormStep1 = ({ advanceStep, currentStep }) => {
 						{errors.title && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.title.message}</p>}
 					</div>
 
-					<div className="mb-2 w-full mx-auto">
+					{/* DESCRIPCION */}
+					<div className="mb-1 w-full mx-auto">
 						<div className="pt-2 border flex flex-col outline outline-blue-400">
-							<label htmlFor="description" className="text-blue-400 text-xs text-left ml-3 font-semibold">
+							<label htmlFor="description" className="text-blue-400 text-left ml-3 block text-sm font-bold">
 								Descripción del proyecto
 							</label>
 							<textarea
@@ -89,15 +102,16 @@ const ProjectFormStep1 = ({ advanceStep, currentStep }) => {
 						{errors.description && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.description.message}</p>}
 					</div>
 
-					<div className="mb-2 w-full mx-auto">
+					{/* FACTOR DIFERENCIAL */}
+					<div className="mb-1 w-full mx-auto">
 						<div className="pt-2 border flex flex-col outline outline-blue-400">
-							<label htmlFor="differential_factor" className="text-blue-400 text-xs text-left ml-3 font-semibold">
+							<label htmlFor="differentialFactor" className="text-blue-400 text-left ml-3 block text-sm font-bold">
 								Factor diferenciador de la propuesta
 							</label>
 							<input
-								id="differential_factor"
+								id="differentialFactor"
 								type="text"
-								{...register("differential_factor", {
+								{...register("differentialFactor", {
 									required: "Se requiere un factor diferencial",
 								})}
 								placeholder="Factor diferencial del proyecto"
@@ -105,12 +119,13 @@ const ProjectFormStep1 = ({ advanceStep, currentStep }) => {
 								autoComplete="off"
 							/>
 						</div>
-						{errors.differential_factor && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.differential_factor.message}</p>}
+						{errors.differentialFactor && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.differentialFactor.message}</p>}
 					</div>
 
-					<div className="mb-4 w-full mx-auto">
+					{/* KEYWORDS */}
+					<div className="mb-2 w-full mx-auto">
 						<div className="pt-2 border-[2.5px] border-blue-400 ">
-							<label htmlFor="keywords" className="text-blue-400 text-xs text-left ml-3 font-semibold block">
+							<label htmlFor="keywords" className="text-blue-400 text-left ml-3 block text-sm font-bold">
 								Keywords
 							</label>
 							<TagsInputComponent
@@ -145,6 +160,7 @@ const ProjectFormStep1 = ({ advanceStep, currentStep }) => {
 				<button
 					className="h-8 px-3 bg-blue-600 hover:bg-blue-400 text-white font-bold text-sm"
 					onClick={() => {
+						handleSubmit(onSubmit)();
 						advanceStep();
 					}}
 				>

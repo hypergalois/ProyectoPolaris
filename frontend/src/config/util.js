@@ -83,4 +83,51 @@ const selectStyles = {
 	}),
 };
 
-export { rolesEnum, statusEnum, academicRoleEnum, colorsDegreesEnum, selectStyles };
+const selectStylesCustom = {
+	control: (styles) => ({
+		...styles,
+		backgroundColor: "white",
+		fontFamily: "Montserrat, sans-serif",
+		fontWeight: "600",
+		color: "#3b82f6",
+		borderColor: "#3b82f6",
+		borderWidth: "2px",
+		"&:hover": { borderColor: "darkblue" },
+	}),
+	placeholder: (styles) => ({
+		...styles,
+		fontFamily: "Montserrat, sans-serif",
+		fontWeight: "600",
+		color: "#3b82f6",
+	}),
+	singleValue: (styles) => ({
+		...styles,
+		fontFamily: "Montserrat, sans-serif",
+		fontWeight: "600",
+		color: "#3b82f6",
+	}),
+	option: (styles) => ({
+		...styles,
+		fontFamily: "Montserrat, sans-serif",
+		fontWeight: "600",
+		color: "#3b82f6",
+	}),
+	menu: (styles) => ({
+		...styles,
+		borderRadius: "0.375rem",
+	}),
+	menuPortal: (base) => ({
+		...base,
+		zIndex: 9999,
+	}),
+};
+
+const courseOptions = [
+	{ value: "1", label: "1º" },
+	{ value: "2", label: "2º" },
+	{ value: "3", label: "3º" },
+	{ value: "4", label: "4º" },
+	{ value: "5", label: "5º" },
+];
+
+export { rolesEnum, statusEnum, academicRoleEnum, colorsDegreesEnum, selectStyles, selectStylesCustom, courseOptions };

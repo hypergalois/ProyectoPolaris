@@ -6,12 +6,16 @@ import TagsInputComponent from "../Helpers/TagsInputComponent.jsx";
 
 import { useForm, useController, useFieldArray, FormProvider } from "react-hook-form";
 
-const ProjectFormStep2 = ({ returnStep, advanceStep, currentStep }) => {
+const ProjectFormStep2 = ({ returnStep, advanceStep, currentStep, updateProjectData, projectData }) => {
 	useEffect(() => {
 		const handleKeyDown = (event) => {
 			if (event.key === "ArrowLeft") {
+				// PUEDE SER INCOMODO que no puedas volver atras sin haber introducido todos los datos
+				// Ya que hace el submit tienen que estar completos a pesar de que estás avanzando
+				handleSubmit(onSubmit)();
 				returnStep();
 			} else if (event.key === "ArrowRight") {
+				handleSubmit(onSubmit)();
 				advanceStep();
 			}
 		};
@@ -24,10 +28,7 @@ const ProjectFormStep2 = ({ returnStep, advanceStep, currentStep }) => {
 	}, [returnStep, advanceStep]);
 
 	const methods = useForm({
-		defaultValues: {
-			impliedStudents: [{ student: "" }],
-			impliedProfessors: [],
-		},
+		defaultValues: projectData.step2,
 	});
 
 	const {
@@ -58,20 +59,28 @@ const ProjectFormStep2 = ({ returnStep, advanceStep, currentStep }) => {
 	});
 
 	const onSubmit = (data) => {
-		const formData = new FormData();
+		const stepTwoData = {};
 
-		const impliedStudents = data.impliedStudents ? data.impliedStudents.map(({ student }) => student).filter((value) => value.trim().length !== 0) : [];
-		formData.append("impliedStudents", JSON.stringify(impliedStudents));
+		// ESTO LO USAMOS LUEGO AL FINAL
+		// const impliedStudents = data.impliedStudents ? data.impliedStudents.map(({ student }) => student).filter((value) => value.trim().length !== 0) : [];
+		// formData.append("impliedStudents", JSON.stringify(impliedStudents));
+		// const impliedProfessors = data.impliedTeachers ? data.impliedProfessors.map(({ professor }) => professor).filter((value) => value.trim().length !== 0) : [];
+		// formData.append("impliedTeachers", JSON.stringify(impliedProfessors));
 
-		const impliedProfessors = data.impliedTeachers ? data.impliedProfessors.map(({ professor }) => professor).filter((value) => value.trim().length !== 0) : [];
-		formData.append("impliedTeachers", JSON.stringify(impliedProfessors));
+		stepTwoData.impliedStudents = data.impliedStudents;
+		stepTwoData.impliedProfessors = data.impliedProfessors;
+
+		console.log(stepTwoData);
+
+		updateProjectData("step2", stepTwoData);
 	};
 
 	return (
 		<>
 			<Stepper currentStep={currentStep} />
 			<div>
-				<form onSubmit={handleSubmit(onSubmit)} className="w-full bg-white  rounded px-8 pt-6 mb-2 grid gap-4 md:grid-cols-2 ">
+				<form onSubmit={handleSubmit(onSubmit)} className="w-full bg-white rounded px-8 pt-6 mb-2 grid gap-4 md:grid-cols-2">
+					{/* ESTUDIANTES */}
 					<div className="mb-4 md:col-span-2 outline outline-blue-400 ">
 						<div className="m-3">
 							<label className="block text-blue-400 text-sm font-bold mb-2">Estudiantes implicados</label>
@@ -102,7 +111,7 @@ const ProjectFormStep2 = ({ returnStep, advanceStep, currentStep }) => {
 											</button>
 										)}
 									</div>
-									{errors.impliedStudents?.[index]?.student && <p className="mb-2 mt-4 text-red-	 font-semibold">{errors.impliedStudents[index].student.message}</p>}
+									{errors.impliedStudents?.[index]?.student && <p className="mb-2 mt-4 text-red-600	 font-semibold">{errors.impliedStudents[index].student.message}</p>}
 								</div>
 							))}
 							<div className="flex justify-center mt-4">
@@ -113,6 +122,7 @@ const ProjectFormStep2 = ({ returnStep, advanceStep, currentStep }) => {
 						</div>
 					</div>
 
+					{/* PROFESORES */}
 					<div className="mb-4 md:col-span-2 outline outline-blue-400">
 						<div className="m-3">
 							<label className="block text-blue-400 text-sm font-bold mb-2">Profesores implicados</label>
@@ -135,7 +145,7 @@ const ProjectFormStep2 = ({ returnStep, advanceStep, currentStep }) => {
 											onClick={() => {
 												removeProfessor(index);
 											}}
-											className="ml-2  bg-red-700 hover:bg-red-600 text-white text-sm font-bold py-1 px-2 rounded"
+											className="ml-2 bg-red-700 hover:bg-red-600 text-white text-sm font-bold py-1 px-2 rounded"
 										>
 											Eliminar
 										</button>
@@ -165,6 +175,7 @@ const ProjectFormStep2 = ({ returnStep, advanceStep, currentStep }) => {
 				<button
 					className="h-8 px-3 bg-blue-600 hover:bg-blue-400 text-white font-bold text-sm"
 					onClick={() => {
+						handleSubmit(onSubmit)();
 						returnStep();
 					}}
 				>
@@ -173,6 +184,7 @@ const ProjectFormStep2 = ({ returnStep, advanceStep, currentStep }) => {
 				<button
 					className="h-8 px-3 bg-blue-600 hover:bg-blue-400 text-white font-bold text-sm"
 					onClick={() => {
+						handleSubmit(onSubmit)();
 						advanceStep();
 					}}
 				>

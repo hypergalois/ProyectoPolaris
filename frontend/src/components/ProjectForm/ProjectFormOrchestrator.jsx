@@ -13,11 +13,39 @@ import Stepper from "../Helpers/Stepper.jsx";
 
 // OJO, una vez sales del popup el step deberia resetearse ya que se supone que el usuario desecha el proyecto
 const ProjectFormOrchestrator = ({ openPopup, closePopup }) => {
+	// Estado para saber en que paso del formulario se encuentra el usuario
 	const [step, setStep] = useState(1);
+
+	// Estado para saber si se esta editando un proyecto
+	// De hecho no necesitamos este estado en todos los hijos, solo en el padre
+	// Ya que lo unico que va a cambiar es el texto del boton y la request
+	// Para que puedas ir atras y adelante en el formulario y se mantengan los datos, vamos a estar checkeando si ya existen
+	// en el estado global y eso es lo mismo que se haria en el update.
+	const [editing, setEditing] = useState(false);
+
+	// Estado para guardar los datos del proyecto
+	// Si estamos editando un proyecto, estos datos se van a cargar en el estado global
+	// Aqui los cargaremos tal cual los leen los inputs etc, que quizas no es la forma en la que los guardaremos
 	const [projectData, setProjectData] = useState({
-		step1: {},
-		step2: {},
-		step3: {},
+		step1: {
+			title: "",
+			description: "",
+			differentialFactor: "",
+			keywords: [],
+		},
+		step2: {
+			impliedStudents: [{ student: "" }],
+			impliedProfessors: [],
+		},
+		step3: {
+			degree: {},
+			personalProject: false,
+			subject: {},
+			// Aqui hay que conseguir el ultimo año para que no este hardcodeado
+			academicCourse: "2023/2024",
+			externalLinks: [],
+			awards: [],
+		},
 	});
 
 	const updateProjectData = (step, data) => {
@@ -27,9 +55,30 @@ const ProjectFormOrchestrator = ({ openPopup, closePopup }) => {
 	const resetForm = () => {
 		setStep(1);
 		setProjectData({
-			step1: {},
-			step2: {},
-			step3: {},
+			step1: {
+				title: "",
+				description: "",
+				differentialFactor: "",
+				keywords: [],
+			},
+			step2: {
+				impliedStudents: [{ student: "" }],
+				impliedProfessors: [],
+			},
+			step3: {
+				degree: {
+					value: "",
+					label: "Elige el grado",
+				},
+				personalProject: false,
+				subject: {
+					value: "",
+					label: "Elige la asignatura",
+				},
+				academicCourse: "2023/2024",
+				externalLinks: [],
+				awards: [""],
+			},
 		});
 	};
 
@@ -44,13 +93,13 @@ const ProjectFormOrchestrator = ({ openPopup, closePopup }) => {
 	const renderStep = () => {
 		switch (step) {
 			case 1:
-				return <ProjectFormStep1 advanceStep={goToNext} currentStep={step} updateProjectData={updateProjectData} />;
+				return <ProjectFormStep1 advanceStep={goToNext} currentStep={step} updateProjectData={updateProjectData} projectData={projectData} />;
 			case 2:
-				return <ProjectFormStep2 advanceStep={goToNext} returnStep={goToPrevious} currentStep={step} updateProjectData={updateProjectData} />;
+				return <ProjectFormStep2 advanceStep={goToNext} returnStep={goToPrevious} currentStep={step} updateProjectData={updateProjectData} projectData={projectData} />;
 			case 3:
-				return <ProjectFormStep3 advanceStep={goToNext} returnStep={goToPrevious} currentStep={step} updateProjectData={updateProjectData} />;
+				return <ProjectFormStep3 advanceStep={goToNext} returnStep={goToPrevious} currentStep={step} updateProjectData={updateProjectData} projectData={projectData} />;
 			case 4:
-				return <ProjectFormStep4 returnStep={goToPrevious} currentStep={step} />;
+				return <ProjectFormStep4 returnStep={goToPrevious} currentStep={step} editing={editing} projectData={projectData} />;
 			default:
 				return null;
 		}

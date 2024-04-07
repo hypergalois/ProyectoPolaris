@@ -5,46 +5,7 @@ import Select from "react-select";
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
 
 // import { selectStyles } from "../../config/util";
-
-export const customStyles = {
-	control: (styles) => ({
-		...styles,
-		backgroundColor: "white",
-		fontFamily: "Montserrat, sans-serif",
-		fontWeight: "600",
-		color: "#3b82f6",
-		borderColor: "#3b82f6",
-		borderWidth: "2px",
-		borderRadius: "0.375rem",
-		"&:hover": { borderColor: "darkblue" },
-	}),
-	placeholder: (styles) => ({
-		...styles,
-		fontFamily: "Montserrat, sans-serif",
-		fontWeight: "600",
-		color: "#3b82f6",
-	}),
-	singleValue: (styles) => ({
-		...styles,
-		fontFamily: "Montserrat, sans-serif",
-		fontWeight: "600",
-		color: "#3b82f6",
-	}),
-	option: (styles) => ({
-		...styles,
-		fontFamily: "Montserrat, sans-serif",
-		fontWeight: "600",
-		color: "#3b82f6",
-	}),
-	menu: (styles) => ({
-		...styles,
-		borderRadius: "0.375rem",
-	}),
-	menuPortal: (base) => ({
-		...base,
-		zIndex: 9999,
-	}),
-};
+import { selectStylesCustom } from "../../config/util.js";
 
 function SearchForms({ degreeOptions, subjectOptions, courseOptions, awardOptions, degreeFilter, subjectFilter, courseFilter, awardFilter, setDegreeFilter, setSubjectFilter, setCourseFilter, setAwardFilter, searchQuery, setSearchQuery }) {
 	// @gonibix23 aqui poner los defaults de los forms que no me los se
@@ -58,10 +19,10 @@ function SearchForms({ degreeOptions, subjectOptions, courseOptions, awardOption
 
 	return (
 		<div className="filter-container flex space-x-4 mx-20 m-8 text-blue-500">
-			<Select className="w-3/5" options={degreeOptions} value={degreeFilter} onChange={setDegreeFilter} placeholder="Titulación" menuPortalTarget={document.body} styles={customStyles} />
-			<Select className="w-3/5 placeholder-blue-500 border-blue-500" options={subjectOptions} value={subjectFilter} onChange={setSubjectFilter} placeholder="Asignatura" menuPortalTarget={document.body} styles={customStyles} />
-			<Select className="w-1/5 placeholder-blue-500 border-blue-500" options={courseOptions} value={courseFilter} onChange={setCourseFilter} placeholder="Curso" menuPortalTarget={document.body} styles={customStyles} />
-			<Select className="w-2/5 placeholder-blue-500 border-blue-500" options={awardOptions} value={awardFilter} onChange={setAwardFilter} placeholder="Premio" menuPortalTarget={document.body} styles={customStyles} />
+			<Select className="w-3/5" options={degreeOptions} value={degreeFilter} onChange={setDegreeFilter} placeholder="Titulación" menuPortalTarget={document.body} styles={selectStylesCustom} />
+			<Select className="w-3/5 placeholder-blue-500 border-blue-500" options={subjectOptions} value={subjectFilter} onChange={setSubjectFilter} placeholder="Asignatura" menuPortalTarget={document.body} styles={selectStylesCustom} />
+			<Select className="w-1/5 placeholder-blue-500 border-blue-500" options={courseOptions} value={courseFilter} onChange={setCourseFilter} placeholder="Curso" menuPortalTarget={document.body} styles={selectStylesCustom} />
+			<Select className="w-2/5 placeholder-blue-500 border-blue-500" options={awardOptions} value={awardFilter} onChange={setAwardFilter} placeholder="Premio" menuPortalTarget={document.body} styles={selectStylesCustom} />
 
 			<div className="relative w-4/5">
 				<input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Buscar" className="rounded border-2 border-blue-500 placeholder-blue-500 pr-10 pl-3 py-1.5 w-full font-semibold" />
