@@ -65,7 +65,7 @@ const ProjectCard = ({ project }) => {
 						backgroundColor: "red",
 						color: "white",
 						padding: "4px 8px",
-						borderRadius: "8px",
+						borderRadius: "4px",
 					}}
 				>
 					Animación

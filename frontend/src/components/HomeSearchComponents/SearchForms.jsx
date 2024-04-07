@@ -15,7 +15,6 @@ export const customStyles = {
 		color: "#3b82f6",
 		borderColor: "#3b82f6",
 		borderWidth: "2px",
-		borderRadius: "0.375rem",
 		"&:hover": { borderColor: "darkblue" },
 	}),
 	placeholder: (styles) => ({

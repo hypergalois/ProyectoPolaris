@@ -104,12 +104,12 @@ function NavBar() {
 											</Link>
 										)}
 
-										<button type="button" onClick={handleOpenProjectFormPopup} className="inline-flex items-center bg-white px-3 py-2 sm:px-4 sm:py-2 mr-2 rounded-full text-white hover:bg-blue-400 focus:outline-none">
+										<button type="button" onClick={handleOpenProjectFormPopup} className="inline-flex items-center bg-white px-3 py-2 sm:px-4 sm:py-2 mr-2 rounded-md text-white hover:bg-blue-200 focus:outline-none">
 											<DocumentPlusIcon className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600" aria-hidden="true" />
 										</button>
 
 										<Menu as="div" className="relative">
-											<Menu.Button className="inline-flex items-center bg-white px-3 py-2 sm:px-4 sm:py-2 mr-2 rounded-full text-white hover:bg-blue-400 focus:outline-none">
+											<Menu.Button className="inline-flex items-center bg-white px-3 py-2 sm:px-4 sm:py-2 mr-2 rounded-md text-white hover:bg-blue-200 focus:outline-none">
 												<BellIcon className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600" aria-hidden="true" />
 											</Menu.Button>
 											<Transition
@@ -136,7 +136,7 @@ function NavBar() {
 
 										{/* @gonibix23 aqui es lo que tienes que cambiar para hacer el menú */}
 										<Menu as="div" className="relative">
-											<Menu.Button className="inline-flex items-center bg-white px-3 py-2 sm:px-4 sm:py-2 mr-2 rounded-full text-white hover:bg-blue-400 focus:outline-none">
+											<Menu.Button className="inline-flex items-center bg-white px-3 py-2 sm:px-4 sm:py-2 mr-2 rounded-md text-white hover:bg-blue-200 focus:outline-none">
 												<UserCircleIcon className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600" aria-hidden="true" />
 											</Menu.Button>
 											<Transition
