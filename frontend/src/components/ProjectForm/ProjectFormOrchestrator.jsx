@@ -17,6 +17,10 @@ const ProjectFormOrchestrator = ({ openPopup, closePopup }) => {
 	const [step, setStep] = useState(1);
 
 	// Estado para saber si se esta editando un proyecto
+	// De hecho no necesitamos este estado en todos los hijos, solo en el padre
+	// Ya que lo unico que va a cambiar es el texto del boton y la request
+	// Para que puedas ir atras y adelante en el formulario y se mantengan los datos, vamos a estar checkeando si ya existen
+	// en el estado global y eso es lo mismo que se haria en el update.
 	const [editing, setEditing] = useState(false);
 
 	// Estado para guardar los datos del proyecto
@@ -50,13 +54,13 @@ const ProjectFormOrchestrator = ({ openPopup, closePopup }) => {
 	const renderStep = () => {
 		switch (step) {
 			case 1:
-				return <ProjectFormStep1 advanceStep={goToNext} currentStep={step} updateProjectData={updateProjectData} editing={editing} />;
+				return <ProjectFormStep1 advanceStep={goToNext} currentStep={step} updateProjectData={updateProjectData} projectData={projectData} />;
 			case 2:
-				return <ProjectFormStep2 advanceStep={goToNext} returnStep={goToPrevious} currentStep={step} updateProjectData={updateProjectData} editing={editing} />;
+				return <ProjectFormStep2 advanceStep={goToNext} returnStep={goToPrevious} currentStep={step} updateProjectData={updateProjectData} projectData={projectData} />;
 			case 3:
-				return <ProjectFormStep3 advanceStep={goToNext} returnStep={goToPrevious} currentStep={step} updateProjectData={updateProjectData} editing={editing} />;
+				return <ProjectFormStep3 advanceStep={goToNext} returnStep={goToPrevious} currentStep={step} updateProjectData={updateProjectData} projectData={projectData} />;
 			case 4:
-				return <ProjectFormStep4 returnStep={goToPrevious} currentStep={step} editing={editing} />;
+				return <ProjectFormStep4 returnStep={goToPrevious} currentStep={step} editing={editing} projectData={projectData} />;
 			default:
 				return null;
 		}

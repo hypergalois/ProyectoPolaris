@@ -7,7 +7,7 @@ import TagsInputComponent from "../Helpers/TagsInputComponent.jsx";
 import { useForm, useController, useFieldArray, FormProvider } from "react-hook-form";
 
 // TODO Funcionalidad de guardar borrador
-const ProjectFormStep1 = ({ advanceStep, currentStep, updateProjectData, editing }) => {
+const ProjectFormStep1 = ({ advanceStep, currentStep, updateProjectData, projectData }) => {
 	useEffect(() => {
 		const handleKeyDown = (event) => {
 			if (event.key === "ArrowRight") {
@@ -23,6 +23,7 @@ const ProjectFormStep1 = ({ advanceStep, currentStep, updateProjectData, editing
 		};
 	}, [advanceStep]);
 
+	// Los default values se tienen que sacar del estado global, con lo cual lo necesitamos pasar como props
 	const methods = useForm({
 		defaultValues: {
 			title: "",

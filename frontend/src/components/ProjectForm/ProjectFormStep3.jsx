@@ -12,7 +12,7 @@ import { useAreas } from "../../context/AreasContext.jsx";
 // <div>Titulacion, Asignatura, Proyecto Personal, Curso Academico, Premios, Miniatura, Archivos del Proyecto, Enlaces, Palabras Clave, Memoria del Proyecto</div>
 // TODO Que cuando se seleccione un grado, se carguen las asignaturas de ese grado y viceversa
 
-const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectData, editing }) => {
+const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectData, projectData }) => {
 	const { degrees, getDegrees, awards, getAwards, subjects, getSubjects } = useAreas();
 	const {
 		handleSubmit,
