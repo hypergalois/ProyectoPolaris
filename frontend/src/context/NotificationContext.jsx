@@ -43,13 +43,17 @@ export const NotificationsProvider = ({ children }) => {
         }
     };
 
-    useEffect(() => {
-        if (user) {
-            getNotificationsData();
-        }
-    }, [userId]);
+    return (
+        <NotificationsContext.Provider
+            value={{
+                notifications,
+                createNotification,
+                getNotificationsData,
+                deleteNotificationData,
+            }}
+        >
+            {children}
+        </NotificationsContext.Provider>
+    );
 
-    const notificationsData = { notifications, createNotification, deleteNotificationData };
-
-    return <NotificationsContext.Provider value={notificationsData}>{children}</NotificationsContext.Provider>;
 };

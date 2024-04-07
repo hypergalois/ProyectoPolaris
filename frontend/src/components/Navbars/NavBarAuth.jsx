@@ -19,7 +19,7 @@ function NavBar() {
 
     useEffect(() => {
         getNotificationsData();
-    }, []);
+      }, []);
 
 	useEffect(() => {
 		getUserRole();
