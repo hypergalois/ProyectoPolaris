@@ -122,4 +122,12 @@ const selectStylesCustom = {
 	}),
 };
 
-export { rolesEnum, statusEnum, academicRoleEnum, colorsDegreesEnum, selectStyles, selectStylesCustom };
+const courseOptions = [
+	{ value: "1", label: "1º" },
+	{ value: "2", label: "2º" },
+	{ value: "3", label: "3º" },
+	{ value: "4", label: "4º" },
+	{ value: "5", label: "5º" },
+];
+
+export { rolesEnum, statusEnum, academicRoleEnum, colorsDegreesEnum, selectStyles, selectStylesCustom, courseOptions };
