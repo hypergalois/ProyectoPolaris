@@ -2,22 +2,25 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 import { useDropzone } from "react-dropzone";
 import { useFormContext } from "react-hook-form";
 
+// Ajusta estos estilos para que coincidan más estrechamente con tus selects personalizados
 const baseStyle = {
 	display: "flex",
 	flexDirection: "column",
 	alignItems: "center",
 	padding: "20px",
-	borderWidth: 2,
-	borderRadius: 2,
-	borderColor: "#eeeeee",
+	borderWidth: "2px",
+	borderRadius: "0.375rem",
+	borderColor: "#3b82f6",
 	borderStyle: "dashed",
-	backgroundColor: "#fafafa",
-	color: "#bdbdbd",
+	backgroundColor: "#e6eff5",
+	color: "#3b82f6",
+	fontFamily: "Montserrat, sans-serif",
+	fontWeight: "600",
 	transition: "border .3s ease-in-out",
 };
 
 const activeStyle = {
-	borderColor: "#2196f3",
+	borderColor: "darkblue",
 };
 
 const acceptStyle = {

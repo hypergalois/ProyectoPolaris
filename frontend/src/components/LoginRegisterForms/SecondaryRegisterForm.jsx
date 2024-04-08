@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import Select from "react-select";
 // import { DevTool } from "@hookform/devtools";
 
-import { selectStyles } from "../../config/util";
+import { selectStylesCustom } from "../../config/util";
 
 const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 	const {
@@ -344,7 +344,7 @@ const SecondaryRegisterForm = ({ initialRegistrationData, closePopup }) => {
 									setValue("grade", selectedOption ? selectedOption.value : "");
 								}}
 								className="w-full border rounded-2xl leading-tight"
-								styles={selectStyles}
+								styles={selectStylesCustom}
 								placeholder="Grados"
 							/>
 						)}
