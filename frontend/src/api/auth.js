@@ -8,6 +8,10 @@ export const verifyTokenRequest = () => axiosInstance.get("/verify");
 
 export const logoutRequest = () => axiosInstance.post("/logout");
 
+export const deleteUserRequest = (user) => axiosInstance.post("/deleteUser", user);
+
+export const editUserRequest = (user) => axiosInstance.post("/editUser", user);
+
 export const forgotPasswordRequest = (email) => axiosInstance.post("/forgotPassword", email);
 
 export const resetPasswordRequest = (token, password) => axiosInstance.post("/resetPassword", token, password);

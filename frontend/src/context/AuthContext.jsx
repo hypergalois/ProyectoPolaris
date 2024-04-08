@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect, useRef } from "react";
-import { registerRequest, loginRequest, verifyTokenRequest, logoutRequest, forgotPasswordRequest, resetPasswordRequest, verifyEmailRequest, checkEmailRequest, getProfileRequest, getUserRequest, getUsersRequest, getUserRoleRequest } from "../api/auth";
+import { registerRequest, loginRequest, verifyTokenRequest, logoutRequest, deleteUserRequest, editUserRequest, forgotPasswordRequest, resetPasswordRequest, verifyEmailRequest, checkEmailRequest, getProfileRequest, getUserRequest, getUsersRequest, getUserRoleRequest } from "../api/auth";
 import Cookies from "js-cookie";
 
 export const AuthContext = createContext();
@@ -70,7 +70,23 @@ export const AuthProvider = ({ children }) => {
 			console.log(error);
 		}
 	};
+	
+	const deleteUser = async (data) => {
+		try {
+			await deleteUserRequest(data);
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
+	const editUser = async (data) => {
+		try {
+			await editUserRequest(data);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+ 
 	const getExistEmail = async (email) => {
 		try {
 			const response = await checkEmailRequest(email);
@@ -240,6 +256,8 @@ export const AuthProvider = ({ children }) => {
 				register,
 				login,
 				logout,
+				deleteUser,
+				editUser,
 				forgotPassword,
 				resetPassword,
 				verifyEmail,
