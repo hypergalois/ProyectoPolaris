@@ -12,13 +12,24 @@ const ProfileProjects = ({ props }) => {
 	//const { projects, getProjectsByUser, errors: proyectsErrors } = useProjects();
 	const [ projects, setProjects ] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const [clickEnabled, setClickEnabled] = useState(true);
 
 	const settings = {
 		dots: true,
 		infinite: false,
 		speed: 500,
 		slidesToShow: 3,
-		slidesToScroll: 3
+		slidesToScroll: 3,
+		beforeChange: () => {
+			setClickEnabled(false);
+		},
+		afterChange: () => {
+			setClickEnabled(true);
+		}
+	};
+
+	const handleParentClick = (e) => {
+		!clickEnabled && e.stopPropagation(); // Si clickEnabled es false, detiene la propagación del clic
 	};
 
 	useEffect(() => {
@@ -50,9 +61,11 @@ const ProfileProjects = ({ props }) => {
 			) : (
 				<div className="container mx-auto px-4">
 					<Slider {...settings}>
-						{projects.map((project) => (
-							<ProjectCard key={project.id} project={project} />
-						))}
+					{projects.map((project) => (
+						<div key={project.id} onClickCapture={handleParentClick}>
+							<ProjectCard project={project} />
+						</div>
+					))}
 					</Slider>
 				</div>
 			)}
