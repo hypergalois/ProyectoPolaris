@@ -216,6 +216,9 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 		stepThreeData.summary = data.summary;
 		stepThreeData.projectFiles = data.projectFiles;
 
+		// Creo que tenemos que guardar mejor los datos de los archivos
+		// Ahora ya los files son objetos FILE
+
 		// const stepThreeData = {
 		// 	degree: data.degree,
 		// 	personalProject: data.personalProject,
