@@ -14,24 +14,6 @@ import Stepper from "../Helpers/Stepper.jsx";
 import { selectStylesCustom } from "../../config/util.js";
 
 const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectData, projectData }) => {
-	useEffect(() => {
-		const handleKeyDown = (event) => {
-			if (event.key === "ArrowLeft") {
-				handleSubmit(onSubmit)();
-				returnStep();
-			} else if (event.key === "ArrowRight") {
-				handleSubmit(onSubmit)();
-				advanceStep();
-			}
-		};
-
-		window.addEventListener("keydown", handleKeyDown);
-
-		return () => {
-			window.removeEventListener("keydown", handleKeyDown);
-		};
-	}, [returnStep, advanceStep]);
-
 	const methods = useForm({
 		defaultValues: projectData.step3,
 	});

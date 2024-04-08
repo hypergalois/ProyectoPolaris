@@ -7,25 +7,6 @@ import TagsInputComponent from "../Helpers/TagsInputComponent.jsx";
 import { useForm, useController, useFieldArray, FormProvider } from "react-hook-form";
 
 const ProjectFormStep2 = ({ returnStep, advanceStep, currentStep, updateProjectData, projectData }) => {
-	useEffect(() => {
-		const handleKeyDown = (event) => {
-			if (event.key === "ArrowLeft") {
-				// PUEDE SER INCOMODO que no puedas volver atras sin haber introducido todos los datos
-				// Ya que hace el submit tienen que estar completos a pesar de que estás avanzando
-				handleSubmit(onSubmit)();
-				returnStep();
-			} else if (event.key === "ArrowRight") {
-				handleSubmit(onSubmit)();
-				advanceStep();
-			}
-		};
-
-		window.addEventListener("keydown", handleKeyDown);
-
-		return () => {
-			window.removeEventListener("keydown", handleKeyDown);
-		};
-	}, [returnStep, advanceStep]);
 
 	const methods = useForm({
 		defaultValues: projectData.step2,

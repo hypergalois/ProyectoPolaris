@@ -4,21 +4,6 @@ import { useEffect } from "react";
 import Stepper from "../Helpers/Stepper.jsx";
 
 const ProjectFormStep4 = ({ returnStep, currentStep, editing, projectData }) => {
-	useEffect(() => {
-		const handleKeyDown = (event) => {
-			if (event.key === "ArrowLeft") {
-				handleSubmit(onSubmit)();
-				returnStep();
-			}
-			// Si es derecha, ya lo mandamos supongo
-		};
-
-		window.addEventListener("keydown", handleKeyDown);
-
-		return () => {
-			window.removeEventListener("keydown", handleKeyDown);
-		};
-	}, [returnStep]);
 
 	// No se si pasandole asi el estado si cambia se renderiza de nuevo
 	const [isComplete, setIsComplete] = React.useState(false);
