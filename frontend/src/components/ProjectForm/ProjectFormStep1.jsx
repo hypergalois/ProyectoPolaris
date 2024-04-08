@@ -1,5 +1,6 @@
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+
 
 import Stepper from "../Helpers/Stepper.jsx";
 import TagsInputComponent from "../Helpers/TagsInputComponent.jsx";
@@ -43,6 +44,12 @@ const ProjectFormStep1 = ({ advanceStep, currentStep, updateProjectData, project
 		updateProjectData("step1", stepOneData);
 	};
 
+    const titleRef = useRef(null);
+
+    useEffect(() => {
+        titleRef.current.focus();
+    }, []); 
+
 	return (
 		<>
 			<Stepper currentStep={currentStep} />
@@ -63,6 +70,7 @@ const ProjectFormStep1 = ({ advanceStep, currentStep, updateProjectData, project
 								placeholder="Título del proyecto"
 								className="outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
 								autoComplete="off"
+                                ref={titleRef}
 							/>
 						</div>
 						{errors.title && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.title.message}</p>}
