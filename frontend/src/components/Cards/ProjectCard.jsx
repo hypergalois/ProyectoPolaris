@@ -1,7 +1,5 @@
 import * as React from "react";
 
-import { useNavigate } from "react-router-dom";
-import { useProjects } from "../../context/ProjectsContext.jsx";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { useEffect, useState } from "react";
 import { rolesEnum } from "../../config/util.js";
@@ -17,6 +15,8 @@ import GroupIcon from "@mui/icons-material/Group";
 
 const ProjectCard = ({ project }) => {
 	const [openPopup, setOpenPopup] = useState(false);
+
+	const { userRole, getUserRole } = useAuth();
 
 	const handleClosePopup = () => {
 		setOpenPopup(false);

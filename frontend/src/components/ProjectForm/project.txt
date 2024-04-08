@@ -1,0 +1,38 @@
+{
+    "step1": {
+        "title": "mi titulo",
+        "description": "mi descrip",
+        "differentialFactor": "factor",
+        "keywords": [
+            {
+                "id": "keywods",
+                "text": "keywods"
+            },
+            {
+                "id": "hola",
+                "text": "hola"
+            }
+        ]
+    },
+    "step2": {
+        "impliedStudents": [
+            {
+                "student": "juanito@live.u-tad.com"
+            }
+        ],
+        "impliedProfessors": [
+            {
+                "professor": "profesor@u-tad.com"
+            }
+        ]
+    },
+    "step3": {
+        "degree": {},
+        "personalProject": false,
+        "subject": {},
+        "academicCourse": "2023/2024",
+        "externalLinks": [],
+        "awards": []
+    }
+}
+

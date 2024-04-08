@@ -45,6 +45,9 @@ const ProjectFormOrchestrator = ({ openPopup, closePopup }) => {
 			academicCourse: "2023/2024",
 			externalLinks: [],
 			awards: [],
+			thumbnail: [],
+			summary: [],
+			projectFiles: [],
 		},
 	});
 
@@ -77,7 +80,7 @@ const ProjectFormOrchestrator = ({ openPopup, closePopup }) => {
 				},
 				academicCourse: "2023/2024",
 				externalLinks: [],
-				awards: [""],
+				awards: [],
 				thumbnail: [],
 				summary: [],
 				projectFiles: [],

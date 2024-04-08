@@ -129,6 +129,7 @@ const ProjectFormStep1 = ({ advanceStep, currentStep, updateProjectData, project
 								Keywords
 							</label>
 							<TagsInputComponent
+								id="keywords"
 								control={control}
 								name="keywords"
 								placeholder="Agregar keywords..."

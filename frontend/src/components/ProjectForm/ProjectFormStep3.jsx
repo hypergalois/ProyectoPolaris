@@ -82,10 +82,12 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 		const getDegreeOptions = async () => {
 			try {
 				await getDegrees();
+
 				const options = degrees.map(({ id, name }) => ({
 					value: id,
 					label: name,
 				}));
+				// console.log(options);
 				setDegreeOptions(options);
 			} catch (error) {
 				console.log(error);
@@ -160,6 +162,7 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 						value: id,
 						label: name,
 					}));
+					// console.log(options);
 					setSubjectOptions(options);
 				} catch {
 					console.log("Error fetching options");
@@ -168,7 +171,8 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 		};
 
 		getSubjectOptions();
-	}, [currentDegree]);
+	}, []);
+	// En el array deberia ir currentDegree, pero no se si se renderiza de nuevo si cambia
 
 	const {
 		fields: linkFields,
@@ -201,12 +205,29 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 	const onSubmit = (data) => {
 		const stepThreeData = {};
 
+		// Ojo, se podria crear el objeto directamente
 		stepThreeData.degree = data.degree;
 		stepThreeData.personalProject = data.personalProject;
 		stepThreeData.subject = data.subject;
 		stepThreeData.academicCourse = data.academicCourse;
 		stepThreeData.externalLinks = data.externalLinks;
 		stepThreeData.awards = data.awards;
+		stepThreeData.thumbnail = data.thumbnail;
+		stepThreeData.summary = data.summary;
+		stepThreeData.projectFiles = data.projectFiles;
+
+		// const stepThreeData = {
+		// 	degree: data.degree,
+		// 	personalProject: data.personalProject,
+		// 	subject: data.subject,
+		// 	academicCourse: data.academicCourse,
+		// 	externalLinks: data.externalLinks,
+		// 	awards: data.awards,
+		// 	// Directamente guardamos los archivos recibidos del formulario
+		// 	thumbnail: data.thumbnail,
+		// 	summary: data.summary,
+		// 	projectFiles: data.projectFiles,
+		// };
 
 		// // Agrega los archivos del proyecto a FormData
 		// const files = data.uploadedContent ? [...data.uploadedContent] : [];
@@ -238,16 +259,17 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 							<Controller
 								name="degree"
 								control={control}
-								defaultValue=""
 								rules={{ required: "Se requiere un grado" }}
 								render={({ field }) => (
 									<Select
 										{...field}
 										options={degreeOptions}
-										placeholder="Selecciona un grado"
+										placeholder="Elige el grado"
 										className="outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
 										menuPortalTarget={document.body}
 										styles={selectStylesCustom}
+										value={degreeOptions.find((option) => option.value === field.value)}
+										onChange={(option) => field.onChange(option.value)}
 									/>
 								)}
 							/>
@@ -261,27 +283,33 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 							<label htmlFor="personalProject" className="text-blue-400 text-xs font-semibold">
 								Proyecto personal (no tiene asignatura)
 							</label>
-							<Controller name="personalProject" control={control} defaultValue={false} render={({ field }) => <input {...field} type="checkbox" className="form-checkbox" />} />
+							<Controller
+								name="personalProject"
+								control={control}
+								defaultValue={false}
+								render={({ field: { onChange, onBlur, value, ref } }) => <input type="checkbox" className="form-checkbox" ref={ref} onBlur={onBlur} onChange={(e) => onChange(e.target.checked)} checked={value} />}
+							/>
 						</div>
 					</div>
 
 					{/* ASIGNATURA */}
-					<div className="mb-2 w-full mx-auto">
+					<div className="mb-2 w-full mx-auto col-span-1">
 						<div className="flex flex-col">
 							<Controller
 								name="subject"
 								control={control}
-								defaultValue=""
 								rules={{ required: !isPersonalProject ? "Se requiere una asignatura" : undefined }}
 								render={({ field }) => (
 									<Select
 										{...field}
 										options={subjectOptions}
-										placeholder="Selecciona una asignatura"
 										className="outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
 										menuPortalTarget={document.body}
 										styles={selectStylesCustom}
 										isDisabled={isPersonalProject}
+										placeholder="Elige la asignatura"
+										value={subjectOptions.find((option) => option.value === field.value)}
+										onChange={(option) => field.onChange(option.value)}
 									/>
 								)}
 							/>
@@ -305,7 +333,7 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 										className="outline-none border-none bg-transparent w-full pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent" // Estilos consistentes con los otros Selects
 										menuPortalTarget={document.body}
 										styles={selectStylesCustom}
-										value={awardOptions.filter((option) => field.value.includes(option.value))}
+										value={awardOptions.filter((option) => Array.isArray(field.value) && field.value.includes(option.value))}
 										onChange={(vals) => field.onChange(vals.map((val) => val.value))}
 									/>
 								)}

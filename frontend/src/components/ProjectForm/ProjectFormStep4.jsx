@@ -23,6 +23,11 @@ const ProjectFormStep4 = ({ returnStep, currentStep, editing, projectData }) => 
 	// No se si pasandole asi el estado si cambia se renderiza de nuevo
 	const [isComplete, setIsComplete] = React.useState(false);
 
+	const onSubmit = (data) => {
+		console.log("Mnadando proyecto");
+		console.log(projectData);
+	};
+
 	return (
 		<>
 			<Stepper currentStep={currentStep} isComplete={isComplete} />
@@ -50,6 +55,7 @@ const ProjectFormStep4 = ({ returnStep, currentStep, editing, projectData }) => 
 					className="h-8 px-3 bg-blue-600 hover:bg-blue-400 text-white font-bold text-sm"
 					onClick={() => {
 						console.log("Subir proyecto");
+						console.log(projectData);
 						handleSubmit(onSubmit)();
 						// Una vez que se suba, hay que poner el estilo del ultimo boton en complete y mostrar la animacion de tick
 						setIsComplete(true);
