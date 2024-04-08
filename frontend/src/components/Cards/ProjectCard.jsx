@@ -22,26 +22,9 @@ const ProjectCard = ({ project }) => {
 		setOpenPopup(false);
 	};
 
-	const { pinProjectRequest } = useProjects();
-	const { userRole, getUserRole } = useAuth();
-
 	useEffect(() => {
 		getUserRole();
 	}, []);
-
-	// if (userRole === null) return null;
-
-	const navigate = useNavigate();
-
-	const handleClick = (project) => {
-		// Navegar a otra página al hacer clic
-		// navigate(`/projects/${projectId}`);
-		// Ya no es una pagina nueva sino un modal
-	};
-
-	const handlePin = () => {
-		pinProjectRequest(project.id);
-	};
 
 	return (
 		<>
@@ -84,9 +67,8 @@ const ProjectCard = ({ project }) => {
 					</Typography>
 				</CardContent>
 			</Card>
-			{/* El title a lo mejor hasta lo quito */}
+
 			<Popup project={project} openPopup={openPopup} closePopup={handleClosePopup}>
-				{/* // Aqui va el ProjectDetail */}
 				<ProjectDetails project={project} />
 			</Popup>
 		</>
