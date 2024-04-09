@@ -8,7 +8,7 @@ import ProjectFormStep4 from "./ProjectFormStep4.jsx";
 import PopupUploadProject from "../Dialogs/PopupUploadProject.jsx";
 import Stepper from "../Helpers/Stepper.jsx";
 
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 // El problema esta, guardo los estados de los componentes hijos en estados individuales o en un estado global?
@@ -104,23 +104,20 @@ const ProjectFormOrchestrator = ({ openPopup, closePopup }) => {
                 setStep((prevStep) => prevStep + 1);
             } else {
                 toast.error('Por favor, completa todos los datos antes de avanzar al siguiente paso.', {
-                    position: toast.POSITION.BOTTOM_RIGHT,
+                    position: 'top-center',
                     autoClose: 3000, // El toast se cerrará automáticamente después de 3 segundos
                 });
             }
         } else {
-            // Si no estamos en el paso 3, simplemente avanzar al siguiente paso
             setStep((prevStep) => prevStep + 1);
         }
     };
 
     const checkProjectData = (projectData) => {
-        // Verificar si todos los campos obligatorios de cada paso están completos
         const step1Completed = projectData.step1.title && projectData.step1.description && projectData.step1.differentialFactor && projectData.step1.keywords.length > 0;
         const step2Completed = projectData.step2.impliedStudents.length > 0;
         const step3Completed = projectData.step3.degree && projectData.step3.subject && projectData.step3.academicCourse;
     
-        // Devolver true si todos los pasos están completos
         return step1Completed && step2Completed && step3Completed;
     };
 
@@ -141,7 +138,23 @@ const ProjectFormOrchestrator = ({ openPopup, closePopup }) => {
 		}
 	};
 
-	return <PopupUploadProject title="Subir Proyecto" openPopup={openPopup} onClose={resetFormAndClose} renderStep={renderStep} />;
+    return (
+        <>
+            <ToastContainer
+                position="top-center"
+                autoClose={3000}
+                hideProgressBar
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                style={{ zIndex: 9999, position:"fixed" }}
+            />
+            <PopupUploadProject title="Subir Proyecto" openPopup={openPopup} onClose={resetFormAndClose} renderStep={renderStep} />
+        </>
+    );
 };
 
 export default ProjectFormOrchestrator;
