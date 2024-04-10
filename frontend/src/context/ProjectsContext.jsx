@@ -20,7 +20,7 @@ export const ProjectsProvider = ({ children }) => {
 	const createProject = async (project) => {
 		try {
 			const res = await createProjectRequest(project);
-			setProjects([...projects, res.data]);
+			setProject(res);
 		} catch (error) {
 			console.log(error);
 		}

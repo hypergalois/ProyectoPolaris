@@ -286,16 +286,16 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 								rules={{ required: !isPersonalProject ? "Se requiere una asignatura" : undefined }}
 								render={({ field }) => (
 									<Select
-										{...field}
-										options={subjectOptions}
-										className="outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
-										menuPortalTarget={document.body}
-										styles={selectStylesCustom}
-										isDisabled={isPersonalProject}
-										placeholder="Elige la asignatura"
-										value={subjectOptions.find((option) => option.value === field.value)}
-										onChange={(option) => field.onChange(option.value)}
-									/>
+                                        {...field}
+                                        options={subjectOptions}
+                                        className="outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
+                                        menuPortalTarget={document.body}
+                                        styles={selectStylesCustom}
+                                        isDisabled={isPersonalProject}
+                                        placeholder="Elige la asignatura"
+                                        value={subjectOptions.find((option) => option.value === field.value)}
+                                        onChange={(selectedOption) => field.onChange(selectedOption.value)}
+                                    />
 								)}
 							/>
 						</div>

@@ -7,6 +7,7 @@ import TagsInputComponent from "../Helpers/TagsInputComponent.jsx";
 import { useForm, useController, useFieldArray, FormProvider } from "react-hook-form";
 
 // TODO Funcionalidad de guardar borrador
+// TODO Eliminar centrado en keywords
 const ProjectFormStep1 = ({ advanceStep, currentStep, updateProjectData, projectData }) => {
 	// Los default values se tienen que sacar del estado global, con lo cual lo necesitamos pasar como props
 	const methods = useForm({
@@ -41,11 +42,6 @@ const ProjectFormStep1 = ({ advanceStep, currentStep, updateProjectData, project
 		updateProjectData("step1", stepOneData);
 	};
 
-    const titleRef = useRef(null);
-
-    useEffect(() => {
-        titleRef.current.focus();
-    }, []); 
 
 	return (
 		<>
@@ -67,7 +63,6 @@ const ProjectFormStep1 = ({ advanceStep, currentStep, updateProjectData, project
 								placeholder="Título del proyecto"
 								className="outline-none border-none bg-transparent pt-2 text-blue-500 placeholder-blue-500 text-xs font-bold focus:outline-none focus:border-none focus:ring-0 focus:border-transparent"
 								autoComplete="off"
-                                ref={titleRef}
 							/>
 						</div>
 						{errors.title && <p className="mb-2 mt-4 text-red-500 font-semibold">{errors.title.message}</p>}
@@ -150,8 +145,7 @@ const ProjectFormStep1 = ({ advanceStep, currentStep, updateProjectData, project
 				</button>
 				<button
 					className="h-8 px-3 bg-blue-600 hover:bg-blue-400 text-white font-bold text-sm"
-					onClick={() => {
-						handleSubmit(onSubmit)();
+					onClick={() => {                        handleSubmit(onSubmit)();
 						advanceStep();
 					}}
 				>

@@ -108,7 +108,7 @@ export const getProjectsHomeByArea = async (req, res) => {
 
 export const createProject = async (req, res) => {
 	try {
-		console.log(req);
+		console.log(req.body);
 
 		// const files = req.files ? req.files.map((file) => path.join(process.env.PUBLIC_URL, file.destination, file.filename)) : [];
 

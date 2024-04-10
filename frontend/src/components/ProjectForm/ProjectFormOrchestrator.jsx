@@ -116,7 +116,7 @@ const ProjectFormOrchestrator = ({ openPopup, closePopup }) => {
     };
 
     const checkProjectData = (projectData) => {
-        const step1Completed = projectData.step1.title && projectData.step1.description && projectData.step1.differentialFactor && projectData.step1.keywords.length > 0;
+        const step1Completed = projectData.step1.title && projectData.step1.description && projectData.step1.differentialFactor;
         const step2Completed = projectData.step2.impliedStudents.length > 0;
         const step3Completed = projectData.step3.degree && projectData.step3.subject && projectData.step3.academicCourse;
     
@@ -134,7 +134,7 @@ const ProjectFormOrchestrator = ({ openPopup, closePopup }) => {
 			case 3:
 				return <ProjectFormStep3 advanceStep={goToNext} returnStep={goToPrevious} currentStep={step} updateProjectData={updateProjectData} projectData={projectData} />;
 			case 4:
-				return <ProjectFormStep4 returnStep={goToPrevious} currentStep={step} editing={editing} projectData={projectData} />;
+				return <ProjectFormStep4 returnStep={goToPrevious} currentStep={step} editing={editing} projectData={projectData} closePopup={closePopup} />;
 			default:
 				return null;
 		}
