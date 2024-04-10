@@ -1,7 +1,6 @@
 import React from "react";
 import { useEffect, useRef } from "react";
 
-
 import Stepper from "../Helpers/Stepper.jsx";
 import TagsInputComponent from "../Helpers/TagsInputComponent.jsx";
 
@@ -22,6 +21,7 @@ const ProjectFormStep1 = ({ advanceStep, currentStep, updateProjectData, project
 	} = methods;
 
 	const onSubmit = (data) => {
+        console.log("funcion onsubmit line 41: ", data);
 		// Creamos un objeto normal para guardar los datos y al final crearemos el formData
 		const stepOneData = {};
 		stepOneData.title = data.title;
@@ -37,9 +37,6 @@ const ProjectFormStep1 = ({ advanceStep, currentStep, updateProjectData, project
 		// const keywordsAsStrings = data.keywords.map((keyword) => keyword.text);
 		// stepOneData.keywords = keywordsAsStrings;
 		stepOneData.keywords = data.keywords;
-
-		console.log(stepOneData);
-
 		// Actualizamos el estado del proyecto
 		updateProjectData("step1", stepOneData);
 	};

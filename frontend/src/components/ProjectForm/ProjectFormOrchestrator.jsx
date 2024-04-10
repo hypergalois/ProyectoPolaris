@@ -97,6 +97,8 @@ const ProjectFormOrchestrator = ({ openPopup, closePopup }) => {
 	};
 
 	const goToNext = () => {
+
+        console.log("projectData Orchestrator", projectData);
         if (step === 3) {
             const isProjectDataComplete = checkProjectData(projectData);
     
