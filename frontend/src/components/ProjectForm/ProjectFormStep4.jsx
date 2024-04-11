@@ -17,27 +17,30 @@ const ProjectFormStep4 = ({ returnStep, currentStep, editing, projectData, close
 
     const prepareFormData = (projectData) => {
         const formData = new FormData();
-    
-        // Flatten the projectData object
+
         const flattenedData = Object.values(projectData).reduce((acc, step) => ({ ...acc, ...step }), {});
     
-        Object.entries(flattenedData).forEach(([key, value]) => {
-            if (Array.isArray(value)) {
-                if (key === 'keywords' || key === 'impliedStudents' || key === 'impliedProfessors' || key === 'awards' || key === 'externalLinks') {
-                    value.forEach((item, index) => {
-                        formData.append(`${key}[${index}]`, item);
-                    });
-                } else {
-                    formData.append(key, JSON.stringify(value));
+        for (const key in flattenedData) {
+            if (Object.hasOwnProperty.call(flattenedData, key)) {
+                const value = flattenedData[key];
+
+                if (value !== undefined) {
+                    if (Array.isArray(value)) {
+                        value.forEach((item) => {
+                            if (typeof item === 'object') {
+                                formData.append(key, JSON.stringify(item));
+                            } else {
+                                formData.append(key, item);
+                            }
+                        });
+                    } else if (typeof value === 'object') {
+                        formData.append(key, JSON.stringify(value));
+                    } else {
+                        formData.append(key, value);
+                    }
                 }
-            } else if (typeof value === 'object' && value !== null) {
-                formData.append(key, JSON.stringify(value));
-            } else if (value instanceof File) {
-                formData.append(key, value, value.name);
-            } else {
-                formData.append(key, value);
             }
-        });
+        }
     
         return formData;
     };
@@ -45,13 +48,15 @@ const ProjectFormStep4 = ({ returnStep, currentStep, editing, projectData, close
 	const handleSubmit = async () => {
 		const formData = prepareFormData(projectData);
 
-
-        for (const pair of formData.entries()) {
-            console.log(pair[0] + ': ' + pair[1]);
-          }
+        formData.forEach((value, key) => {
+            console.log(`${key}: ${value}`);
+          });
 
 		try {
 			const response = createProject(formData);
+
+            console.log(response)
+
 			if (response.ok) {
 				setIsComplete(true);
 				// Aquí, manejar el cierre automático y la animación de éxito

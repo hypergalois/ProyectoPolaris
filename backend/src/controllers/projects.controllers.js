@@ -141,38 +141,53 @@ export const createProject = async (req, res) => {
 			}
 		}
 
-		(JSON.parse(req.body.impliedTeachers)[0]!==undefined) ? req.body.impliedTeachers = JSON.parse(req.body.impliedTeachers) : delete req.body.impliedTeachers;
-		if(req.body.impliedTeachers){
-			if (req.body.impliedTeachers.length > 1) {
-				req.body.impliedTeachers = await prisma.user.findMany({
-					where: {
-						email: {
-							in: req.body.impliedTeachers,
-						},
-					},
-					select: {
-						id: true,
-					},
-				});
-				req.body.impliedTeachers = req.body.impliedTeachers.map((teacher) => {
-					return { connect: { id: teacher.id } };
-				});
-			}else{
-				req.body.impliedTeachers = await prisma.user.findUnique({ where: { email: req.body.impliedTeachers[0] } });
-				req.body.impliedTeachers = { connect: { id: req.body.impliedTeachers.id }};
-			}
-		}
+		if (req.body.impliedTeachers) {
+            const impliedTeachersData = JSON.parse(req.body.impliedTeachers);
+        
+            if (Array.isArray(impliedTeachersData)) {
+                req.body.impliedTeachers = [];
+        
+                for (const teacherData of impliedTeachersData) {
+                    if (teacherData.professor) {
+                        const professorEmail = teacherData.professor;
 
-		(JSON.parse(req.body.awards)[0]!==undefined) ? req.body.awards = JSON.parse(req.body.awards) : delete req.body.awards;
-		if(req.body.awards){
-			if (req.body.awards.length > 1) {
-				req.body.awards = req.body.awards.map((awards) => {
-					return { connect: { id: awards } };
-				});
-			}else{
-				req.body.awards = { connect: { id: req.body.awards.id }};
-			}
-		}
+                        const professor = await prisma.user.findUnique({
+                            where: { email: professorEmail },
+                        });
+        
+                        // Si el profesor existe, conectarlo al proyecto
+                        if (professor) {
+                            req.body.impliedTeachers.push({ connect: { id: professor.id } });
+                        } else {
+                            // Manejar el caso en el que el profesor no existe
+                            console.log(`El profesor con el correo electrónico ${professorEmail} no fue encontrado.`);
+                        }
+                    } else {
+                        // Manejar el caso en el que no se proporcionó el correo electrónico del profesor
+                        console.log('No se proporcionó el correo electrónico del profesor.');
+                    }
+                }
+            } else {
+                // Manejar el caso en el que impliedTeachersData no es un array válido
+                console.log('El campo impliedTeachers debe ser un array válido.');
+                delete req.body.impliedTeachers;
+            }
+        }
+
+        if (req.body.awards) {
+            const awardsData = JSON.parse(req.body.awards);
+        
+            if (Array.isArray(awardsData)) {
+                // Si awardsData es un array, se procede a procesar cada elemento
+                req.body.awards = [];
+        
+                for (const awardId of awardsData) {
+                    // Realizar las operaciones necesarias con el ID del premio
+                    // Por ejemplo, conectar el premio al proyecto
+                    req.body.awards.push({ connect: { id: awardId } });
+                }
+            }
+        }
 
 		req.body.subject = { connect: { id: req.body.subject }};
 		req.body.degree = { connect: { id: req.body.degree }};
