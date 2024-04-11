@@ -18,14 +18,27 @@ const ProjectFormStep4 = ({ returnStep, currentStep, editing, projectData, close
     const prepareFormData = (projectData) => {
         const formData = new FormData();
 
-        // Añadir thumbnail con nombre personalizado
-        formData.append('files', projectData.step3.thumbnail[0], 'thumbnail.'+projectData.step3.thumbnail[0].name.split('.').pop());
-        // Añadir summary con nombre personalizado
-        formData.append('files', projectData.step3.summary[0], 'summary.'+projectData.step3.summary[0].name.split('.').pop());
+        if (projectData.step3.personalProject === true) {
+            delete projectData.step3.subject;
+        }
 
-        projectData.step3.projectFiles.forEach((file) => {
-            formData.append('files', file);
-        });
+        // Añadir thumbnail con nombre personalizado
+        if (projectData.step3.thumbnail && projectData.step3.thumbnail.length > 0) {
+            formData.append('files', projectData.step3.thumbnail[0], 'thumbnail.' + projectData.step3.thumbnail[0].name.split('.').pop());
+        }
+        // Añadir summary con nombre personalizado
+        if (projectData.step3.summary && projectData.step3.summary.length > 0) {
+            formData.append('files', projectData.step3.summary[0], 'summary.'+projectData.step3.summary[0].name.split('.').pop());
+        }
+
+        if (Array.isArray(projectData.step3.projectFiles)) {
+            projectData.step3.projectFiles.forEach((file) => {
+                formData.append('files', file);
+            });
+        } else if (projectData.step3.projectFiles) {
+            // Si solo hay un archivo, no necesitas iterar sobre él
+            formData.append('files', projectData.step3.projectFiles);
+        }
 
         delete projectData.step3.thumbnail;
         delete projectData.step3.summary;

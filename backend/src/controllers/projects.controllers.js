@@ -117,8 +117,10 @@ export const createProject = async (req, res) => {
 
 		const projectFiles = files.filter((file) => !file.includes("thumbnail") && !file.includes("summary")) ?? [];
 
-        req.body.impliedProfessorsIDs = req.body.impliedProfessors ? (Array.isArray(req.body.impliedProfessors) ? req.body.impliedProfessors : [req.body.impliedProfessors]) : null;
-        delete req.body.impliedProfessors;
+        if (req.body.impliedProfessors) {
+            req.body.impliedProfessorsIDs = Array.isArray(req.body.impliedProfessors) ? req.body.impliedProfessors : [req.body.impliedProfessors];
+            delete req.body.impliedProfessors;
+        }
 
         req.body.impliedStudentsIDs = req.body.impliedStudents ? (Array.isArray(req.body.impliedStudents) ? req.body.impliedStudents : [req.body.impliedStudents]) : null;
         delete req.body.impliedStudents;
@@ -160,6 +162,8 @@ export const createProject = async (req, res) => {
 				},
 			});
 			if (!newRequest) return res.status(404).json({ message: "Request not created" });
+
+            console.log(req.body)
 
 			return res.status(200).json(newProject);
 			// Si es admin, no se crea una request
