@@ -38,11 +38,11 @@ const storage = multer.diskStorage({
 	filename: function (req, file, callback) {
 		console.log("Desde filename: req.files", req.files);
 		console.log("file.originalname", file.originalname);
-		if (file.originalname.split(".")[0] === "thumbnail") {
+		if (file.originalname.split(".")[0] === "thumbnail" || file.originalname.split(".")[0] === "summary"){
 			callback(null, file.originalname);
 		} else {
 			const ext = path.extname(file.originalname);
-			const filename = uuidv4()+ "-" + file.originalname + ext;
+			const filename = file.originalname + ext;
 			console.log("filename", filename);
 			callback(null, filename);
 		}

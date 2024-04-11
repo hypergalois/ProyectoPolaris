@@ -37,7 +37,7 @@ const ProjectFormStep1 = ({ advanceStep, currentStep, updateProjectData, project
 		// Si hago esto no puedo volver a leerlo, voy a guardar la forma esta rara y ya
 		// const keywordsAsStrings = data.keywords.map((keyword) => keyword.text);
 		// stepOneData.keywords = keywordsAsStrings;
-		stepOneData.keywords = data.keywords;
+		stepOneData.keywords = data.keywords.map((keyword) => keyword.text);
 		// Actualizamos el estado del proyecto
 		updateProjectData("step1", stepOneData);
 	};

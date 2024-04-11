@@ -18,12 +18,24 @@ const ProjectFormStep4 = ({ returnStep, currentStep, editing, projectData, close
     const prepareFormData = (projectData) => {
         const formData = new FormData();
 
+        // Añadir thumbnail con nombre personalizado
+        formData.append('files', projectData.step3.thumbnail[0], 'thumbnail.'+projectData.step3.thumbnail[0].name.split('.').pop());
+        // Añadir summary con nombre personalizado
+        formData.append('files', projectData.step3.summary[0], 'summary.'+projectData.step3.summary[0].name.split('.').pop());
+
+        projectData.step3.projectFiles.forEach((file) => {
+            formData.append('files', file);
+        });
+
+        delete projectData.step3.thumbnail;
+        delete projectData.step3.summary;
+        delete projectData.step3.projectFiles;
+
         const flattenedData = Object.values(projectData).reduce((acc, step) => ({ ...acc, ...step }), {});
     
         for (const key in flattenedData) {
             if (Object.hasOwnProperty.call(flattenedData, key)) {
                 const value = flattenedData[key];
-
                 if (value !== undefined) {
                     if (Array.isArray(value)) {
                         value.forEach((item) => {
@@ -42,6 +54,7 @@ const ProjectFormStep4 = ({ returnStep, currentStep, editing, projectData, close
             }
         }
     
+        console.log(formData);
         return formData;
     };
 

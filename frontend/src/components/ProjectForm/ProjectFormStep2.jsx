@@ -48,8 +48,8 @@ const ProjectFormStep2 = ({ returnStep, advanceStep, currentStep, updateProjectD
 		// const impliedProfessors = data.impliedTeachers ? data.impliedProfessors.map(({ professor }) => professor).filter((value) => value.trim().length !== 0) : [];
 		// formData.append("impliedTeachers", JSON.stringify(impliedProfessors));
 
-		stepTwoData.impliedStudents = data.impliedStudents;
-		stepTwoData.impliedProfessors = data.impliedProfessors;
+		stepTwoData.impliedStudents = data.impliedStudents.map(item => item.student);
+		stepTwoData.impliedProfessors = data.impliedProfessors.map(item => item.professor);
 
 		console.log(stepTwoData);
 

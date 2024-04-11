@@ -109,99 +109,42 @@ export const getProjectsHomeByArea = async (req, res) => {
 export const createProject = async (req, res) => {
 	try {
 		console.log(req.body);
-
-		// const files = req.files ? req.files.map((file) => path.join(process.env.PUBLIC_URL, file.destination, file.filename)) : [];
-
+        
 		const files = req.files ? req.files.map((file) => process.env.PUBLIC_URL + "/" + file.destination + "/" + file.filename) : [];
 
 		const thumbnail = files.find((file) => file.includes("thumbnail")) ?? "http://localhost:5173/full-logo-utad.webp";
+        const summary = files.find((file) => file.includes("summary")) ?? null;
 
-		const projectFiles = files.filter((file) => !file.includes("thumbnail"));
+		const projectFiles = files.filter((file) => !file.includes("thumbnail") && !file.includes("summary")) ?? [];
 
-		(JSON.parse(req.body.impliedStudents)[0]!==undefined) ? req.body.impliedStudents = JSON.parse(req.body.impliedStudents) : delete req.body.impliedStudents;
-		if(req.body.impliedStudents){
-			if (req.body.impliedStudents.length > 1) {
-				req.body.impliedStudents = await prisma.user.findMany({
-					where: {
-						email: {
-							in: req.body.impliedStudents,
-						},
-					},
-					select: {
-						id: true,
-					},
-				});
-				req.body.impliedStudents = req.body.impliedStudents.map((student) => {
-					console.log(student)
-					return { connect: { id: student.id } };
-				});
-			}else{
-				req.body.impliedStudents = await prisma.user.findUnique({ where: { email: req.body.impliedStudents[0] } });
-				req.body.impliedStudents = { connect: { id: req.body.impliedStudents.id }};
-			}
-		}
+        req.body.impliedProfessorsIDs = req.body.impliedProfessors ? (Array.isArray(req.body.impliedProfessors) ? req.body.impliedProfessors : [req.body.impliedProfessors]) : null;
+        delete req.body.impliedProfessors;
 
-		if (req.body.impliedTeachers) {
-            const impliedTeachersData = JSON.parse(req.body.impliedTeachers);
+        req.body.impliedStudentsIDs = req.body.impliedStudents ? (Array.isArray(req.body.impliedStudents) ? req.body.impliedStudents : [req.body.impliedStudents]) : null;
+        delete req.body.impliedStudents;
+
+        req.body.awardsId = req.body.awards ? (Array.isArray(req.body.awards) ? req.body.awards : [req.body.awards]) : null;
+        delete req.body.awards;
         
-            if (Array.isArray(impliedTeachersData)) {
-                req.body.impliedTeachers = [];
-        
-                for (const teacherData of impliedTeachersData) {
-                    if (teacherData.professor) {
-                        const professorEmail = teacherData.professor;
+        req.body.personalProject = req.body.personalProject === "true" ? true : false;
+        // req.body.subject = req.body.subject ? { connect: { id: req.body.subject }} : null;
+        req.body.subjectId = req.body.subject ? req.body.subject : null;
+        delete req.body.subject;
+        // req.body.degree = req.body.degree ? { connect: { id: req.body.degree }} : null;
+        req.body.degreeId = req.body.degree ? req.body.degree : null;
+        delete req.body.degree;
 
-                        const professor = await prisma.user.findUnique({
-                            where: { email: professorEmail },
-                        });
-        
-                        // Si el profesor existe, conectarlo al proyecto
-                        if (professor) {
-                            req.body.impliedTeachers.push({ connect: { id: professor.id } });
-                        } else {
-                            // Manejar el caso en el que el profesor no existe
-                            console.log(`El profesor con el correo electrónico ${professorEmail} no fue encontrado.`);
-                        }
-                    } else {
-                        // Manejar el caso en el que no se proporcionó el correo electrónico del profesor
-                        console.log('No se proporcionó el correo electrónico del profesor.');
-                    }
-                }
-            } else {
-                // Manejar el caso en el que impliedTeachersData no es un array válido
-                console.log('El campo impliedTeachers debe ser un array válido.');
-                delete req.body.impliedTeachers;
-            }
-        }
-
-        if (req.body.awards) {
-            const awardsData = JSON.parse(req.body.awards);
-        
-            if (Array.isArray(awardsData)) {
-                // Si awardsData es un array, se procede a procesar cada elemento
-                req.body.awards = [];
-        
-                for (const awardId of awardsData) {
-                    // Realizar las operaciones necesarias con el ID del premio
-                    // Por ejemplo, conectar el premio al proyecto
-                    req.body.awards.push({ connect: { id: awardId } });
-                }
-            }
-        }
-
-		req.body.subject = { connect: { id: req.body.subject }};
-		req.body.degree = { connect: { id: req.body.degree }};
-
-		req.body.externalLinks = req.body.externalLinks ? req.body.externalLinks.split(",") : [];
-		req.body.keywords = req.body.keywords ? req.body.keywords.split(",") : [];
+		req.body.externalLinks = req.body.externalLinks ? (Array.isArray(req.body.externalLinks) ? req.body.externalLinks : [req.body.externalLinks]) : null;
+		req.body.keywords = req.body.keywords ? (Array.isArray(req.body.keywords) ? req.body.keywords : [req.body.keywords]) : null;
 
 		if (req.role === rolesEnum.USER) {
 			const newProject = await prisma.project.create({
 				data: {
 					...req.body,
 					uploadedContent: projectFiles,
-					status: statusEnum.PENDING,
 					thumbnail: thumbnail,
+                    summary: summary,
+                    status: statusEnum.PENDING,
 				},
 			});
 			if (!newProject) return res.status(404).json({ message: "Project not created" });
@@ -226,6 +169,7 @@ export const createProject = async (req, res) => {
 					...req.body,
 					uploadedContent: projectFiles,
 					thumbnail: thumbnail,
+                    summary: summary,
 					status: statusEnum.ACCEPTED,
 				},
 			});

@@ -59,11 +59,11 @@ model User {
 
   requests Request[]
 
-  involvedAsStudentIDs String[]  @db.ObjectId
-  involvedAsStudent    Project[] @relation(fields: [involvedAsStudentIDs], references: [id], name: "involvedAsStudent")
+  //involvedAsStudentIDs String[]  @db.ObjectId
+  //involvedAsStudent    Project[] @relation(fields: [involvedAsStudentIDs], references: [id], name: "involvedAsStudent")
 
-  involvedAsProfessorIDs String[]  @db.ObjectId
-  involvedAsProfessor    Project[] @relation(fields: [involvedAsProfessorIDs], references: [id], name: "involvedAsProfessor")
+  //involvedAsProfessorIDs String[]  @db.ObjectId
+  //involvedAsProfessor    Project[] @relation(fields: [involvedAsProfessorIDs], references: [id], name: "involvedAsProfessor")
 
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
@@ -90,8 +90,9 @@ model Project {
   status  Status?   @default(PENDING)
   Request Request[]
 
-  title       String
-  description String?
+  title              String
+  description        String?
+  differentialFactor String?
 
   keywords String[]
 
@@ -105,12 +106,12 @@ model Project {
   letter         String?
 
   thumbnail       String?
-  externalLinks   String[]
+  summary         String?
   uploadedContent String[]
 
-  notifications Notification[]
+  externalLinks String[]
 
-  pinned Boolean? @default(false)
+  notifications Notification[]
 
   subjectId String?  @db.ObjectId
   subject   Subject? @relation(fields: [subjectId], references: [id])
@@ -121,11 +122,11 @@ model Project {
   degreeId String? @db.ObjectId
   degree   Degree? @relation(fields: [degreeId], references: [id])
 
-  impliedStudentsIDs String[] @db.ObjectId
-  impliedStudents    User[]   @relation(fields: [impliedStudentsIDs], references: [id], name: "involvedAsStudent")
+  impliedStudentsIDs String[] // @db.ObjectId
+  //impliedStudents    User[]   @relation(fields: [impliedStudentsIDs], references: [id], name: "involvedAsStudent")
 
-  impliedProfessorsIDs String[] @db.ObjectId
-  impliedProfessors    User[]   @relation(fields: [impliedProfessorsIDs], references: [id], name: "involvedAsProfessor")
+  impliedProfessorsIDs String[] // @db.ObjectId
+  //impliedProfessors    User[]   @relation(fields: [impliedProfessorsIDs], references: [id], name: "involvedAsProfessor")
 
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
@@ -200,19 +201,19 @@ model Request {
 }
 
 model Notification {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
-  content     String
-  read        Boolean   @default(false)
-  createdAt   DateTime  @default(now())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  content   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
 
-  userId      String    @db.ObjectId
-  user        User      @relation(fields: [userId], references: [id])
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id])
 
-  projectId   String   @db.ObjectId
-  project     Project  @relation(fields: [projectId], references: [id])
+  projectId String  @db.ObjectId
+  project   Project @relation(fields: [projectId], references: [id])
 
-  requestId   String   @db.ObjectId
-  request     Request  @relation(fields: [requestId], references: [id])
+  requestId String  @db.ObjectId
+  request   Request @relation(fields: [requestId], references: [id])
 
   @@map("notifications")
 }
