@@ -3,18 +3,22 @@ import { useParams } from "react-router-dom";
 import { useProjects } from "../context/ProjectsContext";
 
 const ProjectDetails = ({ project: projectPopUp }) => {
-	const projectId = projectPopUp.id;
+    const projectId = projectPopUp.id;
+    const [isLoading, setIsLoading] = useState(true); // Estado de carga
 
-	const { getProject, setProject, project } = useProjects();
+    const { getProject, setProject, project } = useProjects();
 
-	useEffect(() => {
+    useEffect(() => {
         console.log("ProjectId", projectId)
-        getProject(projectId);
-        console.log(project)
-	}, [projectId]);
+        getProject(projectId).then(() => setIsLoading(false)); // Cuando se complete la carga, establecer isLoading en false
+    }, [projectId]);
 
-	return (
-		<div className="container mx-auto p-0">
+    if (isLoading) {
+        return <div>Loading...</div>; // Muestra un indicador de carga mientras isLoading sea true
+    }
+
+    return (
+        <div className="container mx-auto p-0">
             <div className="container p-0 relative">
                 <img src="https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800" alt={project.title} className="w-full rounded-2xl" style={{ filter: 'brightness(0.9)' }} />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black"></div>
@@ -31,7 +35,7 @@ const ProjectDetails = ({ project: projectPopUp }) => {
             <div className="grid grid-cols-1 gap-4 pt-6 pl-6">
                 <div className="relative flex items-center">
                     <div className="rounded-full bg-blue-200 p-2 flex items-center justify-center">
-                        <p className="text-lg font-bold">{project.degreeId}</p>
+                        <p className="text-lg font-bold">{project.degree.name}</p>
                     </div>
 
                     <div className="h-10 flex items-center justify-center">
@@ -45,10 +49,10 @@ const ProjectDetails = ({ project: projectPopUp }) => {
                     </div>
 
                     <div className="flex ml-4">
-                    <p className="text-lg font-bold">
-                        {project.personalProject ? "Proyecto personal" : project.subjectId}
-                    </p>
-                </div>
+                        <p className="text-lg font-bold">
+                            {project.personalProject ? "Proyecto personal" : project.subject.name}
+                        </p>
+                    </div>
                     
                 </div>
             </div>
@@ -58,10 +62,10 @@ const ProjectDetails = ({ project: projectPopUp }) => {
                     <div className="mt-4">
                         <p className="text-xl font-bold mb-2">Premios:</p>
             
-                        {project.awardsId && project.awardsId.length > 0 ? (
+                        {project.awards && project.awards.length > 0 ? (
                             <ul className="flex flex-wrap">
-                                {project.awardsId.map((awardId, index) => (
-                                    <li key={index} className="text-white gap-2 bg-blue-900 rounded-lg p-4">{awardId}</li>
+                                {project.awards.map((award, index) => (
+                                    <li key={index} className="text-white gap-2 bg-blue-900 rounded-lg p-4">{award.name}</li>
                                 ))}
                             </ul>
                         ) : (
@@ -74,22 +78,22 @@ const ProjectDetails = ({ project: projectPopUp }) => {
                 </div>
                 
                 <div>
-                {project.keywords && project.keywords.length > 0 && (
-                    <div className="mt-4">
-                        <p className="text-xl font-bold mb-2">Palabras clave:</p>
+                    {project.keywords && project.keywords.length > 0 && (
+                        <div className="mt-4">
+                            <p className="text-xl font-bold mb-2">Palabras clave:</p>
 
-                        <ul className="flex flex-wrap">
-                            {project.keywords.map((keyword, index) => (
-                                <li key={index} className="text-blue-900 bg-blue-200 rounded-full py-1 px-4 m-1">{keyword}</li>
-                            ))}
-                        </ul>
-                    </div>
-                )}
+                            <ul className="flex flex-wrap">
+                                {project.keywords.map((keyword, index) => (
+                                    <li key={index} className="text-blue-900 bg-blue-200 rounded-full py-1 px-4 m-1">{keyword}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
 
                 </div>
             </div>
         </div>
-	);
+    );
 };
 
 export default ProjectDetails;

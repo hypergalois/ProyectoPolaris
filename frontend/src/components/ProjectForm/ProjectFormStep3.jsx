@@ -192,7 +192,7 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 		stepThreeData.personalProject = data.personalProject;
 		stepThreeData.subject = data.subject;
 		stepThreeData.academicCourse = data.academicCourse;
-		stepThreeData.externalLinks = data.externalLinks;
+		stepThreeData.externalLinks = data.externalLinks.map((item) => item.link);
 		stepThreeData.awards = data.awards;
 
 		stepThreeData.thumbnail = data.thumbnail;
