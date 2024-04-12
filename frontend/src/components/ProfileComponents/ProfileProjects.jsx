@@ -9,8 +9,7 @@ import ProjectCard from "../Cards/ProjectCard.jsx";
 
 const ProfileProjects = ({ props }) => {
 	const { profile, getProfile, errors: profileErrors } = useAuth();
-	//const { projects, getProjectsByUser, errors: proyectsErrors } = useProjects();
-	const [ projects, setProjects ] = useState([]);
+	const { projects, getProjectsByUser, errors: proyectsErrors } = useProjects();
 	const [loading, setLoading] = useState(true);
 	const [clickEnabled, setClickEnabled] = useState(true);
 
@@ -38,9 +37,7 @@ const ProfileProjects = ({ props }) => {
 
 	useEffect(() => {
 		if (profile.id) {
-			console.log(profile.id);
-			//getProjectsByUser(profile.id).then(() => setLoading(false));
-			setProjects([{"id":"1","title":"prrueba1"},{"id":"2","title":"prrueba2"},{"id":"3","title":"prrueba3"},{"id":"4","title":"prrueba4"},{"id":"5","title":"prrueba5"}]);
+			getProjectsByUser(profile.id).then(() => setLoading(false));
 			setLoading(false)
 		}
 	}, [profile]);
@@ -57,7 +54,14 @@ const ProfileProjects = ({ props }) => {
 			{loading ? (
 				<p>Cargando proyectos...</p>
 			) : projects.length === 0 ? (
-				<p>No hay proyectos para mostrar</p>
+				<div className="container mx-auto px-4">
+					<Slider {...settings}>
+						<div>
+							<p>No hay proyectos para mostrar</p>
+						</div>
+					</Slider>
+				</div>
+				
 			) : (
 				<div className="container mx-auto px-4">
 					<Slider {...settings}>
