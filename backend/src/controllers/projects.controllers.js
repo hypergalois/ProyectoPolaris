@@ -122,10 +122,10 @@ export const createProject = async (req, res) => {
             delete req.body.impliedProfessors;
         }
 
-        req.body.impliedStudentsIDs = req.body.impliedStudents ? (Array.isArray(req.body.impliedStudents) ? req.body.impliedStudents : [req.body.impliedStudents]) : null;
+        req.body.impliedStudentsIDs = req.body.impliedStudents ? (Array.isArray(req.body.impliedStudents) ? req.body.impliedStudents : [req.body.impliedStudents]) : [];
         delete req.body.impliedStudents;
 
-        req.body.awardsId = req.body.awards ? (Array.isArray(req.body.awards) ? req.body.awards : [req.body.awards]) : null;
+        req.body.awardsId = req.body.awards ? (Array.isArray(req.body.awards) ? req.body.awards : [req.body.awards]) : [];
         delete req.body.awards;
         
         req.body.personalProject = req.body.personalProject === "true" ? true : false;
@@ -136,8 +136,8 @@ export const createProject = async (req, res) => {
         req.body.degreeId = req.body.degree ? req.body.degree : null;
         delete req.body.degree;
 
-		req.body.externalLinks = req.body.externalLinks ? (Array.isArray(req.body.externalLinks) ? req.body.externalLinks : [req.body.externalLinks]) : null;
-		req.body.keywords = req.body.keywords ? (Array.isArray(req.body.keywords) ? req.body.keywords : [req.body.keywords]) : null;
+		req.body.externalLinks = req.body.externalLinks ? (Array.isArray(req.body.externalLinks) ? req.body.externalLinks : [req.body.externalLinks]) : [];
+		req.body.keywords = req.body.keywords ? (Array.isArray(req.body.keywords) ? req.body.keywords : [req.body.keywords]) : [];
 
 		if (req.role === rolesEnum.USER) {
 			const newProject = await prisma.project.create({
