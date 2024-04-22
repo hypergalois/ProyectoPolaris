@@ -22,39 +22,69 @@ const ProjectDetails = ({ project: projectPopUp }) => {
             <div className="container p-0 relative">
                 <img src="https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800" alt={project.title} className="w-full rounded-2xl" style={{ filter: 'brightness(0.9)' }} />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black"></div>
-                    <h1 className="text-3xl font-bold mb-8 absolute bottom-0 left-0 text-white p-4">{project.title}</h1>
-                    <div className="absolute bottom-0 left-0 text-white p-4" style={{ zIndex: '1' }}>
-                        {project.impliedStudentsIDs && project.impliedStudentsIDs.length > 0 && (
-                            <div>
-                                <p>{project.impliedStudentsIDs.join(', ')}</p>
-                            </div>
-                        )}
-                    </div>
+                <h1 className="text-3xl font-bold absolute p-6 bottom-0 left-0 text-white">{project.title}</h1>
             </div>
 
-            <div className="grid grid-cols-1 gap-4 pt-6 pl-6">
+            <div className="grid grid-cols-1 gap-4 pt-6 pl-6 pr-6">
+
+                {/* <div className="grid grid-cols-4">
+                    <div className="relative flex items-center col-span-2">
+                        <div className="rounded bg-blue-200 p-2 flex items-center justify-center">
+                            <p className="text-sm font-bold p-1">{project.degree.name}</p>
+                        </div>
+                        <div className="h-10 flex items-center justify-center">
+                            <div className="w-1 h-10 bg-blue-500 mx-4"></div>
+                        </div>
+                    </div>
+
+                    <div className="relative flex items-center col-span-1">
+                        <p className="text-sm font-bold text-cente w-full">{project.academicCourse}</p>
+                    </div>
+
+                    <div className="relative flex items-center col-span-1">
+                        <div className="h-10 justify-center">
+                            <div className="w-1 h-10 bg-blue-500 mx-4"></div>
+                        </div>
+                        <div className="flex ml-4">
+                            <p className="text-sm font-bold">
+                                {project.personalProject ? "Proyecto personal" : project.subject.name}
+                            </p>
+                        </div>
+                    </div>
+                </div> */}
+
+
                 <div className="relative flex items-center">
-                    <div className="rounded-full bg-blue-200 p-2 flex items-center justify-center">
-                        <p className="text-lg font-bold">{project.degree.name}</p>
+                    <div className="rounded bg-blue-200 p-2 flex items-center justify-center">
+                        <p className="text-sm font-bold p-1">{project.degree.name}</p>
                     </div>
 
                     <div className="h-10 flex items-center justify-center">
                         <div className="w-1 h-10 bg-blue-500 mx-4"></div>
                     </div>
+                    
 
-                    <p className="text-lg font-bold">{project.academicCourse}</p>
+                    <p className="text-sm font-bold">{project.academicCourse}</p>
 
                     <div className="h-10 justify-center">
                         <div className="w-1 h-10 bg-blue-500 mx-4"></div>
                     </div>
 
                     <div className="flex ml-4">
-                        <p className="text-lg font-bold">
+                        <p className="text-sm font-bold">
                             {project.personalProject ? "Proyecto personal" : project.subject.name}
                         </p>
                     </div>
-                    
                 </div>
+            </div>
+
+            <div className="text-black p-5" style={{ zIndex: '1' }}>
+            <p className="text-xl font-bold mb-2">Alumnos implicados</p>
+                {project.impliedStudentsIDs && project.impliedStudentsIDs.length > 0 && (
+                    <div>
+                        <p>{project.impliedStudentsIDs.join(', ')}</p>
+                    </div>
+                )}
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-6 pr-6 pb-6">
