@@ -21,6 +21,31 @@ export const getProjectsHome = async (req, res) => {
 		const projects = await prisma.project.findMany({
 			where: { status: statusEnum.ACCEPTED },
 			orderBy: { createdAt: "desc" },
+			select: {
+				id: true,
+				title: true,
+                thumbnail: true,
+				subject: {
+                    select: {
+                        id: true,
+                        name: true,
+                    }
+                },
+				degree: {
+					select: {
+                        id: true,
+						name: true,
+					},
+				},
+                awards: {
+                    select: {
+                        id: true,
+                        name: true,
+                    }
+                },
+                personalProject: true,
+                impliedStudentsIDs: true,
+			},
 		});
 
 		console.log(projects);

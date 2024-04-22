@@ -18,8 +18,8 @@ const ProjectCard = ({ project }) => {
 
 	const { userRole, getUserRole } = useAuth();
 
-    const {}
-
+    console.log("ProjectCard", project);
+    
 	const handleClosePopup = () => {
 		setOpenPopup(false);
 	};
@@ -53,7 +53,7 @@ const ProjectCard = ({ project }) => {
 						borderRadius: "4px",
 					}}
 				>
-					{project.personalProject ? "Personal" : project.subject}
+					{project.personalProject ? "Proyecto personal" : project.subject.name}
 				</div>
 				<CardCover
 					sx={{
@@ -65,11 +65,14 @@ const ProjectCard = ({ project }) => {
 						{project.title}
 					</Typography>
 					<Typography startDecorator={<GroupIcon />} textColor="neutral.300">
-                        <div className="ml-3">
-                             {/* Aquí está el contenido que quieres mostrar */}
+                        <div className="pl-2">
+                            {/* Aquí está el contenido que quieres mostrar */}
                             {project.impliedStudentsIDs && project.impliedStudentsIDs.length > 0 && (
-                                <div className="absolute bottom-0 left-0 text-white p-4" style={{ zIndex: '1' }}>
-                                    <p>{project.impliedStudentsIDs.join(', ')}</p>
+                                <div className="bottom-0 left-0 text-white" style={{ zIndex: '1' }}>
+                                    <p>
+                                        {project.impliedStudentsIDs.slice(0, 3).join(', ')}
+                                        {project.impliedStudentsIDs.length > 3 && ', ...'}
+                                    </p>
                                 </div>
                             )}
                         </div>
