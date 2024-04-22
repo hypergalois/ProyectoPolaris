@@ -69,7 +69,7 @@ const ProjectDetails = ({ project: projectPopUp }) => {
                                 ))}
                             </ul>
                         ) : (
-                            <p className="text-white">Sin premios</p>
+                            <p className="text-black">Sin premios</p>
                         )}
                     </div>
 

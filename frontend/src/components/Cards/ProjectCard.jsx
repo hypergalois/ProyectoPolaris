@@ -18,6 +18,8 @@ const ProjectCard = ({ project }) => {
 
 	const { userRole, getUserRole } = useAuth();
 
+    const {}
+
 	const handleClosePopup = () => {
 		setOpenPopup(false);
 	};
@@ -51,7 +53,7 @@ const ProjectCard = ({ project }) => {
 						borderRadius: "4px",
 					}}
 				>
-					Animación
+					{project.personalProject ? "Personal" : project.subject}
 				</div>
 				<CardCover
 					sx={{
@@ -63,8 +65,16 @@ const ProjectCard = ({ project }) => {
 						{project.title}
 					</Typography>
 					<Typography startDecorator={<GroupIcon />} textColor="neutral.300">
-						Nombre de los alumnos
-					</Typography>
+                        <div className="ml-3">
+                             {/* Aquí está el contenido que quieres mostrar */}
+                            {project.impliedStudentsIDs && project.impliedStudentsIDs.length > 0 && (
+                                <div className="absolute bottom-0 left-0 text-white p-4" style={{ zIndex: '1' }}>
+                                    <p>{project.impliedStudentsIDs.join(', ')}</p>
+                                </div>
+                            )}
+                        </div>
+                       
+                    </Typography>
 				</CardContent>
 			</Card>
 
