@@ -5,6 +5,7 @@ import prisma from "../config/prisma.client.js";
 import { createAccessToken } from "../libs/jwt.js";
 import { rolesEnum, academicRoleEnum } from "../config/tags.js";
 import { handleForgotPassword, handleVerifyEmail } from "../services/auth.services.js";
+import { academicRole } from "@prisma/client";
 
 const secret = process.env.TOKEN_SECRET;
 const BCRYPT_SALT_ROUNDS = parseInt(process.env.BCRYPT_SALT_ROUNDS);
@@ -297,11 +298,12 @@ export const profile = async (req, res) => {
 		});
 
 		if (!userFound) return res.status(404).json({ message: "User not found.", userExists: false });
-
+		console.log(userFound)
 		return res.status(200).json({
-			id: userFound.id,
 			username: userFound.username,
 			email: userFound.email,
+			description: userFound.description,
+			academicRole: userFound.academicRole,
 		});
 	} catch (error) {
 		console.log(error);

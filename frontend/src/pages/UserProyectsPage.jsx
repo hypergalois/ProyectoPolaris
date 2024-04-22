@@ -18,10 +18,7 @@ function ProjectHomePage() {
 				<div className="flex justify-center h-screen">
 					<div className="mx-auto text-center w-2/3">
 						<div className="text-4xl mb-4">
-							<h1>ProfilePage</h1>
-						</div>
-						<div className="mb-4">
-							<ProfileDetails />
+							<h1>My Proyects</h1>
 						</div>
 						<div className="mb-4">
 							<ProfileProjects />
