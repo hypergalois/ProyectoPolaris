@@ -1,5 +1,4 @@
 // SearchForms.js
-import zIndex from "@mui/material/styles/zIndex";
 import React from "react";
 import Select from "react-select";
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
@@ -8,12 +7,11 @@ import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import { selectStylesCustom } from "../../config/util.js";
 
 function SearchForms({ degreeOptions, subjectOptions, courseOptions, awardOptions, degreeFilter, subjectFilter, courseFilter, awardFilter, setDegreeFilter, setSubjectFilter, setCourseFilter, setAwardFilter, searchQuery, setSearchQuery }) {
-	// @gonibix23 aqui poner los defaults de los forms que no me los se
 	const resetFilters = () => {
-		setDegreeFilter("");
-		setSubjectFilter("");
-		setCourseFilter("");
-		setAwardFilter("");
+		setDegreeFilter({ label: "Todos los Grados", value: "All" });
+		setSubjectFilter({ label: "Todas las Asignaturas", value: "All" });
+		setCourseFilter({ label: "Cursos (Todos)", value: "All" });
+		setAwardFilter({ label: "Todos los Premios", value: "All" });
 		setSearchQuery("");
 	};
 

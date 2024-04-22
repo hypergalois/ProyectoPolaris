@@ -54,12 +54,12 @@ const selectStylesCustom = {
 		fontWeight: "600",
 		color: "#3b82f6",
 	}),
-	option: (styles) => ({
-		...styles,
+	option: (styles) => ({ isSelected }) => ({
+        ...styles,
 		fontFamily: "Montserrat, sans-serif",
 		fontWeight: "600",
-		color: "#3b82f6",
-	}),
+		color: isSelected ? "white" : "#60a5fa",
+    }),    
 	menu: (styles) => ({
 		...styles,
 		backgroundColor: "white",

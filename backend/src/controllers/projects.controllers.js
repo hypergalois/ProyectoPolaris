@@ -24,7 +24,6 @@ export const getProjectsHome = async (req, res) => {
 			select: {
 				id: true,
 				title: true,
-				description: true,
                 thumbnail: true,
 				subject: {
                     select: {
@@ -43,7 +42,9 @@ export const getProjectsHome = async (req, res) => {
                         id: true,
                         name: true,
                     }
-                }
+                },
+                personalProject: true,
+                impliedStudentsIDs: true,
 			},
 		});
 
