@@ -17,8 +17,6 @@ const ProjectCard = ({ project }) => {
 	const [openPopup, setOpenPopup] = useState(false);
 
 	const { userRole, getUserRole } = useAuth();
-
-    console.log("ProjectCard", project);
     
 	const handleClosePopup = () => {
 		setOpenPopup(false);

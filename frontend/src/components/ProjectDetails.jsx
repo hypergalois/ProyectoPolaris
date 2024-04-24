@@ -1,6 +1,13 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useProjects } from "../context/ProjectsContext";
+import { pdfjs } from "react-pdf";
+import { PdfComp } from "./Helpers/PdfComp.jsx";
+
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+    'pdfjs-dist/build/pdf.worker.min.js',
+    import.meta.url,
+  ).toString();
 import { Link } from 'react-router-dom';
 
 const ProjectDetails = ({ project: projectPopUp }) => {
@@ -134,6 +141,8 @@ const ProjectDetails = ({ project: projectPopUp }) => {
 
                 </div>
             </div>
+
+            <PdfComp pdfFile={""}/>
         </div>
     );
 };
