@@ -323,9 +323,10 @@ export const getUser = async (req, res) => {
 		if (!userFound) return res.status(404).json({ message: "User not found.", userExists: false });
 
 		return res.status(200).json({
-			id: userFound.id,
 			username: userFound.username,
 			email: userFound.email,
+			description: userFound.description,
+			academicRole: userFound.academicRole,
 		});
 	} catch (error) {
 		console.log(error);

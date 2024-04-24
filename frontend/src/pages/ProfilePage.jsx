@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom'
 function ProfilePage() {
 
 	const location = useLocation()
-    const { email } = location.state
+	const email = location.state ? location.state.email : null;
 
 	return (
 		<>
