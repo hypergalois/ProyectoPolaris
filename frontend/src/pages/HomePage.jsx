@@ -11,7 +11,7 @@ import CircularProgress from "@mui/joy/CircularProgress";
 function HomePage() {
 	var { area } = useParams();
 	area = area || "all";
-	console.log("Has seleccionado el area: ", area);
+	//console.log("Has seleccionado el area: ", area);
 
 	const { projects, getProjectsHome } = useProjects();
 	const { degrees, getDegrees, awards, getAwards, subjects, getSubjects } = useAreas();
@@ -91,7 +91,7 @@ function HomePage() {
 		  ]
 		: [];
 
-	console.log(degreeFilter.value, subjectFilter.value, courseFilter.value, awardFilter.value, searchQuery);
+	//console.log(degreeFilter.value, subjectFilter.value, courseFilter.value, awardFilter.value, searchQuery);
 
 	return (
 		<>
