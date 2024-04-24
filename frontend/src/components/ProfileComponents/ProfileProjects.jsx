@@ -42,12 +42,6 @@ const ProfileProjects = ({ props }) => {
 		}
 	}, [profile]);
 
-	useEffect(() => {
-		if (projects) {
-			console.log("Proyectos: ", projects);
-		}
-	}, [projects]);
-
 	return (
 		<div className="max-w rounded overflow-hidden shadow-lg">
 			<h1>Projects</h1>

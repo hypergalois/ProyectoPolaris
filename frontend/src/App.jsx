@@ -20,8 +20,6 @@ import ProjectsDetailPage from "./pages/ProjectsDetailPage";
 
 import VerifyEmailPage from "./pages/VerifyEmailPage";
 
-import SettingsPage from "./pages/SettingsPage";
-
 import NotFoundPage from "./pages/NotFoundPage";
 
 import ProfilePage from "./pages/ProfilePage";
@@ -74,8 +72,6 @@ function App() {
                                             <Route path="/projects/:id" element={<ProjectsDetailPage />} />
                                             {/* Pagina para editar un proyecto, es el mismo formulario pero populating */}
                                             <Route path="/projects/:id/edit" element={<ProjectsFormPage />} />
-                                            {/* Pagina de ajustes, puede ser solo para admin */}
-                                            <Route path="/settings" element={<SettingsPage />} />
                                             {/* Pagina de perfil, puede ser solo para admin */}
                                             <Route path="/profile" element={<ProfilePage />} />
                                             {/* Pagina de proyectos, puede ser solo para admin */}

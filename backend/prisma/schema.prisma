@@ -70,6 +70,8 @@ model User {
 
   notifications Notification[]
 
+  description   String?
+
   @@map("users")
 }
 
