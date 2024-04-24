@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useProjects } from "../context/ProjectsContext";
+import { Link } from 'react-router-dom';
 
 const ProjectDetails = ({ project: projectPopUp }) => {
     const projectId = projectPopUp.id;
@@ -79,11 +80,22 @@ const ProjectDetails = ({ project: projectPopUp }) => {
             </div>
 
             <div className="text-black p-5" style={{ zIndex: '1' }}>
-            <p className="text-xl font-bold mb-2">Alumnos implicados</p>
-                {project.impliedStudentsIDs && project.impliedStudentsIDs.length > 0 && (
+                <p className="text-xl font-bold mb-2">Alumnos implicados</p>
+                {project.impliedStudentsIDs && project.impliedStudentsIDs.length > 0 ? (
                     <div>
-                        <p>{project.impliedStudentsIDs.join(', ')}</p>
+                    {project.impliedStudentsIDs.map(studentID => (
+                        <div key={studentID}>
+                            <Link
+                                to="/profile"
+                                state={{ email: studentID }}
+                            >
+                                {studentID}
+                            </Link><a>, </a>
+                        </div>
+                    ))}
                     </div>
+                ) : (
+                    <p>No hay alumnos implicados</p>
                 )}
             </div>
             

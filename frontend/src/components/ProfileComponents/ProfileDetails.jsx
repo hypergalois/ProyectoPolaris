@@ -2,12 +2,16 @@ import React from "react";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { useEffect } from "react";
 
-const ProfileDetails = ({ project }) => {
-	const { profile, getProfile, errors: profileErrors } = useAuth();
+const ProfileDetails = ({ email }) => {
+	const { user, getUser, getProfile, errors: profileErrors } = useAuth();
+
 
 	useEffect(() => {
-		getProfile();
-		console.log(project)
+		if(email){
+			getUser(email);
+		}else{
+			getProfile();
+		}
 	}, []);
 
 	return (
@@ -21,7 +25,7 @@ const ProfileDetails = ({ project }) => {
 							</div>
 							<a>Mantén la privacidad de tus datos personales. 
 								Cualquier usuario que pueda ver tus perfiles puede ver la información que añades aquí.</a>
-							{Object.entries(profile).map(([key, value]) => (
+							{Object.entries(user).map(([key, value]) => (
 								<div key={key}>
 									<strong>{key}:</strong> {value}
 								</div>

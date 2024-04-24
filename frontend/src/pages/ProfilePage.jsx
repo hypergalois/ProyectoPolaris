@@ -1,19 +1,21 @@
 import React from "react";
 import ProfileDetails from "../components/ProfileComponents/ProfileDetails.jsx";
-import ProfileProjects from "../components/ProfileComponents/ProfileProjects.jsx";
-import ProfileUserManagement from "../components/ProfileComponents/ProfileUserManagement.jsx";
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
+import { useLocation } from 'react-router-dom'
 
-function ProjectHomePage() {
+function ProfilePage() {
+
+	const location = useLocation()
+    const { email } = location.state
 
 	return (
 		<>
 
-			<ProfileDetails />
+			<ProfileDetails email={email}/>
 
 		</>
 	);
 }
 
-export default ProjectHomePage;
+export default ProfilePage;

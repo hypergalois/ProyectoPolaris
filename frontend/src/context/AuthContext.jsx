@@ -15,7 +15,6 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
 	const [existEmail, setExistEmail] = useState(false);
 	const [userRole, setUserRole] = useState(null);
-	const [profile, setProfile] = useState([]);
 	const [user, setUser] = useState(null);
 	const [users, setUsers] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -105,7 +104,7 @@ export const AuthProvider = ({ children }) => {
 	const getProfile = async () => {
 		try {
 			const response = await getProfileRequest();
-			setProfile(response.data);
+			setUser(response.data);
 		} catch (error) {
 			if (Array.isArray(error.response.data)) {
 				setErrors(error.response.data);
@@ -263,7 +262,6 @@ export const AuthProvider = ({ children }) => {
 				verifyEmail,
 				existEmail,
 				getExistEmail,
-				profile,
 				getProfile,
 				getUser,
 				getUsers,
