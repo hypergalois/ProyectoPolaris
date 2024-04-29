@@ -7,8 +7,8 @@ import { useProjects } from "../../context/ProjectsContext.jsx";
 import { useState, useEffect } from "react";
 import ProjectCard from "../Cards/ProjectCard.jsx";
 
-const ProfileProjects = ({ props }) => {
-	const { profile, getProfile, errors: profileErrors } = useAuth();
+const ProfileProjects = ({ email }) => {
+	const { user, getUser, getProfile, errors: profileErrors } = useAuth();
 	const { projects, getProjectsByUser, errors: proyectsErrors } = useProjects();
 	const [loading, setLoading] = useState(true);
 	const [clickEnabled, setClickEnabled] = useState(true);
@@ -30,24 +30,29 @@ const ProfileProjects = ({ props }) => {
 	const handleParentClick = (e) => {
 		!clickEnabled && e.stopPropagation(); // Si clickEnabled es false, detiene la propagación del clic
 	};
+/*
 
+*/
 	useEffect(() => {
-		getProfile();
+		if(email){
+			getUser({"email":email});
+		}else{
+			getProfile();
+		}
 	}, []);
 
 	useEffect(() => {
-		if (profile.id) {
-			getProjectsByUser(profile.id).then(() => setLoading(false));
-			setLoading(false)
+		if (user.email) {
+			getProjectsByUser(user.email).then(() => setLoading(false));
 		}
-	}, [profile]);
+	}, [user]);
 
 	return (
 		<div className="max-w rounded overflow-hidden shadow-lg">
-			<h1>Projects</h1>
+			<h1>Proyectos de {user.username}</h1>
 			{loading ? (
 				<p>Cargando proyectos...</p>
-			) : projects.length === 0 ? (
+			) : (projects.length === 0 ? (
 				<div className="container mx-auto px-4">
 					<Slider {...settings}>
 						<div>
@@ -55,18 +60,19 @@ const ProfileProjects = ({ props }) => {
 						</div>
 					</Slider>
 				</div>
-				
 			) : (
 				<div className="container mx-auto px-4">
 					<Slider {...settings}>
-					{projects.map((project) => (
-						<div key={project.id} onClickCapture={handleParentClick}>
-							<ProjectCard project={project} />
-						</div>
-					))}
+						{projects.map((project) => (
+							<div key={project.id} onClickCapture={handleParentClick}>
+								<ProjectCard project={project} />
+							</div>
+						))}
 					</Slider>
+					
 				</div>
-			)}
+			))}
+
 		</div>
 	);
 };

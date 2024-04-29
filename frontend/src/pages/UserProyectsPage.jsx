@@ -1,12 +1,14 @@
 import React from "react";
-import ProfileDetails from "../components/ProfileComponents/ProfileDetails.jsx";
 import ProfileProjects from "../components/ProfileComponents/ProfileProjects.jsx";
 import ProfileUserManagement from "../components/ProfileComponents/ProfileUserManagement.jsx";
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
+import { useLocation } from 'react-router-dom'
 
 function ProjectHomePage() {
 	const { userRole, getUserRole } = useAuth();
+	const location = useLocation()
+	const email = location.state ? location.state.email : null;
 
 	useEffect(() => {
 		getUserRole();
@@ -21,7 +23,7 @@ function ProjectHomePage() {
 							<h1>My Proyects</h1>
 						</div>
 						<div className="mb-4">
-							<ProfileProjects />
+							<ProfileProjects email={email}/>
 						</div>
 						{userRole == "ADMIN" && (
 							<div className="mb-4">
