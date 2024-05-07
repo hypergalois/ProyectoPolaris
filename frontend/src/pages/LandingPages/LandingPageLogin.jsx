@@ -10,7 +10,7 @@ const HomePage = () => {
 	return (
 		<>
 			<NavBarNoAuth />
-			<LandingPageAnimation />
+			{/* <LandingPageAnimation /> */}
 			<LandingPageBar />
 
 			<div className="flex flex-col justify-center items-center w-full px-4">
