@@ -1,0 +1,245 @@
+{
+	"info": {
+		"_postman_id": "71d84c97-396e-4536-9bc7-a18b0e0eb471",
+		"name": "Degrees",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26303495",
+		"_collection_link": "https://proyectopolaris.postman.co/workspace/My-Workspace~7ad015f7-88f4-4d09-8a04-281788145a86/collection/32885635-71d84c97-396e-4536-9bc7-a18b0e0eb471?action=share&source=collection_link&creator=26303495"
+	},
+	"item": [
+		{
+			"name": "Utility Routes",
+			"item": [
+				{
+					"name": "Get Degrees Names and IDs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/degrees/names/form",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"degrees",
+								"names",
+								"form"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Degrees By Area",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/degrees/area/65cf8ac9857d9d616efaab1c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"degrees",
+								"area",
+								"65cf8ac9857d9d616efaab1c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Degrees By Subject",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/degrees/subject/65e73152409ad0ed4b916867",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"degrees",
+								"subject",
+								"65e73152409ad0ed4b916867"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Projects Home",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/projects/home",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"projects",
+								"home"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get All Degrees",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/degrees",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"degrees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Degree",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/degrees/65cf8ac9857d9d616efaab22",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"degrees",
+						"65cf8ac9857d9d616efaab22"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "65c9ff1ee76929137a32a152",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Degree",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Grado en Dirección de Empresas de Entretenimiento Digital\",\r\n    \"area\": \"Area\",\r\n    \"random\": \"Random\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/degrees",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"degrees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Degree",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"NamePut\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/degrees/65cc01a0ab5fd1558101164e",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"degrees",
+						"65cc01a0ab5fd1558101164e"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "65c9ff1ee76929137a32a152",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Degree",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/degrees/65cc01a0ab5fd1558101164e",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"degrees",
+						"65cc01a0ab5fd1558101164e"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "65c9ff1ee76929137a32a152",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

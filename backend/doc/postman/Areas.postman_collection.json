@@ -1,0 +1,146 @@
+{
+	"info": {
+		"_postman_id": "e40d3058-3535-4a8c-a405-8c588702e9a0",
+		"name": "Areas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26303495",
+		"_collection_link": "https://proyectopolaris.postman.co/workspace/My-Workspace~7ad015f7-88f4-4d09-8a04-281788145a86/collection/32885635-e40d3058-3535-4a8c-a405-8c588702e9a0?action=share&source=collection_link&creator=26303495"
+	},
+	"item": [
+		{
+			"name": "Get All Areas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/areas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"areas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Area",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/area/65cd06b8c274d31c64e36e41",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"area",
+						"65cd06b8c274d31c64e36e41"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Area",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Name\",\r\n    \"area\": \"Area\",\r\n    \"coordinator\": \"Coordinator\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/areas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"areas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Area",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"NamePut\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/areas/65cbfd1d5e2dd9199126796e",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"areas",
+						"65cbfd1d5e2dd9199126796e"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "65c9ff1ee76929137a32a152",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Area",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/areas/65cbfd1d5e2dd9199126796e",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"areas",
+						"65cbfd1d5e2dd9199126796e"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "65c9ff1ee76929137a32a152",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

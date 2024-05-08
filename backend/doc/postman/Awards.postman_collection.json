@@ -1,0 +1,31 @@
+{
+	"info": {
+		"_postman_id": "d46c359d-aaec-492e-ab6b-a230983de3d5",
+		"name": "Awards",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26303495",
+		"_collection_link": "https://proyectopolaris.postman.co/workspace/My-Workspace~7ad015f7-88f4-4d09-8a04-281788145a86/collection/32885635-d46c359d-aaec-492e-ab6b-a230983de3d5?action=share&source=collection_link&creator=26303495"
+	},
+	"item": [
+		{
+			"name": "Get Awards",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/awards",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"awards"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

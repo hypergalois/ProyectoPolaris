@@ -1,0 +1,473 @@
+{
+	"info": {
+		"_postman_id": "849890db-35f0-4f1a-a592-f8545c65c919",
+		"name": "Projects",
+		"description": "Requests for api/projects",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26303495",
+		"_collection_link": "https://proyectopolaris.postman.co/workspace/My-Workspace~7ad015f7-88f4-4d09-8a04-281788145a86/collection/26303495-849890db-35f0-4f1a-a592-f8545c65c919?action=share&source=collection_link&creator=26303495"
+	},
+	"item": [
+		{
+			"name": "Search Requests",
+			"item": [
+				{
+					"name": "Get By User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/projects/user/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"projects",
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get By Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/projects/category/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"projects",
+								"category",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get By Title",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/projects/title/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"projects",
+								"title",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get By Date",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/projects/date/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"projects",
+								"date",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get By Keyword",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/projects/keyword/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"projects",
+								"keyword",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get All Projects",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/projects",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Project",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/projects/66180f06fb0e4635e5534979",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"projects",
+						"66180f06fb0e4635e5534979"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Projects Home",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/projects/home",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"projects",
+						"home"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Projects Home By Area",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/projects/home/660c3259560fe57ac5ec8724",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"projects",
+						"home",
+						"660c3259560fe57ac5ec8724"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Project Thumbnail",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "files",
+							"type": "file",
+							"src": [
+								"postman-cloud:///1eed3230-0f5f-4820-8903-5d05853d6d7a",
+								"postman-cloud:///1eec9538-c608-4b70-b43b-fb7af70baabf",
+								"postman-cloud:///1eec94fd-5eb4-48b0-8041-2c6f5730d60d",
+								"postman-cloud:///1eec94c7-e28e-41d0-ac4f-943087a714ad"
+							]
+						},
+						{
+							"key": "title",
+							"value": "TestTitle",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "TestDescription",
+							"type": "text"
+						},
+						{
+							"key": "report",
+							"value": "report",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "summary",
+							"value": "summary",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "letter",
+							"value": "letter",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "course",
+							"value": "course",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "academicCourse",
+							"value": "academicCourse",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "personalProject",
+							"value": "true",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "subject",
+							"value": "subject",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "differentiator",
+							"value": "differentiator",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/projects",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Project No Thumbnail",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "files",
+							"type": "file",
+							"src": [
+								"postman-cloud:///1eec9538-c608-4b70-b43b-fb7af70baabf",
+								"postman-cloud:///1eec94fd-5eb4-48b0-8041-2c6f5730d60d",
+								"postman-cloud:///1eec94c7-e28e-41d0-ac4f-943087a714ad"
+							]
+						},
+						{
+							"key": "title",
+							"value": "TestTitle",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "TestDescription",
+							"type": "text"
+						},
+						{
+							"key": "report",
+							"value": "report",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "summary",
+							"value": "summary",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "letter",
+							"value": "letter",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "course",
+							"value": "course",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "academicCourse",
+							"value": "academicCourse",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "personalProject",
+							"value": "true",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "subject",
+							"value": "subject",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "differentiator",
+							"value": "differentiator",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "impliedStudentsIDs",
+							"value": "[{'juan@gmail.com', 'marcos@gmail.com'}]",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "impliedTeachersIDs",
+							"value": "[{'juan@gmail.com', 'marcos@gmail.com'}]",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/projects",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Project",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"TestTitlePut\",\r\n    \"type\": \"TestType\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/projects/65c984b61f6c4f787d6c8c2e",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"projects",
+						"65c984b61f6c4f787d6c8c2e"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "65c98af13b6889629e5aa398",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Project",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/projects/65c92974750002a538af96cd",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"projects",
+						"65c92974750002a538af96cd"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "65c94858ef18ecc4c9575233",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
