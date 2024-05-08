@@ -3,6 +3,8 @@ import { getAreas, getArea, createArea, updateArea, deleteArea } from "../contro
 import { validateSchema } from "../middlewares/validator.middleware.js";
 import { areaSchema } from "../schemas/area.schema.js";
 
+// https://proyectopolaris.postman.co/workspace/My-Workspace~7ad015f7-88f4-4d09-8a04-281788145a86/collection/32885635-e40d3058-3535-4a8c-a405-8c588702e9a0?action=share&creator=26303495
+
 /**
  * @swagger
  * tags:

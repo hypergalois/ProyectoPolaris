@@ -13,6 +13,8 @@ import { authRequired } from "../middlewares/authRequired.middleware.js";
 
 const router = Router();
 
+// https://proyectopolaris.postman.co/workspace/My-Workspace~7ad015f7-88f4-4d09-8a04-281788145a86/collection/32885635-2ce6e9f5-68f3-4fb1-be1b-dde6318a90ed?action=share&creator=26303495
+
 // Main routes
 
 /**
@@ -128,7 +130,7 @@ router.get("/requests/:id", authRequired, getRequest);
  */
 router.put("/requests/:id", authRequired, checkRole([rolesEnum.ADMIN]), updateRequest);
 
-router.post("/requests", authRequired, createRequest)
+router.post("/requests", authRequired, createRequest);
 
 // Utility routes
 

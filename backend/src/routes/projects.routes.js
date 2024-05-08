@@ -1,6 +1,18 @@
 import { Router } from "express";
-import { createProject, deleteProject, getProject, getProjectByCategory, getProjectByDate,
-    getProjectByStatus, getProjectByTitle, getProjectByUser, getProjects, getProjectsHome, updateProject, getProjectsHomeByArea } from "../controllers/projects.controllers.js";
+import {
+	createProject,
+	deleteProject,
+	getProject,
+	getProjectByCategory,
+	getProjectByDate,
+	getProjectByStatus,
+	getProjectByTitle,
+	getProjectByUser,
+	getProjects,
+	getProjectsHome,
+	updateProject,
+	getProjectsHomeByArea,
+} from "../controllers/projects.controllers.js";
 import { uploadFile } from "../middlewares/uploadFile.middleware.js";
 import { authRequired } from "../middlewares/authRequired.middleware.js";
 import { validateSchema } from "../middlewares/validator.middleware.js";
@@ -9,6 +21,8 @@ import { rolesEnum } from "../config/tags.js";
 import { projectSchema, updateProjectSchema } from "../schemas/project.schema.js";
 
 const router = Router();
+
+// https://proyectopolaris.postman.co/workspace/My-Workspace~7ad015f7-88f4-4d09-8a04-281788145a86/collection/26303495-849890db-35f0-4f1a-a592-f8545c65c919?action=share&creator=26303495
 
 // Main routes
 

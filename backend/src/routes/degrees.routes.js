@@ -12,6 +12,8 @@ import { degreeSchema } from "../schemas/degree.schema.js";
 
 const router = Router();
 
+// https://proyectopolaris.postman.co/workspace/My-Workspace~7ad015f7-88f4-4d09-8a04-281788145a86/collection/32885635-71d84c97-396e-4536-9bc7-a18b0e0eb471?action=share&creator=26303495
+
 // Main routes
 
 /**
