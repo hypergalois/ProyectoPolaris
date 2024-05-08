@@ -13,7 +13,7 @@ const BCRYPT_SALT_ROUNDS = parseInt(process.env.BCRYPT_SALT_ROUNDS);
 // Ruta que se usa en el registro para comprobar si el email ya esta registrado
 export const checkEmailRegister = async (req, res) => {
 	const { email } = req.body;
-	console.log(email);
+	// console.log(email);
 
 	try {
 		const userFound = await prisma.user.findUnique({
@@ -36,7 +36,7 @@ export const checkEmailRegister = async (req, res) => {
 
 export const forgotPassword = async (req, res) => {
 	const { email } = req.body;
-	console.log(email);
+	// console.log(email);
 
 	try {
 		const userFound = await prisma.user.findUnique({
@@ -123,7 +123,7 @@ export const register = async (req, res) => {
 
 		const hashedPassword = await bcrypt.hash(password, salt);
 
-		console.log(email);
+		// console.log(email);
 
 		// Asignación automatica de rol según el email
 		// La comprobación subsiguiente de academicRole es innecesaria ya que
@@ -188,8 +188,9 @@ export const register = async (req, res) => {
 	}
 };
 
+// No implementado al final
 export const verifyEmail = async (req, res) => {
-	console.log(req.body);
+	// console.log(req.body);
 
 	// Aqui el token ya ha sido verificado y solo tenemos que cambiar el campo de emailVerified y settear la cookie
 
@@ -234,8 +235,8 @@ export const verifyEmail = async (req, res) => {
 
 export const login = async (req, res) => {
 	const { email, password } = req.body;
-	console.log(email);
-	console.log(password);
+	// console.log(email);
+	// console.log(password);
 
 	try {
 		const foundUser = await prisma.user.findUnique({
@@ -251,7 +252,7 @@ export const login = async (req, res) => {
 			});
 
 		const passwordsMatch = await bcrypt.compare(password, foundUser.passwordHash);
-		console.log(passwordsMatch);
+		// console.log(passwordsMatch);
 
 		if (!passwordsMatch) return res.status(400).json({ message: "The password is incorrect. Try again.", userExists: true, passwordsMatch: false });
 
@@ -261,7 +262,7 @@ export const login = async (req, res) => {
 			emailVerified: foundUser.emailVerified,
 		});
 
-		console.log(accessToken);
+		// console.log(accessToken);
 
 		res.cookie("token", accessToken, {
 			sameSite: "none",
@@ -298,7 +299,7 @@ export const profile = async (req, res) => {
 		});
 
 		if (!userFound) return res.status(404).json({ message: "User not found.", userExists: false });
-		console.log(userFound)
+		// console.log(userFound);
 		return res.status(200).json({
 			username: userFound.username,
 			email: userFound.email,
@@ -344,22 +345,22 @@ export const getUsers = async (req, res) => {
 					{
 						username: {
 							contains: userName,
-							mode: 'insensitive'
-						}
+							mode: "insensitive",
+						},
 					},
 					{
 						email: {
 							contains: userName,
-							mode: 'insensitive'
-						}
-					}
-				]
-			}
+							mode: "insensitive",
+						},
+					},
+				],
+			},
 		});
 
 		if (!usersFound) return res.status(200).json({ message: "Users not found.", usersExists: false });
 
-		const usersInfo = usersFound.map(user => ({
+		const usersInfo = usersFound.map((user) => ({
 			id: user.id,
 			username: user.username,
 			email: user.email,
@@ -381,7 +382,7 @@ export const verifyToken = async (req, res) => {
 
 	jwt.verify(token, secret, async (err, payload) => {
 		if (err) return res.status(403).json({ message: "Invalid token." });
-		console.log(payload);
+		// console.log(payload);
 
 		const userFound = await prisma.user.findUnique({
 			where: {
