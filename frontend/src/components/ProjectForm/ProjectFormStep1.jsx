@@ -22,7 +22,6 @@ const ProjectFormStep1 = ({ advanceStep, currentStep, updateProjectData, project
 	} = methods;
 
 	const onSubmit = (data) => {
-        console.log("funcion onsubmit line 41: ", data);
 		// Creamos un objeto normal para guardar los datos y al final crearemos el formData
 		const stepOneData = {};
 		stepOneData.title = data.title;

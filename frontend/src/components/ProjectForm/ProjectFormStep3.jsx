@@ -125,7 +125,6 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 		const getSubjectOptions = async () => {
 			// console.log(currentDegree);
 			if (currentDegree) {
-				console.log("Current degree, fetching subjects by degree");
 				try {
 					const subjectsList = await getSubjectsByDegree(currentDegree);
 					const options = subjectsList.map(({ id, name }) => ({
@@ -137,7 +136,6 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 					console.log("Error fetching options");
 				}
 			} else {
-				console.log("No current degree, fetching all subjects");
 				try {
 					const subjectsList = await getSubjects();
 					const options = subjectsList.map(({ id, name }) => ({
@@ -229,7 +227,6 @@ const ProjectFormStep3 = ({ returnStep, advanceStep, currentStep, updateProjectD
 
 		// console.log(data, Object.fromEntries(formData.entries()));
 
-		console.log(stepThreeData);
 		updateProjectData("step3", stepThreeData);
 	};
 
