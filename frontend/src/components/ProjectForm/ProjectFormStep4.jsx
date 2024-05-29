@@ -20,39 +20,40 @@ const ProjectFormStep4 = ({ returnStep, currentStep, editing, projectData, close
 	const [loading, setLoading] = useState(true);
 	const [formDataObj, setFormDataObj] = useState({});
 	const [degree, setDegree] = useState({});
-	const [award, setAward] = useState({});
+	const [award, setAward] = useState([]);
 	const [subject, setSubject] = useState({});
+	const [load, setLoad] = useState(true);
 
-    const prepareFormData = (projectData) => {
+    const prepareFormData = (projectDataFunc) => {
         const formData = new FormData();
 
-        if (projectData.step3.personalProject === true) {
-            delete projectData.step3.subject;
+        if (projectDataFunc.step3.personalProject === true) {
+            delete projectDataFunc.step3.subject;
         }
 
         // Añadir thumbnail con nombre personalizado
-        if (projectData.step3.thumbnail && projectData.step3.thumbnail.length > 0) {
-            formData.append('files', projectData.step3.thumbnail[0], 'thumbnail.' + projectData.step3.thumbnail[0].name.split('.').pop());
+        if (projectDataFunc.step3.thumbnail && projectDataFunc.step3.thumbnail.length > 0) {
+            formData.append('files', projectDataFunc.step3.thumbnail[0], 'thumbnail.' + projectDataFunc.step3.thumbnail[0].name.split('.').pop());
         }
         // Añadir summary con nombre personalizado
-        if (projectData.step3.summary && projectData.step3.summary.length > 0) {
-            formData.append('files', projectData.step3.summary[0], 'summary.'+projectData.step3.summary[0].name.split('.').pop());
+        if (projectDataFunc.step3.summary && projectDataFunc.step3.summary.length > 0) {
+            formData.append('files', projectDataFunc.step3.summary[0], 'summary.'+projectDataFunc.step3.summary[0].name.split('.').pop());
         }
 
-        if (Array.isArray(projectData.step3.projectFiles)) {
-            projectData.step3.projectFiles.forEach((file) => {
+        if (Array.isArray(projectDataFunc.step3.projectFiles)) {
+            projectDataFunc.step3.projectFiles.forEach((file) => {
                 formData.append('files', file);
             });
-        } else if (projectData.step3.projectFiles) {
+        } else if (projectDataFunc.step3.projectFiles) {
             // Si solo hay un archivo, no necesitas iterar sobre él
-            formData.append('files', projectData.step3.projectFiles);
+            formData.append('files', projectDataFunc.step3.projectFiles);
         }
 
-        delete projectData.step3.thumbnail;
-        delete projectData.step3.summary;
-        delete projectData.step3.projectFiles;
+        delete projectDataFunc.step3.thumbnail;
+        delete projectDataFunc.step3.summary;
+        delete projectDataFunc.step3.projectFiles;
 
-        const flattenedData = Object.values(projectData).reduce((acc, step) => ({ ...acc, ...step }), {});
+        const flattenedData = Object.values(projectDataFunc).reduce((acc, step) => ({ ...acc, ...step }), {});
     
         for (const key in flattenedData) {
             if (Object.hasOwnProperty.call(flattenedData, key)) {
@@ -92,29 +93,52 @@ const ProjectFormStep4 = ({ returnStep, currentStep, editing, projectData, close
 	};
 
 	useEffect(() => {
-		const formDataO = {};
-		for (let [name, value] of prepareFormData(projectData)) {
-			formDataO[name] = value;
-		}
-		setFormDataObj(formDataO)
 		Promise.all([ getDegrees(), getAwards(), getSubjects()]).then(() => setLoading(false));
 	}, []);
 
 	useEffect(() => {
-		const selectedAwards = awards.find(c => c.id === formDataObj.awards);
-		console.log(formDataObj,formDataObj.awards)
-		if (selectedAwards) {
-			setAward(selectedAwards);
-		}
-		const selectedDegree = degrees.find(r => r.id === formDataObj.degree);
+		const formDataO = {};
+		for (let [name, value] of prepareFormData(projectData)) {
+            if (name === 'awards' || name === 'impliedStudents') {
+                if (formDataO[name]) {
+                    if (Array.isArray(formDataO[name])) {
+                        formDataO[name].push(value);
+                    } else {
+                        formDataO[name] = [formDataO[name], value];
+                    }
+                } else {
+                    formDataO[name] = [value];  // Inicializa como array
+                }
+            } else {
+                formDataO[name] = value;  // Mantener como valor único
+            }
+        }
+		setFormDataObj(formDataO)
+	}, [loading]);
+
+	useEffect(() => {
+		if (formDataObj.awards && Array.isArray(formDataObj.awards)) {
+            const selectedAwards = awards.filter(c => formDataObj.awards.includes(c.id));
+            setAward(selectedAwards);
+        }
+		const selectedDegree = degrees.find(r => String(r.id) === String(formDataObj.degree));
 		if (selectedDegree) {
 			setDegree(selectedDegree);
 		}
 		const selectedSubject = subjects.find(d => d.id === formDataObj.subject);
 		if (selectedSubject) {
-			setDegree(selectedSubject);
+			setSubject(selectedSubject);
 		}
-	}, [loading]);
+		setLoad(false)
+	}, [formDataObj]);
+
+	/*useEffect(() => {
+		console.log("degree:",formDataObj.degree,degree)
+	}, [degree]);*/
+
+	if (load) {
+        return <div>Loading...</div>; // Muestra un indicador de carga mientras isLoading sea true
+    }
 
 	return (
 		<>
@@ -123,9 +147,9 @@ const ProjectFormStep4 = ({ returnStep, currentStep, editing, projectData, close
 
 			<div className="container mx-auto p-0">
 				<div className="container p-0 relative">
-					<img src="https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800" alt={projectData.step1.title} className="w-full rounded-2xl" style={{ filter: 'brightness(0.9)' }} />
+					<img src="https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800" alt={formDataObj.title} className="w-full rounded-2xl" style={{ filter: 'brightness(0.9)' }} />
 					<div className="absolute inset-0 bg-gradient-to-b from-transparent to-black"></div>
-					<h1 className="text-3xl font-bold absolute p-6 bottom-0 left-0 text-white">{projectData.step1.title}</h1>
+					<h1 className="text-3xl font-bold absolute p-6 bottom-0 left-0 text-white">{formDataObj.title}</h1>
 				</div>
 
 				<div className="grid grid-cols-1 gap-4 pt-6 pl-6 pr-6">
@@ -167,7 +191,7 @@ const ProjectFormStep4 = ({ returnStep, currentStep, editing, projectData, close
 						</div>
 						
 
-						<p className="text-sm font-bold">{projectData.step3.academicCourse}</p>
+						<p className="text-sm font-bold">{formDataObj.academicCourse}</p>
 
 						<div className="h-10 justify-center">
 							<div className="w-1 h-10 bg-blue-500 mx-4"></div>
@@ -175,7 +199,7 @@ const ProjectFormStep4 = ({ returnStep, currentStep, editing, projectData, close
 
 						<div className="flex ml-4">
 							<p className="text-sm font-bold">
-								{projectData.step3.personalProject ? "Proyecto personal" : projectData.step3.subject.name}
+								{formDataObj.personalProject ? subject.name : "Proyecto personal"}
 							</p>
 						</div>
 					</div>
@@ -183,9 +207,9 @@ const ProjectFormStep4 = ({ returnStep, currentStep, editing, projectData, close
 
 				<div className="text-black p-5" style={{ zIndex: '1' }}>
 					<p className="text-xl font-bold mb-2">Alumnos implicados</p>
-					{projectData.step2.impliedStudentsIDs ? (
+					{formDataObj.impliedStudents ? (
 						<div>
-						{projectData.step2.impliedStudentsIDs.map(studentID => (
+						{formDataObj.impliedStudents.map(studentID => (
 							<div key={studentID}>
 								<Link
 									to="/profile"
@@ -218,7 +242,7 @@ const ProjectFormStep4 = ({ returnStep, currentStep, editing, projectData, close
 						</div>
 
 						<h2 className="text-xl font-bold mb-2 mt-4">Descripcion:</h2>
-						<p className="text-gray-700">{projectData.step1.description}</p>
+						<p className="text-gray-700">{formDataObj.description}</p>
 					</div>
 					
 					<div>
@@ -252,7 +276,6 @@ const ProjectFormStep4 = ({ returnStep, currentStep, editing, projectData, close
 				<button
 					className="h-8 px-3 bg-blue-600 hover:bg-blue-400 text-white font-bold text-sm"
 					onClick={() => {
-						handleSubmit()
 						returnStep();
 					}}
 				>
