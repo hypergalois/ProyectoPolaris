@@ -38,7 +38,7 @@ const ProfileDetails = ({ email }) => {
 					<div className="flex justify-center mb-4 p-4">
 						<div className="w-2/3">
 							<div className="text-4xl mb-4 text-blue-500">
-								<h1>ProfilePage</h1>
+								<h1>Mi Perfil</h1>
 							</div>
 							<div className="mb-4">
 								<a>Mantén la privacidad de tus datos personales. 
@@ -53,6 +53,8 @@ const ProfileDetails = ({ email }) => {
 												type="text"
 												name={key}
 												value={value}
+                                                // Not editable
+                                                disabled={key === "email"}
 												onChange={handleChange}
 												className="block w-full px-3 py-2 border rounded-md"
 											/>
@@ -69,18 +71,6 @@ const ProfileDetails = ({ email }) => {
 									))}
 								</div>
 							)}
-						</div>
-						<div className="w-1/3 mb-4 p-4 relative">
-							<div className="text-lg mb-4 absolute top-0 right-0" onClick={handleButtonClick}>
-								<button className="text-white bg-blue-500 px-4 py-2 rounded-xl" onClick={handleButtonClick}>
-									<Link
-										to="/userProyects"
-										state={{ email: user.email }}
-									>
-										Proyectos
-									</Link>
-								</button>
-							</div>
 						</div>
 					</div>	
 					{editable && (

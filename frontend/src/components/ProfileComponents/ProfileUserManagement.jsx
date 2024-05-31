@@ -20,7 +20,7 @@ const ProfileUserManagement = ({ project }) => {
 
 	return (
 		<div className="container mx-auto">
-			<h1>User Management</h1>
+			<h1>Buscar usuario</h1>
 			<SearchUsers setSearchQuery={setSearchQuery} />
 			{loading ? <p></p> : <SearchResultsUsers filteredUsers={users} />}
 		</div>

@@ -162,14 +162,14 @@ function NavBar() {
 													<Menu.Item>
 														{({ active }) => (
 															<Link to="/profile" className={`${active ? "bg-gray-100" : ""} block px-4 py-2 text-sm text-gray-700`}>
-																Profile
+																Perfil
 															</Link>
 														)}
 													</Menu.Item>
 													<Menu.Item>
 														{({ active }) => (
 															<Link to="/userProyects" className={`${active ? "bg-gray-100" : ""} block px-4 py-2 text-sm text-gray-700`}>
-																My Proyects
+																Mis Proyectos
 															</Link>
 														)}
 													</Menu.Item>
@@ -183,7 +183,7 @@ function NavBar() {
 																	logout();
 																}}
 															>
-																Sign out
+																Cerrar Sesión
 															</Link>
 														)}
 													</Menu.Item>
