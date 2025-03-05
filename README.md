@@ -1,33 +1,33 @@
-# 🌟 Proyecto Polaris 🌟
+# 🌟 Project Polaris 🌟
 
-## Introducción 📖
-Bienvenido al repositorio del Proyecto Polaris, una innovadora plataforma diseñada para centralizar, organizar y dar visibilidad a los trabajos y proyectos creativos de los estudiantes y profesores de U-Tad. Este proyecto es un esfuerzo colaborativo para crear un espacio donde la excelencia académica y la creatividad se encuentren y brillen.
+## Introduction 📖
+Welcome to the Project Polaris repository, an innovative platform designed to centralize, organize, and showcase the creative works and projects of students and professors at U-Tad. This project is a collaborative effort to create a space where academic excellence and creativity come together and shine.
 
 ![polaris](https://i.ibb.co/CmbQ3Qh/iconic-space-photos-armstrong-moon-nasa1.webp)
 
-## Objetivo 🎯
-El propósito del Proyecto Polaris es proporcionar un repositorio accesible y dinámico que resalte los logros de los alumnos y alumni de U-Tad. Buscamos facilitar la promoción de sus habilidades y contribuciones a través de un portal intuitivo y atractivo.
+## Objective 🎯
+The purpose of Project Polaris is to provide an accessible and dynamic repository that highlights the achievements of U-Tad students and alumni. Our goal is to facilitate the promotion of their skills and contributions through an intuitive and engaging portal.
 
-## Características 🌈
-### Accesibilidad Universal: 
-Diseño adaptable para una experiencia óptima en ordenadores, tablets y móviles.
-### Seguridad Robusta: 
-Autenticación en dos pasos y sesiones controladas por JWT para una máxima seguridad.
-### Búsqueda Avanzada: 
-Encuentra proyectos y trabajos utilizando filtros múltiples y palabras clave.
-### Interfaz Intuitiva: 
-Navega fácilmente a través de un diseño limpio y claro, en línea con la identidad de U-Tad.
+## Features 🌈
+### Universal Accessibility: 
+Responsive design for an optimal experience on desktops, tablets, and mobile devices.
+### Robust Security: 
+Two-step authentication and JWT-controlled sessions for maximum security.
+### Advanced Search: 
+Find projects and works using multiple filters and keywords.
+### Intuitive Interface: 
+Easily navigate through a clean and clear design aligned with U-Tad's identity.
 
-## Tecnologías Utilizadas 💻
+## Technologies Used 💻
 ### Backend: 
 Express / NodeJS
 ### Frontend: 
-React / Nextjs
-### Base de Datos: 
+React / Next.js
+### Database: 
 MongoDB
 
-## Documentación 📚
-Para más detalles sobre la implementación y uso del Proyecto Polaris, por favor consulta nuestra wiki.
+## Documentation 📚
+For more details on the implementation and usage of Project Polaris, please refer to our wiki.
 
-## Contacto 📫
-Para cualquier consulta, contactar con nuestro administrador plenipotenciario en gonzalo.antonio@live.u-tad.com.
+## Contact 📫
+For any inquiries, please contact our plenipotentiary administrator at gonzalo.antonio@live.u-tad.com.
